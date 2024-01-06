@@ -16,6 +16,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.sophiebun.buntsy.blocks.ModBlocks;
+import net.sophiebun.buntsy.item.CreativeModeTabs;
+import net.sophiebun.buntsy.item.ModItems;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -30,14 +33,17 @@ public class BuntsyMod
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        // Register the commonSetup method for modloading
+        CreativeModeTabs.register(modEventBus);
+
+        ModItems.register(modEventBus);
+
+        ModBlocks.register(modEventBus);
+
+        //OreDictionary
+
         modEventBus.addListener(this::commonSetup);
 
-        // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-
-        // Register the item to a creative tab
-        modEventBus.addListener(this::addCreative);
 
     }
 
@@ -45,12 +51,6 @@ public class BuntsyMod
     {
         // Some common setup code
         LOGGER.info("HELLO FROM COMMON SETUP");
-
-    }
-
-    // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event)
-    {
 
     }
 
