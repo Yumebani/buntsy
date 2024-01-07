@@ -2,22 +2,21 @@ package net.sophiebun.buntsy.blocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
-import net.sophiebun.buntsy.blocks.custom.ModFlammableRotatedPillarBlock;
-import net.sophiebun.buntsy.blocks.custom.ModLeaves;
-import net.sophiebun.buntsy.blocks.custom.ModPlanks;
+import net.sophiebun.buntsy.blocks.custom.*;
 import net.sophiebun.buntsy.item.ModItems;
 
 import java.util.function.Supplier;
@@ -41,6 +40,23 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> GENTLIT_PLANKS = registerBlock("gentlit_planks",
             () -> new ModPlanks(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
+    public static final RegistryObject<Block> GENTLIT_STAIRS = registerBlock("gentlit_stairs",
+            () -> new ModWoodStairs(() -> ModBlocks.GENTLIT_PLANKS.get().defaultBlockState(),BlockBehaviour.Properties.copy(Blocks.OAK_STAIRS)));
+    public static final RegistryObject<Block> GENTLIT_SLAB = registerBlock("gentlit_slab",
+            () -> new ModWoodSlab(BlockBehaviour.Properties.copy(Blocks.OAK_SLAB)));
+    public static final RegistryObject<Block> GENTLIT_BUTTON = registerBlock("gentlit_button",
+            () -> new ButtonBlock(BlockBehaviour.Properties.copy(Blocks.OAK_BUTTON), BlockSetType.OAK, 10, true));
+    public static final RegistryObject<Block> GENTLIT_PRESSURE_PLATE = registerBlock("gentlit_pressure_plate",
+            () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.OAK_PRESSURE_PLATE),
+                    BlockSetType.OAK));
+    public static final RegistryObject<Block> GENTLIT_FENCE = registerBlock("gentlit_fence",
+            () -> new ModWoodFence(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
+    public static final RegistryObject<Block> GENTLIT_FENCE_GATE = registerBlock("gentlit_fence_gate",
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS), SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
+    public static final RegistryObject<Block> GENTLIT_DOOR = registerBlock("gentlit_door",
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noCollission(), BlockSetType.OAK));
+    public static final RegistryObject<Block> GENTLIT_TRAPDOOR = registerBlock("gentlit_trapdoor",
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noCollission(), BlockSetType.OAK));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){

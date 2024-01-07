@@ -41,11 +41,11 @@ public class ModFlammableRotatedPillarBlock extends RotatedPillarBlock {
 
         if (context.getItemInHand().getItem() instanceof AxeItem) {
 
-            if(state.is(ModBlocks.gentlit_log.get())) {
-                return ModBlocks.stripped_gentlit_log.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
+            if(state.is(ModBlocks.GENTLIT_LOG.get())) {
+                return ModBlocks.STRIPPED_GENTLIT_LOG.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
             }
-            if(state.is(ModBlocks.gentlit_wood.get())) {
-                return ModBlocks.stripped_gentlit_wood.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
+            if(state.is(ModBlocks.GENTLIT_WOOD.get())) {
+                return ModBlocks.STRIPPED_GENTLIT_WOOD.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
             }
         }
 

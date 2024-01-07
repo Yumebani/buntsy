@@ -32,5 +32,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.STRIPPED_GENTLIT_LOG.get())
                 .add(ModBlocks.GENTLIT_WOOD.get())
                 .add(ModBlocks.STRIPPED_GENTLIT_WOOD.get());
+
+        this.tag(BlockTags.WOODEN_FENCES)
+                .add(ModBlocks.GENTLIT_FENCE.get());
+
+        this.tag(BlockTags.FENCE_GATES)
+                .add(ModBlocks.GENTLIT_FENCE_GATE.get());
     }
 }

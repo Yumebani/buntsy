@@ -1,5 +1,25 @@
 {
   "block.buntsy.gentlit_log": "Gentlit Log",
+  "item.buntsy.cocoon": "Cocoon",
+  "item.buntsy.silk": "Silk",
+  "item.buntsy.silk_spool": "Silk Spool",
+  "item.buntsy.silk_fabric": "Silk Fabric",
+  "item.buntsy.molted_moth_wings": "Molted Moth Wings",
+  "item.buntsy.moth_wing_thread": "Moth Wing Thread",
+  "item.buntsy.tough_silk_fabric": "Tough Silk Fabric",
+  "item.buntsy.silky_ingot": "Silky Ingot",
+  "item.buntsy.silky_nugget": "Silky Nugget",
+  "item.buntsy.silky_crystal": "Silky Crystal",
+  "item.buntsy.fairy_dust": "Fairy Dust",
+  "item.buntsy.gentlit_syrup": "Gentlit Syrup",
+  "item.buntsy.sugar_bowl": "Sugar Bowl",
+  "item.buntsy.syrupy_mixture_bowl": "Syrupy Mixture Bowl",
+
+  "item.buntsy.bowl_of_caramel": "Bowl of Caramel",
+  "item.buntsy.bowl_of_rockcandy": "Bowl of Rockcandy",
+  "item.buntsy.caramel_strawberries": "Caramel Strawberries",
+  "item.buntsy.strawberry": "Strawberry",
+  "item.buntsy.golden_strawberry": "Golden Strawberry",
 
   "creativetab.buntsy_tab": "Buntsy"
 }
