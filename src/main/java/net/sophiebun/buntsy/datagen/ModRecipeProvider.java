@@ -1,7 +1,9 @@
 package net.sophiebun.buntsy.datagen;
 
+import com.mojang.datafixers.functions.PointFreeRule;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -13,6 +15,7 @@ import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.item.ModItems;
+import net.sophiebun.buntsy.tag.ModTags;
 
 import java.util.function.Consumer;
 
@@ -24,8 +27,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
 
-        planksRecipe(ModBlocks.GENTLIT_LOG.get(), ModBlocks.GENTLIT_PLANKS.get(), consumer);
-        //trapdoorRecipe(ModBlocks.GENTLIT_PLANKS.get(), ModBlocks.GENTLIT_TRAPDOOR.get(), consumer);
+        planksRecipe(ModTags.Items.GENTLIT_LOGS, ModBlocks.GENTLIT_PLANKS.get(), consumer);
+        trapdoorRecipe(ModBlocks.GENTLIT_PLANKS.get(), ModBlocks.GENTLIT_TRAPDOOR.get(), consumer);
         compact2By2(ModItems.SILK_SPOOL.get(), ModItems.SILK_FABRIC.get(), 2, consumer);
 
         //Silky solids
@@ -150,10 +153,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_smithing");
     }
 
-    private void planksRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer){
+    private void planksRecipe(TagKey<Item> tags, ItemLike result, Consumer<FinishedRecipe> consumer){
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, result, 8)
-                .requires(material, 1)
-                .unlockedBy(getHasName(material), has(material))
+                .requires(Ingredient.of(tags), 1)
+                .unlockedBy(tags.toString(), has(tags))
                 .save(consumer);
     }
 

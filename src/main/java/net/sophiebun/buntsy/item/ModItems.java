@@ -1,6 +1,6 @@
 package net.sophiebun.buntsy.item;
 
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -41,6 +41,26 @@ public class ModItems {
             "sugar_bowl", () -> new Item(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> SYRUPY_MIXTURE_BOWL = ItemsRegister.register(
             "syrupy_mixture_bowl", () -> new Item(new Item.Properties().stacksTo(16)));
+
+    public static final RegistryObject<Item> SILKY_SWORD = ItemsRegister.register(
+            "silky_sword", () -> new SwordItem(ModToolTiers.SILKY, 7, 2f, new Item.Properties()));
+    public static final RegistryObject<Item> SILKY_PICKAXE = ItemsRegister.register(
+            "silky_pickaxe", () -> new PickaxeItem(ModToolTiers.SILKY, 5, 1.4f, new Item.Properties()));
+    public static final RegistryObject<Item> SILKY_AXE = ItemsRegister.register(
+            "silky_axe", () -> new AxeItem(ModToolTiers.SILKY, 7, 1.2f, new Item.Properties()));
+    public static final RegistryObject<Item> SILKY_SHOVEL = ItemsRegister.register(
+            "silky_shovel", () -> new ShovelItem(ModToolTiers.SILKY, 5.5f, 1.2f, new Item.Properties()));
+    public static final RegistryObject<Item> SILKY_HOE = ItemsRegister.register(
+            "silky_hoe", () -> new HoeItem(ModToolTiers.SILKY, 1, 5f, new Item.Properties()));
+
+    public static final RegistryObject<Item> SILKY_HELMET = ItemsRegister.register(
+            "silky_helmet", () -> new ArmorItem(ModArmorMaterials.SILKY, ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final RegistryObject<Item> SILKY_CHESTPLATE = ItemsRegister.register(
+            "silky_chestplate", () -> new ArmorItem(ModArmorMaterials.SILKY, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+    public static final RegistryObject<Item> SILKY_LEGGINGS = ItemsRegister.register(
+            "silky_leggings", () -> new ArmorItem(ModArmorMaterials.SILKY, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+    public static final RegistryObject<Item> SILKY_BOOTS = ItemsRegister.register(
+            "silky_boots", () -> new ArmorItem(ModArmorMaterials.SILKY, ArmorItem.Type.BOOTS, new Item.Properties()));
 
     public static final RegistryObject<Item> BOWL_OF_CARAMEL = ItemsRegister.register(
             "bowl_of_caramel", () -> new Item(new Item.Properties().food(ModFoods.BOWL_OF_CARAMEL).stacksTo(16)));
