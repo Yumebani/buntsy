@@ -11,6 +11,8 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.GrindingWheelBlockEntity;
+import net.sophiebun.buntsy.blocks.inventory.FairyInBottleSlot;
+import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
 import org.jetbrains.annotations.Nullable;
 
 public class GrindingWheelMenu extends AbstractContainerMenu {
@@ -20,12 +22,12 @@ public class GrindingWheelMenu extends AbstractContainerMenu {
     private final ContainerData data;
 
     protected GrindingWheelMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
+        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(5));
     }
 
     public GrindingWheelMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModMenuTypes.GRINDING_WHEEL_MENU.get(), pContainerId);
-        checkContainerSize(inv, 4);
+        checkContainerSize(inv, 5);
         blockEntity = ((GrindingWheelBlockEntity) entity);
         this.level = inv.player.level();
         this.data = data;
@@ -34,10 +36,11 @@ public class GrindingWheelMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
 
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
-            this.addSlot(new SlotItemHandler(iItemHandler, 0, 13, 17));
-            this.addSlot(new SlotItemHandler(iItemHandler, 1, 13, 53));
-            this.addSlot(new SlotItemHandler(iItemHandler, 2, 69, 25));
-            this.addSlot(new SlotItemHandler(iItemHandler, 3, 132, 35));
+            this.addSlot(new FairyInBottleSlot(iItemHandler, 0, 13, 17));
+            this.addSlot(new SlotItemHandler(iItemHandler, 1, 13, 36));
+            this.addSlot(new OutputSlot(iItemHandler, 2, 13, 53));
+            this.addSlot(new SlotItemHandler(iItemHandler, 3, 69, 25));
+            this.addSlot(new OutputSlot(iItemHandler, 4, 132, 35));
         });
 
         addDataSlots(data);
@@ -61,7 +64,7 @@ public class GrindingWheelMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 4;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 5;  // must be the number of slots you have!
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);

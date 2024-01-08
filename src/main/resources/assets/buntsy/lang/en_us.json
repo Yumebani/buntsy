@@ -1,5 +1,25 @@
 {
+  "block.buntsy.leaves": "Gentlit Leaves",
   "block.buntsy.gentlit_log": "Gentlit Log",
+  "block.buntsy.stripped_gentlit_log": "Stripped Gentlit Log",
+  "block.buntsy.gentlit_wood": "Gentlit Wood",
+  "block.buntsy.stripped_gentlit_wood": "Stripped Gentlit Wood",
+
+  "block.buntsy.gentlit_planks": "Gentlit Planks",
+  "block.buntsy.gentlit_stairs": "Gentlit Stairs",
+  "block.buntsy.gentlit_slab": "Gentlit Slab",
+  "block.buntsy.gentlit_trapdoor": "Gentlit Trapdoor",
+  "block.buntsy.gentlit_door": "Gentlit Door",
+  "block.buntsy.gentlit_fence": "Gentlit Fence",
+  "block.buntsy.gentlit_fence_gate": "Gentlit Fence Gate",
+  "block.buntsy.gentlit_pressure_plate": "Gentlit Pressure Plate",
+  "block.buntsy.gentlit_button": "Gentlit Button",
+
+  "block.buntsy.grinding_wheel": "Grinding Wheel",
+
+
+  "item.buntsy.amethyst_dust": "Amethyst Dust",
+  "item.buntsy.fairy_dust": "Fairy Dust",
   "item.buntsy.cocoon": "Cocoon",
   "item.buntsy.silk": "Silk",
   "item.buntsy.silk_spool": "Silk Spool",
@@ -10,15 +30,28 @@
   "item.buntsy.silky_ingot": "Silky Ingot",
   "item.buntsy.silky_nugget": "Silky Nugget",
   "item.buntsy.silky_crystal": "Silky Crystal",
-  "item.buntsy.fairy_dust": "Fairy Dust",
+
+  "item.buntsy.silky_sword": "Silky Sword",
+  "item.buntsy.silky_pickaxe": "Silky Pickaxe",
+  "item.buntsy.silky_axe": "Silky Axe",
+  "item.buntsy.silky_shovel": "Silky Shovel",
+  "item.buntsy.silky_hoe": "Silky Hoe",
+  "item.buntsy.silky_helmet": "Silky Helmet",
+  "item.buntsy.silky_chestplate": "Silky Chestplate",
+  "item.buntsy.silky_leggings": "Silky Leggings",
+  "item.buntsy.silky_boots": "Silky Boots",
+  "item.buntsy.fairy_in_a_bottle": "Fairy in a Bottle",
+
+  "item.buntsy.hootnip": "Hootnip",
+  "item.buntsy.ground_hootnip": "Ground Hootnip",
+  "item.buntsy.hootnip_cereal": "Hootnip Cereal",
+  "item.buntsy.bowl_of_rockcandy": "Bowl of Rockcandy",
   "item.buntsy.gentlit_syrup": "Gentlit Syrup",
   "item.buntsy.sugar_bowl": "Sugar Bowl",
   "item.buntsy.syrupy_mixture_bowl": "Syrupy Mixture Bowl",
-
   "item.buntsy.bowl_of_caramel": "Bowl of Caramel",
-  "item.buntsy.bowl_of_rockcandy": "Bowl of Rockcandy",
-  "item.buntsy.caramel_strawberries": "Caramel Strawberries",
   "item.buntsy.strawberry": "Strawberry",
+  "item.buntsy.caramel_strawberries": "Caramel Strawberries",
   "item.buntsy.golden_strawberry": "Golden Strawberry",
 
   "creativetab.buntsy_tab": "Buntsy"

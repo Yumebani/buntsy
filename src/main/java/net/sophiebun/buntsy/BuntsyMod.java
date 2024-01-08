@@ -21,6 +21,7 @@ import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.item.CreativeModeTabs;
 import net.sophiebun.buntsy.item.ModItems;
+import net.sophiebun.buntsy.recipe.ModRecipes;
 import net.sophiebun.buntsy.screen.GrindingWheelScreen;
 import net.sophiebun.buntsy.screen.ModMenuTypes;
 import org.slf4j.Logger;
@@ -44,6 +45,10 @@ public class BuntsyMod
         ModBlocks.register(modEventBus);
 
         ModBlockEntities.register(modEventBus);
+
+        ModMenuTypes.register(modEventBus);
+
+        ModRecipes.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 

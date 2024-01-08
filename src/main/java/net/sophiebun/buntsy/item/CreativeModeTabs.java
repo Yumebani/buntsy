@@ -25,9 +25,54 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.STRIPPED_GENTLIT_LOG.get());
                         pOutput.accept(ModBlocks.GENTLIT_WOOD.get());
                         pOutput.accept(ModBlocks.STRIPPED_GENTLIT_LOG.get());
-                        pOutput.accept(ModBlocks.GENTLIT_PLANKS.get());
 
+                        pOutput.accept(ModBlocks.GENTLIT_PLANKS.get());
+                        pOutput.accept(ModBlocks.GENTLIT_STAIRS.get());
+                        pOutput.accept(ModBlocks.GENTLIT_SLAB.get());
+                        pOutput.accept(ModBlocks.GENTLIT_TRAPDOOR.get());
+                        pOutput.accept(ModBlocks.GENTLIT_DOOR.get());
+                        pOutput.accept(ModBlocks.GENTLIT_FENCE.get());
+                        pOutput.accept(ModBlocks.GENTLIT_FENCE_GATE.get());
+                        pOutput.accept(ModBlocks.GENTLIT_PRESSURE_PLATE.get());
+                        pOutput.accept(ModBlocks.GENTLIT_BUTTON.get());
+
+                        pOutput.accept(ModBlocks.GRINDING_WHEEL.get());
+
+
+                        pOutput.accept(ModItems.AMETHYST_DUST.get());
+                        pOutput.accept(ModItems.FAIRY_DUST.get());
+                        pOutput.accept(ModItems.COCOON.get());
+                        pOutput.accept(ModItems.SILK.get());
+                        pOutput.accept(ModItems.SILK_SPOOL.get());
+                        pOutput.accept(ModItems.SILK_FABRIC.get());
+                        pOutput.accept(ModItems.MOLTED_MOTH_WINGS.get());
+                        pOutput.accept(ModItems.MOTH_WING_THREAD.get());
+                        pOutput.accept(ModItems.TOUGH_SILK_FABRIC.get());
+                        pOutput.accept(ModItems.SILKY_NUGGET.get());
+                        pOutput.accept(ModItems.SILKY_INGOT.get());
+                        pOutput.accept(ModItems.SILKY_CRYSTAL.get());
+
+                        pOutput.accept(ModItems.SILKY_SWORD.get());
+                        pOutput.accept(ModItems.SILKY_PICKAXE.get());
+                        pOutput.accept(ModItems.SILKY_AXE.get());
+                        pOutput.accept(ModItems.SILKY_SHOVEL.get());
+                        pOutput.accept(ModItems.SILKY_HOE.get());
+                        pOutput.accept(ModItems.SILKY_HELMET.get());
+                        pOutput.accept(ModItems.SILKY_CHESTPLATE.get());
+                        pOutput.accept(ModItems.SILKY_LEGGINGS.get());
+                        pOutput.accept(ModItems.SILKY_BOOTS.get());
+                        pOutput.accept(ModItems.FAIRY_IN_A_BOTTLE.get());
+
+                        pOutput.accept(ModItems.HOOTNIP.get());
+                        pOutput.accept(ModItems.GROUND_HOOTNIP.get());
+                        pOutput.accept(ModItems.HOOTNIP_CEREAL.get());
+                        pOutput.accept(ModItems.BOWL_OF_ROCKCANDY.get());
+                        pOutput.accept(ModItems.GENTLIT_SYRUP.get());
+                        pOutput.accept(ModItems.SUGAR_BOWL.get());
+                        pOutput.accept(ModItems.SYRUPY_MIXTURE_BOWL.get());
+                        pOutput.accept(ModItems.BOWL_OF_CARAMEL.get());
                         pOutput.accept(ModItems.STRAWBERRY.get());
+                        pOutput.accept(ModItems.CARAMEL_STRAWBERRIES.get());
                         pOutput.accept(ModItems.GOLDEN_STRAWBERRY.get());
 
                     })
