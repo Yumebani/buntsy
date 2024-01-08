@@ -38,5 +38,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlock(ModBlocks.GENTLIT_LEAVES.get(),
                 models().singleTexture(ForgeRegistries.BLOCKS.getKey(ModBlocks.GENTLIT_LEAVES.get()).getPath(),
                 new ResourceLocation("minecraft:block/leaves"), "all", blockTexture(ModBlocks.GENTLIT_LEAVES.get())).renderType("cutout"));
+
+        simpleBlockWithItem(ModBlocks.GRINDING_WHEEL.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/grinding_wheel")));
     }
 }

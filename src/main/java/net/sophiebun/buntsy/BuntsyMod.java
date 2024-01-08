@@ -2,6 +2,7 @@ package net.sophiebun.buntsy;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -17,8 +18,11 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.sophiebun.buntsy.blocks.ModBlocks;
+import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.item.CreativeModeTabs;
 import net.sophiebun.buntsy.item.ModItems;
+import net.sophiebun.buntsy.screen.GrindingWheelScreen;
+import net.sophiebun.buntsy.screen.ModMenuTypes;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -39,7 +43,7 @@ public class BuntsyMod
 
         ModBlocks.register(modEventBus);
 
-        //OreDictionary
+        ModBlockEntities.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -69,9 +73,7 @@ public class BuntsyMod
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-            // Some client setup code
-            LOGGER.info("HELLO FROM CLIENT SETUP");
-            LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+            MenuScreens.register(ModMenuTypes.GRINDING_WHEEL_MENU.get(), GrindingWheelScreen::new);
         }
     }
 }
