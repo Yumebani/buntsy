@@ -1,6 +1,7 @@
-// 1.20.1	2024-01-09T23:29:09.092766357	Tags for minecraft:item mod id buntsy
+// 1.20.1	2024-01-10T15:41:03.435243896	Tags for minecraft:item mod id buntsy
 8dfcac00ff67b8e8fa2d32c38f72d64b5a1a8ded data/buntsy/tags/items/bottled_item.json
-f389fe43e1a9bf99b6966d67ee158722ef4404f2 data/buntsy/tags/items/fairy_food.json
+ff756e950d8f253b89d248cdcaf4d44be72d3aef data/buntsy/tags/items/bowl_item.json
+73b1a5042181244742ef2a06d39f27fab477b914 data/buntsy/tags/items/fairy_food.json
 aed44b8c2d4b8f052b0e59dcfea5256689fbd728 data/minecraft/tags/items/logs_that_burn.json
 3c0a37829999806003244d1c4350ae59c31ff6c3 data/minecraft/tags/items/planks.json
 ad466a642a721b6c7ce6d1ff2a2f407046d7a86b data/minecraft/tags/items/trimmable_armor.json

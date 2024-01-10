@@ -39,11 +39,11 @@ public class ModItems {
     public static final RegistryObject<Item> AMETHYST_DUST = ItemsRegister.register(
             "amethyst_dust", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> GENTLIT_SYRUP = ItemsRegister.register(
-            "gentlit_syrup", () -> new FairyFoodItem(new Item.Properties().stacksTo(16), 1600));
+            "gentlit_syrup", () -> new FairyFoodItem(new Item.Properties().stacksTo(16), 800, 1f));
     public static final RegistryObject<Item> SUGAR_BOWL = ItemsRegister.register(
-            "sugar_bowl", () -> new Item(new Item.Properties().stacksTo(16)));
+            "sugar_bowl", () -> new FairyFoodItem(new Item.Properties().stacksTo(16), 1000, 1f));
     public static final RegistryObject<Item> SYRUPY_MIXTURE_BOWL = ItemsRegister.register(
-            "syrupy_mixture_bowl", () -> new Item(new Item.Properties().stacksTo(16)));
+            "syrupy_mixture_bowl", () -> new FairyFoodItem(new Item.Properties().stacksTo(16), 2000, 1.5f));
     public static final RegistryObject<Item> HOOTNIP = ItemsRegister.register(
             "hootnip", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> GROUND_HOOTNIP = ItemsRegister.register(
@@ -72,9 +72,11 @@ public class ModItems {
             "silky_boots", () -> new ArmorItem(ModArmorMaterials.SILKY, ArmorItem.Type.BOOTS, new Item.Properties()));
 
     public static final RegistryObject<Item> BOWL_OF_CARAMEL = ItemsRegister.register(
-            "bowl_of_caramel", () -> new Item(new Item.Properties().food(ModFoods.BOWL_OF_CARAMEL).stacksTo(16)));
+            "bowl_of_caramel", () -> new FairyFoodItem(new Item.Properties().food(ModFoods.BOWL_OF_CARAMEL).stacksTo(16),
+                    2000, 1.5f));
     public static final RegistryObject<Item> BOWL_OF_ROCKCANDY = ItemsRegister.register(
-            "bowl_of_rockcandy", () -> new Item(new Item.Properties().food(ModFoods.BOWL_OF_ROCKCANDY).stacksTo(16)));
+            "bowl_of_rockcandy", () -> new FairyFoodItem(new Item.Properties().food(ModFoods.BOWL_OF_ROCKCANDY).stacksTo(16),
+                    4000, 2f));
     public static final RegistryObject<Item> CARAMEL_STRAWBERRIES = ItemsRegister.register(
             "caramel_strawberries", () -> new Item(new Item.Properties().food(ModFoods.CARAMEL_STRAWBERRIES).stacksTo(16)));
     public static final RegistryObject<Item> STRAWBERRY = ItemsRegister.register(

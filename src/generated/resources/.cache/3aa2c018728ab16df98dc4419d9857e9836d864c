@@ -1,4 +1,5 @@
-// 1.20.1	2024-01-09T23:29:09.089589869	Block States: buntsy
+// 1.20.1	2024-01-10T15:26:21.443108175	Block States: buntsy
+85611fb35b13ca94cd7e808b269df7e417954c63 assets/buntsy/blockstates/fairy_terrarium.json
 4fbed8a6c930a0cffe8c8450dfbc9c3e414e17de assets/buntsy/blockstates/gentlit_button.json
 0dee6df3979421f9b46560abedf1bf39a31e1253 assets/buntsy/blockstates/gentlit_door.json
 5c03b85d99ab35cb03529ad26d20204ad97eb3ee assets/buntsy/blockstates/gentlit_fence.json
@@ -14,7 +15,7 @@ b5816724661ac413d732734c6e858065e943c28a assets/buntsy/blockstates/gentlit_plank
 34ab41a5153d61f5022e0e9a6df57edb0fa71f76 assets/buntsy/blockstates/grinding_wheel.json
 d3cbf1b01a5b3ab360194b20317cdb58de834e96 assets/buntsy/blockstates/stripped_gentlit_log.json
 4c14575fab1b23a9d0b85c8a5c65b22b4a39a938 assets/buntsy/blockstates/stripped_gentlit_wood.json
-34ab41a5153d61f5022e0e9a6df57edb0fa71f76 assets/buntsy/blockstates/thread_reeler.json
+d4e1fd13339a6294cff77ea8b3fe7a421a39b8f5 assets/buntsy/blockstates/thread_reeler.json
 8ba5031f042093aa1e29c57038faded0eadf2d3e assets/buntsy/models/block/gentlit_button.json
 8e2adb263b6e7e31a31a8f1f1b643973499fb3c9 assets/buntsy/models/block/gentlit_button_pressed.json
 13798c51e1f0f37bc00d7b130ee87ba06d3a21c8 assets/buntsy/models/block/gentlit_door_bottom_left.json
@@ -51,6 +52,7 @@ b3051cfb68d96d2099932d3a5800425144d386fb assets/buntsy/models/block/gentlit_wood
 1503cb631ec2169e708bfb28a031477e6e3b8e7b assets/buntsy/models/block/stripped_gentlit_log_horizontal.json
 22fb0f04f6df839a7b68ddd32c8de07d25188e9b assets/buntsy/models/block/stripped_gentlit_wood.json
 378eb177a2c41f34e555fee01e926585772c0db5 assets/buntsy/models/block/stripped_gentlit_wood_horizontal.json
+d241e5c4ac770ff9c89f129477eb9c9625e6ceae assets/buntsy/models/item/fairy_terrarium.json
 3ca7f608fe8dcb53a430b14fd52969ceada9db10 assets/buntsy/models/item/gentlit_planks.json
 d468cd62030635f3cfa5ea93497a7862e5075bf8 assets/buntsy/models/item/grinding_wheel.json
-d468cd62030635f3cfa5ea93497a7862e5075bf8 assets/buntsy/models/item/thread_reeler.json
+932acec05c2c87ed3def823eccdbecc9181f9ac5 assets/buntsy/models/item/thread_reeler.json

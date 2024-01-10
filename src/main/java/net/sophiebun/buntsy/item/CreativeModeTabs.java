@@ -38,6 +38,7 @@ public class CreativeModeTabs {
 
                         pOutput.accept(ModBlocks.GRINDING_WHEEL.get());
                         pOutput.accept(ModBlocks.THREAD_REELER.get());
+                        pOutput.accept(ModBlocks.FAIRY_TERRARIUM.get());
 
 
                         pOutput.accept(ModItems.AMETHYST_DUST.get());

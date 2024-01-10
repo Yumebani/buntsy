@@ -42,10 +42,20 @@ public class ModItemTagGenerator extends ItemTagsProvider {
         this.tag(ModTags.Items.FAIRY_FOOD)
                 .add(ModItems.GENTLIT_SYRUP.get().asItem())
                 .add(Items.SUGAR)
-                .add(Items.HONEY_BOTTLE);
+                .add(Items.HONEY_BOTTLE)
+                .add(ModItems.BOWL_OF_CARAMEL.get().asItem())
+                .add(ModItems.SUGAR_BOWL.get().asItem())
+                .add(ModItems.SYRUPY_MIXTURE_BOWL.get().asItem())
+                .add(ModItems.BOWL_OF_ROCKCANDY.get().asItem());
 
         this.tag(ModTags.Items.BOTTLED_ITEM)
                 .add(ModItems.GENTLIT_SYRUP.get().asItem())
                 .add(Items.HONEY_BOTTLE);
+
+        this.tag(ModTags.Items.BOWL_ITEM)
+                .add(ModItems.BOWL_OF_CARAMEL.get().asItem())
+                .add(ModItems.SUGAR_BOWL.get().asItem())
+                .add(ModItems.SYRUPY_MIXTURE_BOWL.get().asItem())
+                .add(ModItems.BOWL_OF_ROCKCANDY.get().asItem());
     }
 }

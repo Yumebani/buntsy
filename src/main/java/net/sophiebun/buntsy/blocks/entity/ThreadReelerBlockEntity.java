@@ -26,6 +26,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.item.custom.FairyFoodItem;
 import net.sophiebun.buntsy.recipe.GrindingWheelRecipe;
@@ -58,7 +59,7 @@ public class ThreadReelerBlockEntity extends BlockEntity implements MenuProvider
 
     private static final Map<Item, Integer> foodMaps = Map.of(
             Items.SUGAR, 400,
-            Items.HONEY_BOTTLE, 1600
+            Items.HONEY_BOTTLE, 800
     );
 
     //TEMPORARY
@@ -169,20 +170,15 @@ public class ThreadReelerBlockEntity extends BlockEntity implements MenuProvider
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-
-        System.out.println("Hi im being ticked");
+        
         if (tempHasRecipe() && hasFairy()){
 
-            System.out.println("Hi i met the requirements");
             if (!hasFood()){
-                System.out.println("Hi i dont have food");
                 if (hasFoodItem() && foodHasOutput()){
-                    System.out.println("Consuming food");
                     consumeFood();
                     tick(pLevel, pPos, pState);
                 }
                 else{
-                    System.out.println("No food me sad");
                     resetProgress();
                 }
             }
@@ -214,19 +210,32 @@ public class ThreadReelerBlockEntity extends BlockEntity implements MenuProvider
         this.itemHandler.extractItem(FAIRY_FOOD_SLOT, 1, false);
     }
 
+    private Item getFoodItemToOutput(){
+        return this.itemHandler.getStackInSlot(FAIRY_FOOD_SLOT).is(ModTags.Items.BOTTLED_ITEM) ?
+                Items.GLASS_BOTTLE : this.itemHandler.getStackInSlot(FAIRY_FOOD_SLOT).is(ModTags.Items.BOWL_ITEM) ?
+                Items.BOWL : null;
+    }
+
     private boolean foodHasOutput() {
-        return !this.itemHandler.getStackInSlot(FAIRY_FOOD_SLOT).is(ModTags.Items.BOTTLED_ITEM)
-                || ((this.itemHandler.getStackInSlot(FAIRY_FOOD_OUTPUT_SLOT).isEmpty())
-                || (this.itemHandler.getStackInSlot(FAIRY_FOOD_OUTPUT_SLOT).getCount() + 1 <= 64));
+        Item item = getFoodItemToOutput();
+
+        if (item != null){
+            ItemStack itemToPlace = new ItemStack(getFoodItemToOutput());
+            return isOutputClear(itemToPlace, FAIRY_FOOD_OUTPUT_SLOT);
+        }
+
+        return true;
     }
 
     private void outputFoodItem(){
-        if (this.itemHandler.getStackInSlot(FAIRY_FOOD_SLOT).is(ModTags.Items.BOTTLED_ITEM)){
+        Item itemToPlace = getFoodItemToOutput();
+
+        if (itemToPlace != null){
             this.itemHandler.setStackInSlot(FAIRY_FOOD_OUTPUT_SLOT,
-                    new ItemStack(Items.GLASS_BOTTLE,
-                            this.itemHandler.getStackInSlot(FAIRY_FOOD_OUTPUT_SLOT).getCount() + 1));
+                    new ItemStack(itemToPlace,this.itemHandler.getStackInSlot(FAIRY_FOOD_OUTPUT_SLOT).getCount() + 1));
         }
     }
+
 
     private void setFoodTick(Item item) {
         int tickCount = foodMaps.containsKey(item) ? foodMaps.get(item) : ((FairyFoodItem) item).getFoodTick();
@@ -264,7 +273,7 @@ public class ThreadReelerBlockEntity extends BlockEntity implements MenuProvider
         }
 
         ItemStack result = recipe.getResult();
-        return isOutputClear(result);
+        return isOutputClear(result, OUTPUT_SLOT);
     }
 
     private TempRecipe tempGetCurrentRecipe() {
@@ -283,7 +292,7 @@ public class ThreadReelerBlockEntity extends BlockEntity implements MenuProvider
     }
 
     private void craftItem() {
-        Optional<GrindingWheelRecipe> recipe = getCurrentRecipe();
+        Optional<ThreadReelerRecipe> recipe = getCurrentRecipe();
         ItemStack result = recipe.get().getResultItem(null);
 
         this.itemHandler.extractItem(INPUT_SLOT, 1, false);
@@ -294,7 +303,7 @@ public class ThreadReelerBlockEntity extends BlockEntity implements MenuProvider
     }
 
     private boolean hasRecipe() {
-        Optional<GrindingWheelRecipe> recipe = getCurrentRecipe();
+        Optional<ThreadReelerRecipe> recipe = getCurrentRecipe();
 
         if (recipe.isEmpty()){
             System.out.println("no recipe detected");
@@ -302,22 +311,22 @@ public class ThreadReelerBlockEntity extends BlockEntity implements MenuProvider
         }
         ItemStack result = recipe.get().getResultItem(null);
 
-        return isOutputClear(result);
+        return isOutputClear(result, OUTPUT_SLOT);
     }
 
-    private boolean isOutputClear(ItemStack result) {
-        return (this.itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty() || this.itemHandler.getStackInSlot(OUTPUT_SLOT).getItem() == result.getItem())
-                && (this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount() <= result.getMaxStackSize());
+    private boolean isOutputClear(ItemStack result, int slot) {
+        return (this.itemHandler.getStackInSlot(slot).isEmpty() || this.itemHandler.getStackInSlot(slot).getItem() == result.getItem())
+                && (this.itemHandler.getStackInSlot(slot).getCount() + result.getCount() <= result.getMaxStackSize());
     }
 
 
-    private Optional<GrindingWheelRecipe> getCurrentRecipe() {
+    private Optional<ThreadReelerRecipe> getCurrentRecipe() {
         SimpleContainer inventory = new SimpleContainer(this.itemHandler.getSlots());
         for(int i = 0; i < itemHandler.getSlots(); i++) {
             inventory.setItem(i, this.itemHandler.getStackInSlot(i));
         }
 
-        return this.level.getRecipeManager().getRecipeFor(GrindingWheelRecipe.Type.INSTANCE, inventory, level);
+        return this.level.getRecipeManager().getRecipeFor(ThreadReelerRecipe.Type.INSTANCE, inventory, level);
     }
 
     private boolean hasProgressFinished() {

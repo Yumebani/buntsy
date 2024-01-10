@@ -6,16 +6,19 @@ import net.minecraft.world.item.ItemStack;
 public class FairyFoodItem extends Item {
 
     private final int foodTick;
+    private final float terrariumChanceMult;
 
-    public static final int HONEY_BOTTLE_FOOD_TICK = 1600;
-    public static final int SUGAR_FOOD_TICK = 400;
-
-    public FairyFoodItem(Properties pProperties, int foodTick) {
+    public FairyFoodItem(Properties pProperties, int foodTick, float terrariumChanceMult) {
         super(pProperties);
         this.foodTick = foodTick;
+        this.terrariumChanceMult = terrariumChanceMult;
     }
 
     public int getFoodTick(){
         return this.foodTick;
+    }
+
+    public float getTerrariumChanceMult() {
+        return terrariumChanceMult;
     }
 }

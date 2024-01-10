@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "buntsy:block/grinding_wheel"
+      "model": "buntsy:block/thread_reeler"
     }
   }
 }

@@ -1,4 +1,5 @@
-// 1.20.1	2024-01-09T23:29:09.093378567	Loot Tables
+// 1.20.1	2024-01-10T15:26:21.445272885	Loot Tables
+a9cde91353d1b2c756fc052210193799cde892da data/buntsy/loot_tables/blocks/fairy_terrarium.json
 cf0fc57f2a762f0761031817742e363d39c0fcf3 data/buntsy/loot_tables/blocks/gentlit_button.json
 a064954b35fe84365ef0aba63c97178b08374a3a data/buntsy/loot_tables/blocks/gentlit_door.json
 580e5f353e3592500b31fe22b6c8838842026ee0 data/buntsy/loot_tables/blocks/gentlit_fence.json

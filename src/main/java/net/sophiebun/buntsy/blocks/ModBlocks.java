@@ -57,6 +57,8 @@ public class ModBlocks {
             () -> new GrindingWheelBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
     public static final RegistryObject<Block> THREAD_REELER = registerBlock("thread_reeler",
             () -> new ThreadReelerBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
+    public static final RegistryObject<Block> FAIRY_TERRARIUM = registerBlock("fairy_terrarium",
+            () -> new FairyTerrariumBlock(BlockBehaviour.Properties.copy(Blocks.GLASS).noOcclusion()));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){
         RegistryObject<T> toRet = BlocksRegister.register(name, block);

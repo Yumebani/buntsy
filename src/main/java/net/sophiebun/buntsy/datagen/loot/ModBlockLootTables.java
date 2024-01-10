@@ -33,6 +33,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
         this.dropSelf(ModBlocks.GRINDING_WHEEL.get());
         this.dropSelf(ModBlocks.THREAD_REELER.get());
+        this.dropSelf(ModBlocks.FAIRY_TERRARIUM.get());
 
         this.add(ModBlocks.GENTLIT_SLAB.get(), block -> createSlabItemTable(ModBlocks.GENTLIT_SLAB.get()));
         this.add(ModBlocks.GENTLIT_DOOR.get(), block -> createDoorTable(ModBlocks.GENTLIT_SLAB.get()));

@@ -42,7 +42,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(ModBlocks.GRINDING_WHEEL.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/grinding_wheel")));
         simpleBlockWithItem(ModBlocks.THREAD_REELER.get(),
-                new ModelFile.UncheckedModelFile(modLoc("block/grinding_wheel")));
+                new ModelFile.UncheckedModelFile(modLoc("block/thread_reeler")));
+        simpleBlockWithItem(ModBlocks.FAIRY_TERRARIUM.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/fairy_terrarium")));
     }
 
     private void blockWithItem(RegistryObject<Block> blockRegistryObject) {

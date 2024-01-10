@@ -23,11 +23,10 @@ public class ModBlockEntities {
             blockEntityRegister.register("thread_reeler_block_entity",
                     () -> BlockEntityType.Builder.of(ThreadReelerBlockEntity::new,
                             ModBlocks.THREAD_REELER.get()).build(null));
-    /*
-    public static final RegistryObject<BlockEntityType<GrindingWheelBlockEntity>> FAIRY_TERRARIUM_BLOCK_ENTITY =
+    public static final RegistryObject<BlockEntityType<FairyTerrariumBlockEntity>> FAIRY_TERRARIUM_BLOCK_ENTITY =
             blockEntityRegister.register("fairy_terrarium_block_entity",
-                    () -> BlockEntityType.Builder.of(GrindingWheelBlockEntity::new,
-                            ModBlocks..get()).build(null))*/
+                    () -> BlockEntityType.Builder.of(FairyTerrariumBlockEntity::new,
+                            ModBlocks.FAIRY_TERRARIUM.get()).build(null));
 
     public static void register(IEventBus eventBus){
 
