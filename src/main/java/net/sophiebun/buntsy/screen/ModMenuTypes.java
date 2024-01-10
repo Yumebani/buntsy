@@ -18,6 +18,8 @@ public class ModMenuTypes {
 
     public static final RegistryObject<MenuType<GrindingWheelMenu>> GRINDING_WHEEL_MENU =
             registerMenuType("grinding_wheel_menu", GrindingWheelMenu::new);
+    public static final RegistryObject<MenuType<ThreadReelerMenu>> THREAD_REELER_MENU =
+            registerMenuType("thread_reeler_menu", ThreadReelerMenu::new);
 
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory){
         return MenusRegister.register(name, () -> IForgeMenuType.create(factory));

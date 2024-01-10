@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "buntsy:block/gentlit_log",
+    "side": "buntsy:block/stripped_gentlit_log"
+  }
+}

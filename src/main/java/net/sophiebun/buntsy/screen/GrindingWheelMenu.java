@@ -33,11 +33,11 @@ public class GrindingWheelMenu extends AbstractContainerMenu {
         this.data = data;
 
         addPlayerHotbar(inv);
-        addPlayerHotbar(inv);
+        addPlayerInventory(inv);
 
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
             this.addSlot(new FairyInBottleSlot(iItemHandler, 0, 13, 17));
-            this.addSlot(new SlotItemHandler(iItemHandler, 1, 13, 36));
+            this.addSlot(new SlotItemHandler(iItemHandler, 1, 13, 35));
             this.addSlot(new OutputSlot(iItemHandler, 2, 13, 53));
             this.addSlot(new SlotItemHandler(iItemHandler, 3, 69, 25));
             this.addSlot(new OutputSlot(iItemHandler, 4, 132, 35));

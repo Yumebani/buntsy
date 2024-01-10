@@ -43,5 +43,9 @@ public class ModItemTagGenerator extends ItemTagsProvider {
                 .add(ModItems.GENTLIT_SYRUP.get().asItem())
                 .add(Items.SUGAR)
                 .add(Items.HONEY_BOTTLE);
+
+        this.tag(ModTags.Items.BOTTLED_ITEM)
+                .add(ModItems.GENTLIT_SYRUP.get().asItem())
+                .add(Items.HONEY_BOTTLE);
     }
 }

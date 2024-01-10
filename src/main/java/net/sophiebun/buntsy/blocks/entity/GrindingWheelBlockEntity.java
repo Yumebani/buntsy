@@ -7,6 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -17,6 +18,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,18 +27,23 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.item.custom.FairyFoodItem;
 import net.sophiebun.buntsy.recipe.GrindingWheelRecipe;
+import net.sophiebun.buntsy.recipe.TempRecipe;
+import net.sophiebun.buntsy.recipe.ThreadReelerRecipe;
 import net.sophiebun.buntsy.screen.GrindingWheelMenu;
 import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class GrindingWheelBlockEntity extends BlockEntity implements MenuProvider {
 
-    private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
+    private final ItemStackHandler itemHandler = new ItemStackHandler(5) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -48,9 +55,21 @@ public class GrindingWheelBlockEntity extends BlockEntity implements MenuProvide
 
     private static final int FAIRY_SLOT = 0;
     private static final int FAIRY_FOOD_SLOT = 1;
-    private static final int FAIRY_FOOD_OUTPUT_SLOT = 2;
+    private static final int FAIRY_FOOD_OUTPUT_SLOT = 2; //Fiz this
     private static final int INPUT_SLOT = 3;
     private static final int OUTPUT_SLOT = 4;
+
+    private static final Map<Item, Integer> foodMaps = Map.of(
+            Items.SUGAR, 400,
+            Items.HONEY_BOTTLE, 1600
+    );
+
+    //TEMPORARY
+    private static final List<TempRecipe> recipeList = List.of(
+            new TempRecipe(Ingredient.of(Items.AMETHYST_SHARD), new ItemStack(ModItems.AMETHYST_DUST.get(), 1)),
+            new TempRecipe(Ingredient.of(Items.SUGAR_CANE), new ItemStack(Items.SUGAR, 2)),
+            new TempRecipe(Ingredient.of(ModItems.HOOTNIP.get()), new ItemStack(ModItems.GROUND_HOOTNIP.get(), 1))
+    );
 
     protected final ContainerData data;
     private int progress = 0;
@@ -135,7 +154,9 @@ public class GrindingWheelBlockEntity extends BlockEntity implements MenuProvide
     protected void saveAdditional(CompoundTag pTag) {
         pTag.put("inventory", itemHandler.serializeNBT());
         pTag.putInt("grinding_wheel.progress", this.progress);
+        pTag.putInt("grinding_wheel.max_progress", this.maxProgress);
         pTag.putInt("grinding_wheel.food", this.food);
+        pTag.putInt("grinding_wheel.max_food", this.maxFood);
 
         super.saveAdditional(pTag);
     }
@@ -146,14 +167,16 @@ public class GrindingWheelBlockEntity extends BlockEntity implements MenuProvide
 
         this.itemHandler.deserializeNBT(pTag.getCompound("inventory"));
         this.progress = pTag.getInt("grinding_wheel.progress");
+        this.maxProgress = pTag.getInt("grinding_wheel.max_progress");
         this.food = pTag.getInt("grinding_wheel.food");
+        this. maxFood = pTag.getInt("grinding_wheel.max_food");
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
 
-        if (hasRecipe() && hasFairy()){
+        if (tempHasRecipe() && hasFairy()){
             if (!hasFood()){
-                if (hasFoodItem()){
+                if (hasFoodItem() && foodHasOutput()){
                     consumeFood();
                     tick(pLevel, pPos, pState);
                 }
@@ -167,13 +190,94 @@ public class GrindingWheelBlockEntity extends BlockEntity implements MenuProvide
 
                 if (hasProgressFinished()){
                     resetProgress();
-                    craftItem();
+                    tempCraftItem();
+                    tick(pLevel, pPos, pState);
                 }
             }
         }
         else{
             resetProgress();
         }
+    }
+    private boolean hasFairy() {
+        return !this.itemHandler.getStackInSlot(FAIRY_SLOT).isEmpty();
+    }
+
+    private void consumeFood() {
+        Item foodItem = this.itemHandler.getStackInSlot(FAIRY_FOOD_SLOT).getItem();
+
+        setFoodTick(foodItem);
+
+        outputFoodItem();
+        this.itemHandler.extractItem(FAIRY_FOOD_SLOT, 1, false);
+    }
+
+    private boolean foodHasOutput() {
+        return !this.itemHandler.getStackInSlot(FAIRY_FOOD_SLOT).is(ModTags.Items.BOTTLED_ITEM)
+                || ((this.itemHandler.getStackInSlot(FAIRY_FOOD_OUTPUT_SLOT).isEmpty())
+                || (this.itemHandler.getStackInSlot(FAIRY_FOOD_OUTPUT_SLOT).getCount() + 1 <= 64));
+    }
+
+    private void outputFoodItem(){
+        if (this.itemHandler.getStackInSlot(FAIRY_FOOD_SLOT).is(ModTags.Items.BOTTLED_ITEM)){
+            this.itemHandler.setStackInSlot(FAIRY_FOOD_OUTPUT_SLOT,
+                    new ItemStack(Items.GLASS_BOTTLE,
+                            this.itemHandler.getStackInSlot(FAIRY_FOOD_OUTPUT_SLOT).getCount() + 1));
+        }
+    }
+
+    private void setFoodTick(Item item) {
+        int tickCount = foodMaps.containsKey(item) ? foodMaps.get(item) : ((FairyFoodItem) item).getFoodTick();
+        this.maxFood = tickCount;
+        this.food = tickCount;
+    }
+
+    private void decreaseFood() {
+        this.food--;
+    }
+
+    private boolean hasFoodItem() {
+        return this.itemHandler.getStackInSlot(FAIRY_FOOD_SLOT).is(ModTags.Items.FAIRY_FOOD);
+    }
+
+    private boolean hasFood() {
+        return this.food > 0;
+    }
+
+    private void tempCraftItem() {
+        TempRecipe recipe = tempGetCurrentRecipe();
+        ItemStack result = recipe.getResult();
+
+        this.itemHandler.extractItem(INPUT_SLOT, 1, false);
+
+        this.itemHandler.setStackInSlot(OUTPUT_SLOT,
+                new ItemStack(result.getItem(),
+                        this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
+    }
+
+    private boolean tempHasRecipe() {
+        TempRecipe recipe = tempGetCurrentRecipe();
+        if (recipe == null){
+            return false;
+        }
+
+        ItemStack result = recipe.getResult();
+        return isOutputClear(result);
+    }
+
+    private TempRecipe tempGetCurrentRecipe() {
+        SimpleContainer inventory = new SimpleContainer(this.itemHandler.getSlots());
+        for(int i = 0; i < itemHandler.getSlots(); i++) {
+            inventory.setItem(i, this.itemHandler.getStackInSlot(i));
+        }
+
+        for (TempRecipe recipe : recipeList){
+            if (recipe.isPresent(inventory, new int[]{INPUT_SLOT})){
+                return recipe;
+            }
+        }
+
+        return null;
     }
 
     private void craftItem() {
@@ -187,58 +291,11 @@ public class GrindingWheelBlockEntity extends BlockEntity implements MenuProvide
                         this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
     }
 
-    private boolean hasProgressFinished() {
-        return this.progress == this.maxProgress;
-    }
-
-    private void decreaseFood() {
-        this.food--;
-    }
-
-    private void increaseProgress() {
-        this.progress++;
-    }
-
-    private void resetProgress() {
-        this.progress = 0;
-    }
-
-    private void consumeFood() {
-        Item foodItem = this.itemHandler.getStackInSlot(FAIRY_FOOD_SLOT).getItem();
-
-        if (foodItem.equals(Items.SUGAR)) {
-            setFoodTick(FairyFoodItem.SUGAR_FOOD_TICK);
-        } else if (foodItem.equals(Items.HONEY_BOTTLE)) {
-            setFoodTick(FairyFoodItem.HONEY_BOTTLE_FOOD_TICK);
-        } else {
-            setFoodTick(((FairyFoodItem) foodItem).getFoodTick());
-        }
-
-        this.itemHandler.extractItem(FAIRY_FOOD_SLOT, 1, false);
-    }
-
-    private void setFoodTick(int i) {
-        this.maxFood = i;
-        this.food = i;
-    }
-
-    private boolean hasFoodItem() {
-        this.itemHandler.getStackInSlot(FAIRY_FOOD_SLOT).getTags().anyMatch((tag) -> tag == ModTags.Items.FAIRY_FOOD);
-        return this.itemHandler.getStackInSlot(FAIRY_FOOD_SLOT).is(ModTags.Items.FAIRY_FOOD);
-    }
-
-    private boolean hasFood() {
-        return this.food > 0;
-    }
-
-    private boolean hasFairy() {
-        return this.itemHandler.getStackInSlot(FAIRY_SLOT).isEmpty();
-    }
-
     private boolean hasRecipe() {
         Optional<GrindingWheelRecipe> recipe = getCurrentRecipe();
 
         if (recipe.isEmpty()){
+            System.out.println("no recipe detected");
             return false;
         }
         ItemStack result = recipe.get().getResultItem(null);
@@ -247,17 +304,30 @@ public class GrindingWheelBlockEntity extends BlockEntity implements MenuProvide
     }
 
     private boolean isOutputClear(ItemStack result) {
-        return (this.itemHandler.getStackInSlot(INPUT_SLOT).isEmpty() || this.itemHandler.getStackInSlot(INPUT_SLOT) == result)
-                && (this.itemHandler.getStackInSlot(INPUT_SLOT).getCount() + result.getCount() <= result.getMaxStackSize());
+        return (this.itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty() || this.itemHandler.getStackInSlot(OUTPUT_SLOT).getItem() == result.getItem())
+                && (this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount() <= result.getMaxStackSize());
     }
+
 
     private Optional<GrindingWheelRecipe> getCurrentRecipe() {
         SimpleContainer inventory = new SimpleContainer(this.itemHandler.getSlots());
-        for (int i = 0; i < itemHandler.getSlots(); i++){
+        for(int i = 0; i < itemHandler.getSlots(); i++) {
             inventory.setItem(i, this.itemHandler.getStackInSlot(i));
         }
 
         return this.level.getRecipeManager().getRecipeFor(GrindingWheelRecipe.Type.INSTANCE, inventory, level);
+    }
+
+    private boolean hasProgressFinished() {
+        return this.progress >= this.maxProgress;
+    }
+
+    private void increaseProgress() {
+        this.progress++;
+    }
+
+    private void resetProgress() {
+        this.progress = 0;
     }
 
     @Nullable

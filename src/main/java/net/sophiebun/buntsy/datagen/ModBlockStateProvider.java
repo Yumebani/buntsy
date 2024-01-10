@@ -19,6 +19,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
 
+        blockWithItem(ModBlocks.GENTLIT_PLANKS);
         stairsBlock((StairBlock) ModBlocks.GENTLIT_STAIRS.get(), blockTexture(ModBlocks.GENTLIT_PLANKS.get()));
         slabBlock((SlabBlock) ModBlocks.GENTLIT_SLAB.get(), blockTexture(ModBlocks.GENTLIT_PLANKS.get()), blockTexture(ModBlocks.GENTLIT_PLANKS.get()));
         buttonBlock((ButtonBlock) ModBlocks.GENTLIT_BUTTON.get(), blockTexture(ModBlocks.GENTLIT_PLANKS.get()));
@@ -34,12 +35,17 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 new ResourceLocation(BuntsyMod.MODID, "block/stripped_gentlit_log_top"));
         axisBlock((RotatedPillarBlock) ModBlocks.STRIPPED_GENTLIT_WOOD.get(), blockTexture(ModBlocks.STRIPPED_GENTLIT_LOG.get()), blockTexture(ModBlocks.GENTLIT_LOG.get()));
 
-        simpleBlock(ModBlocks.GENTLIT_PLANKS.get());
         simpleBlock(ModBlocks.GENTLIT_LEAVES.get(),
                 models().singleTexture(ForgeRegistries.BLOCKS.getKey(ModBlocks.GENTLIT_LEAVES.get()).getPath(),
                 new ResourceLocation("minecraft:block/leaves"), "all", blockTexture(ModBlocks.GENTLIT_LEAVES.get())).renderType("cutout"));
 
         simpleBlockWithItem(ModBlocks.GRINDING_WHEEL.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/grinding_wheel")));
+        simpleBlockWithItem(ModBlocks.THREAD_REELER.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/grinding_wheel")));
+    }
+
+    private void blockWithItem(RegistryObject<Block> blockRegistryObject) {
+        simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
     }
 }

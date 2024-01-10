@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "buntsy:block/gentlit_planks",
+    "side": "buntsy:block/gentlit_planks",
+    "top": "buntsy:block/gentlit_planks"
+  }
+}

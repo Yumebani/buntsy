@@ -26,26 +26,26 @@ public class GrindingWheelRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public boolean matches(SimpleContainer simpleContainer, Level level) {
-        if (level.isClientSide){
+    public boolean matches(SimpleContainer pContainer, Level pLevel) {
+        if(pLevel.isClientSide()) {
             return false;
         }
 
-        return inputItems.get(0).test(simpleContainer.getItem(3));
+        return inputItems.get(0).test(pContainer.getItem(3));
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer simpleContainer, RegistryAccess registryAccess) {
+    public ItemStack assemble(SimpleContainer pContainer, RegistryAccess pRegistryAccess) {
         return output.copy();
     }
 
     @Override
-    public boolean canCraftInDimensions(int i, int i1) {
+    public boolean canCraftInDimensions(int pWidth, int pHeight) {
         return true;
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return output.copy();
     }
 
@@ -74,41 +74,40 @@ public class GrindingWheelRecipe implements Recipe<SimpleContainer> {
         public static final ResourceLocation ID = new ResourceLocation(BuntsyMod.MODID, "grinding_wheel");
 
         @Override
-        public GrindingWheelRecipe fromJson(ResourceLocation resourceLocation, JsonObject jsonObject) {
-            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(jsonObject, "result"));
+        public GrindingWheelRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
+            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "result"));
 
-            JsonArray ingredients = GsonHelper.getAsJsonArray(jsonObject, "ingredients");
+            JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients");
             NonNullList<Ingredient> inputs = NonNullList.withSize(1, Ingredient.EMPTY);
 
-            for (int i = 0; i < inputs.size(); i++) {
+            for(int i = 0; i < inputs.size(); i++) {
                 inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
             }
 
-            return new GrindingWheelRecipe(inputs, output, resourceLocation);
+            return new GrindingWheelRecipe(inputs, output, pRecipeId);
         }
 
         @Override
-        public @Nullable GrindingWheelRecipe fromNetwork(ResourceLocation resourceLocation, FriendlyByteBuf friendlyByteBuf) {
-            NonNullList<Ingredient> inputs = NonNullList.withSize(friendlyByteBuf.readInt(), Ingredient.EMPTY);
+        public @Nullable GrindingWheelRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
+            NonNullList<Ingredient> inputs = NonNullList.withSize(pBuffer.readInt(), Ingredient.EMPTY);
 
-            for (int i = 0; i < inputs.size(); i++){
-                inputs.set(i, Ingredient.fromNetwork(friendlyByteBuf));
+            for(int i = 0; i < inputs.size(); i++) {
+                inputs.set(i, Ingredient.fromNetwork(pBuffer));
             }
 
-            ItemStack output = friendlyByteBuf.readItem();
-
-            return new GrindingWheelRecipe(inputs, output, resourceLocation);
+            ItemStack output = pBuffer.readItem();
+            return new GrindingWheelRecipe(inputs, output, pRecipeId);
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf friendlyByteBuf, GrindingWheelRecipe grindingWheelRecipe) {
-            friendlyByteBuf.writeInt(grindingWheelRecipe.inputItems.size());
+        public void toNetwork(FriendlyByteBuf pBuffer, GrindingWheelRecipe pRecipe) {
+            pBuffer.writeInt(pRecipe.inputItems.size());
 
-            for (Ingredient ingredient : grindingWheelRecipe.getIngredients()){
-                ingredient.toNetwork(friendlyByteBuf);
+            for (Ingredient ingredient : pRecipe.getIngredients()) {
+                ingredient.toNetwork(pBuffer);
             }
 
-            friendlyByteBuf.writeItemStack(grindingWheelRecipe.getResultItem(null), false);
+            pBuffer.writeItemStack(pRecipe.getResultItem(null), false);
         }
     }
 }

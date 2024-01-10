@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "buntsy:block/gentlit_slab"
+    },
+    "type=double": {
+      "model": "buntsy:block/gentlit_planks"
+    },
+    "type=top": {
+      "model": "buntsy:block/gentlit_slab_top"
+    }
+  }
+}

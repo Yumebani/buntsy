@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "buntsy:gentlit_logs"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "item": "buntsy:gentlit_planks"
+  }
+}

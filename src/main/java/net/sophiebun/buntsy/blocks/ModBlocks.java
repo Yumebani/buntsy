@@ -21,6 +21,9 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BlocksRegister =
             DeferredRegister.create(ForgeRegistries.BLOCKS, BuntsyMod.MODID);
 
+    public static final RegistryObject<Block> GENTLIT_LEAVES = registerBlock("gentlit_leaves",
+            () -> new ModLeaves(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
+
     public static final RegistryObject<Block> GENTLIT_LOG = registerBlock("gentlit_log",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
     public static final RegistryObject<Block> STRIPPED_GENTLIT_LOG = registerBlock("stripped_gentlit_log",
@@ -29,9 +32,6 @@ public class ModBlocks {
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)));
     public static final RegistryObject<Block> STRIPPED_GENTLIT_WOOD = registerBlock("stripped_gentlit_wood",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
-
-    public static final RegistryObject<Block> GENTLIT_LEAVES = registerBlock("gentlit_leaves",
-            () -> new ModLeaves(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
 
     public static final RegistryObject<Block> GENTLIT_PLANKS = registerBlock("gentlit_planks",
             () -> new ModPlanks(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
@@ -54,7 +54,9 @@ public class ModBlocks {
             () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noCollission(), BlockSetType.OAK));
 
     public static final RegistryObject<Block> GRINDING_WHEEL = registerBlock("grinding_wheel",
-            () -> new GrindingWheelBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
+            () -> new GrindingWheelBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
+    public static final RegistryObject<Block> THREAD_REELER = registerBlock("thread_reeler",
+            () -> new ThreadReelerBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){
         RegistryObject<T> toRet = BlocksRegister.register(name, block);

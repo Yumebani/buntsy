@@ -74,6 +74,6 @@ public enum ModArmorMaterials implements ArmorMaterial {
 
     @Override
     public float getKnockbackResistance() {
-        return this.getKnockbackResistance();
+        return this.knockbackResistance;
     }
 }

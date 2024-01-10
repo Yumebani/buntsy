@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "buntsy:tough_silk_fabric"
+  },
+  "base": {
+    "item": "minecraft:diamond"
+  },
+  "result": {
+    "item": "buntsy:silky_crystal"
+  },
+  "template": {
+    "item": "buntsy:fairy_dust"
+  }
+}

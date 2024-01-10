@@ -60,7 +60,8 @@ public class GrindingWheelBlock extends BaseEntityBlock {
             }
         }
 
-        return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+        super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+        return InteractionResult.SUCCESS;
     }
 
     @Nullable

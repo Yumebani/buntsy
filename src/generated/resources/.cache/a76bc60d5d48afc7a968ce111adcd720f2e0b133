@@ -1,0 +1,7 @@
+// 1.20.1	2024-01-09T00:15:59.691833107	Tags for minecraft:block mod id buntsy
+8f30e74d65e15f941591c49161ccf1c7855102a1 data/buntsy/tags/blocks/gentlit_logs.json
+eaa67ae19c8ddfff91b2949ddeb11f3dfefe5770 data/minecraft/tags/blocks/fence_gates.json
+aed44b8c2d4b8f052b0e59dcfea5256689fbd728 data/minecraft/tags/blocks/logs_that_burn.json
+c1c410427dc4c858277f2a4386479139e9ab7422 data/minecraft/tags/blocks/mineable/axe.json
+3c0a37829999806003244d1c4350ae59c31ff6c3 data/minecraft/tags/blocks/planks.json
+125f702b3d2b38f8e5be3563c6867ab6634a5e80 data/minecraft/tags/blocks/wooden_fences.json

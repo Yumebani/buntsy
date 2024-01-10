@@ -21,6 +21,7 @@ public class GrindingWheelScreen extends AbstractContainerScreen<GrindingWheelMe
     @Override
     protected void init() {
         super.init();
+        this.titleLabelX = 76;
     }
 
     @Override
@@ -40,7 +41,7 @@ public class GrindingWheelScreen extends AbstractContainerScreen<GrindingWheelMe
 
     private void renderActionIcon(GuiGraphics guiGraphics, int x, int y) {
         if(menu.isCrafting()) {
-            guiGraphics.blit(TEXTURE, x + 68, y + 45, 176, 17, 18, 18);
+            guiGraphics.blit(TEXTURE, x + 68, y + 47, 176, 17, 18, 18);
         }
     }
     private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {

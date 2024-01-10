@@ -24,6 +24,8 @@ import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.recipe.ModRecipes;
 import net.sophiebun.buntsy.screen.GrindingWheelScreen;
 import net.sophiebun.buntsy.screen.ModMenuTypes;
+import net.sophiebun.buntsy.screen.ThreadReelerMenu;
+import net.sophiebun.buntsy.screen.ThreadReelerScreen;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -79,6 +81,7 @@ public class BuntsyMod
         public static void onClientSetup(FMLClientSetupEvent event)
         {
             MenuScreens.register(ModMenuTypes.GRINDING_WHEEL_MENU.get(), GrindingWheelScreen::new);
+            MenuScreens.register(ModMenuTypes.THREAD_REELER_MENU.get(), ThreadReelerScreen::new);
         }
     }
 }

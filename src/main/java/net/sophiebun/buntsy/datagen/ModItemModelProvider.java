@@ -56,6 +56,10 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.GENTLIT_SYRUP);
         simpleItem(ModItems.SUGAR_BOWL);
         simpleItem(ModItems.SYRUPY_MIXTURE_BOWL);
+        simpleItem(ModItems.HOOTNIP);
+        simpleItem(ModItems.GROUND_HOOTNIP);
+        simpleItem(ModItems.HOOTNIP_CEREAL);
+        simpleItem(ModItems.AMETHYST_DUST);
 
         simpleItem(ModItems.STRAWBERRY);
         simpleItem(ModItems.BOWL_OF_CARAMEL);
@@ -79,6 +83,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         fenceItem(ModBlocks.GENTLIT_FENCE, ModBlocks.GENTLIT_PLANKS);
         buttonItem(ModBlocks.GENTLIT_BUTTON, ModBlocks.GENTLIT_PLANKS);
         trapdoorItem(ModBlocks.GENTLIT_TRAPDOOR);
+        simpleBlockItem(ModBlocks.GENTLIT_DOOR);
 
         handheldItem(ModItems.SILKY_SWORD);
         handheldItem(ModItems.SILKY_PICKAXE);
@@ -144,6 +149,12 @@ public class ModItemModelProvider extends ItemModelProvider {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
                 new ResourceLocation(BuntsyMod.MODID,"item/" + item.getId().getPath()));
+    }
+
+    private ItemModelBuilder simpleBlockItem (RegistryObject<Block> block){
+        return withExistingParent(block.getId().getPath(),
+                new ResourceLocation("item/generated")).texture("layer0",
+                new ResourceLocation(BuntsyMod.MODID,"item/" + block.getId().getPath()));
     }
 
     private ItemModelBuilder handheldItem (RegistryObject<Item> item){

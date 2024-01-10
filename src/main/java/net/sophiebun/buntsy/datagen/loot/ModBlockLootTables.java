@@ -23,6 +23,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.GENTLIT_WOOD.get());
         this.dropSelf(ModBlocks.STRIPPED_GENTLIT_WOOD.get());
 
+        this.dropSelf(ModBlocks.GENTLIT_PLANKS.get());
         this.dropSelf(ModBlocks.GENTLIT_STAIRS.get());
         this.dropSelf(ModBlocks.GENTLIT_BUTTON.get());
         this.dropSelf(ModBlocks.GENTLIT_PRESSURE_PLATE.get());
@@ -31,9 +32,13 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.GENTLIT_FENCE_GATE.get());
 
         this.dropSelf(ModBlocks.GRINDING_WHEEL.get());
+        this.dropSelf(ModBlocks.THREAD_REELER.get());
 
         this.add(ModBlocks.GENTLIT_SLAB.get(), block -> createSlabItemTable(ModBlocks.GENTLIT_SLAB.get()));
         this.add(ModBlocks.GENTLIT_DOOR.get(), block -> createDoorTable(ModBlocks.GENTLIT_SLAB.get()));
+
+        this.add(ModBlocks.GENTLIT_LEAVES.get(), block ->
+                createLeavesDrops(block, ModBlocks.GENTLIT_LEAVES.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 
         //createRedstoneOreDrops();
     }

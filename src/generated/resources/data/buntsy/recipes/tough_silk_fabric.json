@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "buntsy:silk_fabric"
+    },
+    "B": {
+      "item": "buntsy:moth_wing_thread"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "BAB",
+    "ABA"
+  ],
+  "result": {
+    "item": "buntsy:tough_silk_fabric"
+  },
+  "show_notification": true
+}

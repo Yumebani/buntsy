@@ -19,6 +19,16 @@ public class ModBlockEntities {
                     () -> BlockEntityType.Builder.of(GrindingWheelBlockEntity::new,
                             ModBlocks.GRINDING_WHEEL.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<ThreadReelerBlockEntity>> THREAD_REELER_BLOCK_ENTITY =
+            blockEntityRegister.register("thread_reeler_block_entity",
+                    () -> BlockEntityType.Builder.of(ThreadReelerBlockEntity::new,
+                            ModBlocks.THREAD_REELER.get()).build(null));
+    /*
+    public static final RegistryObject<BlockEntityType<GrindingWheelBlockEntity>> FAIRY_TERRARIUM_BLOCK_ENTITY =
+            blockEntityRegister.register("fairy_terrarium_block_entity",
+                    () -> BlockEntityType.Builder.of(GrindingWheelBlockEntity::new,
+                            ModBlocks..get()).build(null))*/
+
     public static void register(IEventBus eventBus){
 
         blockEntityRegister.register(eventBus);

@@ -5,7 +5,7 @@
       "item": "minecraft:amethyst_shard"
     }
   ],
-  "output": {
+  "result": {
     "count": 1,
     "item": "buntsy:amethyst_dust"
   }

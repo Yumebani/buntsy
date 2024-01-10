@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "buntsy:tough_silk_fabric"
+  },
+  "base": {
+    "item": "minecraft:iron_ingot"
+  },
+  "result": {
+    "item": "buntsy:silky_ingot"
+  },
+  "template": {
+    "item": "buntsy:fairy_dust"
+  }
+}

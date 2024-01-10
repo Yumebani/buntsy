@@ -39,7 +39,7 @@ public class ModItems {
     public static final RegistryObject<Item> AMETHYST_DUST = ItemsRegister.register(
             "amethyst_dust", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> GENTLIT_SYRUP = ItemsRegister.register(
-            "gentlit_syrup", () -> new FairyFoodItem(new Item.Properties(), 1600));
+            "gentlit_syrup", () -> new FairyFoodItem(new Item.Properties().stacksTo(16), 1600));
     public static final RegistryObject<Item> SUGAR_BOWL = ItemsRegister.register(
             "sugar_bowl", () -> new Item(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> SYRUPY_MIXTURE_BOWL = ItemsRegister.register(

@@ -24,6 +24,7 @@ public class ModTags {
 
         public static final TagKey<Item> GENTLIT_LOGS = tag("gentlit_logs");
         public static final TagKey<Item> FAIRY_FOOD = tag("fairy_food");
+        public static final TagKey<Item> BOTTLED_ITEM = tag("bottled_item");
 
         private static TagKey<Item> tag(String name) {
             return ItemTags.create(new ResourceLocation(BuntsyMod.MODID, name));

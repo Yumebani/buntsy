@@ -37,6 +37,7 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.GENTLIT_BUTTON.get());
 
                         pOutput.accept(ModBlocks.GRINDING_WHEEL.get());
+                        pOutput.accept(ModBlocks.THREAD_REELER.get());
 
 
                         pOutput.accept(ModItems.AMETHYST_DUST.get());
