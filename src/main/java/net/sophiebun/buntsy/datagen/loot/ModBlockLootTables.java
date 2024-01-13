@@ -56,6 +56,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlocks.BRAVOT_SLAB.get(), block -> createSlabItemTable(ModBlocks.BRAVOT_SLAB.get()));
         this.add(ModBlocks.BRAVOT_DOOR.get(), block -> createDoorTable(ModBlocks.BRAVOT_SLAB.get()));
 
+        this.dropSelf(ModBlocks.PINK_BLOOM_GRASS_BLOCK.get());
+
         this.dropSelf(ModBlocks.GRINDING_WHEEL.get());
         this.dropSelf(ModBlocks.THREAD_REELER.get());
         this.dropSelf(ModBlocks.FAIRY_TERRARIUM.get());

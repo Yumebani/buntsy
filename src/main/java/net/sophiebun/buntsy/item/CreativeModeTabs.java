@@ -20,12 +20,15 @@ public class CreativeModeTabs {
                     .title(Component.translatable("creativetab.buntsy_tab"))
                     .displayItems((pParameters, pOutput) -> {
 
+                        pOutput.accept(ModBlocks.PINK_BLOOM_GRASS_BLOCK.get());
+
                         pOutput.accept(ModBlocks.GENTLIT_LOG.get());
                         pOutput.accept(ModBlocks.STRIPPED_GENTLIT_LOG.get());
                         pOutput.accept(ModBlocks.GENTLIT_WOOD.get());
                         pOutput.accept(ModBlocks.STRIPPED_GENTLIT_LOG.get());
 
                         pOutput.accept(ModBlocks.GENTLIT_LEAVES.get());
+                        pOutput.accept(ModBlocks.GENTLIT_SAPLING.get());
 
                         pOutput.accept(ModBlocks.GENTLIT_PLANKS.get());
                         pOutput.accept(ModBlocks.GENTLIT_STAIRS.get());
@@ -43,6 +46,7 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.STRIPPED_BRAVOT_LOG.get());
 
                         pOutput.accept(ModBlocks.BRAVOT_LEAVES.get());
+                        pOutput.accept(ModBlocks.BRAVOT_SAPLING.get());
 
                         pOutput.accept(ModBlocks.BRAVOT_PLANKS.get());
                         pOutput.accept(ModBlocks.BRAVOT_STAIRS.get());

@@ -39,6 +39,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
         this.tag(BlockTags.FENCE_GATES)
                 .add(ModBlocks.GENTLIT_FENCE_GATE.get());
 
+        this.tag(BlockTags.LEAVES)
+                .add(ModBlocks.GENTLIT_LEAVES.get())
+                .add(ModBlocks.BRAVOT_LEAVES.get());
+
         this.tag(BlockTags.LOGS_THAT_BURN)
                 .add(ModBlocks.GENTLIT_LOG.get())
                 .add(ModBlocks.GENTLIT_WOOD.get())
@@ -48,6 +52,22 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.BRAVOT_WOOD.get())
                 .add(ModBlocks.STRIPPED_BRAVOT_LOG.get())
                 .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get());
+
+        this.tag(BlockTags.LOGS)
+                .add(ModBlocks.GENTLIT_LOG.get())
+                .add(ModBlocks.GENTLIT_WOOD.get())
+                .add(ModBlocks.STRIPPED_GENTLIT_LOG.get())
+                .add(ModBlocks.STRIPPED_GENTLIT_WOOD.get())
+                .add(ModBlocks.BRAVOT_LOG.get())
+                .add(ModBlocks.BRAVOT_WOOD.get())
+                .add(ModBlocks.STRIPPED_BRAVOT_LOG.get())
+                .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get());
+
+        this.tag(BlockTags.MUSHROOM_GROW_BLOCK)
+                .add(ModBlocks.PINK_BLOOM_GRASS_BLOCK.get());
+
+        this.tag(BlockTags.DIRT)
+                .add(ModBlocks.PINK_BLOOM_GRASS_BLOCK.get());
 
         this.tag(BlockTags.PLANKS)
                 .add(ModBlocks.GENTLIT_PLANKS.get());

@@ -91,6 +91,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> BRAVOT_TRAPDOOR = registerBlock("bravot_trapdoor",
             () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noCollission(), BlockSetType.OAK));
 
+    public static final RegistryObject<Block> PINK_BLOOM_GRASS_BLOCK = registerBlock("pink_bloom_grass_block",
+            () -> new SnowyDirtBlock(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK)));
+
     public static final RegistryObject<Block> GRINDING_WHEEL = registerBlock("grinding_wheel",
             () -> new GrindingWheelBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
     public static final RegistryObject<Block> THREAD_REELER = registerBlock("thread_reeler",

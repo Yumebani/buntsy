@@ -23,9 +23,12 @@ import net.sophiebun.buntsy.item.CreativeModeTabs;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.recipe.ModRecipes;
 import net.sophiebun.buntsy.screen.*;
+import net.sophiebun.buntsy.worldgen.biome.ModTerrablender;
+import net.sophiebun.buntsy.worldgen.biome.surface.ModSurfaceRules;
 import net.sophiebun.buntsy.worldgen.tree.ModFoliagePlacers;
 import net.sophiebun.buntsy.worldgen.tree.ModTrunkPlacerTypes;
 import org.slf4j.Logger;
+import terrablender.api.SurfaceRuleManager;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(BuntsyMod.MODID)
@@ -53,6 +56,8 @@ public class BuntsyMod
         ModTrunkPlacerTypes.register(modEventBus);
         ModFoliagePlacers.register(modEventBus);
 
+        ModTerrablender.registerBiomes();
+
         modEventBus.addListener(this::commonSetup);
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -61,8 +66,7 @@ public class BuntsyMod
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
+        SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MODID, ModSurfaceRules.makeRules());
 
     }
 

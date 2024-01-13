@@ -38,9 +38,27 @@ public class SquishedBlobFoliagePlacer extends FoliagePlacer {
                 {
                     if (isInRadius(radiusY, x, z)){
                         tryPlaceLeaf(levelSimulatedReader, foliageSetter, randomSource, treeConfiguration, foliageAttachment.pos().offset(x, y, z));
+                        makeDroopyleaves(getCurrentDistance(x * 10, z * 10), radiusOffset, x, y, z,
+                                levelSimulatedReader, foliageSetter, randomSource, treeConfiguration, foliageAttachment);
                     }
                 }
             }
+        }
+    }
+
+    private float getCurrentDistance (float x, float z){
+        return (float)Math.hypot(Math.abs(x), Math.abs(z));
+    }
+
+
+    private void makeDroopyleaves(float distanceFromSource, float maxDistance, int x, int y, int z,
+            LevelSimulatedReader levelSimulatedReader, FoliageSetter foliageSetter, RandomSource randomSource, TreeConfiguration treeConfiguration, FoliageAttachment foliageAttachment){
+
+        int randomDroop = randomSource.nextInt((int)Math.round(Math.pow(distanceFromSource, 1.2f) / maxDistance),
+                (int)Math.round(Math.pow(distanceFromSource, 1.5f) / maxDistance) + 1);
+
+        for (int i = 1; i < randomDroop; i++){
+            tryPlaceLeaf(levelSimulatedReader, foliageSetter, randomSource, treeConfiguration, foliageAttachment.pos().offset(x, y - i, z));
         }
     }
 

@@ -1,5 +1,6 @@
 package net.sophiebun.buntsy.datagen;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
@@ -60,6 +61,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
         fenceGateBlock((FenceGateBlock) ModBlocks.BRAVOT_FENCE_GATE.get(), blockTexture(ModBlocks.BRAVOT_PLANKS.get()));
         doorBlockWithRenderType((DoorBlock) ModBlocks.BRAVOT_DOOR.get(), modLoc("block/bravot_door_bottom"), modLoc("block/bravot_door_top"), "cutout");
         trapdoorBlockWithRenderType((TrapDoorBlock) ModBlocks.BRAVOT_TRAPDOOR.get(), modLoc("block/bravot_trapdoor"), true, "cutout");
+
+        simpleBlockWithItem(ModBlocks.PINK_BLOOM_GRASS_BLOCK.get(),
+                models().cubeBottomTop(ForgeRegistries.BLOCKS.getKey(ModBlocks.PINK_BLOOM_GRASS_BLOCK.get()).getPath(),
+                        new ResourceLocation(BuntsyMod.MODID, "block/pink_grass_side"),
+                        mcLoc("block/dirt"),
+                        new ResourceLocation(BuntsyMod.MODID, "block/pink_grass_top")));
 
         simpleBlockWithItem(ModBlocks.GRINDING_WHEEL.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/grinding_wheel")));
