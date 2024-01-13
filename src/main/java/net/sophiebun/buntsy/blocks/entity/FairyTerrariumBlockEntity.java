@@ -37,6 +37,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class FairyTerrariumBlockEntity extends BlockEntity implements MenuProvider {
 
@@ -477,5 +478,12 @@ public class FairyTerrariumBlockEntity extends BlockEntity implements MenuProvid
     @Override
     public CompoundTag getUpdateTag() {
         return saveWithoutMetadata();
+    }
+
+    public List<String> maisFrequentes (Stream<String> stream, int i){
+        Map<String, Integer> map = new HashMap<>();
+        stream.map(String::toLowerCase)
+                .map((y) -> map.containsKey(y) ? map.put(y, map.get(y) + 1) : map.put(y, 1));
+        return map.entrySet().stream().limit(i).sorted(Map.Entry.comparingByValue()).map(Map.Entry::getKey).toList();
     }
 }

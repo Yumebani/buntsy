@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "buntsy:block/bravot_log",
+    "side": "buntsy:block/bravot_log"
+  }
+}

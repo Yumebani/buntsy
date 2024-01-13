@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "buntsy:block/stripped_bravot_log_top",
+    "side": "buntsy:block/stripped_bravot_log"
+  }
+}
