@@ -23,6 +23,8 @@ import net.sophiebun.buntsy.item.CreativeModeTabs;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.recipe.ModRecipes;
 import net.sophiebun.buntsy.screen.*;
+import net.sophiebun.buntsy.worldgen.tree.ModFoliagePlacers;
+import net.sophiebun.buntsy.worldgen.tree.ModTrunkPlacerTypes;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -42,12 +44,14 @@ public class BuntsyMod
         ModItems.register(modEventBus);
 
         ModBlocks.register(modEventBus);
-
         ModBlockEntities.register(modEventBus);
 
         ModMenuTypes.register(modEventBus);
 
         ModRecipes.register(modEventBus);
+
+        ModTrunkPlacerTypes.register(modEventBus);
+        ModFoliagePlacers.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 

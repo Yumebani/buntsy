@@ -43,7 +43,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.GENTLIT_LOG.get())
                 .add(ModBlocks.GENTLIT_WOOD.get())
                 .add(ModBlocks.STRIPPED_GENTLIT_LOG.get())
-                .add(ModBlocks.STRIPPED_GENTLIT_WOOD.get());
+                .add(ModBlocks.STRIPPED_GENTLIT_WOOD.get())
+                .add(ModBlocks.BRAVOT_LOG.get())
+                .add(ModBlocks.BRAVOT_WOOD.get())
+                .add(ModBlocks.STRIPPED_BRAVOT_LOG.get())
+                .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get());
 
         this.tag(BlockTags.PLANKS)
                 .add(ModBlocks.GENTLIT_PLANKS.get());

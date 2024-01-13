@@ -23,6 +23,10 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.GENTLIT_WOOD.get());
         this.dropSelf(ModBlocks.STRIPPED_GENTLIT_WOOD.get());
 
+        this.add(ModBlocks.GENTLIT_LEAVES.get(), block ->
+                createLeavesDrops(block, ModBlocks.GENTLIT_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+        this.dropSelf(ModBlocks.GENTLIT_SAPLING.get());
+
         this.dropSelf(ModBlocks.GENTLIT_PLANKS.get());
         this.dropSelf(ModBlocks.GENTLIT_STAIRS.get());
         this.dropSelf(ModBlocks.GENTLIT_BUTTON.get());
@@ -30,16 +34,31 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.GENTLIT_TRAPDOOR.get());
         this.dropSelf(ModBlocks.GENTLIT_FENCE.get());
         this.dropSelf(ModBlocks.GENTLIT_FENCE_GATE.get());
+        this.add(ModBlocks.GENTLIT_SLAB.get(), block -> createSlabItemTable(ModBlocks.GENTLIT_SLAB.get()));
+        this.add(ModBlocks.GENTLIT_DOOR.get(), block -> createDoorTable(ModBlocks.GENTLIT_SLAB.get()));
+
+        this.dropSelf(ModBlocks.BRAVOT_LOG.get());
+        this.dropSelf(ModBlocks.STRIPPED_BRAVOT_LOG.get());
+        this.dropSelf(ModBlocks.BRAVOT_WOOD.get());
+        this.dropSelf(ModBlocks.STRIPPED_BRAVOT_WOOD.get());
+
+        this.add(ModBlocks.BRAVOT_LEAVES.get(), block ->
+                createLeavesDrops(block, ModBlocks.BRAVOT_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+        this.dropSelf(ModBlocks.BRAVOT_SAPLING.get());
+
+        this.dropSelf(ModBlocks.BRAVOT_PLANKS.get());
+        this.dropSelf(ModBlocks.BRAVOT_STAIRS.get());
+        this.dropSelf(ModBlocks.BRAVOT_BUTTON.get());
+        this.dropSelf(ModBlocks.BRAVOT_PRESSURE_PLATE.get());
+        this.dropSelf(ModBlocks.BRAVOT_TRAPDOOR.get());
+        this.dropSelf(ModBlocks.BRAVOT_FENCE.get());
+        this.dropSelf(ModBlocks.BRAVOT_FENCE_GATE.get());
+        this.add(ModBlocks.BRAVOT_SLAB.get(), block -> createSlabItemTable(ModBlocks.BRAVOT_SLAB.get()));
+        this.add(ModBlocks.BRAVOT_DOOR.get(), block -> createDoorTable(ModBlocks.BRAVOT_SLAB.get()));
 
         this.dropSelf(ModBlocks.GRINDING_WHEEL.get());
         this.dropSelf(ModBlocks.THREAD_REELER.get());
         this.dropSelf(ModBlocks.FAIRY_TERRARIUM.get());
-
-        this.add(ModBlocks.GENTLIT_SLAB.get(), block -> createSlabItemTable(ModBlocks.GENTLIT_SLAB.get()));
-        this.add(ModBlocks.GENTLIT_DOOR.get(), block -> createDoorTable(ModBlocks.GENTLIT_SLAB.get()));
-
-        this.add(ModBlocks.GENTLIT_LEAVES.get(), block ->
-                createLeavesDrops(block, ModBlocks.GENTLIT_LEAVES.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 
         //createRedstoneOreDrops();
     }

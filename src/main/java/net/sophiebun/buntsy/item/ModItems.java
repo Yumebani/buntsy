@@ -1,5 +1,6 @@
 package net.sophiebun.buntsy.item;
 
+import net.minecraft.world.flag.FeatureFlag;
 import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -7,6 +8,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModFoods;
+import net.sophiebun.buntsy.item.custom.BowlFoodFairyFoodItem;
 import net.sophiebun.buntsy.item.custom.FairyBottle;
 import net.sophiebun.buntsy.item.custom.FairyFoodItem;
 
@@ -72,11 +74,11 @@ public class ModItems {
             "silky_boots", () -> new ArmorItem(ModArmorMaterials.SILKY, ArmorItem.Type.BOOTS, new Item.Properties()));
 
     public static final RegistryObject<Item> BOWL_OF_CARAMEL = ItemsRegister.register(
-            "bowl_of_caramel", () -> new FairyFoodItem(new Item.Properties().food(ModFoods.BOWL_OF_CARAMEL).stacksTo(16),
+            "bowl_of_caramel", () -> new BowlFoodFairyFoodItem(new Item.Properties().food(ModFoods.BOWL_OF_CARAMEL).stacksTo(16),
                     2000, 1.5f));
     public static final RegistryObject<Item> BOWL_OF_ROCKCANDY = ItemsRegister.register(
-            "bowl_of_rockcandy", () -> new FairyFoodItem(new Item.Properties().food(ModFoods.BOWL_OF_ROCKCANDY).stacksTo(16),
-                    4000, 2f));
+            "bowl_of_rockcandy", () -> new BowlFoodFairyFoodItem(new Item.Properties().food(ModFoods.BOWL_OF_ROCKCANDY)
+                    .stacksTo(16),4000, 2f));
     public static final RegistryObject<Item> CARAMEL_STRAWBERRIES = ItemsRegister.register(
             "caramel_strawberries", () -> new Item(new Item.Properties().food(ModFoods.CARAMEL_STRAWBERRIES).stacksTo(16)));
     public static final RegistryObject<Item> STRAWBERRY = ItemsRegister.register(

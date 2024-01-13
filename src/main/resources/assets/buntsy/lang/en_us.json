@@ -1,9 +1,11 @@
 {
-  "block.buntsy.leaves": "Gentlit Leaves",
   "block.buntsy.gentlit_log": "Gentlit Log",
   "block.buntsy.stripped_gentlit_log": "Stripped Gentlit Log",
   "block.buntsy.gentlit_wood": "Gentlit Wood",
   "block.buntsy.stripped_gentlit_wood": "Stripped Gentlit Wood",
+
+  "block.buntsy.gentlit_leaves": "Gentlit Leaves",
+  "block.buntsy.gentlit_sapling": "Gentlit Sapling",
 
   "block.buntsy.gentlit_planks": "Gentlit Planks",
   "block.buntsy.gentlit_stairs": "Gentlit Stairs",
@@ -14,6 +16,23 @@
   "block.buntsy.gentlit_fence_gate": "Gentlit Fence Gate",
   "block.buntsy.gentlit_pressure_plate": "Gentlit Pressure Plate",
   "block.buntsy.gentlit_button": "Gentlit Button",
+
+  "block.buntsy.bravot_log": "Bravot Log",
+  "block.buntsy.stripped_bravot_log": "Stripped Bravot Log",
+  "block.buntsy.bravot_wood": "Bravot Wood",
+  "block.buntsy.stripped_bravot_wood": "Stripped Bravot Wood",
+
+  "block.buntsy.bravot_leaves": "Bravot Leaves",
+
+  "block.buntsy.bravot_planks": "Bravot Planks",
+  "block.buntsy.bravot_stairs": "Bravot Stairs",
+  "block.buntsy.bravot_slab": "Bravot Slab",
+  "block.buntsy.bravot_trapdoor": "Bravot Trapdoor",
+  "block.buntsy.bravot_door": "Bravot Door",
+  "block.buntsy.bravot_fence": "Bravot Fence",
+  "block.buntsy.bravot_fence_gate": "Bravot Fence Gate",
+  "block.buntsy.bravot_pressure_plate": "Bravot Pressure Plate",
+  "block.buntsy.bravot_button": "Bravot Button",
 
   "block.buntsy.grinding_wheel": "Grinding Wheel",
   "block.buntsy.thread_reeler": "Thread Reeler",

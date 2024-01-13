@@ -13,6 +13,7 @@ import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
@@ -69,21 +70,41 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         simpleItem(ModItems.FAIRY_IN_A_BOTTLE);
 
-        evenSimplerBlockItem(ModBlocks.GENTLIT_STAIRS);
-        evenSimplerBlockItem(ModBlocks.GENTLIT_SLAB);
-        evenSimplerBlockItem(ModBlocks.GENTLIT_PRESSURE_PLATE);
-        evenSimplerBlockItem(ModBlocks.GENTLIT_FENCE_GATE);
         evenSimplerBlockItem(ModBlocks.GENTLIT_LOG);
         evenSimplerBlockItem(ModBlocks.STRIPPED_GENTLIT_LOG);
         evenSimplerBlockItem(ModBlocks.GENTLIT_WOOD);
         evenSimplerBlockItem(ModBlocks.STRIPPED_GENTLIT_WOOD);
-        evenSimplerBlockItem(ModBlocks.GENTLIT_PLANKS);
-        evenSimplerBlockItem(ModBlocks.GENTLIT_LEAVES);
 
+        evenSimplerBlockItem(ModBlocks.GENTLIT_LEAVES);
+        simpleCrossBlockItem(ModBlocks.GENTLIT_SAPLING);
+
+        evenSimplerBlockItem(ModBlocks.GENTLIT_PLANKS);
         fenceItem(ModBlocks.GENTLIT_FENCE, ModBlocks.GENTLIT_PLANKS);
         buttonItem(ModBlocks.GENTLIT_BUTTON, ModBlocks.GENTLIT_PLANKS);
         trapdoorItem(ModBlocks.GENTLIT_TRAPDOOR);
         simpleBlockItem(ModBlocks.GENTLIT_DOOR);
+        evenSimplerBlockItem(ModBlocks.GENTLIT_STAIRS);
+        evenSimplerBlockItem(ModBlocks.GENTLIT_SLAB);
+        evenSimplerBlockItem(ModBlocks.GENTLIT_PRESSURE_PLATE);
+        evenSimplerBlockItem(ModBlocks.GENTLIT_FENCE_GATE);
+
+        evenSimplerBlockItem(ModBlocks.BRAVOT_LOG);
+        evenSimplerBlockItem(ModBlocks.STRIPPED_BRAVOT_LOG);
+        evenSimplerBlockItem(ModBlocks.BRAVOT_WOOD);
+        evenSimplerBlockItem(ModBlocks.STRIPPED_BRAVOT_WOOD);
+
+        evenSimplerBlockItem(ModBlocks.BRAVOT_LEAVES);
+        simpleCrossBlockItem(ModBlocks.BRAVOT_SAPLING);
+
+        evenSimplerBlockItem(ModBlocks.BRAVOT_PLANKS);
+        fenceItem(ModBlocks.BRAVOT_FENCE, ModBlocks.BRAVOT_PLANKS);
+        buttonItem(ModBlocks.BRAVOT_BUTTON, ModBlocks.BRAVOT_PLANKS);
+        trapdoorItem(ModBlocks.BRAVOT_TRAPDOOR);
+        simpleBlockItem(ModBlocks.BRAVOT_DOOR);
+        evenSimplerBlockItem(ModBlocks.BRAVOT_STAIRS);
+        evenSimplerBlockItem(ModBlocks.BRAVOT_SLAB);
+        evenSimplerBlockItem(ModBlocks.BRAVOT_PRESSURE_PLATE);
+        evenSimplerBlockItem(ModBlocks.BRAVOT_FENCE_GATE);
 
         handheldItem(ModItems.SILKY_SWORD);
         handheldItem(ModItems.SILKY_PICKAXE);
@@ -144,6 +165,13 @@ public class ModItemModelProvider extends ItemModelProvider {
             });
         }
     }
+
+    private ItemModelBuilder simpleCrossBlockItem (RegistryObject<Block> block){
+        return withExistingParent(block.getId().getPath(),
+                new ResourceLocation("item/generated")).texture("layer0",
+                new ResourceLocation(BuntsyMod.MODID,"block/" + block.getId().getPath()));
+    }
+
 
     private ItemModelBuilder simpleItem (RegistryObject<Item> item){
         return withExistingParent(item.getId().getPath(),

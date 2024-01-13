@@ -20,11 +20,12 @@ public class CreativeModeTabs {
                     .title(Component.translatable("creativetab.buntsy_tab"))
                     .displayItems((pParameters, pOutput) -> {
 
-                        pOutput.accept(ModBlocks.GENTLIT_LEAVES.get());
                         pOutput.accept(ModBlocks.GENTLIT_LOG.get());
                         pOutput.accept(ModBlocks.STRIPPED_GENTLIT_LOG.get());
                         pOutput.accept(ModBlocks.GENTLIT_WOOD.get());
                         pOutput.accept(ModBlocks.STRIPPED_GENTLIT_LOG.get());
+
+                        pOutput.accept(ModBlocks.GENTLIT_LEAVES.get());
 
                         pOutput.accept(ModBlocks.GENTLIT_PLANKS.get());
                         pOutput.accept(ModBlocks.GENTLIT_STAIRS.get());
@@ -35,6 +36,23 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.GENTLIT_FENCE_GATE.get());
                         pOutput.accept(ModBlocks.GENTLIT_PRESSURE_PLATE.get());
                         pOutput.accept(ModBlocks.GENTLIT_BUTTON.get());
+
+                        pOutput.accept(ModBlocks.BRAVOT_LOG.get());
+                        pOutput.accept(ModBlocks.STRIPPED_BRAVOT_LOG.get());
+                        pOutput.accept(ModBlocks.BRAVOT_WOOD.get());
+                        pOutput.accept(ModBlocks.STRIPPED_BRAVOT_LOG.get());
+
+                        pOutput.accept(ModBlocks.BRAVOT_LEAVES.get());
+
+                        pOutput.accept(ModBlocks.BRAVOT_PLANKS.get());
+                        pOutput.accept(ModBlocks.BRAVOT_STAIRS.get());
+                        pOutput.accept(ModBlocks.BRAVOT_SLAB.get());
+                        pOutput.accept(ModBlocks.BRAVOT_TRAPDOOR.get());
+                        pOutput.accept(ModBlocks.BRAVOT_DOOR.get());
+                        pOutput.accept(ModBlocks.BRAVOT_FENCE.get());
+                        pOutput.accept(ModBlocks.BRAVOT_FENCE_GATE.get());
+                        pOutput.accept(ModBlocks.BRAVOT_PRESSURE_PLATE.get());
+                        pOutput.accept(ModBlocks.BRAVOT_BUTTON.get());
 
                         pOutput.accept(ModBlocks.GRINDING_WHEEL.get());
                         pOutput.accept(ModBlocks.THREAD_REELER.get());
