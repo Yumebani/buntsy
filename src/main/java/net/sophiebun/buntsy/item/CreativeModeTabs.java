@@ -20,7 +20,7 @@ public class CreativeModeTabs {
                     .title(Component.translatable("creativetab.buntsy_tab"))
                     .displayItems((pParameters, pOutput) -> {
 
-                        pOutput.accept(ModBlocks.PINK_BLOOM_GRASS_BLOCK.get());
+                        pOutput.accept(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get());
 
                         pOutput.accept(ModBlocks.GENTLIT_LOG.get());
                         pOutput.accept(ModBlocks.STRIPPED_GENTLIT_LOG.get());

@@ -1,4 +1,6 @@
-// 1.20.1	2024-01-12T18:01:04.109761159	Loot Tables
+// 1.20.1	2024-01-13T23:36:56.749538538	Loot Tables
+89827097379284e3cff8aa1eae40585b5a3a87d6 data/buntsy/loot_tables/blocks/blue_bloom.json
+114a61f4b222fad5ef21cd8a9c2433f21ec4fea8 data/buntsy/loot_tables/blocks/blue_charmil_grass.json
 a4f634df261525820e924760c9301e06b3ed0b3e data/buntsy/loot_tables/blocks/bravot_button.json
 7962d5f2cb6518be83e0c0b2e55046e12cda0bca data/buntsy/loot_tables/blocks/bravot_door.json
 016b4e5fcc8c99a7ddc046849f8e793679ce349a data/buntsy/loot_tables/blocks/bravot_fence.json
@@ -12,6 +14,7 @@ a4f634df261525820e924760c9301e06b3ed0b3e data/buntsy/loot_tables/blocks/bravot_b
 1394fe2a6d7307d03e026248fe67cb5ada4b0863 data/buntsy/loot_tables/blocks/bravot_stairs.json
 1f6b7bab7a3b8b4eeb6b05d28bb7304a106ca4af data/buntsy/loot_tables/blocks/bravot_trapdoor.json
 9c78f9f23078f58627e0d38eb7068855a5e8fe22 data/buntsy/loot_tables/blocks/bravot_wood.json
+aae27e8cb2c562a0f2908cfe30267f065757ebec data/buntsy/loot_tables/blocks/charmil_soil.json
 a9cde91353d1b2c756fc052210193799cde892da data/buntsy/loot_tables/blocks/fairy_terrarium.json
 cf0fc57f2a762f0761031817742e363d39c0fcf3 data/buntsy/loot_tables/blocks/gentlit_button.json
 a064954b35fe84365ef0aba63c97178b08374a3a data/buntsy/loot_tables/blocks/gentlit_door.json
@@ -26,7 +29,16 @@ f6fcd69994d647178f59f8fb8fe2a168c19a34f5 data/buntsy/loot_tables/blocks/gentlit_
 760b42c1a5de9d69cf74dba8b02f37a2e985fcc8 data/buntsy/loot_tables/blocks/gentlit_stairs.json
 4859cab84cb02227d206613e08c91414fe73a003 data/buntsy/loot_tables/blocks/gentlit_trapdoor.json
 ca37ffa372d4a4a04e0514d3acd2351f96d4abb0 data/buntsy/loot_tables/blocks/gentlit_wood.json
+9a7ac783000109e7a64d8789416b260e5e02c616 data/buntsy/loot_tables/blocks/glowshroom.json
+a626779ad80fc8f3a9d0751675a1b142e468389d data/buntsy/loot_tables/blocks/glowshroom_block.json
 99610439b6d85eaea33c1e99cd55845121152e03 data/buntsy/loot_tables/blocks/grinding_wheel.json
+1242c8b5f35f473624c9e517e0d72783f885429d data/buntsy/loot_tables/blocks/loveshroom.json
+c8b5ad2ffb54d43250b68397832c68f1d3097707 data/buntsy/loot_tables/blocks/loveshroom_block.json
+978c5dc42a6ca1d96b4496bb0f1d4c936747ebe1 data/buntsy/loot_tables/blocks/pink_bloom.json
+c1d6588859a0ea38f55d58bf42a90f82a601892c data/buntsy/loot_tables/blocks/pink_charmil_grass.json
+367aad1aff79541aac9798733ac9870db367cb54 data/buntsy/loot_tables/blocks/pink_fluf_charmil_soil.json
+dd047dcc77a47bf75807001c07940f7a3aff9bf4 data/buntsy/loot_tables/blocks/potted_blue_bloom.json
+684340a5ac124b994f670e351d0abf5689da303c data/buntsy/loot_tables/blocks/potted_pink_bloom.json
 018fe338f9294e44f9fb5110e142a4f139f42767 data/buntsy/loot_tables/blocks/stripped_bravot_log.json
 91683b86fd8d8dcafc9445f33c3f951c21b3d43c data/buntsy/loot_tables/blocks/stripped_bravot_wood.json
 0f3413a27eda123220bddd7ae0feede1057fb8b3 data/buntsy/loot_tables/blocks/stripped_gentlit_log.json

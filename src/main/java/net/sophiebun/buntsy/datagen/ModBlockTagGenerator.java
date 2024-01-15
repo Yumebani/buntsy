@@ -64,10 +64,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get());
 
         this.tag(BlockTags.MUSHROOM_GROW_BLOCK)
-                .add(ModBlocks.PINK_BLOOM_GRASS_BLOCK.get());
+                .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get());
 
         this.tag(BlockTags.DIRT)
-                .add(ModBlocks.PINK_BLOOM_GRASS_BLOCK.get());
+                .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
+                .add(ModBlocks.CHARMIL_SOIL.get());
 
         this.tag(BlockTags.PLANKS)
                 .add(ModBlocks.GENTLIT_PLANKS.get());

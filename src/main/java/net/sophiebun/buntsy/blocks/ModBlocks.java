@@ -1,10 +1,14 @@
 package net.sophiebun.buntsy.blocks;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -13,8 +17,9 @@ import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.custom.*;
 import net.sophiebun.buntsy.item.ModItems;
-import net.sophiebun.buntsy.worldgen.tree.GentlitTreeGrower;
+import net.sophiebun.buntsy.worldgen.ModConfiguredFeatures;
 import net.sophiebun.buntsy.worldgen.tree.BravotTreeGrower;
+import net.sophiebun.buntsy.worldgen.tree.GentlitTreeGrower;
 
 import java.util.function.Supplier;
 
@@ -91,9 +96,57 @@ public class ModBlocks {
     public static final RegistryObject<Block> BRAVOT_TRAPDOOR = registerBlock("bravot_trapdoor",
             () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noCollission(), BlockSetType.OAK));
 
-    public static final RegistryObject<Block> PINK_BLOOM_GRASS_BLOCK = registerBlock("pink_bloom_grass_block",
-            () -> new SnowyDirtBlock(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK)));
+    //Biome ground blocks
+    public static final RegistryObject<Block> PINK_FLUF_CHARMIL_SOIL = registerBlock("pink_fluf_charmil_soil", //MAKE FLUF SPIRAL DOWNWWARDS
+            () -> new SnowyDirtBlock(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK).sound(SoundType.MOSS)));
 
+    public static final RegistryObject<Block> CHARMIL_SOIL = registerBlock("charmil_soil",
+            () -> new SnowyDirtBlock(BlockBehaviour.Properties.copy(Blocks.DIRT).sound(SoundType.MOSS)));
+
+    //Biome plants
+    public static final RegistryObject<Block> PINK_CHARMIL_GRASS = registerBlock("pink_charmil_grass",
+            () -> new TallGrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> BLUE_CHARMIL_GRASS = registerBlock("blue_charmil_grass",
+            () -> new TallGrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
+
+
+    public static final RegistryObject<Block> PINK_BLOOM = registerBlock("pink_bloom",
+            () -> new FlowerBlock(() -> MobEffects.DIG_SPEED, 20,
+                    BlockBehaviour.Properties.copy(Blocks.PINK_TULIP).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> POTTED_PINK_BLOOM = BlocksRegister.register("potted_pink_bloom",
+            () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, ModBlocks.PINK_BLOOM,
+                    BlockBehaviour.Properties.copy(Blocks.POTTED_PINK_TULIP).noOcclusion()));
+    public static final RegistryObject<Block> BLUE_BLOOM = registerBlock("blue_bloom",
+            () -> new FlowerBlock(() -> MobEffects.DIG_SPEED, 20,
+                    BlockBehaviour.Properties.copy(Blocks.PINK_TULIP).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> POTTED_BLUE_BLOOM = BlocksRegister.register("potted_blue_bloom",
+            () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, ModBlocks.PINK_BLOOM,
+                    BlockBehaviour.Properties.copy(Blocks.POTTED_PINK_TULIP).noOcclusion()));
+
+    public static final RegistryObject<Block> LOVESHROOM = registerBlock("loveshroom",
+            () -> new MushroomBlock(BlockBehaviour.Properties.copy(Blocks.RED_MUSHROOM).noOcclusion().noCollission(),
+                    ModConfiguredFeatures.GIANT_LOVESHROOM_KEY));
+    public static final RegistryObject<Block> LOVESHROOM_BLOCK = registerBlock("loveshroom_block",
+            () -> new HugeMushroomBlock(BlockBehaviour.Properties.copy(Blocks.RED_MUSHROOM_BLOCK)));
+
+    public static final RegistryObject<Block> GLOWSHROOM = registerBlock("glowshroom",
+            () -> new MushroomBlock(BlockBehaviour.Properties.copy(Blocks.RED_MUSHROOM).noOcclusion().noCollission(),
+                    ModConfiguredFeatures.GIANT_GLOWSHROOM_KEY){
+                @Override
+                public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+                    return 5;
+                }
+            });
+
+    public static final RegistryObject<Block> GLOWSHROOM_BLOCK = registerBlock("glowshroom_block",
+            () -> new HugeMushroomBlock(BlockBehaviour.Properties.copy(Blocks.RED_MUSHROOM_BLOCK)){
+                @Override
+                public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+                    return 8;
+                }
+            });
+
+    //Block entities
     public static final RegistryObject<Block> GRINDING_WHEEL = registerBlock("grinding_wheel",
             () -> new GrindingWheelBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
     public static final RegistryObject<Block> THREAD_REELER = registerBlock("thread_reeler",

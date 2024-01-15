@@ -106,6 +106,18 @@ public class ModItemModelProvider extends ItemModelProvider {
         evenSimplerBlockItem(ModBlocks.BRAVOT_PRESSURE_PLATE);
         evenSimplerBlockItem(ModBlocks.BRAVOT_FENCE_GATE);
 
+        //Adding plants
+        simpleCrossBlockItem(ModBlocks.PINK_CHARMIL_GRASS);
+        simpleCrossBlockItem(ModBlocks.BLUE_CHARMIL_GRASS);
+        simpleCrossBlockItem(ModBlocks.PINK_BLOOM);
+        simpleCrossBlockItem(ModBlocks.BLUE_BLOOM);
+        simpleCrossBlockItem(ModBlocks.LOVESHROOM);
+        simpleCrossBlockItem(ModBlocks.GLOWSHROOM);
+
+        //Adding mushroom blocks
+        blockItemNonBlockDependent(ModBlocks.LOVESHROOM_BLOCK);
+        blockItemNonBlockDependent(ModBlocks.GLOWSHROOM_BLOCK);
+
         handheldItem(ModItems.SILKY_SWORD);
         handheldItem(ModItems.SILKY_PICKAXE);
         handheldItem(ModItems.SILKY_AXE);
@@ -213,6 +225,12 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     public void evenSimplerBlockItem(RegistryObject<Block> block) {
         this.withExistingParent(BuntsyMod.MODID + ":" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath(),
+                modLoc("block/" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath()));
+    }
+
+    public void blockItemNonBlockDependent(RegistryObject<Block> block) {
+        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(),
+                mcLoc("block/cube_all")).texture("all",
                 modLoc("block/" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath()));
     }
 }

@@ -8,17 +8,19 @@ import net.sophiebun.buntsy.worldgen.biome.ModBiomes;
 
 public class ModSurfaceRules {
 
-    private static final SurfaceRules.RuleSource DIRT = makeStateRule(Blocks.DIRT);
-    private static final SurfaceRules.RuleSource PINK_GRASS_BLOCK = makeStateRule(ModBlocks.PINK_BLOOM_GRASS_BLOCK.get());
+    private static final SurfaceRules.RuleSource CHARMIL_SOIL = makeStateRule(ModBlocks.CHARMIL_SOIL.get());
+    private static final SurfaceRules.RuleSource CHARMIL_SOIL_PINK_FLUF = makeStateRule(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get());
 
     public static SurfaceRules.RuleSource makeRules()
     {
         SurfaceRules.ConditionSource isAtOrAboveWaterLevel = SurfaceRules.waterBlockCheck(-1, 0);
-        SurfaceRules.RuleSource pinkGrassSurface = SurfaceRules.sequence(SurfaceRules.ifTrue(isAtOrAboveWaterLevel, PINK_GRASS_BLOCK), DIRT);
+        SurfaceRules.RuleSource pinkGrassSurface = SurfaceRules.sequence(SurfaceRules.ifTrue(isAtOrAboveWaterLevel, CHARMIL_SOIL_PINK_FLUF), CHARMIL_SOIL);
 
         return SurfaceRules.sequence(
-                SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.CUTELY_BIOME),
-                        SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, pinkGrassSurface))
+                SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.CUTERLY_BIOME),
+                        SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, pinkGrassSurface)),
+                SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.CUTERLY_BIOME),
+                        SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, CHARMIL_SOIL))
         );
     }
 

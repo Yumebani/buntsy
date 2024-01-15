@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "buntsy:block/blue_charmil_grass_1",
+        "weight": 2
+      },
+      {
+        "model": "buntsy:block/blue_charmil_grass_2",
+        "weight": 2
+      },
+      {
+        "model": "buntsy:block/blue_charmil_grass_3"
+      }
+    ]
+  }
+}

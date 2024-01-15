@@ -1,11 +1,10 @@
 package net.sophiebun.buntsy.datagen;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -62,12 +61,27 @@ public class ModBlockStateProvider extends BlockStateProvider {
         doorBlockWithRenderType((DoorBlock) ModBlocks.BRAVOT_DOOR.get(), modLoc("block/bravot_door_bottom"), modLoc("block/bravot_door_top"), "cutout");
         trapdoorBlockWithRenderType((TrapDoorBlock) ModBlocks.BRAVOT_TRAPDOOR.get(), modLoc("block/bravot_trapdoor"), true, "cutout");
 
-        simpleBlockWithItem(ModBlocks.PINK_BLOOM_GRASS_BLOCK.get(),
-                models().cubeBottomTop(ForgeRegistries.BLOCKS.getKey(ModBlocks.PINK_BLOOM_GRASS_BLOCK.get()).getPath(),
-                        new ResourceLocation(BuntsyMod.MODID, "block/pink_grass_side"),
-                        mcLoc("block/dirt"),
-                        new ResourceLocation(BuntsyMod.MODID, "block/pink_grass_top")));
+        //Adding soil models
+        grassBlock(ModBlocks.PINK_FLUF_CHARMIL_SOIL, ModBlocks.CHARMIL_SOIL.getId().getPath());
+        blockWithItem(ModBlocks.CHARMIL_SOIL);
 
+        //Adding plants
+        variedGrass(ModBlocks.PINK_CHARMIL_GRASS); //Item added in item model gen
+        variedGrass(ModBlocks.BLUE_CHARMIL_GRASS); //Item added in item model gen
+        simpleCrossBlock(ModBlocks.PINK_BLOOM); //Item added in item model gen
+        simpleCrossBlock(ModBlocks.BLUE_BLOOM); //Item added in item model gen
+        simpleCrossBlock(ModBlocks.LOVESHROOM); //Item added in item model gen
+        simpleCrossBlock(ModBlocks.GLOWSHROOM); //Item added in item model gen
+
+        //Adding potted plants
+        pottedPlant(ModBlocks.POTTED_PINK_BLOOM, ModBlocks.PINK_BLOOM);
+        pottedPlant(ModBlocks.POTTED_BLUE_BLOOM, ModBlocks.BLUE_BLOOM);
+
+        //MushroomBlocks
+        mushroomBlock(ModBlocks.LOVESHROOM_BLOCK); //Item added in item model gen
+        mushroomBlock(ModBlocks.GLOWSHROOM_BLOCK); //Item added in item model gen
+
+        //Block entities
         simpleBlockWithItem(ModBlocks.GRINDING_WHEEL.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/grinding_wheel")));
         simpleBlockWithItem(ModBlocks.THREAD_REELER.get(),
@@ -76,12 +90,71 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 new ModelFile.UncheckedModelFile(modLoc("block/fairy_terrarium")));
     }
 
+    private void pottedPlant(RegistryObject<Block> registryObject, RegistryObject<Block> plant){
+        simpleBlockWithItem(registryObject.get(),
+                models().singleTexture(ForgeRegistries.BLOCKS.getKey(registryObject.get()).getPath()
+                        , new ResourceLocation("flower_pot_cross"), "plant",
+                        blockTexture(plant.get())).renderType("cutout"));
+    }
+
+    private void variedGrass(RegistryObject<Block> registryObject){
+        BlockModelBuilder var1 = getCrossModel(registryObject, "_1");
+        BlockModelBuilder var2 = getCrossModel(registryObject, "_2");
+        BlockModelBuilder var3 = getCrossModel(registryObject, "_3");
+
+        getVariantBuilder(registryObject.get()).forAllStates(blockState ->
+            ConfiguredModel.builder()
+                    .modelFile(var1).weight(2).nextModel()
+                    .modelFile(var2).weight(2).nextModel()
+                    .modelFile(var3).weight(1)
+                    .build());
+    }
+
+    private BlockModelBuilder getCrossModel(RegistryObject<Block> registryObject, String var){
+        return models().cross(ForgeRegistries.BLOCKS.getKey(registryObject.get()).getPath() + var,
+                new ResourceLocation(BuntsyMod.MODID,"block/" + registryObject.getId().getPath() + var)).renderType("cutout");
+    }
+
+    private void mushroomBlock(RegistryObject<Block> registryObject){
+        BlockModelBuilder mushroomInside = mushroomSide(registryObject, true);
+        BlockModelBuilder mushroomOutside = mushroomSide(registryObject, false);
+
+        getMultipartBuilder(registryObject.get())
+                .part().modelFile(mushroomOutside).addModel().condition(HugeMushroomBlock.NORTH, true).end()
+                .part().modelFile(mushroomOutside).uvLock(true).rotationY(90).addModel().condition(HugeMushroomBlock.EAST, true).end()
+                .part().modelFile(mushroomOutside).uvLock(true).rotationY(180).addModel().condition(HugeMushroomBlock.SOUTH, true).end()
+                .part().modelFile(mushroomOutside).uvLock(true).rotationY(270).addModel().condition(HugeMushroomBlock.WEST, true).end()
+                .part().modelFile(mushroomOutside).uvLock(true).rotationX(270).addModel().condition(HugeMushroomBlock.UP, true).end()
+                .part().modelFile(mushroomOutside).uvLock(true).rotationX(90).addModel().condition(HugeMushroomBlock.DOWN, true).end()
+                .part().modelFile(mushroomInside).addModel().condition(HugeMushroomBlock.NORTH,false).end()
+                .part().modelFile(mushroomInside).uvLock(false).rotationY(90).addModel().condition(HugeMushroomBlock.EAST,false).end()
+                .part().modelFile(mushroomInside).uvLock(false).rotationY(180).addModel().condition(HugeMushroomBlock.SOUTH,false).end()
+                .part().modelFile(mushroomInside).uvLock(false).rotationY(270).addModel().condition(HugeMushroomBlock.WEST,false).end()
+                .part().modelFile(mushroomInside).uvLock(false).rotationX(270).addModel().condition(HugeMushroomBlock.UP,false).end()
+                .part().modelFile(mushroomInside).uvLock(false).rotationX(90).addModel().condition(HugeMushroomBlock.DOWN,false).end();
+
+    }
+
+    private BlockModelBuilder mushroomSide(RegistryObject<Block> registryObject, boolean isInside){
+        String inside = isInside ? "_inside" : "";
+        return models().singleTexture(ForgeRegistries.BLOCKS.getKey(registryObject.get()).getPath() + inside,
+                mcLoc("minecraft:block/template_single_face"),
+                new ResourceLocation(BuntsyMod.MODID, "block/" + registryObject.getId().getPath() + inside));
+    }
+
+    private void grassBlock(RegistryObject<Block> registryObject, String blockBottomPath) {
+        simpleBlockWithItem(registryObject.get(),
+                models().cubeBottomTop(ForgeRegistries.BLOCKS.getKey(registryObject.get()).getPath(),
+                        new ResourceLocation(BuntsyMod.MODID, "block/" + registryObject.getId().getPath() + "_side"),
+                        new ResourceLocation(BuntsyMod.MODID, "block/" + blockBottomPath),
+                        new ResourceLocation(BuntsyMod.MODID, "block/" + registryObject.getId().getPath() + "_top")));
+    }
+
     private void blockWithItem(RegistryObject<Block> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
     }
 
     private void simpleCrossBlock(RegistryObject<Block> blockRegistry){
-        simpleBlock(blockRegistry.get(),
-                models().cross(ForgeRegistries.BLOCKS.getKey(blockRegistry.get()).getPath(), blockTexture(blockRegistry.get())).renderType("cutout"));
+        simpleBlock(blockRegistry.get(),getCrossModel(blockRegistry, ""));
     }
 }

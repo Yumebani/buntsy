@@ -1,11 +1,8 @@
 package net.sophiebun.buntsy.datagen.loot;
 
 import net.minecraft.data.loot.BlockLootSubProvider;
-import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 
@@ -56,8 +53,27 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlocks.BRAVOT_SLAB.get(), block -> createSlabItemTable(ModBlocks.BRAVOT_SLAB.get()));
         this.add(ModBlocks.BRAVOT_DOOR.get(), block -> createDoorTable(ModBlocks.BRAVOT_SLAB.get()));
 
-        this.dropSelf(ModBlocks.PINK_BLOOM_GRASS_BLOCK.get());
+        //Adding soil
+        this.add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get(), block -> createSingleItemTableWithSilkTouch(block, ModBlocks.CHARMIL_SOIL.get()));
+        this.dropSelf(ModBlocks.CHARMIL_SOIL.get());
 
+        //Adding plants
+        this.add(ModBlocks.PINK_CHARMIL_GRASS.get(), block -> createShearsOnlyDrop(block));
+        this.add(ModBlocks.BLUE_CHARMIL_GRASS.get(), block -> createShearsOnlyDrop(block));
+        this.dropSelf(ModBlocks.PINK_BLOOM.get());
+        this.dropSelf(ModBlocks.BLUE_BLOOM.get());
+        this.dropSelf(ModBlocks.LOVESHROOM.get());
+        this.dropSelf(ModBlocks.GLOWSHROOM.get());
+
+        //Adding potted plants
+        this.add(ModBlocks.POTTED_PINK_BLOOM.get(), createPotFlowerItemTable(ModBlocks.PINK_BLOOM.get()));
+        this.add(ModBlocks.POTTED_BLUE_BLOOM.get(), createPotFlowerItemTable(ModBlocks.BLUE_BLOOM.get()));
+
+        //Adding mushroom blocks
+        this.add(ModBlocks.LOVESHROOM_BLOCK.get(), block -> createMushroomBlockDrop(block, ModBlocks.LOVESHROOM.get()));
+        this.add(ModBlocks.GLOWSHROOM_BLOCK.get(), block -> createMushroomBlockDrop(block, ModBlocks.GLOWSHROOM.get()));
+
+        //Adding tile entities
         this.dropSelf(ModBlocks.GRINDING_WHEEL.get());
         this.dropSelf(ModBlocks.THREAD_REELER.get());
         this.dropSelf(ModBlocks.FAIRY_TERRARIUM.get());

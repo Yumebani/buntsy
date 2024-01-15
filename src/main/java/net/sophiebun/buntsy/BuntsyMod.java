@@ -4,6 +4,8 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FlowerBlock;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -25,6 +27,7 @@ import net.sophiebun.buntsy.recipe.ModRecipes;
 import net.sophiebun.buntsy.screen.*;
 import net.sophiebun.buntsy.worldgen.biome.ModTerrablender;
 import net.sophiebun.buntsy.worldgen.biome.surface.ModSurfaceRules;
+import net.sophiebun.buntsy.worldgen.feature.ModFeatures;
 import net.sophiebun.buntsy.worldgen.tree.ModFoliagePlacers;
 import net.sophiebun.buntsy.worldgen.tree.ModTrunkPlacerTypes;
 import org.slf4j.Logger;
@@ -56,6 +59,8 @@ public class BuntsyMod
         ModTrunkPlacerTypes.register(modEventBus);
         ModFoliagePlacers.register(modEventBus);
 
+        ModFeatures.register(modEventBus);
+
         ModTerrablender.registerBiomes();
 
         modEventBus.addListener(this::commonSetup);
@@ -66,8 +71,12 @@ public class BuntsyMod
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-        SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MODID, ModSurfaceRules.makeRules());
+        event.enqueueWork(() -> {
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.PINK_BLOOM.getId(), ModBlocks.POTTED_PINK_BLOOM);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.BLUE_BLOOM.getId(), ModBlocks.POTTED_BLUE_BLOOM);
 
+            SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MODID, ModSurfaceRules.makeRules());
+        });
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

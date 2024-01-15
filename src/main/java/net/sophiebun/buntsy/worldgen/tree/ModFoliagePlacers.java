@@ -6,8 +6,9 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
-import net.sophiebun.buntsy.worldgen.tree.bravot.SquishedBlobFoliagePlacer;
+import net.sophiebun.buntsy.worldgen.tree.bravot.BravotFoliagePlacer;
 import net.sophiebun.buntsy.worldgen.tree.gentlit.PieFoliagePlacer;
+import net.sophiebun.buntsy.worldgen.tree.grounded_trunk.SphereFoliagePlacer;
 
 public class ModFoliagePlacers {
 
@@ -16,8 +17,10 @@ public class ModFoliagePlacers {
 
     public static final RegistryObject<FoliagePlacerType<PieFoliagePlacer>> PIE_FOLIAGE_PLACER =
             foliagePlacerRegister.register("pie_foliage_placer", () -> new FoliagePlacerType<>(PieFoliagePlacer.CODEC));
-    public static final RegistryObject<FoliagePlacerType<SquishedBlobFoliagePlacer>> SQUISHED_BLOB_FOLIAGE_PLACER =
-            foliagePlacerRegister.register("squished_blob_foliage_placer", () -> new FoliagePlacerType<>(SquishedBlobFoliagePlacer.CODEC));
+    public static final RegistryObject<FoliagePlacerType<BravotFoliagePlacer>> BRAVOT_FOLIAGE_PLACER =
+            foliagePlacerRegister.register("bravot_foliage_placer", () -> new FoliagePlacerType<>(BravotFoliagePlacer.CODEC));
+    public static final RegistryObject<FoliagePlacerType<SphereFoliagePlacer>> SPHERE_FOLIAGE_PLACER =
+            foliagePlacerRegister.register("sphere_foliage_placer", () -> new FoliagePlacerType<>(SphereFoliagePlacer.CODEC));
 
     public static void register(IEventBus eventBus){
         foliagePlacerRegister.register(eventBus);

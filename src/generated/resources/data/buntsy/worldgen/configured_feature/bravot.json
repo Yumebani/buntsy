@@ -9,7 +9,7 @@
       }
     },
     "foliage_placer": {
-      "type": "buntsy:squished_blob_foliage_placer",
+      "type": "buntsy:bravot_foliage_placer",
       "offset": 0,
       "radius": 0
     },

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "buntsy:block/charmil_soil",
+    "side": "buntsy:block/pink_fluf_charmil_soil_side",
+    "top": "buntsy:block/pink_fluf_charmil_soil_top"
+  }
+}
