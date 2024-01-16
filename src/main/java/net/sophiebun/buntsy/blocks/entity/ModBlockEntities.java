@@ -18,7 +18,6 @@ public class ModBlockEntities {
             blockEntityRegister.register("grinding_wheel_block_entity",
                     () -> BlockEntityType.Builder.of(GrindingWheelBlockEntity::new,
                             ModBlocks.GRINDING_WHEEL.get()).build(null));
-
     public static final RegistryObject<BlockEntityType<ThreadReelerBlockEntity>> THREAD_REELER_BLOCK_ENTITY =
             blockEntityRegister.register("thread_reeler_block_entity",
                     () -> BlockEntityType.Builder.of(ThreadReelerBlockEntity::new,
@@ -27,6 +26,10 @@ public class ModBlockEntities {
             blockEntityRegister.register("fairy_terrarium_block_entity",
                     () -> BlockEntityType.Builder.of(FairyTerrariumBlockEntity::new,
                             ModBlocks.FAIRY_TERRARIUM.get()).build(null));
+    public static final RegistryObject<BlockEntityType<OfferingBenchBlockEntity>> OFFERING_BENCH_BLOCK_ENTITY =
+            blockEntityRegister.register("offering_bench_block_entity",
+                    () -> BlockEntityType.Builder.of(OfferingBenchBlockEntity::new,
+                            ModBlocks..get()).build(null));
 
     public static void register(IEventBus eventBus){
 

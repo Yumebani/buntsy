@@ -23,6 +23,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.entity.ModEntities;
+import net.sophiebun.buntsy.entity.client.FairyRenderer;
 import net.sophiebun.buntsy.entity.client.SilkbunRenderer;
 import net.sophiebun.buntsy.item.CreativeModeTabs;
 import net.sophiebun.buntsy.item.ModItems;
@@ -104,6 +105,7 @@ public class BuntsyMod
             MenuScreens.register(ModMenuTypes.FAIRY_TERRARIUM_MENU.get(), FairyTerrariumScreen::new);
 
             EntityRenderers.register(ModEntities.SILKBUN_ENTITY.get(), SilkbunRenderer::new);
+            EntityRenderers.register(ModEntities.FAIRY_ENTITY.get(), FairyRenderer::new);
         }
     }
 }
