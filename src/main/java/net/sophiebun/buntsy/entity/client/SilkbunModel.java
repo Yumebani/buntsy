@@ -7,7 +7,12 @@ import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
+import net.sophiebun.buntsy.entity.animals.Silkbun;
+import net.sophiebun.buntsy.entity.animations.ModAnimationDefinitions;
+import org.joml.Vector3f;
 
 public class SilkbunModel<T extends Entity> extends HierarchicalModel<T> {
 
@@ -40,7 +45,7 @@ public class SilkbunModel<T extends Entity> extends HierarchicalModel<T> {
 		PartDefinition LeftEar_r1 = LeftEar.addOrReplaceChild("LeftEar_r1", CubeListBuilder.create().texOffs(0, 26).addBox(-0.5F, -8.0F, 0.0F, 2.0F, 6.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, 3.0F, 0.0F, 0.1309F, 0.0F, 0.2356F));
 
 		PartDefinition Eyes = Head.addOrReplaceChild("Eyes", CubeListBuilder.create().texOffs(29, 32).addBox(-1.9F, -1.0F, 0.475F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-		.texOffs(29, 32).addBox(0.9F, -1.0F, 0.475F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -1.0F, -2.5F));
+				.texOffs(29, 32).addBox(0.9F, -1.0F, 0.475F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -1.0F, -2.5F));
 
 		PartDefinition FrontLegs = Body.addOrReplaceChild("FrontLegs", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
@@ -70,14 +75,31 @@ public class SilkbunModel<T extends Entity> extends HierarchicalModel<T> {
 
 		PartDefinition LeftWing_r1 = LeftWing.addOrReplaceChild("LeftWing_r1", CubeListBuilder.create().texOffs(30, 0).addBox(-1.0F, 0.5F, -3.0F, 9.0F, 0.0F, 11.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.0F, -1.0F, -2.0F, 0.0873F, -0.1745F, -0.5857F));
 
-		PartDefinition Cocoon = Body.addOrReplaceChild("Cocoon", CubeListBuilder.create().texOffs(0, 34).addBox(-4.0F, -4.0F, -6.0F, 8.0F, 8.0F, 13.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, -9.0F, 1.0F));
+		PartDefinition Cocoon = MainBody.addOrReplaceChild("Cocoon", CubeListBuilder.create().texOffs(0, 34).addBox(-4.0F, -4.0F, -6.0F, 8.0F, 8.0F, 13.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -1.0F, 1.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.root().getAllParts().forEach(ModelPart::resetPose);
 
+		this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
+
+		this.animateWalk(ModAnimationDefinitions.SILKBUN_JUMP, 0, 0, 2f, 2.5f);
+		this.animate(((Silkbun) entity).initAnimationState, ModAnimationDefinitions.SILKBUN_INIT, ageInTicks, 1);
+		this.animate(((Silkbun) entity).idleAnimationState, ModAnimationDefinitions.SILKBUN_IDLE, ageInTicks, 1);
+		this.animate(((Silkbun) entity).jumpAnimationState, ModAnimationDefinitions.SILKBUN_JUMP, ageInTicks, 1);
+		this.animate(((Silkbun) entity).startSleepAnimationState, ModAnimationDefinitions.SILKBUN_ENTER_SLEEP, ageInTicks, 1);
+		this.animate(((Silkbun) entity).endSleepAnimationState, ModAnimationDefinitions.SILKBUN_EXIT_SLEEP, ageInTicks, 1);
+	}
+
+	private void applyHeadRotation(float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {
+		pNetHeadYaw = Mth.clamp(pNetHeadYaw, -30.0F, 30.0F);
+		pHeadPitch = Mth.clamp(pHeadPitch, -25.0F, 45.0F);
+
+		this.Head.yRot = pNetHeadYaw * ((float)Math.PI / 180F);
+		this.Head.xRot = pHeadPitch * ((float)Math.PI / 180F);
 	}
 
 	@Override

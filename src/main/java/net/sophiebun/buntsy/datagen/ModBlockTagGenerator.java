@@ -70,6 +70,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
                 .add(ModBlocks.CHARMIL_SOIL.get());
 
+        this.tag(ModTags.Blocks.SILKBUN_SPAWNABLE_ON)
+                .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
+                .add(ModBlocks.CHARMIL_SOIL.get());
+
         this.tag(BlockTags.PLANKS)
                 .add(ModBlocks.GENTLIT_PLANKS.get());
     }

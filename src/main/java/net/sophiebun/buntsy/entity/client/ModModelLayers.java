@@ -6,5 +6,7 @@ import net.sophiebun.buntsy.BuntsyMod;
 
 public class ModModelLayers {
     public static final ModelLayerLocation SILKBUN_LOCATION = new ModelLayerLocation(
-            new ResourceLocation(BuntsyMod.MODID, "white_silkbun_layer"), "main");
+            new ResourceLocation(BuntsyMod.MODID, "silkbun_layer"), "main");
+    public static final ModelLayerLocation FAIRY_LAYER = new ModelLayerLocation(
+            new ResourceLocation(BuntsyMod.MODID, "fairy_layer"), "main");
 }

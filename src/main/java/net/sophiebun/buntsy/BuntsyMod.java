@@ -3,6 +3,7 @@ package net.sophiebun.buntsy;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.FlowerPotBlock;
@@ -21,6 +22,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
+import net.sophiebun.buntsy.entity.ModEntities;
+import net.sophiebun.buntsy.entity.client.SilkbunRenderer;
 import net.sophiebun.buntsy.item.CreativeModeTabs;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.recipe.ModRecipes;
@@ -53,6 +56,8 @@ public class BuntsyMod
         ModBlockEntities.register(modEventBus);
 
         ModMenuTypes.register(modEventBus);
+
+        ModEntities.register(modEventBus);
 
         ModRecipes.register(modEventBus);
 
@@ -97,6 +102,8 @@ public class BuntsyMod
             MenuScreens.register(ModMenuTypes.GRINDING_WHEEL_MENU.get(), GrindingWheelScreen::new);
             MenuScreens.register(ModMenuTypes.THREAD_REELER_MENU.get(), ThreadReelerScreen::new);
             MenuScreens.register(ModMenuTypes.FAIRY_TERRARIUM_MENU.get(), FairyTerrariumScreen::new);
+
+            EntityRenderers.register(ModEntities.SILKBUN_ENTITY.get(), SilkbunRenderer::new);
         }
     }
 }

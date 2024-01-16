@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "buntsy:block/pink_charmil_grass"
+    "layer0": "buntsy:block/pink_charmil_grass_3"
   }
 }

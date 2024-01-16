@@ -21,6 +21,16 @@ public class CreativeModeTabs {
                     .displayItems((pParameters, pOutput) -> {
 
                         pOutput.accept(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get());
+                        pOutput.accept(ModBlocks.CHARMIL_SOIL.get());
+
+                        pOutput.accept(ModBlocks.PINK_CHARMIL_GRASS.get());
+                        pOutput.accept(ModBlocks.BLUE_CHARMIL_GRASS.get());
+                        pOutput.accept(ModBlocks.PINK_BLOOM.get());
+                        pOutput.accept(ModBlocks.BLUE_BLOOM.get());
+                        pOutput.accept(ModBlocks.LOVESHROOM.get());
+                        pOutput.accept(ModBlocks.LOVESHROOM_BLOCK.get());
+                        pOutput.accept(ModBlocks.GLOWSHROOM.get());
+                        pOutput.accept(ModBlocks.GLOWSHROOM_BLOCK.get());
 
                         pOutput.accept(ModBlocks.GENTLIT_LOG.get());
                         pOutput.accept(ModBlocks.STRIPPED_GENTLIT_LOG.get());
@@ -98,6 +108,8 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.STRAWBERRY.get());
                         pOutput.accept(ModItems.CARAMEL_STRAWBERRIES.get());
                         pOutput.accept(ModItems.GOLDEN_STRAWBERRY.get());
+
+                        pOutput.accept(ModItems.SILKBUN_SPAWN_EGG.get());
 
                     })
                     .build());

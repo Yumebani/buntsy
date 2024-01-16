@@ -1,4 +1,30 @@
 package net.sophiebun.buntsy.entity.client;
 
-public class SilkbunRenderer {
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.resources.ResourceLocation;
+import net.sophiebun.buntsy.BuntsyMod;
+import net.sophiebun.buntsy.entity.animals.Silkbun;
+
+public class SilkbunRenderer extends MobRenderer<Silkbun, SilkbunModel<Silkbun>> {
+    public SilkbunRenderer(EntityRendererProvider.Context pContext) {
+        super(pContext, new SilkbunModel<>(pContext.bakeLayer(ModModelLayers.SILKBUN_LOCATION)), 0.5f);
+    }
+
+    @Override
+    public ResourceLocation getTextureLocation(Silkbun silkbunEntity) {
+        return new ResourceLocation(BuntsyMod.MODID, "textures/entity/white_silkbun.png");
+    }
+
+    @Override
+    public void render(Silkbun pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
+
+        if (pEntity.isBaby()){
+            pPoseStack.scale(0.75f, 0.75f, 0.75f);
+        }
+
+        super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
+    }
 }

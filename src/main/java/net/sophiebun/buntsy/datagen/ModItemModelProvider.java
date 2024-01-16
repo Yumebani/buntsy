@@ -107,8 +107,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         evenSimplerBlockItem(ModBlocks.BRAVOT_FENCE_GATE);
 
         //Adding plants
-        simpleCrossBlockItem(ModBlocks.PINK_CHARMIL_GRASS);
-        simpleCrossBlockItem(ModBlocks.BLUE_CHARMIL_GRASS);
+        specificCrossBlockItem(ModBlocks.PINK_CHARMIL_GRASS, "_3");
+        specificCrossBlockItem(ModBlocks.BLUE_CHARMIL_GRASS, "_3");
         simpleCrossBlockItem(ModBlocks.PINK_BLOOM);
         simpleCrossBlockItem(ModBlocks.BLUE_BLOOM);
         simpleCrossBlockItem(ModBlocks.LOVESHROOM);
@@ -128,6 +128,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(ModItems.SILKY_CHESTPLATE);
         trimmedArmorItem(ModItems.SILKY_LEGGINGS);
         trimmedArmorItem(ModItems.SILKY_BOOTS);
+
+        withExistingParent(ModItems.SILKBUN_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     }
 
     // Shoutout to El_Redstoniano for making this
@@ -182,6 +184,12 @@ public class ModItemModelProvider extends ItemModelProvider {
         return withExistingParent(block.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
                 new ResourceLocation(BuntsyMod.MODID,"block/" + block.getId().getPath()));
+    }
+
+    private ItemModelBuilder specificCrossBlockItem (RegistryObject<Block> block, String extra){
+        return withExistingParent(block.getId().getPath(),
+                new ResourceLocation("item/generated")).texture("layer0",
+                new ResourceLocation(BuntsyMod.MODID,"block/" + block.getId().getPath() + extra));
     }
 
 

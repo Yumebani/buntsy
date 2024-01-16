@@ -34,6 +34,18 @@
   "block.buntsy.bravot_pressure_plate": "Bravot Pressure Plate",
   "block.buntsy.bravot_button": "Bravot Button",
 
+  "block.buntsy.pink_fluf_charmil_soil": "Pink Fluf Charmil Soil",
+  "block.buntsy.charmil_soil": "Charmil Soil",
+
+  "block.buntsy.pink_charmil_grass": "Pink Charmil Grass",
+  "block.buntsy.blue_charmil_grass": "Blue Charmil Grass",
+  "block.buntsy.pink_bloom": "Pink Bloom",
+  "block.buntsy.blue_bloom": "Blue Bloom",
+  "block.buntsy.loveshroom": "Loveshroom",
+  "block.buntsy.loveshroom_block": "Loveshroom Block",
+  "block.buntsy.glowshroom": "Glowshroom",
+  "block.buntsy.glowshroom_block": "Glowshroom Block",
+
   "block.buntsy.grinding_wheel": "Grinding Wheel",
   "block.buntsy.thread_reeler": "Thread Reeler",
   "block.buntsy.fairy_terrarium": "Fairy Terrarium",
@@ -74,6 +86,8 @@
   "item.buntsy.strawberry": "Strawberry",
   "item.buntsy.caramel_strawberries": "Caramel Strawberries",
   "item.buntsy.golden_strawberry": "Golden Strawberry",
+
+  "item.buntsy.silkbun_spawn_egg": "Silkbun Spawn Egg",
 
   "creativetab.buntsy_tab": "Buntsy"
 }
