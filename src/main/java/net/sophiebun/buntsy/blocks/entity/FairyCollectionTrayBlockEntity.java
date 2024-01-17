@@ -18,16 +18,14 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import net.sophiebun.buntsy.item.ModItems;
+import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
 import net.sophiebun.buntsy.item.custom.FairyFoodItem;
 import net.sophiebun.buntsy.recipe.GrindingWheelRecipe;
 import net.sophiebun.buntsy.recipe.TempRecipe;
@@ -39,9 +37,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class FairyTerrariumBlockEntity extends BlockEntity implements MenuProvider {
+public class FairyCollectionTrayBlockEntity extends FairyInteractBlockEntity implements MenuProvider {
 
-    private final ItemStackHandler itemHandler = new ItemStackHandler(21) {
+    private final ItemStackHandler itemHandler = new ItemStackHandler(15) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -51,28 +49,8 @@ public class FairyTerrariumBlockEntity extends BlockEntity implements MenuProvid
         }
     };
 
-    private static final int FAIRY_SLOT = 0;
-    private static final int FAIRY_FOOD_SLOT = 1;
-    private static final int FAIRY_FOOD_OUTPUT_SLOT = 2;
-    private static final int INFUSION_SLOT_START = 3;
-    private static final int INFUSION_SLOT_COUNT = 3;
-    private static final int OUTPUT_SLOT_START = 6;
+    private static final int OUTPUT_SLOT_START = 0;
     private static final int OUTPUT_SLOT_COUNT = 15;
-
-    private static final Map<Item, Integer> foodMaps = Map.of(
-            Items.SUGAR, 400,
-            Items.HONEY_BOTTLE, 800
-    );
-
-    private static final Map<Item, Float> chanceMaps = Map.of(
-            Items.SUGAR, 0.5f,
-            Items.HONEY_BOTTLE, 1f
-    );
-
-    //TEMPORARY
-    private static final List<TempRecipe> infusionRecipeList = List.of(
-            new TempRecipe(Ingredient.of(ModItems.AMETHYST_DUST.get()), new ItemStack(ModItems.FAIRY_DUST.get(), 1))
-    );
 
     protected final ContainerData data;
     private int food = 0;
@@ -90,16 +68,16 @@ public class FairyTerrariumBlockEntity extends BlockEntity implements MenuProvid
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
-    public FairyTerrariumBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(ModBlockEntities.FAIRY_TERRARIUM_BLOCK_ENTITY.get(), pPos, pBlockState);
+    public FairyCollectionTrayBlockEntity(BlockPos pPos, BlockState pBlockState) {
+        super(ModBlockEntities.FAIRY_FLOWER_TRAY_BLOCK_ENTITY.get(), pPos, pBlockState);
         this.data = new ContainerData() {
             @Override
             public int get(int i) {
                 return switch(i) {
-                    case 0 -> FairyTerrariumBlockEntity.this.food;
-                    case 1 -> FairyTerrariumBlockEntity.this.maxFood;
-                    case 2 -> Math.round(FairyTerrariumBlockEntity.this.chanceModifier * 100);
-                    case 3 -> FairyTerrariumBlockEntity.this.flowerValid ? 1 : 0;
+                    case 0 -> FairyCollectionTrayBlockEntity.this.food;
+                    case 1 -> FairyCollectionTrayBlockEntity.this.maxFood;
+                    case 2 -> Math.round(FairyCollectionTrayBlockEntity.this.chanceModifier * 100);
+                    case 3 -> FairyCollectionTrayBlockEntity.this.flowerValid ? 1 : 0;
                     default -> 0;
                 };
             }
@@ -107,10 +85,10 @@ public class FairyTerrariumBlockEntity extends BlockEntity implements MenuProvid
             @Override
             public void set(int i, int i1) {
                 switch(i) {
-                    case 0 -> FairyTerrariumBlockEntity.this.food = i1;
-                    case 1 -> FairyTerrariumBlockEntity.this.maxFood = i1;
-                    case 2 -> FairyTerrariumBlockEntity.this.chanceModifier = i1 / 100f;
-                    case 3 -> FairyTerrariumBlockEntity.this.flowerValid = i1 == 1;
+                    case 0 -> FairyCollectionTrayBlockEntity.this.food = i1;
+                    case 1 -> FairyCollectionTrayBlockEntity.this.maxFood = i1;
+                    case 2 -> FairyCollectionTrayBlockEntity.this.chanceModifier = i1 / 100f;
+                    case 3 -> FairyCollectionTrayBlockEntity.this.flowerValid = i1 == 1;
                 };
             }
 
@@ -121,14 +99,14 @@ public class FairyTerrariumBlockEntity extends BlockEntity implements MenuProvid
 
             public float getFloat(int i) {
                 return switch(i) {
-                    case 0 -> FairyTerrariumBlockEntity.this.chanceModifier;
+                    case 0 -> FairyCollectionTrayBlockEntity.this.chanceModifier;
                     default -> 0;
                 };
             }
 
             public void setFloat(int i, float i1) {
                 switch(i) {
-                    case 0 -> FairyTerrariumBlockEntity.this.chanceModifier = i1;
+                    case 0 -> FairyCollectionTrayBlockEntity.this.chanceModifier = i1;
                 };
             }
 
@@ -138,14 +116,14 @@ public class FairyTerrariumBlockEntity extends BlockEntity implements MenuProvid
 
             public boolean getBool(int i) {
                 return switch(i) {
-                    case 0 -> FairyTerrariumBlockEntity.this.flowerValid;
+                    case 0 -> FairyCollectionTrayBlockEntity.this.flowerValid;
                     default -> false;
                 };
             }
 
             public void setBool(int i, boolean i1) {
                 switch(i) {
-                    case 0 -> FairyTerrariumBlockEntity.this.flowerValid = i1;
+                    case 0 -> FairyCollectionTrayBlockEntity.this.flowerValid = i1;
                 };
             }
 

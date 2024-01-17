@@ -18,7 +18,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
-import net.sophiebun.buntsy.blocks.entity.GrindingWheelBlockEntity;
+import net.sophiebun.buntsy.blocks.entity.basicfairy.GrindingWheelBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import org.jetbrains.annotations.Nullable;
 

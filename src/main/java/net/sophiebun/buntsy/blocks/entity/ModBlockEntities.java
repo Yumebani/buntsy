@@ -1,6 +1,5 @@
 package net.sophiebun.buntsy.blocks.entity;
 
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -8,6 +7,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
+import net.sophiebun.buntsy.blocks.entity.basicfairy.GrindingWheelBlockEntity;
+import net.sophiebun.buntsy.blocks.entity.basicfairy.ThreadReelerBlockEntity;
 
 public class ModBlockEntities {
 
@@ -22,10 +23,14 @@ public class ModBlockEntities {
             blockEntityRegister.register("thread_reeler_block_entity",
                     () -> BlockEntityType.Builder.of(ThreadReelerBlockEntity::new,
                             ModBlocks.THREAD_REELER.get()).build(null));
-    public static final RegistryObject<BlockEntityType<FairyTerrariumBlockEntity>> FAIRY_TERRARIUM_BLOCK_ENTITY =
-            blockEntityRegister.register("fairy_terrarium_block_entity",
-                    () -> BlockEntityType.Builder.of(FairyTerrariumBlockEntity::new,
-                            ModBlocks.FAIRY_TERRARIUM.get()).build(null));
+    public static final RegistryObject<BlockEntityType<FairyCollectionTrayBlockEntity>> FAIRY_COLLECTION_TRAY_BLOCK_ENTITY =
+            blockEntityRegister.register("fairy_collection_tray_block_entity",
+                    () -> BlockEntityType.Builder.of(FairyCollectionTrayBlockEntity::new,
+                            ModBlocks..get()).build(null));
+    public static final RegistryObject<BlockEntityType<>> FAIRY_INFUSE_BENCH_BLOCK_ENTITY =
+            blockEntityRegister.register("fairy_infuse_bench_block_entity",
+                    () -> BlockEntityType.Builder.of(::new,
+                            ModBlocks..get()).build(null));
     public static final RegistryObject<BlockEntityType<OfferingBenchBlockEntity>> OFFERING_BENCH_BLOCK_ENTITY =
             blockEntityRegister.register("offering_bench_block_entity",
                     () -> BlockEntityType.Builder.of(OfferingBenchBlockEntity::new,

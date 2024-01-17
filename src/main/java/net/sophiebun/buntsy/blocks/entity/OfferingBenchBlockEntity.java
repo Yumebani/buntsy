@@ -28,6 +28,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.item.custom.FairyFoodItem;
 import net.sophiebun.buntsy.recipe.GrindingWheelRecipe;
@@ -40,7 +41,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class OfferingBenchBlockEntity extends BlockEntity implements MenuProvider {
+public class OfferingBenchBlockEntity extends FairyInteractBlockEntity implements MenuProvider {
 
     private final ItemStackHandler itemHandler = new ItemStackHandler(5) {
         @Override
@@ -144,10 +145,6 @@ public class OfferingBenchBlockEntity extends BlockEntity implements MenuProvide
     public void load(CompoundTag pTag) {
         super.load(pTag);
         this.itemHandler.deserializeNBT(pTag.getCompound("inventory"));
-    }
-
-    public boolean isValid(){
-        return this.level.getBlockState(this.getBlockPos().above(1)).isSolid();
     }
 
     public boolean hasFood() {

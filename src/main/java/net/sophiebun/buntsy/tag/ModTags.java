@@ -15,6 +15,9 @@ public class ModTags {
         public static final TagKey<Block> GENTLIT_LOGS = tag("gentlit_logs");
         public static final TagKey<Block> NEEDS_SIlKY_TOOL = tag("needs_silky_tool");
 
+        public static final TagKey<Block> FAIRY_MINERAL = tag("fairy_mineral");
+        public static final TagKey<Block> FAIRY_HARVESTABLES = tag("fully_grown_mineral");
+
         public static final TagKey<Block> SILKBUN_SPAWNABLE_ON = tag("silkbun_spawnable_on");
 
         private static TagKey<Block> tag(String name) {

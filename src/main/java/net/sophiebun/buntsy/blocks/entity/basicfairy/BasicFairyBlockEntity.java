@@ -3,23 +3,14 @@ package net.sophiebun.buntsy.blocks.entity.basicfairy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Containers;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -27,22 +18,15 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
-import net.sophiebun.buntsy.item.ModItems;
-import net.sophiebun.buntsy.item.custom.FairyFoodItem;
-import net.sophiebun.buntsy.recipe.GrindingWheelRecipe;
+import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
 import net.sophiebun.buntsy.recipe.TempRecipe;
-import net.sophiebun.buntsy.screen.GrindingWheelMenu;
-import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
-public class BasicFairyBlockEntity extends BlockEntity {
+public class BasicFairyBlockEntity extends FairyInteractBlockEntity {
 
     private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
         @Override
@@ -57,6 +41,7 @@ public class BasicFairyBlockEntity extends BlockEntity {
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
     private static final int SECONDARY_OUTPUT_SLOT = 2;
+    private static final int FAIRY_WEIGHT = 1;
 
     private static final List<TempRecipe> recipeList = new ArrayList<>();
 
@@ -64,7 +49,6 @@ public class BasicFairyBlockEntity extends BlockEntity {
     private int progress = 0;
     private int maxProgress = 200;
     private int nextRollChance = 0;
-    private boolean isEnchanted = false;
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
@@ -77,7 +61,7 @@ public class BasicFairyBlockEntity extends BlockEntity {
                     case 0 -> BasicFairyBlockEntity.this.progress;
                     case 1 -> BasicFairyBlockEntity.this.maxProgress;
                     case 2 -> BasicFairyBlockEntity.this.nextRollChance;
-                    case 3 -> BasicFairyBlockEntity.this.isEnchanted ? 1 : 0;
+                    case 3 -> BasicFairyBlockEntity.this.isEnchanted() ? 1 : 0;
                     default -> 0;
                 };
             }
@@ -88,7 +72,7 @@ public class BasicFairyBlockEntity extends BlockEntity {
                     case 0 -> BasicFairyBlockEntity.this.progress = i1;
                     case 1 -> BasicFairyBlockEntity.this.maxProgress = i1;
                     case 2 -> BasicFairyBlockEntity.this.nextRollChance = i1;
-                    case 3 -> BasicFairyBlockEntity.this.isEnchanted = i1 == 1;
+                    case 3 -> BasicFairyBlockEntity.this.setEnchanted(i1 == 1);
                 };
             }
 
@@ -134,7 +118,6 @@ public class BasicFairyBlockEntity extends BlockEntity {
         pTag.putInt("basic_fairy_block.progress", this.progress);
         pTag.putInt("basic_fairy_block.max_progress", this.maxProgress);
         pTag.putInt("basic_fairy_block.next_roll_chance", this.nextRollChance);
-        pTag.putBoolean("basic_fairy_block.is_enchanted", this.isEnchanted);
 
         super.saveAdditional(pTag);
     }
@@ -147,15 +130,11 @@ public class BasicFairyBlockEntity extends BlockEntity {
         this.progress = pTag.getInt("basic_fairy_block.progress");
         this.maxProgress = pTag.getInt("basic_fairy_block.max_progress");
         this.nextRollChance = pTag.getInt("basic_fairy_block.next_roll_chance");
-        this.isEnchanted = pTag.getBoolean("basic_fairy_block.is_enchanted");
     }
 
-    public boolean isEnchanted() {
-        return isEnchanted;
-    }
-
-    public void setEnchanted(boolean enchanted) {
-        isEnchanted = enchanted;
+    @Override
+    public int getFairyWeight() {
+        return FAIRY_WEIGHT;
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {

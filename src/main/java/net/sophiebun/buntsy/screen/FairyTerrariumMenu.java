@@ -10,14 +10,13 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
-import net.sophiebun.buntsy.blocks.entity.FairyTerrariumBlockEntity;
-import net.sophiebun.buntsy.blocks.entity.ThreadReelerBlockEntity;
+import net.sophiebun.buntsy.blocks.entity.FairyCollectionTrayBlockEntity;
 import net.sophiebun.buntsy.blocks.inventory.FairyInBottleSlot;
 import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
 
 public class FairyTerrariumMenu extends AbstractContainerMenu {
 
-    private final FairyTerrariumBlockEntity blockEntity;
+    private final FairyCollectionTrayBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
 
@@ -28,7 +27,7 @@ public class FairyTerrariumMenu extends AbstractContainerMenu {
     public FairyTerrariumMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModMenuTypes.FAIRY_TERRARIUM_MENU.get(), pContainerId);
         checkContainerSize(inv, 5);
-        blockEntity = ((FairyTerrariumBlockEntity) entity);
+        blockEntity = ((FairyCollectionTrayBlockEntity) entity);
         this.level = inv.player.level();
         this.data = data;
 

@@ -10,10 +10,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
-import net.sophiebun.buntsy.blocks.entity.GrindingWheelBlockEntity;
+import net.sophiebun.buntsy.blocks.entity.basicfairy.GrindingWheelBlockEntity;
 import net.sophiebun.buntsy.blocks.inventory.FairyInBottleSlot;
 import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
-import org.jetbrains.annotations.Nullable;
 
 public class GrindingWheelMenu extends AbstractContainerMenu {
 

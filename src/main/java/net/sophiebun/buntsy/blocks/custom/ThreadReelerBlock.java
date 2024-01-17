@@ -19,7 +19,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
-import net.sophiebun.buntsy.blocks.entity.ThreadReelerBlockEntity;
+import net.sophiebun.buntsy.blocks.entity.basicfairy.ThreadReelerBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class ThreadReelerBlock extends BaseEntityBlock {

@@ -32,11 +32,13 @@ public class TempRecipe {
         for (Map.Entry<Item, Map<Integer, Float>> itemEntry : results.entrySet()){
             ItemStack result = new ItemStack(itemEntry.getKey());
             for (Map.Entry<Integer, Float> chanceEntry : itemEntry.getValue().entrySet()){
-                if (chanceEntry.getValue() >= rollChance / 100){
+                if (chanceEntry.getValue() >= rollChance / 100f){
                     result.setCount(result.getCount() + chanceEntry.getKey());
                 }
             }
-            items.add(result);
+            if (result.getCount() > 0){
+                items.add(result);
+            }
         }
         return items;
     }

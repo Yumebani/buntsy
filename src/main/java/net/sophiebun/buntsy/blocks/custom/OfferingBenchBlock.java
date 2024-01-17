@@ -18,8 +18,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
-import net.sophiebun.buntsy.blocks.entity.FairyTerrariumBlockEntity;
-import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.OfferingBenchBlockEntity;
 import org.jetbrains.annotations.Nullable;
 

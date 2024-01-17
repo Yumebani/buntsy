@@ -18,7 +18,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
-import net.sophiebun.buntsy.blocks.entity.FairyTerrariumBlockEntity;
+import net.sophiebun.buntsy.blocks.entity.FairyCollectionTrayBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,15 +33,15 @@ public class FairyTerrariumBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new FairyTerrariumBlockEntity(blockPos, blockState);
+        return new FairyCollectionTrayBlockEntity(blockPos, blockState);
     }
 
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof FairyTerrariumBlockEntity) {
-                ((FairyTerrariumBlockEntity) blockEntity).drops();
+            if (blockEntity instanceof FairyCollectionTrayBlockEntity) {
+                ((FairyCollectionTrayBlockEntity) blockEntity).drops();
             }
         }
 
@@ -52,8 +52,8 @@ public class FairyTerrariumBlock extends BaseEntityBlock {
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof FairyTerrariumBlockEntity) {
-                NetworkHooks.openScreen((ServerPlayer) pPlayer,(FairyTerrariumBlockEntity) blockEntity, pPos);
+            if (blockEntity instanceof FairyCollectionTrayBlockEntity) {
+                NetworkHooks.openScreen((ServerPlayer) pPlayer,(FairyCollectionTrayBlockEntity) blockEntity, pPos);
             }
             else {
                 throw new IllegalStateException("No container provider.");
