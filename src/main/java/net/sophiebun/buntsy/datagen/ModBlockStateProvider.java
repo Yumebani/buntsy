@@ -99,7 +99,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(ModBlocks.GRINDING_WHEEL.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/grinding_wheel")));
         simpleBlockWithItem(ModBlocks.THREAD_REELER.get(),
-                new ModelFile.UncheckedModelFile(modLoc("block/thread_reeler")));
+                new ModelFile.UncheckedModelFile(modLoc("block/thread_reeler_item")));
         simpleBlockWithItem(ModBlocks.FAIRY_COLLECTION_TRAY.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/fairy_collection_tray")));
         simpleBlockWithItem(ModBlocks.FAIRY_INFUSION_BENCH.get(),

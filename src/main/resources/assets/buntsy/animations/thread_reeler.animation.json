@@ -1,0 +1,31 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.thread_reeler.rotate": {
+			"animation_length": 2,
+			"bones": {
+				"rotator": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"2.0": {
+							"vector": [0, 0, 360]
+						}
+					}
+				}
+			}
+		},
+		"animation.thread_reeler.idle": {
+			"loop": true,
+			"bones": {
+				"rotator": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

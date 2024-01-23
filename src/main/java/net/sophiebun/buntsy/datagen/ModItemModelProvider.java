@@ -126,6 +126,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.FAIRY_IN_A_BOTTLE);
         simpleItem(ModItems.FAIRY_STAFF);
 
+        //this.getBuilder(ForgeRegistries.BLOCKS.getKey(ModBlocks.THREAD_REELER.get()).getPath())
+        //        .parent(new ModelFile.UncheckedModelFile(modLoc("block/thread_reeler_item")));
+
         //Adding tools and armor
         handheldItem(ModItems.SILKY_SWORD);
         handheldItem(ModItems.SILKY_PICKAXE);

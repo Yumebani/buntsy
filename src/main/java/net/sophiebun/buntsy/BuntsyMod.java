@@ -2,6 +2,8 @@ package net.sophiebun.buntsy;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
@@ -17,6 +19,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
+import net.sophiebun.buntsy.blocks.entity.client.ThreadReelerBlockRenderer;
+import net.sophiebun.buntsy.datagen.ModBlockTagGenerator;
 import net.sophiebun.buntsy.entity.ModEntities;
 import net.sophiebun.buntsy.entity.client.FairyRenderer;
 import net.sophiebun.buntsy.entity.client.SilkbunRenderer;
@@ -31,6 +35,7 @@ import net.sophiebun.buntsy.worldgen.feature.ModFeatures;
 import net.sophiebun.buntsy.worldgen.tree.ModFoliagePlacers;
 import net.sophiebun.buntsy.worldgen.tree.ModTrunkPlacerTypes;
 import org.slf4j.Logger;
+import software.bernie.geckolib.GeckoLib;
 import terrablender.api.SurfaceRuleManager;
 
 import java.nio.channels.NetworkChannel;
@@ -46,6 +51,8 @@ public class BuntsyMod
     public BuntsyMod()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        GeckoLib.initialize();
 
         ModPacketHandler.register();
 
@@ -107,6 +114,8 @@ public class BuntsyMod
 
             EntityRenderers.register(ModEntities.SILKBUN_ENTITY.get(), SilkbunRenderer::new);
             EntityRenderers.register(ModEntities.FAIRY_ENTITY.get(), FairyRenderer::new);
+
+            BlockEntityRenderers.register(ModBlockEntities.THREAD_REELER_BLOCK_ENTITY.get(), ThreadReelerBlockRenderer::new);
         }
     }
 }

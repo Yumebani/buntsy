@@ -26,6 +26,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.sophiebun.buntsy.blocks.custom.entityblocks.ThreadReelerBlock;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.basicfairy.BasicFairyBlockEntity;
 import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
@@ -38,10 +39,19 @@ import net.sophiebun.buntsy.screen.ThreadReelerMenu;
 import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoBlockEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.*;
 
-public class ThreadReelerBlockEntity extends BasicFairyBlockEntity implements MenuProvider {
+public class ThreadReelerBlockEntity extends BasicFairyBlockEntity implements MenuProvider, GeoBlockEntity {
+
+    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private AnimationController<ThreadReelerBlockEntity> controller;
 
     //TEMPORARY
     private static final List<TempRecipe> recipeList = List.of(
@@ -79,5 +89,37 @@ public class ThreadReelerBlockEntity extends BasicFairyBlockEntity implements Me
     @Override
     public CompoundTag getUpdateTag() {
         return saveWithoutMetadata();
+    }
+
+    @Override
+    public void setAdditional(Level pLevel, BlockPos pPos, BlockState pState) {
+        boolean value = false;
+        if (canRun() && tempGetCurrentRecipe().getIngredients().getItems()[0].is(ModItems.MOLTED_MOTH_WINGS.get())){
+            value = true;
+        }
+
+        if (getBlockState().getValue(ThreadReelerBlock.SPECIAL_PROCESS) != value){
+            pState = pState.setValue(ThreadReelerBlock.SPECIAL_PROCESS, value);
+            pLevel.setBlock(pPos, pState, 3);
+            setChanged();
+            if (!level.isClientSide()){
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+            }
+        }
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controller = new AnimationController<>(this, "controller", 2, this::predicate);
+        controllers.add(controller);
+    }
+    private PlayState predicate(AnimationState<ThreadReelerBlockEntity> threadReelerBlockEntityAnimationState) {
+        threadReelerBlockEntityAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.thread_reeler.rotate", Animation.LoopType.LOOP));
+        return getBlockState().getValue(ThreadReelerBlock.RUNNING) ? PlayState.CONTINUE : PlayState.STOP;
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 }

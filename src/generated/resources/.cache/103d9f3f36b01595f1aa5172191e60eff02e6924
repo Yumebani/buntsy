@@ -1,4 +1,4 @@
-// 1.20.1	2024-01-15T18:56:21.316559573	Registries
+// 1.20.1	2024-01-23T17:46:45.69067661	Registries
 6cc62037a48689704ffdbd8025c6c60eac6f932f data/buntsy/worldgen/biome/cuterly_biome.json
 ab097dead8e291ea82b33a2aa6ca1ee8a40956c4 data/buntsy/worldgen/configured_feature/blue_bloom.json
 3d5f83129c7eab1697bef9f07fb0e9118e5c00a4 data/buntsy/worldgen/configured_feature/blue_charmil_grass.json
@@ -13,7 +13,7 @@ ed744c0cd0497b4a8adafcd2d271b9782ccbf418 data/buntsy/worldgen/configured_feature
 b62f806d31ec74ca2a82ddbed225f96eaa301f70 data/buntsy/worldgen/configured_feature/pink_bloom.json
 754d2f1c8c3e75592a5434094233636d0a79e077 data/buntsy/worldgen/configured_feature/pink_charmil_grass.json
 c10ce469ab10814b7fb57d5fd3d3a15bf26ddedf data/buntsy/worldgen/placed_feature/blue_bloom_placed.json
-1258d89464ec7fe96d673a4538c88663cb602ba2 data/buntsy/worldgen/placed_feature/blue_charmil_grass_placed.json
+0c5a6b35ca3d5501076863512c31a3a24e4ea889 data/buntsy/worldgen/placed_feature/blue_charmil_grass_placed.json
 eb52cc0363c7f5cb63a5a44b48d7da69491368e7 data/buntsy/worldgen/placed_feature/bravot_placed.json
 c10062308ed648b44c7e5a464a935051d3114a27 data/buntsy/worldgen/placed_feature/gentlit_placed.json
 66bde2ac312e61feca291c0d1cd49ba0ddf2a98a data/buntsy/worldgen/placed_feature/giant_glowshroom_placed.json
@@ -23,4 +23,4 @@ db7d3a75087b28a471d977daf4c1ed572adbd968 data/buntsy/worldgen/placed_feature/gro
 66ff989251565026b0198d6a35cc6e4835866550 data/buntsy/worldgen/placed_feature/grounded_gentlit_placed.json
 1db2284b57e2ab295eb818d7bd1b496f2d85b8cb data/buntsy/worldgen/placed_feature/loveshroom_placed.json
 c823be129d5e100e95f253960cb5d73419e38321 data/buntsy/worldgen/placed_feature/pink_bloom_placed.json
-cc088ba179e84d4a123ecd627b32a37b773f65ce data/buntsy/worldgen/placed_feature/pink_charmil_grass_placed.json
+80d6477ed6ab2509c16b510d2b94073830915d5b data/buntsy/worldgen/placed_feature/pink_charmil_grass_placed.json

@@ -344,6 +344,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
         for (BlockPos pos : getRegisteredBlockPosArray()){
             if (pos != null && pos.equals(blockEntity.getBlockPos())){
                 ((FairyInteractBlockEntity) level().getBlockEntity(pos)).setWatched(false);
+                ((FairyInteractBlockEntity) level().getBlockEntity(pos)).setEnchanted(false);
                 this.currentWeight -= this.registeredUtilBlockEntityPos.get(pos);
                 this.registeredUtilBlockEntityPos.remove(pos);
                 this.setUpdateBlocksFlag(true);
@@ -408,7 +409,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
 
         int loopCount = pCompound.getInt("fairy.registered_block_entity_count");
 
-        for (int i = loopCount - 1; i >= 0; i--){
+        for (int i = 0; i < loopCount; i++){
             this.registeredUtilBlockEntityPos.put(
                     NbtUtils.readBlockPos(pCompound.getCompound("fairy.registered_block_entity_pos_" + i)),
                     pCompound.getInt("fairy.registered_block_entity_weight_" + i));
@@ -801,6 +802,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
         }
 
         private void moveToGoal(){
+            System.out.println("Moving to goal");
             this.moveToBlock(this.nextTarget);
         }
 
@@ -861,7 +863,8 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
                     this.fairy.setBusy(false);
                 }
 
-                if ((!hasArrivedAtHarvest() && !hasReachedTarget) || (!hasArrivedAtTray() && collectionTime >= COLLECT_TIME)){
+                if ((!hasArrivedAtHarvest() && !hasReachedTarget) || (!hasArrivedAtTray() && fairy.hasCarriedItem())){
+                    System.out.println("Repathing");
                     moveAway();
                     repathTicks = 30;
                 }
@@ -1009,9 +1012,6 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
 
         @Override
         public boolean canUse() {
-            System.out.println("Can use test");
-            System.out.println(this.fairy.isTame());
-            System.out.println(getUpdateBlocksFlag());
             return this.fairy.isTame() && (this.fairy.getUpdateBlocksFlag() || requiresUpdate());
         }
 
@@ -1027,7 +1027,6 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
 
         @Override
         public void tick() {
-            System.out.println("Count of blocks: " + this.fairy.getRegisteredBlockPosArray().size());
 
             for (BlockPos pos : this.fairy.getRegisteredBlockPosArray()){
                 if (this.fairy.level().getBlockEntity(pos) == null){
@@ -1038,7 +1037,6 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
                     ((FairyInteractBlockEntity) this.fairy.level().getBlockEntity(pos)).setEnchanted(false);
                 }
                 else{
-                    System.out.println("Setting enchanted");
                     ((FairyInteractBlockEntity) this.fairy.level().getBlockEntity(pos)).setEnchanted(true);
                 }
             }

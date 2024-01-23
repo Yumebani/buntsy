@@ -12,6 +12,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -19,6 +20,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.sophiebun.buntsy.blocks.custom.entityblocks.ThreadReelerBlock;
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
 import net.sophiebun.buntsy.recipe.TempRecipe;
 import org.jetbrains.annotations.NotNull;
@@ -140,7 +142,11 @@ public class BasicFairyBlockEntity extends FairyInteractBlockEntity {
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
 
-        if (tempHasRecipe() && isEnchanted()){
+        setAdditional(pLevel, pPos, pState);
+
+        if (canRun()){
+
+            setRunning(pLevel, pPos, pState, true);
 
             if (!Mth.equal(getConsumption(), 1f)){
                 setConsumption(1f);
@@ -157,12 +163,32 @@ public class BasicFairyBlockEntity extends FairyInteractBlockEntity {
         }
         else{
 
+            setRunning(pLevel, pPos, pState, false);
+
             if (Mth.equal(getConsumption(), 1f)){
                 setConsumption(0);
             }
 
             resetProgress();
         }
+    }
+
+    public void setAdditional(Level pLevel, BlockPos pPos, BlockState pState) {
+    }
+
+    public void setRunning(Level pLevel, BlockPos pPos, BlockState pState, boolean b) {
+        if (getBlockState().getValue(ThreadReelerBlock.RUNNING) != b){
+            pState = pState.setValue(ThreadReelerBlock.RUNNING, b);
+            pLevel.setBlock(pPos, pState, 3);
+            setChanged();
+            if (!level.isClientSide()){
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+            }
+        }
+    }
+
+    public boolean canRun(){
+        return tempHasRecipe() && isEnchanted();
     }
 
     public void rollNewChance(){
@@ -180,6 +206,10 @@ public class BasicFairyBlockEntity extends FairyInteractBlockEntity {
         if (secondary != null){
             insertIntoSlot(SECONDARY_OUTPUT_SLOT, secondary);
         }
+    }
+
+    public ItemStack getInputStack(){
+        return this.itemHandler.getStackInSlot(INPUT_SLOT);
     }
 
     public void insertIntoSlot(int slot, ItemStack item){
