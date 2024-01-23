@@ -6,6 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerData;
@@ -141,6 +142,10 @@ public class BasicFairyBlockEntity extends FairyInteractBlockEntity {
 
         if (tempHasRecipe() && isEnchanted()){
 
+            if (!Mth.equal(getConsumption(), 1f)){
+                setConsumption(1f);
+            }
+
             increaseProgress();
 
             if (hasProgressFinished()){
@@ -151,6 +156,11 @@ public class BasicFairyBlockEntity extends FairyInteractBlockEntity {
             }
         }
         else{
+
+            if (Mth.equal(getConsumption(), 1f)){
+                setConsumption(0);
+            }
+
             resetProgress();
         }
     }
@@ -217,7 +227,7 @@ public class BasicFairyBlockEntity extends FairyInteractBlockEntity {
             inventory.setItem(i, this.itemHandler.getStackInSlot(i));
         }
 
-        for (TempRecipe recipe : recipeList){
+        for (TempRecipe recipe : getRecipeList()){
             if (recipe.isPresent(inventory, new int[]{INPUT_SLOT})){
                 return recipe;
             }
@@ -226,6 +236,9 @@ public class BasicFairyBlockEntity extends FairyInteractBlockEntity {
         return null;
     }
 
+    public List<TempRecipe> getRecipeList() {
+        return recipeList;
+    }
     /*
 
     private void craftItem() {

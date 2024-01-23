@@ -1,4 +1,4 @@
-// 1.20.1	2024-01-16T02:53:42.032542262	Item Models: buntsy
+// 1.20.1	2024-01-18T20:02:06.743953925	Item Models: buntsy
 eeb88518e910489d20bafae39dd12a926895cb2b assets/buntsy/models/item/amethyst_dust.json
 0f8ae319a35ecc071abb5ec3e2de7d458391059e assets/buntsy/models/item/blue_bloom.json
 845b039af840d1a5da1ab7ebc47784d867f1793d assets/buntsy/models/item/blue_charmil_grass.json
@@ -21,6 +21,8 @@ af5f90a07fbca34469854c02826e55a60d308f75 assets/buntsy/models/item/bravot_trapdo
 98b8e0e29a81f4934ae81a714059565311b2937b assets/buntsy/models/item/cocoon.json
 09a5f7477f960082bfd341e1e7219907bc5ca6f8 assets/buntsy/models/item/fairy_dust.json
 137c9a337fd1012885739f620245e488eb32251f assets/buntsy/models/item/fairy_in_a_bottle.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/buntsy/models/item/fairy_spawn_egg.json
+253f23129490fbf5394cd59e6aaa97c8633ed444 assets/buntsy/models/item/fairy_staff.json
 987d7b5ec3dd67527be099e0266b2c627135e7c2 assets/buntsy/models/item/gentlit_button.json
 1287e1f7c61fb3fcd053bad3b847c008d916257c assets/buntsy/models/item/gentlit_door.json
 0e8dc80ae17a99f518b08ca49bb85d35c72a583c assets/buntsy/models/item/gentlit_fence.json
@@ -39,10 +41,13 @@ a84b97762923c98b616bfb60464b1e194261e56d assets/buntsy/models/item/glowshroom.js
 48e7a740541c676250487cde94be81e201e957d8 assets/buntsy/models/item/glowshroom_block.json
 f7d6b46004a9cd53f0057f8d028d36ff488b5189 assets/buntsy/models/item/golden_strawberry.json
 0344d182dddeb406b96b2db65317999f52d66ce8 assets/buntsy/models/item/ground_hootnip.json
+ceae3b7a072603dc9209de9a3319ba71de50719f assets/buntsy/models/item/growable_amethyst_cluster.json
 f1f0bd1901ff8f2221bed6e00230862fe66affb0 assets/buntsy/models/item/hootnip.json
 71b38e218b182058f2ec486958b03467c08f0bff assets/buntsy/models/item/hootnip_cereal.json
+cb6fd2e97e667ba96df9de84ed3b539fb92c3590 assets/buntsy/models/item/large_growable_amethyst_cluster.json
 08f9e4cd2588b518484b1dbf627928c0813dfea0 assets/buntsy/models/item/loveshroom.json
 94ecea3eec47be4faecfd6345118b083dbd061f7 assets/buntsy/models/item/loveshroom_block.json
+d2bd401cec942c1b002c831da5831d97813299e2 assets/buntsy/models/item/medium_growable_amethyst_cluster.json
 9ae6c9115f08f75b07ccbb98cbd1131136f78db3 assets/buntsy/models/item/molted_moth_wings.json
 902eed895819d241d131c906f1804f538c14f9be assets/buntsy/models/item/moth_wing_thread.json
 5fa8c5d74e0374fcdf92e0f6f2727c565d1891f1 assets/buntsy/models/item/pink_bloom.json
@@ -103,6 +108,7 @@ fef6aa1ab48fd43614177642115daec1ae49e78f assets/buntsy/models/item/silky_legging
 6009c7ce54c1c0c087e8222173f45fb3d2468c99 assets/buntsy/models/item/silky_pickaxe.json
 eac87e9feb0765b254d24a3547afffcbef6edcdf assets/buntsy/models/item/silky_shovel.json
 6310d66c2a43dd426e364d5541f21d0fc4d9e1fa assets/buntsy/models/item/silky_sword.json
+4f3d6637b9ce2eb9682778b52c4f4849c7dde48e assets/buntsy/models/item/small_growable_amethyst_cluster.json
 2dc7ea4e772143dc1ead0d838368d9abd4bc1103 assets/buntsy/models/item/strawberry.json
 42624a2f53f75bc32e18c78b1f6e0f9c33bf8a98 assets/buntsy/models/item/stripped_bravot_log.json
 9679d32451ccd6f19bbf5faf5761fe1e7a64d790 assets/buntsy/models/item/stripped_bravot_wood.json

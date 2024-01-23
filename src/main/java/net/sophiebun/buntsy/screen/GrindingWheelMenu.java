@@ -21,12 +21,12 @@ public class GrindingWheelMenu extends AbstractContainerMenu {
     private final ContainerData data;
 
     protected GrindingWheelMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(5));
+        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
 
     public GrindingWheelMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModMenuTypes.GRINDING_WHEEL_MENU.get(), pContainerId);
-        checkContainerSize(inv, 5);
+        checkContainerSize(inv, 3);
         blockEntity = ((GrindingWheelBlockEntity) entity);
         this.level = inv.player.level();
         this.data = data;
@@ -35,11 +35,9 @@ public class GrindingWheelMenu extends AbstractContainerMenu {
         addPlayerInventory(inv);
 
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
-            this.addSlot(new FairyInBottleSlot(iItemHandler, 0, 13, 17));
-            this.addSlot(new SlotItemHandler(iItemHandler, 1, 13, 35));
-            this.addSlot(new OutputSlot(iItemHandler, 2, 13, 53));
-            this.addSlot(new SlotItemHandler(iItemHandler, 3, 69, 25));
-            this.addSlot(new OutputSlot(iItemHandler, 4, 132, 35));
+            this.addSlot(new SlotItemHandler(iItemHandler, 0, 40, 25));
+            this.addSlot(new OutputSlot(iItemHandler, 1, 103, 35));
+            this.addSlot(new OutputSlot(iItemHandler, 2, 121, 35));
         });
 
         addDataSlots(data);
@@ -63,7 +61,7 @@ public class GrindingWheelMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 5;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 3;  // must be the number of slots you have!
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);
@@ -117,16 +115,8 @@ public class GrindingWheelMenu extends AbstractContainerMenu {
         }
     }
 
-    public boolean isCrafting() {
-        return data.get(0) > 0;
-    }
-
-    public int getScaledFood() {
-
-        int food = this.data.get(2);
-        int maxFood = this.data.get(3);
-
-        return maxFood != 0 && food != 0 ? food * 57 / maxFood : 0;
+    public boolean isEnchanted() {
+        return data.get(3) > 0;
     }
 
     public int getScaledProgress() {

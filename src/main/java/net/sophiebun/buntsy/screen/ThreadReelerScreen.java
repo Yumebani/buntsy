@@ -21,7 +21,7 @@ public class ThreadReelerScreen extends AbstractContainerScreen<ThreadReelerMenu
     @Override
     protected void init() {
         super.init();
-        this.titleLabelX = 77;
+        this.titleLabelX = 57;
     }
 
     @Override
@@ -36,21 +36,17 @@ public class ThreadReelerScreen extends AbstractContainerScreen<ThreadReelerMenu
 
         renderActionIcon(guiGraphics, x, y);
         renderProgressArrow(guiGraphics, x, y);
-        renderFoodBar(guiGraphics, x, y);
     }
 
     private void renderActionIcon(GuiGraphics guiGraphics, int x, int y) {
-        if(menu.isCrafting()) {
-            guiGraphics.blit(TEXTURE, x + 68, y + 47, 176, 17, 18, 18);
+        if(menu.isEnchanted()) {
+            guiGraphics.blit(TEXTURE, x + 39, y + 47, 176, 17, 18, 18);
         }
     }
     private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
-        if(menu.isCrafting()) {
-            guiGraphics.blit(TEXTURE, x + 95, y + 35, 176, 0, menu.getScaledProgress(), 17);
+        if(menu.isEnchanted()) {
+            guiGraphics.blit(TEXTURE, x + 66, y + 35, 176, 0, menu.getScaledProgress(), 17);
         }
-    }
-    private void renderFoodBar(GuiGraphics guiGraphics, int x, int y) {
-        guiGraphics.blit(TEXTURE, x + 36, y + 71 - menu.getScaledFood(), 176, 92 - menu.getScaledFood(), 14, menu.getScaledFood());
     }
 
     @Override

@@ -86,7 +86,7 @@ public class SilkbunModel<T extends Entity> extends HierarchicalModel<T> {
 
 		this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
 
-		this.animateWalk(ModAnimationDefinitions.SILKBUN_JUMP, 0, 0, 2f, 2.5f);
+		//this.animateWalk(ModAnimationDefinitions.SILKBUN_JUMP, 0, 0, 2f, 2.5f);
 		this.animate(((Silkbun) entity).initAnimationState, ModAnimationDefinitions.SILKBUN_INIT, ageInTicks, 1);
 		this.animate(((Silkbun) entity).idleAnimationState, ModAnimationDefinitions.SILKBUN_IDLE, ageInTicks, 1);
 		this.animate(((Silkbun) entity).jumpAnimationState, ModAnimationDefinitions.SILKBUN_JUMP, ageInTicks, 1);

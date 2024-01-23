@@ -68,8 +68,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.GOLDEN_STRAWBERRY);
         simpleItem(ModItems.BOWL_OF_ROCKCANDY);
 
-        simpleItem(ModItems.FAIRY_IN_A_BOTTLE);
-
         evenSimplerBlockItem(ModBlocks.GENTLIT_LOG);
         evenSimplerBlockItem(ModBlocks.STRIPPED_GENTLIT_LOG);
         evenSimplerBlockItem(ModBlocks.GENTLIT_WOOD);
@@ -118,6 +116,17 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemNonBlockDependent(ModBlocks.LOVESHROOM_BLOCK);
         blockItemNonBlockDependent(ModBlocks.GLOWSHROOM_BLOCK);
 
+        //Adding mineral blocks
+        simpleCrossBlockItem(ModBlocks.GROWABLE_AMETHYST_CLUSTER);
+        simpleCrossBlockItem(ModBlocks.LARGE_GROWABLE_AMETHYST_CLUSTER);
+        simpleCrossBlockItem(ModBlocks.MEDIUM_GROWABLE_AMETHYST_CLUSTER);
+        simpleCrossBlockItem(ModBlocks.SMALL_GROWABLE_AMETHYST_CLUSTER);
+
+        //Fairy utils
+        simpleItem(ModItems.FAIRY_IN_A_BOTTLE);
+        simpleItem(ModItems.FAIRY_STAFF);
+
+        //Adding tools and armor
         handheldItem(ModItems.SILKY_SWORD);
         handheldItem(ModItems.SILKY_PICKAXE);
         handheldItem(ModItems.SILKY_AXE);
@@ -130,6 +139,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(ModItems.SILKY_BOOTS);
 
         withExistingParent(ModItems.SILKBUN_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.FAIRY_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     }
 
     // Shoutout to El_Redstoniano for making this

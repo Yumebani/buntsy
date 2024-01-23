@@ -16,6 +16,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.custom.*;
+import net.sophiebun.buntsy.blocks.custom.entityblocks.*;
+import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.worldgen.ModConfiguredFeatures;
 import net.sophiebun.buntsy.worldgen.tree.BravotTreeGrower;
@@ -137,7 +139,6 @@ public class ModBlocks {
                     return 5;
                 }
             });
-
     public static final RegistryObject<Block> GLOWSHROOM_BLOCK = registerBlock("glowshroom_block",
             () -> new HugeMushroomBlock(BlockBehaviour.Properties.copy(Blocks.RED_MUSHROOM_BLOCK)){
                 @Override
@@ -146,13 +147,27 @@ public class ModBlocks {
                 }
             });
 
+    //Fairy minerals
+    public static final RegistryObject<Block> GROWABLE_AMETHYST_CLUSTER = registerBlock("growable_amethyst_cluster",
+            () -> new ModGrowableMineral((byte) 0, 3,7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> LARGE_GROWABLE_AMETHYST_CLUSTER = registerBlock("large_growable_amethyst_cluster",
+            () -> new ModGrowableMineral((byte) 0, 2,5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> MEDIUM_GROWABLE_AMETHYST_CLUSTER = registerBlock("medium_growable_amethyst_cluster",
+            () -> new ModGrowableMineral((byte) 0, 1,4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> SMALL_GROWABLE_AMETHYST_CLUSTER = registerBlock("small_growable_amethyst_cluster",
+            () -> new ModGrowableMineral((byte) 0, 0,3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+
     //Block entities
+    public static final RegistryObject<Block> FAIRY_OFFERING_BENCH = registerBlock("fairy_offering_bench",
+            () -> new FairyOfferingBenchBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
     public static final RegistryObject<Block> GRINDING_WHEEL = registerBlock("grinding_wheel",
             () -> new GrindingWheelBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));
     public static final RegistryObject<Block> THREAD_REELER = registerBlock("thread_reeler",
             () -> new ThreadReelerBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
-    public static final RegistryObject<Block> FAIRY_TERRARIUM = registerBlock("fairy_terrarium",
-            () -> new FairyTerrariumBlock(BlockBehaviour.Properties.copy(Blocks.GLASS).noOcclusion()));
+    public static final RegistryObject<Block> FAIRY_COLLECTION_TRAY = registerBlock("fairy_collection_tray",
+            () -> new FairyCollectionTrayBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
+    public static final RegistryObject<Block> FAIRY_INFUSION_BENCH = registerBlock("fairy_infusion_bench",
+            () -> new FairyInfusionBenchBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){
         RegistryObject<T> toRet = BlocksRegister.register(name, block);

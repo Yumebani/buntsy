@@ -72,6 +72,11 @@ public class GrindingWheelBlockEntity extends BasicFairyBlockEntity implements M
         return new GrindingWheelMenu(i, inventory, this, this.data);
     }
 
+    @Override
+    public List<TempRecipe> getRecipeList() {
+        return recipeList;
+    }
+
     @Nullable
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {

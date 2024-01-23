@@ -16,7 +16,8 @@ public class ModTags {
         public static final TagKey<Block> NEEDS_SIlKY_TOOL = tag("needs_silky_tool");
 
         public static final TagKey<Block> FAIRY_MINERAL = tag("fairy_mineral");
-        public static final TagKey<Block> FAIRY_HARVESTABLES = tag("fully_grown_mineral");
+        public static final TagKey<Block> FAIRY_HARVESTABLE = tag("fairy_harvestable");
+        public static final TagKey<Block> FAIRY_INTERACTABLE_BLOCK_ENTITY = tag("fairy_interactable_block_entity");
 
         public static final TagKey<Block> SILKBUN_SPAWNABLE_ON = tag("silkbun_spawnable_on");
 

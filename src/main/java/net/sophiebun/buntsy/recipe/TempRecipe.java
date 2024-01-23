@@ -30,14 +30,14 @@ public class TempRecipe {
     public List<ItemStack> getResults(int rollChance) {
         List<ItemStack> items = new ArrayList<>();
         for (Map.Entry<Item, Map<Integer, Float>> itemEntry : results.entrySet()){
-            ItemStack result = new ItemStack(itemEntry.getKey());
+            int finalCount = 0;
             for (Map.Entry<Integer, Float> chanceEntry : itemEntry.getValue().entrySet()){
                 if (chanceEntry.getValue() >= rollChance / 100f){
-                    result.setCount(result.getCount() + chanceEntry.getKey());
+                    finalCount += chanceEntry.getKey();
                 }
             }
-            if (result.getCount() > 0){
-                items.add(result);
+            if (finalCount > 0){
+                items.add(new ItemStack(itemEntry.getKey(), finalCount));
             }
         }
         return items;

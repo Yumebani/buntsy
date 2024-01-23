@@ -74,6 +74,17 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
                 .add(ModBlocks.CHARMIL_SOIL.get());
 
+        this.tag(ModTags.Blocks.FAIRY_INTERACTABLE_BLOCK_ENTITY)
+                .add(ModBlocks.FAIRY_OFFERING_BENCH.get())
+                .add(ModBlocks.GRINDING_WHEEL.get())
+                .add(ModBlocks.THREAD_REELER.get())
+                .add(ModBlocks.FAIRY_COLLECTION_TRAY.get())
+                .add(ModBlocks.FAIRY_INFUSION_BENCH.get());
+
+        this.tag(ModTags.Blocks.FAIRY_HARVESTABLE)
+                .addTag(BlockTags.FLOWERS)
+                .add(ModBlocks.GROWABLE_AMETHYST_CLUSTER.get());
+
         this.tag(BlockTags.PLANKS)
                 .add(ModBlocks.GENTLIT_PLANKS.get());
     }

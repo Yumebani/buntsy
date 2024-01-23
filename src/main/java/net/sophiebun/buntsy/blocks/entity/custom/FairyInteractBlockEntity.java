@@ -30,6 +30,7 @@ public class FairyInteractBlockEntity extends BlockEntity {
 
     private static final int FAIRY_WEIGHT = 1;
 
+    private boolean isWatched = false;
     private boolean isEnchanted = false;
     private float consumption;
 
@@ -39,7 +40,9 @@ public class FairyInteractBlockEntity extends BlockEntity {
 
     @Override
     protected void saveAdditional(CompoundTag pTag) {
-        pTag.putBoolean("basic_fairy_block.is_enchanted", this.isEnchanted);
+        pTag.putFloat("fairy_interaction_block.consumption", this.consumption);
+        pTag.putBoolean("fairy_interaction_block.is_enchanted", this.isEnchanted);
+        pTag.putBoolean("fairy_interaction_block.is_watched", this.isWatched);
 
         super.saveAdditional(pTag);
     }
@@ -48,7 +51,17 @@ public class FairyInteractBlockEntity extends BlockEntity {
     public void load(CompoundTag pTag) {
         super.load(pTag);
 
-        this.isEnchanted = pTag.getBoolean("basic_fairy_block.is_enchanted");
+        this.consumption = pTag.getFloat("fairy_interaction_block.consumption");
+        this.isEnchanted = pTag.getBoolean("fairy_interaction_block.is_enchanted");
+        this.isWatched = pTag.getBoolean("fairy_interaction_block.is_watched");
+    }
+
+    public boolean isWatched() {
+        return isWatched;
+    }
+
+    public void setWatched(boolean watched) {
+        isWatched = watched;
     }
 
     public boolean isEnchanted() {
@@ -72,6 +85,6 @@ public class FairyInteractBlockEntity extends BlockEntity {
     }
 
     public boolean isValidForInteraction(){
-        return this.level.getBlockState(this.getBlockPos().above(1)).isSolid();
+        return !this.level.getBlockState(this.getBlockPos().above(1)).isSolid();
     }
 }

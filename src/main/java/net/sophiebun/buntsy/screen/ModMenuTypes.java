@@ -10,18 +10,20 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 
-import java.awt.*;
-
 public class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MenusRegister =
             DeferredRegister.create(ForgeRegistries.MENU_TYPES, BuntsyMod.MODID);
 
+    public static final RegistryObject<MenuType<FairyOfferingBenchMenu>> FAIRY_OFFERING_BENCH_MENU =
+            registerMenuType("fairy_offering_bench_menu", FairyOfferingBenchMenu::new);
     public static final RegistryObject<MenuType<GrindingWheelMenu>> GRINDING_WHEEL_MENU =
             registerMenuType("grinding_wheel_menu", GrindingWheelMenu::new);
     public static final RegistryObject<MenuType<ThreadReelerMenu>> THREAD_REELER_MENU =
             registerMenuType("thread_reeler_menu", ThreadReelerMenu::new);
-    public static final RegistryObject<MenuType<FairyTerrariumMenu>> FAIRY_TERRARIUM_MENU =
-            registerMenuType("fairy_terrarium_menu", FairyTerrariumMenu::new);
+    public static final RegistryObject<MenuType<FairyCollectionTrayMenu>> FAIRY_COLLECTION_TRAY_MENU =
+            registerMenuType("fairy_collection_tray_menu", FairyCollectionTrayMenu::new);
+    public static final RegistryObject<MenuType<FairyInfusionBenchMenu>> FAIRY_INFUSION_BENCH_MENU =
+            registerMenuType("fairy_infusion_bench_menu", FairyInfusionBenchMenu::new);
 
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory){
         return MenusRegister.register(name, () -> IForgeMenuType.create(factory));

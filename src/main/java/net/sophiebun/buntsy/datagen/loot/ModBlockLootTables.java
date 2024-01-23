@@ -2,6 +2,7 @@ package net.sophiebun.buntsy.datagen.loot;
 
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.blocks.ModBlocks;
@@ -73,12 +74,18 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlocks.LOVESHROOM_BLOCK.get(), block -> createMushroomBlockDrop(block, ModBlocks.LOVESHROOM.get()));
         this.add(ModBlocks.GLOWSHROOM_BLOCK.get(), block -> createMushroomBlockDrop(block, ModBlocks.GLOWSHROOM.get()));
 
+        //Adding minerals
+        this.add(ModBlocks.GROWABLE_AMETHYST_CLUSTER.get(), block -> createOreDrop(block, Items.AMETHYST_SHARD));
+        this.add(ModBlocks.LARGE_GROWABLE_AMETHYST_CLUSTER.get(), block -> createSilkTouchOnlyTable(block));
+        this.add(ModBlocks.MEDIUM_GROWABLE_AMETHYST_CLUSTER.get(), block -> createSilkTouchOnlyTable(block));
+        this.add(ModBlocks.SMALL_GROWABLE_AMETHYST_CLUSTER.get(), block -> createSilkTouchOnlyTable(block));
+
         //Adding tile entities
+        this.dropSelf(ModBlocks.FAIRY_OFFERING_BENCH.get());
         this.dropSelf(ModBlocks.GRINDING_WHEEL.get());
         this.dropSelf(ModBlocks.THREAD_REELER.get());
-        this.dropSelf(ModBlocks.FAIRY_TERRARIUM.get());
-
-        //createRedstoneOreDrops();
+        this.dropSelf(ModBlocks.FAIRY_COLLECTION_TRAY.get());
+        this.dropSelf(ModBlocks.FAIRY_INFUSION_BENCH.get());
     }
 
     @Override

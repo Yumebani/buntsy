@@ -1,15 +1,21 @@
 package net.sophiebun.buntsy.datagen;
 
 import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraftforge.client.model.IModelBuilder;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
+import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
+
+import java.util.Properties;
 
 public class ModBlockStateProvider extends BlockStateProvider {
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -81,13 +87,23 @@ public class ModBlockStateProvider extends BlockStateProvider {
         mushroomBlock(ModBlocks.LOVESHROOM_BLOCK); //Item added in item model gen
         mushroomBlock(ModBlocks.GLOWSHROOM_BLOCK); //Item added in item model gen
 
+        //Minerals
+        crystalBlock(ModBlocks.GROWABLE_AMETHYST_CLUSTER);
+        crystalBlock(ModBlocks.LARGE_GROWABLE_AMETHYST_CLUSTER);
+        crystalBlock(ModBlocks.MEDIUM_GROWABLE_AMETHYST_CLUSTER);
+        crystalBlock(ModBlocks.SMALL_GROWABLE_AMETHYST_CLUSTER);
+
         //Block entities
+        simpleBlockWithItem(ModBlocks.FAIRY_OFFERING_BENCH.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/fairy_offering_bench")));
         simpleBlockWithItem(ModBlocks.GRINDING_WHEEL.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/grinding_wheel")));
         simpleBlockWithItem(ModBlocks.THREAD_REELER.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/thread_reeler")));
-        simpleBlockWithItem(ModBlocks.FAIRY_TERRARIUM.get(),
-                new ModelFile.UncheckedModelFile(modLoc("block/fairy_terrarium")));
+        simpleBlockWithItem(ModBlocks.FAIRY_COLLECTION_TRAY.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/fairy_collection_tray")));
+        simpleBlockWithItem(ModBlocks.FAIRY_INFUSION_BENCH.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/fairy_infusion_bench")));
     }
 
     private void pottedPlant(RegistryObject<Block> registryObject, RegistryObject<Block> plant){
@@ -108,6 +124,24 @@ public class ModBlockStateProvider extends BlockStateProvider {
                     .modelFile(var2).weight(2).nextModel()
                     .modelFile(var3).weight(1)
                     .build());
+    }
+
+    private void crystalBlock(RegistryObject<Block> registryObject){
+        BlockModelBuilder base = getCrossModel(registryObject, "");
+
+        getVariantBuilder(registryObject.get()).partialState()
+                .with(ModGrowableMineral.FACING, Direction.DOWN)
+                .modelForState().modelFile(base).rotationX(180).addModel().partialState()
+                .with(ModGrowableMineral.FACING, Direction.EAST)
+                .modelForState().modelFile(base).rotationX(90).rotationY(90).addModel().partialState()
+                .with(ModGrowableMineral.FACING, Direction.NORTH)
+                .modelForState().modelFile(base).rotationX(90).addModel().partialState()
+                .with(ModGrowableMineral.FACING, Direction.SOUTH)
+                .modelForState().modelFile(base).rotationX(90).rotationY(180).addModel().partialState()
+                .with(ModGrowableMineral.FACING, Direction.UP)
+                .modelForState().modelFile(base).addModel().partialState()
+                .with(ModGrowableMineral.FACING, Direction.WEST)
+                .modelForState().modelFile(base).rotationX(90).rotationY(270).addModel().partialState();
     }
 
     private BlockModelBuilder getCrossModel(RegistryObject<Block> registryObject, String var){

@@ -22,7 +22,7 @@ public class SilkbunRenderer extends MobRenderer<Silkbun, SilkbunModel<Silkbun>>
     public void render(Silkbun pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
 
         if (pEntity.isBaby()){
-            pPoseStack.scale(0.75f, 0.75f, 0.75f);
+            pPoseStack.scale(0.5f, 0.5f, 0.5f);
         }
 
         super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);

@@ -1,6 +1,5 @@
 package net.sophiebun.buntsy.item;
 
-import net.minecraft.world.flag.FeatureFlag;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -13,6 +12,7 @@ import net.sophiebun.buntsy.entity.ModEntities;
 import net.sophiebun.buntsy.item.custom.BowlFoodFairyFoodItem;
 import net.sophiebun.buntsy.item.custom.FairyBottle;
 import net.sophiebun.buntsy.item.custom.FairyFoodItem;
+import net.sophiebun.buntsy.item.custom.FairyStaff;
 
 public class ModItems {
     public static final DeferredRegister<Item> ItemsRegister =
@@ -90,10 +90,13 @@ public class ModItems {
 
     public static final RegistryObject<Item> FAIRY_IN_A_BOTTLE = ItemsRegister.register(
             "fairy_in_a_bottle", () -> new FairyBottle(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> FAIRY_STAFF = ItemsRegister.register(
+            "fairy_staff", () -> new FairyStaff(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> SILKBUN_SPAWN_EGG = ItemsRegister.register(
             "silkbun_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.SILKBUN_ENTITY, 0xfdf4f7, 0x673f4e , new Item.Properties()));
-
+    public static final RegistryObject<Item> FAIRY_SPAWN_EGG = ItemsRegister.register(
+            "fairy_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.FAIRY_ENTITY, 0xfae54e, 0xfff4ac , new Item.Properties()));
 
     public static void register(IEventBus eventBus){
         ItemsRegister.register(eventBus);

@@ -46,9 +46,16 @@
   "block.buntsy.glowshroom": "Glowshroom",
   "block.buntsy.glowshroom_block": "Glowshroom Block",
 
+  "block.buntsy.growable_amethyst_cluster": "Growable Amethyst Cluster",
+  "block.buntsy.large_growable_amethyst_cluster": "Large Growable Amethyst Cluster",
+  "block.buntsy.medium_growable_amethyst_cluster": "Medium Growable Amethyst Cluster",
+  "block.buntsy.small_growable_amethyst_cluster": "Small Growable Amethyst Cluster",
+
+  "block.buntsy.fairy_offering_bench": "Fairy Offering Bench",
   "block.buntsy.grinding_wheel": "Grinding Wheel",
   "block.buntsy.thread_reeler": "Thread Reeler",
-  "block.buntsy.fairy_terrarium": "Fairy Terrarium",
+  "block.buntsy.fairy_collection_tray": "Fairy Collection Tray",
+  "block.buntsy.fairy_infusion_bench": "Fairy Infusion Bench",
 
 
   "item.buntsy.amethyst_dust": "Amethyst Dust",
@@ -73,7 +80,6 @@
   "item.buntsy.silky_chestplate": "Silky Chestplate",
   "item.buntsy.silky_leggings": "Silky Leggings",
   "item.buntsy.silky_boots": "Silky Boots",
-  "item.buntsy.fairy_in_a_bottle": "Fairy in a Bottle",
 
   "item.buntsy.hootnip": "Hootnip",
   "item.buntsy.ground_hootnip": "Ground Hootnip",
@@ -87,7 +93,14 @@
   "item.buntsy.caramel_strawberries": "Caramel Strawberries",
   "item.buntsy.golden_strawberry": "Golden Strawberry",
 
+  "item.buntsy.fairy_in_a_bottle": "Fairy in a Bottle",
+  "item.buntsy.fairy_staff": "Fairy Staff",
+
   "item.buntsy.silkbun_spawn_egg": "Silkbun Spawn Egg",
+  "item.buntsy.fairy_spawn_egg": "Fairy Spawn Egg",
+
+  "entity.buntsy.fairy": "Fairy",
+  "entity.buntsy.silkbun": "Silkbun",
 
   "creativetab.buntsy_tab": "Buntsy"
 }

@@ -3,12 +3,16 @@ package net.sophiebun.buntsy.entity.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.Entity;
+import net.sophiebun.buntsy.entity.animals.Fairy;
+import net.sophiebun.buntsy.entity.animals.Silkbun;
+import net.sophiebun.buntsy.entity.animations.ModAnimationDefinitions;
 
-public class FairyModel<T extends Entity> extends EntityModel<T> {
+public class FairyModel<T extends Entity> extends HierarchicalModel<T> {
 
 	private final ModelPart Fairy;
 
@@ -37,11 +41,18 @@ public class FairyModel<T extends Entity> extends EntityModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.root().getAllParts().forEach(ModelPart::resetPose);
 
+		this.animate(((Fairy) entity).flyAnimationState, ModAnimationDefinitions.FAIRY_FLY, ageInTicks, 1);
 	}
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		Fairy.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+	}
+
+	@Override
+	public ModelPart root() {
+		return Fairy;
 	}
 }

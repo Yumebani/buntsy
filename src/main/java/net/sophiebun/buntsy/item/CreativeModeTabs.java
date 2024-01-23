@@ -68,10 +68,18 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.BRAVOT_PRESSURE_PLATE.get());
                         pOutput.accept(ModBlocks.BRAVOT_BUTTON.get());
 
+                        pOutput.accept(ModBlocks.GROWABLE_AMETHYST_CLUSTER.get());
+                        pOutput.accept(ModBlocks.LARGE_GROWABLE_AMETHYST_CLUSTER.get());
+                        pOutput.accept(ModBlocks.MEDIUM_GROWABLE_AMETHYST_CLUSTER.get());
+                        pOutput.accept(ModBlocks.SMALL_GROWABLE_AMETHYST_CLUSTER.get());
+
+                        pOutput.accept(ModBlocks.FAIRY_OFFERING_BENCH.get());
                         pOutput.accept(ModBlocks.GRINDING_WHEEL.get());
                         pOutput.accept(ModBlocks.THREAD_REELER.get());
-                        pOutput.accept(ModBlocks.FAIRY_TERRARIUM.get());
+                        pOutput.accept(ModBlocks.FAIRY_COLLECTION_TRAY.get());
+                        pOutput.accept(ModBlocks.FAIRY_INFUSION_BENCH.get());
 
+                        pOutput.accept(ModItems.FAIRY_STAFF.get());
 
                         pOutput.accept(ModItems.AMETHYST_DUST.get());
                         pOutput.accept(ModItems.FAIRY_DUST.get());
@@ -110,6 +118,7 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.GOLDEN_STRAWBERRY.get());
 
                         pOutput.accept(ModItems.SILKBUN_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.FAIRY_SPAWN_EGG.get());
 
                     })
                     .build());
