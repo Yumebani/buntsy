@@ -27,6 +27,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.sophiebun.buntsy.blocks.custom.entityblocks.ThreadReelerBlock;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.basicfairy.BasicFairyBlockEntity;
 import net.sophiebun.buntsy.item.ModItems;
@@ -38,6 +39,11 @@ import net.sophiebun.buntsy.screen.GrindingWheelMenu;
 import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoBlockEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,8 +51,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class GrindingWheelBlockEntity extends BasicFairyBlockEntity implements MenuProvider {
+public class GrindingWheelBlockEntity extends BasicFairyBlockEntity implements MenuProvider, GeoBlockEntity {
 
+    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private AnimationController<GrindingWheelBlockEntity> controller;
 
     //TEMPORARY
     private static final List<TempRecipe> recipeList = List.of(
@@ -70,6 +78,22 @@ public class GrindingWheelBlockEntity extends BasicFairyBlockEntity implements M
     @Override
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
         return new GrindingWheelMenu(i, inventory, this, this.data);
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controller = new AnimationController<>(this, "controller", 2, this::predicate);
+        controllers.add(controller);
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
+    private PlayState predicate(AnimationState<GrindingWheelBlockEntity> threadReelerBlockEntityAnimationState) {
+        threadReelerBlockEntityAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.grinding_wheel.rotate", Animation.LoopType.LOOP));
+        return getBlockState().getValue(ThreadReelerBlock.RUNNING) ? PlayState.CONTINUE : PlayState.STOP;
     }
 
     @Override

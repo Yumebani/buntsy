@@ -1,6 +1,7 @@
 package net.sophiebun.buntsy.blocks.custom.entityblocks;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -34,6 +35,7 @@ public class ThreadReelerBlock extends BaseEntityBlock {
 
     public ThreadReelerBlock(Properties pProperties) {
         super(pProperties);
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(RUNNING, Boolean.valueOf(false)).setValue(SPECIAL_PROCESS, Boolean.valueOf(false)));
     }
 
     @Nullable

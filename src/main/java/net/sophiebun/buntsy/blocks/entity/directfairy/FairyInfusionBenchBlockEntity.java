@@ -53,11 +53,24 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
             new TempRecipe(Ingredient.of(ModItems.AMETHYST_DUST.get()), Map.of(
                     ModItems.FAIRY_DUST.get(), Map.of(1, 1f))));
 
+    private final List<Integer> randomRotations;
+
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+
+    public List<Integer> getRandomRotations() {
+        return randomRotations;
+    }
 
     public FairyInfusionBenchBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.FAIRY_INFUSE_BENCH_BLOCK_ENTITY.get(), pPos, pBlockState);
         setConsumption(1.25f);
+
+        Random random = new Random();
+
+        randomRotations = new ArrayList<>();
+        for (int i = 0; i < 5; i++){
+            randomRotations.add(random.nextInt(0, 270));
+        }
     }
 
     @Override
@@ -119,6 +132,30 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
         this.itemHandler.deserializeNBT(pTag.getCompound("inventory"));
     }
 
+    public List<ItemStack> getRenderInputItems(){
+
+        List<Integer> inputs = getFilledInputSlotList();
+
+        List<ItemStack> renderItems = new ArrayList<>();
+
+        for (Integer i : inputs){
+            if (renderItems.size() < 4){
+                renderItems.add(this.itemHandler.getStackInSlot(i));
+            }
+        }
+
+        return renderItems;
+    }
+
+    public ItemStack getFirstOutputItemStack(){
+        for (int i = OUTPUT_SLOT_START; i < OUTPUT_SLOT_START + OUTPUT_SLOT_COUNT; i++){
+            if (!itemHandler.getStackInSlot(i).isEmpty()){
+                return itemHandler.getStackInSlot(i);
+            }
+        }
+        return itemHandler.getStackInSlot(OUTPUT_SLOT_START);
+    }
+
     public void infuse() {
         int slot = getRandomFilledInputSlot();
         TempRecipe recipe = tempGetCurrentInfusion(slot);
@@ -169,6 +206,15 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
             }
         }
         return slotList.isEmpty() ? null : slotList.get(level.random.nextInt(slotList.size()));
+    }
+    private List<Integer> getFilledInputSlotList() {
+        List<Integer> slotList = new ArrayList<Integer>();
+        for (int i = INPUT_SLOT_START; i < INPUT_SLOT_START + INPUT_SLOT_COUNT; i++){
+            if (!this.itemHandler.getStackInSlot(i).isEmpty()){
+                slotList.add(i);
+            }
+        }
+        return slotList;
     }
 
     private boolean isOutputClear(ItemStack result) {

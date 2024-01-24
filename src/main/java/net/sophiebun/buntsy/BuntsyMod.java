@@ -19,6 +19,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
+import net.sophiebun.buntsy.blocks.entity.client.GrindingWheelBlockRenderer;
 import net.sophiebun.buntsy.blocks.entity.client.ThreadReelerBlockRenderer;
 import net.sophiebun.buntsy.datagen.ModBlockTagGenerator;
 import net.sophiebun.buntsy.entity.ModEntities;
@@ -116,6 +117,7 @@ public class BuntsyMod
             EntityRenderers.register(ModEntities.FAIRY_ENTITY.get(), FairyRenderer::new);
 
             BlockEntityRenderers.register(ModBlockEntities.THREAD_REELER_BLOCK_ENTITY.get(), ThreadReelerBlockRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.GRINDING_WHEEL_BLOCK_ENTITY.get(), GrindingWheelBlockRenderer::new);
         }
     }
 }

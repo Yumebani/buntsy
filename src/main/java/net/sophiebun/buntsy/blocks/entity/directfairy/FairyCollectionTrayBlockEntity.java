@@ -23,8 +23,13 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
 import net.sophiebun.buntsy.screen.FairyCollectionTrayMenu;
+import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class FairyCollectionTrayBlockEntity extends FairyInteractBlockEntity implements MenuProvider {
 
@@ -41,11 +46,24 @@ public class FairyCollectionTrayBlockEntity extends FairyInteractBlockEntity imp
     private static final int OUTPUT_SLOT_START = 0;
     private static final int OUTPUT_SLOT_COUNT = 15;
 
+    private final List<Integer> randomRotations;
+
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+
+    public List<Integer> getRandomRotations() {
+        return randomRotations;
+    }
 
     public FairyCollectionTrayBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.FAIRY_COLLECTION_TRAY_BLOCK_ENTITY.get(), pPos, pBlockState);
         setConsumption(1.25f);
+
+        Random random = new Random();
+
+        randomRotations = new ArrayList<>();
+        for (int i = 0; i < 4; i++){
+            randomRotations.add(random.nextInt(0, 270));
+        }
     }
 
     @Override
@@ -105,6 +123,32 @@ public class FairyCollectionTrayBlockEntity extends FairyInteractBlockEntity imp
         super.load(pTag);
 
         this.itemHandler.deserializeNBT(pTag.getCompound("inventory"));
+    }
+
+    public List<ItemStack> getRenderItems(){
+
+        List<Integer> values = getFilledSlotList();
+
+        List<ItemStack> renderItems = new ArrayList<>();
+
+        for (Integer i : values){
+            if (renderItems.size() < 4){
+                renderItems.add(this.itemHandler.getStackInSlot(i));
+            }
+        }
+
+        return renderItems;
+    }
+
+    private List<Integer> getFilledSlotList() {
+
+        List<Integer> slots = new ArrayList<Integer>();
+        for (int i = OUTPUT_SLOT_START; i < OUTPUT_SLOT_START + OUTPUT_SLOT_COUNT; i++){
+            if (!this.itemHandler.getStackInSlot(i).isEmpty() && this.itemHandler.getStackInSlot(i).is(ModTags.Items.FAIRY_FOOD)){
+                slots.add(i);
+            }
+        }
+        return slots;
     }
 
     public void depositItem(ItemStack item) {

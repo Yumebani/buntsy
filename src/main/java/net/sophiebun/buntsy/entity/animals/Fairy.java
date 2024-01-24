@@ -285,7 +285,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
     }
 
     public void clearBlockEntityData(){
-        if (this.offeringBenchPos != null){
+        if (this.offeringBenchPos != null && getofferingBench() != null){
             getofferingBench().setEnchanted(false);
             getofferingBench().setWatched(false);
             this.offeringBenchPos = null;
@@ -293,9 +293,12 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
 
         if (this.registeredUtilBlockEntityPos.size() != 0){
             for (BlockPos pos : getRegisteredBlockPosArray()){
-                FairyInteractBlockEntity entity = (FairyInteractBlockEntity) level().getBlockEntity(pos);
-                entity.setEnchanted(false);
-                entity.setWatched(false);
+                BlockEntity blockEntity = level().getBlockEntity(pos);
+                if (blockEntity != null){
+                    FairyInteractBlockEntity entity = (FairyInteractBlockEntity) level().getBlockEntity(pos);
+                    entity.setEnchanted(false);
+                    entity.setWatched(false);
+                }
             }
             this.registeredUtilBlockEntityPos.clear();
         }

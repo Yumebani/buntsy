@@ -1,5 +1,7 @@
 package net.sophiebun.buntsy.blocks.entity.directfairy;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -34,6 +36,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity implements MenuProvider {
 
@@ -63,11 +66,23 @@ public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity impl
     );
 
     public final ContainerData data;
+    private final List<Integer> randomRotations;
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
+    public List<Integer> getRandomRotations() {
+        return randomRotations;
+    }
+
     public FairyOfferingBenchBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.OFFERING_BENCH_BLOCK_ENTITY.get(), pPos, pBlockState);
+
+        Random random = new Random();
+
+        randomRotations = new ArrayList<>();
+        for (int i = 0; i < 4; i++){
+            randomRotations.add(random.nextInt(0, 270));
+        }
 
         this.data = new ContainerData() {
             @Override
@@ -145,6 +160,28 @@ public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity impl
         this.itemHandler.deserializeNBT(pTag.getCompound("inventory"));
     }
 
+    public List<ItemStack> getRenderItems(){
+
+        List<Integer> inputs = getFilledInputSlotList();
+        List<Integer> outputs = getFilledOutputSlotList();
+
+        List<ItemStack> renderItems = new ArrayList<>();
+
+        for (Integer i : inputs){
+            if (renderItems.size() < 4){
+                renderItems.add(this.itemHandler.getStackInSlot(i));
+            }
+        }
+
+        for (Integer i : outputs){
+            if (renderItems.size() < 4){
+                renderItems.add(this.itemHandler.getStackInSlot(i));
+            }
+        }
+
+        return renderItems;
+    }
+
     public boolean hasFood() {
         return getFirstValidInputSlot() != null;
     }
@@ -195,6 +232,17 @@ public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity impl
 
         List<Integer> slots = new ArrayList<Integer>();
         for (int i = FAIRY_FOOD_SLOT_START; i < FAIRY_FOOD_SLOT_START + FAIRY_FOOD_SLOT_COUNT; i++){
+            if (!this.itemHandler.getStackInSlot(i).isEmpty() && this.itemHandler.getStackInSlot(i).is(ModTags.Items.FAIRY_FOOD)){
+                slots.add(i);
+            }
+        }
+        return slots;
+    }
+
+    private List<Integer> getFilledOutputSlotList() {
+
+        List<Integer> slots = new ArrayList<Integer>();
+        for (int i = FAIRY_FOOD_OUTPUT_SLOT_START; i < FAIRY_FOOD_OUTPUT_SLOT_START + FAIRY_FOOD_OUTPUT_SLOT_COUNT; i++){
             if (!this.itemHandler.getStackInSlot(i).isEmpty() && this.itemHandler.getStackInSlot(i).is(ModTags.Items.FAIRY_FOOD)){
                 slots.add(i);
             }

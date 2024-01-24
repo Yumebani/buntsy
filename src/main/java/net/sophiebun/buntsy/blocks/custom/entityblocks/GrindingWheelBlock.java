@@ -1,6 +1,7 @@
 package net.sophiebun.buntsy.blocks.custom.entityblocks;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -14,6 +15,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -24,11 +27,15 @@ import org.jetbrains.annotations.Nullable;
 
 public class GrindingWheelBlock extends BaseEntityBlock {
 
-    public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 15, 16);
+    public static final BooleanProperty RUNNING = ThreadReelerBlock.RUNNING;
+    public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
 
     public GrindingWheelBlock(Properties pProperties) {
         super(pProperties);
+        this.registerDefaultState(this.stateDefinition.any().setValue(RUNNING, Boolean.valueOf(false)));
     }
+
+
 
     @Nullable
     @Override
@@ -76,12 +83,17 @@ public class GrindingWheelBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
+        pBuilder.add(RUNNING);
+    }
+
+    @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return SHAPE;
     }
 
     @Override
     public RenderShape getRenderShape(BlockState pState) {
-        return RenderShape.MODEL;
+        return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 }
