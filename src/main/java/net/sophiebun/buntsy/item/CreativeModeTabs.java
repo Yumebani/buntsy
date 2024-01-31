@@ -68,20 +68,82 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.BRAVOT_PRESSURE_PLATE.get());
                         pOutput.accept(ModBlocks.BRAVOT_BUTTON.get());
 
+                        pOutput.accept(ModItems.AMETHYST_DUST.get());
+                        pOutput.accept(ModItems.PRISTINE_AMETHYST_GRAIN.get());
                         pOutput.accept(ModBlocks.GROWABLE_AMETHYST_CLUSTER.get());
                         pOutput.accept(ModBlocks.LARGE_GROWABLE_AMETHYST_CLUSTER.get());
                         pOutput.accept(ModBlocks.MEDIUM_GROWABLE_AMETHYST_CLUSTER.get());
                         pOutput.accept(ModBlocks.SMALL_GROWABLE_AMETHYST_CLUSTER.get());
+
+                        pOutput.accept(ModItems.IRON_CRYSTAL.get());
+                        pOutput.accept(ModItems.IRON_DUST.get());
+                        pOutput.accept(ModItems.PRISTINE_IRON_SAMPLE.get());
+                        pOutput.accept(ModBlocks.IRON_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.LARGE_IRON_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.MEDIUM_IRON_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.SMALL_IRON_CRYSTAL_CLUSTER.get());
+
+                        pOutput.accept(ModItems.COPPER_CRYSTAL.get());
+                        pOutput.accept(ModItems.COPPER_DUST.get());
+                        pOutput.accept(ModItems.PRISTINE_COPPER_SAMPLE.get());
+                        pOutput.accept(ModBlocks.COPPER_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.LARGE_COPPER_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.MEDIUM_COPPER_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.SMALL_COPPER_CRYSTAL_CLUSTER.get());
+
+                        pOutput.accept(ModItems.GOLD_CRYSTAL.get());
+                        pOutput.accept(ModItems.GOLD_DUST.get());
+                        pOutput.accept(ModItems.PRISTINE_GOLD_SAMPLE.get());
+                        pOutput.accept(ModBlocks.GOLD_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.LARGE_GOLD_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.MEDIUM_GOLD_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.SMALL_GOLD_CRYSTAL_CLUSTER.get());
+
+                        pOutput.accept(ModItems.DEBRIS_SHARD.get());
+                        pOutput.accept(ModItems.NETHERITE_DUST.get());
+                        pOutput.accept(ModItems.PRISTINE_DEBRIS_SAMPLE.get());
+                        pOutput.accept(ModBlocks.DEBRIS_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.LARGE_DEBRIS_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.MEDIUM_DEBRIS_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.SMALL_DEBRIS_CRYSTAL_CLUSTER.get());
+
+                        pOutput.accept(ModItems.REDSTONE_CRYSTAL.get());
+                        pOutput.accept(ModItems.PRISTINE_REDSTONE_SAMPLE.get());
+                        pOutput.accept(ModBlocks.REDSTONE_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.LARGE_REDSTONE_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.MEDIUM_REDSTONE_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.SMALL_REDSTONE_CRYSTAL_CLUSTER.get());
+
+                        pOutput.accept(ModItems.LAPIS_CRYSTAL.get());
+                        pOutput.accept(ModItems.PRISTINE_LAPIS_SAMPLE.get());
+                        pOutput.accept(ModBlocks.LAPIS_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.LARGE_LAPIS_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.MEDIUM_LAPIS_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.SMALL_LAPIS_CRYSTAL_CLUSTER.get());
+
+                        pOutput.accept(ModItems.DIAMOND_SHARD.get());
+                        pOutput.accept(ModItems.PRISTINE_DIAMOND_SAMPLE.get());
+                        pOutput.accept(ModBlocks.DIAMOND_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.LARGE_DIAMOND_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.MEDIUM_DIAMOND_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.SMALL_DIAMOND_CRYSTAL_CLUSTER.get());
+
+                        pOutput.accept(ModItems.EMERALD_SHARD.get());
+                        pOutput.accept(ModItems.PRISTINE_EMERALD_SAMPLE.get());
+                        pOutput.accept(ModBlocks.EMERALD_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.LARGE_EMERALD_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.MEDIUM_EMERALD_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.SMALL_EMERALD_CRYSTAL_CLUSTER.get());
 
                         pOutput.accept(ModBlocks.FAIRY_OFFERING_BENCH.get());
                         pOutput.accept(ModBlocks.GRINDING_WHEEL.get());
                         pOutput.accept(ModBlocks.THREAD_REELER.get());
                         pOutput.accept(ModBlocks.FAIRY_COLLECTION_TRAY.get());
                         pOutput.accept(ModBlocks.FAIRY_INFUSION_BENCH.get());
+                        pOutput.accept(ModBlocks.MAGIC_CRYSTALIZER.get());
 
                         pOutput.accept(ModItems.FAIRY_STAFF.get());
 
-                        pOutput.accept(ModItems.AMETHYST_DUST.get());
                         pOutput.accept(ModItems.FAIRY_DUST.get());
                         pOutput.accept(ModItems.COCOON.get());
                         pOutput.accept(ModItems.SILK.get());

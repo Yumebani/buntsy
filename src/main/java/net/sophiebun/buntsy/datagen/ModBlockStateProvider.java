@@ -9,12 +9,15 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraftforge.client.model.IModelBuilder;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
+import net.sophiebun.buntsy.blocks.custom.StrawberryCrop;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
 
+import java.util.List;
 import java.util.Properties;
 
 public class ModBlockStateProvider extends BlockStateProvider {
@@ -70,6 +73,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
         //Adding soil models
         grassBlock(ModBlocks.PINK_FLUF_CHARMIL_SOIL, ModBlocks.CHARMIL_SOIL.getId().getPath());
         blockWithItem(ModBlocks.CHARMIL_SOIL);
+        farmlandBlock(ModBlocks.CHARMIL_FARMLAND, ModBlocks.CHARMIL_SOIL);
+
+        //Crops
+        simpleCrossBlock(ModBlocks.WILD_STRAWBERRY);
+        strawberryCrop(ModBlocks.STRAWBERRY_CROP);
 
         //Adding plants
         variedGrass(ModBlocks.PINK_CHARMIL_GRASS); //Item added in item model gen
@@ -82,16 +90,21 @@ public class ModBlockStateProvider extends BlockStateProvider {
         //Adding potted plants
         pottedPlant(ModBlocks.POTTED_PINK_BLOOM, ModBlocks.PINK_BLOOM);
         pottedPlant(ModBlocks.POTTED_BLUE_BLOOM, ModBlocks.BLUE_BLOOM);
+        pottedPlant(ModBlocks.POTTED_GENTLIT_SAPLING, ModBlocks.GENTLIT_SAPLING);
+        pottedPlant(ModBlocks.POTTED_BRAVOT_SAPLING, ModBlocks.BRAVOT_SAPLING);
+        pottedPlant(ModBlocks.POTTED_LOVESHROOM, ModBlocks.LOVESHROOM);
+        pottedPlant(ModBlocks.POTTED_GLOWSHROOM, ModBlocks.GLOWSHROOM);
 
         //MushroomBlocks
         mushroomBlock(ModBlocks.LOVESHROOM_BLOCK); //Item added in item model gen
         mushroomBlock(ModBlocks.GLOWSHROOM_BLOCK); //Item added in item model gen
 
         //Minerals
-        crystalBlock(ModBlocks.GROWABLE_AMETHYST_CLUSTER);
-        crystalBlock(ModBlocks.LARGE_GROWABLE_AMETHYST_CLUSTER);
-        crystalBlock(ModBlocks.MEDIUM_GROWABLE_AMETHYST_CLUSTER);
-        crystalBlock(ModBlocks.SMALL_GROWABLE_AMETHYST_CLUSTER);
+        for (List<RegistryObject<Block>> minerals : ModGrowableMineral.GROWABLE_MINERAL_STAGES){
+            for (RegistryObject<Block> mineral : minerals){
+                crystalBlock(mineral);
+            }
+        }
 
         //Block entities
         simpleBlockWithItem(ModBlocks.FAIRY_OFFERING_BENCH.get(),
@@ -104,6 +117,39 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 new ModelFile.UncheckedModelFile(modLoc("block/fairy_collection_tray")));
         simpleBlockWithItem(ModBlocks.FAIRY_INFUSION_BENCH.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/fairy_infusion_bench")));
+        simpleBlockWithItem(ModBlocks.MAGIC_CRYSTALIZER.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/magic_crystalizer")));
+    }
+
+    private void strawberryCrop(RegistryObject<Block> block){
+        getVariantBuilder(block.get()).forAllStates(blockState ->
+           ConfiguredModel.builder().modelFile(models().crop(block.getId().getPath(),
+                   new ResourceLocation(BuntsyMod.MODID, "textures/block/" + block.getId().getPath() + "_stage" +
+                           blockState.getValue(StrawberryCrop.AGE)))).build()
+        );
+    }
+
+    private void farmlandBlock(RegistryObject<Block> block, RegistryObject<Block> soil) {
+        BlockModelBuilder farmland = farmlandModel(block, soil);
+        BlockModelBuilder moistFarmland = moistFarmlandModel(block, soil);
+
+        getVariantBuilder(block.get()).forAllStates(blockState -> {
+            if (blockState.getValue(FarmBlock.MOISTURE) == 7){
+                return ConfiguredModel.builder().modelFile(moistFarmland).build();
+            }
+            return ConfiguredModel.builder().modelFile(farmland).build();
+        });
+    }
+
+    private BlockModelBuilder farmlandModel(RegistryObject<Block> block, RegistryObject<Block> soil){
+        return models().withExistingParent(block.getId().getPath(), mcLoc("block/template_farmland"))
+                .texture("dirt", new ResourceLocation(BuntsyMod.MODID, "block/" + soil.getId().getPath()))
+                .texture("top", new ResourceLocation(BuntsyMod.MODID, "block/" + block.getId().getPath()));
+    }
+    private BlockModelBuilder moistFarmlandModel(RegistryObject<Block> block, RegistryObject<Block> soil){
+        return models().withExistingParent(block.getId().getPath(), mcLoc("block/template_farmland"))
+                .texture("dirt", new ResourceLocation(BuntsyMod.MODID, "block/" + soil.getId().getPath()))
+                .texture("top", new ResourceLocation(BuntsyMod.MODID, "block/" + block.getId().getPath() + "_moist"));
     }
 
     private void pottedPlant(RegistryObject<Block> registryObject, RegistryObject<Block> plant){

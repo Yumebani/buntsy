@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "buntsy:block/large_copper_crystal_cluster"
+  }
+}

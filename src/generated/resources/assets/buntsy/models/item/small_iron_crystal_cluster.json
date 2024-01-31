@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "buntsy:block/small_iron_crystal_cluster"
+  }
+}

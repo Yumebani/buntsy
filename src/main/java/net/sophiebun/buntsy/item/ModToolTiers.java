@@ -14,7 +14,7 @@ import java.util.List;
 public class ModToolTiers {
 
     public static final Tier SILKY = TierSortingRegistry.registerTier(
-            new ForgeTier( 3,1371, 5f,4f,25,
+            new ForgeTier( 3,1371, 0f,0f,25,
                     ModTags.Blocks.NEEDS_SIlKY_TOOL, () -> Ingredient.of(ModItems.SILKY_CRYSTAL.get())),
                     new ResourceLocation(BuntsyMod.MODID,"silky"), List.of(Tiers.DIAMOND), List.of(Tiers.NETHERITE));
 }

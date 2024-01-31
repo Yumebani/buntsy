@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "buntsy:debris_shard"
+    },
+    {
+      "item": "buntsy:debris_shard"
+    },
+    {
+      "item": "buntsy:debris_shard"
+    }
+  ],
+  "result": {
+    "item": "minecraft:netherite_scrap"
+  }
+}

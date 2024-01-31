@@ -33,6 +33,12 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.GENTLIT_WOOD.get())
                 .add(ModBlocks.STRIPPED_GENTLIT_WOOD.get());
 
+        this.tag(ModTags.Blocks.BRAVOT_LOGS)
+                .add(ModBlocks.BRAVOT_LOG.get())
+                .add(ModBlocks.STRIPPED_BRAVOT_LOG.get())
+                .add(ModBlocks.BRAVOT_WOOD.get())
+                .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get());
+
         this.tag(BlockTags.WOODEN_FENCES)
                 .add(ModBlocks.GENTLIT_FENCE.get());
 
@@ -79,11 +85,20 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.GRINDING_WHEEL.get())
                 .add(ModBlocks.THREAD_REELER.get())
                 .add(ModBlocks.FAIRY_COLLECTION_TRAY.get())
-                .add(ModBlocks.FAIRY_INFUSION_BENCH.get());
+                .add(ModBlocks.FAIRY_INFUSION_BENCH.get())
+                .add(ModBlocks.MAGIC_CRYSTALIZER.get());
 
         this.tag(ModTags.Blocks.FAIRY_HARVESTABLE)
                 .addTag(BlockTags.FLOWERS)
-                .add(ModBlocks.GROWABLE_AMETHYST_CLUSTER.get());
+                .add(ModBlocks.GROWABLE_AMETHYST_CLUSTER.get())
+                .add(ModBlocks.IRON_CRYSTAL_CLUSTER.get())
+                .add(ModBlocks.COPPER_CRYSTAL_CLUSTER.get())
+                .add(ModBlocks.GOLD_CRYSTAL_CLUSTER.get())
+                .add(ModBlocks.REDSTONE_CRYSTAL_CLUSTER.get())
+                .add(ModBlocks.LAPIS_CRYSTAL_CLUSTER.get())
+                .add(ModBlocks.DIAMOND_CRYSTAL_CLUSTER.get())
+                .add(ModBlocks.EMERALD_CRYSTAL_CLUSTER.get())
+                .add(ModBlocks.DEBRIS_CRYSTAL_CLUSTER.get());
 
         this.tag(BlockTags.PLANKS)
                 .add(ModBlocks.GENTLIT_PLANKS.get());

@@ -1,6 +1,7 @@
-// 1.20.1	2024-01-19T02:28:01.033015452	Tags for minecraft:block mod id buntsy
-8213c7256ff394a9a6773286e5ffda67ac84daa4 data/buntsy/tags/blocks/fairy_harvestable.json
-b68f54f3f980cef641b1dd13669b749d82a93e7d data/buntsy/tags/blocks/fairy_interactable_block_entity.json
+// 1.20.1	2024-01-26T18:45:54.661576229	Tags for minecraft:block mod id buntsy
+375b70dcc9fd9e50a722f028008e1c11e6e68dd9 data/buntsy/tags/blocks/bravot_logs.json
+de52d4e144d1fdcc9bb81a3dda042d48296ebb65 data/buntsy/tags/blocks/fairy_harvestable.json
+a1cbf596737267688192871099fdc9e85f20336e data/buntsy/tags/blocks/fairy_interactable_block_entity.json
 8f30e74d65e15f941591c49161ccf1c7855102a1 data/buntsy/tags/blocks/gentlit_logs.json
 22debb79ff2ee672d037593170cf5894806e4fb8 data/buntsy/tags/blocks/silkbun_spawnable_on.json
 22debb79ff2ee672d037593170cf5894806e4fb8 data/minecraft/tags/blocks/dirt.json

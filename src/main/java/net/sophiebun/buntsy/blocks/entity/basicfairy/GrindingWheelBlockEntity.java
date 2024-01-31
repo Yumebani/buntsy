@@ -1,5 +1,6 @@
 package net.sophiebun.buntsy.blocks.entity.basicfairy;
 
+import com.google.common.collect.ImmutableMultimap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -8,6 +9,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -37,6 +39,7 @@ import net.sophiebun.buntsy.recipe.TempRecipe;
 import net.sophiebun.buntsy.recipe.ThreadReelerRecipe;
 import net.sophiebun.buntsy.screen.GrindingWheelMenu;
 import net.sophiebun.buntsy.tag.ModTags;
+import org.antlr.v4.runtime.misc.MultiMap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
@@ -59,14 +62,64 @@ public class GrindingWheelBlockEntity extends BasicFairyBlockEntity implements M
     //TEMPORARY
     private static final List<TempRecipe> recipeList = List.of(
             new TempRecipe(Ingredient.of(Items.AMETHYST_SHARD), Map.of(
-                    ModItems.AMETHYST_DUST.get(), Map.of(1, 1f))),
+                    ModItems.AMETHYST_DUST.get(), ImmutableMultimap.of(1, 1f))),
+
+            new TempRecipe(Ingredient.of(ItemTags.IRON_ORES), Map.of(
+                    Items.RAW_IRON, ImmutableMultimap.of(2, 1f, 1, 0.5f),
+                    ModItems.PRISTINE_IRON_SAMPLE.get(), ImmutableMultimap.of(1, 0.05f))),
+            new TempRecipe(Ingredient.of(Items.RAW_IRON), Map.of(
+                    ModItems.IRON_DUST.get(), ImmutableMultimap.of(1, 1f,1, 0.33f))),
+            new TempRecipe(Ingredient.of(ModItems.IRON_CRYSTAL.get()), Map.of(
+                    ModItems.IRON_DUST.get(), ImmutableMultimap.of(1, 1f, 1, 0.33f))),
+
+            new TempRecipe(Ingredient.of(ItemTags.COPPER_ORES), Map.of(
+                    Items.RAW_COPPER, ImmutableMultimap.of(7, 1f, 1, 0.5f, 1, 0.25f),
+                    ModItems.PRISTINE_COPPER_SAMPLE.get(), ImmutableMultimap.of(1, 0.10f))),
+            new TempRecipe(Ingredient.of(Items.RAW_COPPER), Map.of(
+                    ModItems.COPPER_DUST.get(), ImmutableMultimap.of(1, 1f, 1, 0.33f))),
+            new TempRecipe(Ingredient.of(ModItems.COPPER_CRYSTAL.get()), Map.of(
+                    ModItems.COPPER_DUST.get(), ImmutableMultimap.of(1, 1f, 1, 0.33f))),
+
+            new TempRecipe(Ingredient.of(ItemTags.GOLD_ORES), Map.of(
+                    Items.RAW_GOLD, ImmutableMultimap.of(2, 1f, 1, 0.5f),
+                    ModItems.PRISTINE_GOLD_SAMPLE.get(), ImmutableMultimap.of(1, 0.05f))),
+            new TempRecipe(Ingredient.of(Items.RAW_GOLD), Map.of(
+                    ModItems.GOLD_DUST.get(), ImmutableMultimap.of(1, 1f, 1, 0.33f))),
+            new TempRecipe(Ingredient.of(ModItems.GOLD_CRYSTAL.get()), Map.of(
+                    ModItems.GOLD_DUST.get(), ImmutableMultimap.of(1, 1f, 1, 0.33f))),
+
+            new TempRecipe(Ingredient.of(Items.ANCIENT_DEBRIS), Map.of(
+                    ModItems.NETHERITE_DUST.get(), ImmutableMultimap.of(1, 1f, 1, 0.5f),
+                    ModItems.PRISTINE_DEBRIS_SAMPLE.get(), ImmutableMultimap.of(1, 0.1f))),
+
+            new TempRecipe(Ingredient.of(ItemTags.REDSTONE_ORES), Map.of(
+                    Items.REDSTONE, ImmutableMultimap.of(6, 1f, 1, 0.5f, 1, 0.25f),
+                    ModItems.PRISTINE_REDSTONE_SAMPLE.get(), ImmutableMultimap.of(1, 0.1f))),
+            new TempRecipe(Ingredient.of(ModItems.REDSTONE_CRYSTAL.get()), Map.of(
+                    Items.REDSTONE, ImmutableMultimap.of(2, 1f, 1, 0.5f))),
+
+            new TempRecipe(Ingredient.of(ItemTags.LAPIS_ORES), Map.of(
+                    Items.LAPIS_LAZULI, ImmutableMultimap.of(14, 1f, 2, 0.5f, 1, 0.5f),
+                    ModItems.PRISTINE_LAPIS_SAMPLE.get(), ImmutableMultimap.of(1, 0.1f))),
+            new TempRecipe(Ingredient.of(ModItems.LAPIS_CRYSTAL.get()), Map.of(
+                    Items.LAPIS_LAZULI, ImmutableMultimap.of(4, 1f, 1, 0.5f, 1, 0.25f))),
+
+            new TempRecipe(Ingredient.of(ItemTags.DIAMOND_ORES), Map.of(
+                    Items.DIAMOND, ImmutableMultimap.of(2, 1f, 1, 0.5f),
+                    ModItems.PRISTINE_DIAMOND_SAMPLE.get(), ImmutableMultimap.of(1, 0.1f))),
+
+            new TempRecipe(Ingredient.of(ItemTags.EMERALD_ORES), Map.of(
+                    Items.EMERALD, ImmutableMultimap.of(2, 1f, 1, 0.5f),
+                    ModItems.PRISTINE_EMERALD_SAMPLE.get(), ImmutableMultimap.of(1, 0.1f))),
+
             new TempRecipe(Ingredient.of(Items.SUGAR_CANE), Map.of(
-                    Items.SUGAR, Map.of(2, 1f))),
+                    Items.SUGAR, ImmutableMultimap.of(2, 1f))),
             new TempRecipe(Ingredient.of(ModItems.HOOTNIP.get()), Map.of(
-                    ModItems.GROUND_HOOTNIP.get(), Map.of(1, 1f))));
+                    ModItems.GROUND_HOOTNIP.get(), ImmutableMultimap.of(1, 1f))));
 
     public GrindingWheelBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.GRINDING_WHEEL_BLOCK_ENTITY.get(), pPos, pBlockState);
+        setConsumption(1f);
     }
 
     @Override

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "buntsy:bravot_planks"
+    }
+  ],
+  "result": {
+    "item": "buntsy:bravot_button"
+  }
+}

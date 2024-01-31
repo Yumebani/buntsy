@@ -9,10 +9,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModFoods;
 import net.sophiebun.buntsy.entity.ModEntities;
-import net.sophiebun.buntsy.item.custom.BowlFoodFairyFoodItem;
-import net.sophiebun.buntsy.item.custom.FairyBottle;
-import net.sophiebun.buntsy.item.custom.FairyFoodItem;
-import net.sophiebun.buntsy.item.custom.FairyStaff;
+import net.sophiebun.buntsy.item.custom.*;
 
 public class ModItems {
     public static final DeferredRegister<Item> ItemsRegister =
@@ -40,8 +37,6 @@ public class ModItems {
             "silky_crystal", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> FAIRY_DUST = ItemsRegister.register(
             "fairy_dust", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> AMETHYST_DUST = ItemsRegister.register(
-            "amethyst_dust", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> GENTLIT_SYRUP = ItemsRegister.register(
             "gentlit_syrup", () -> new FairyFoodItem(new Item.Properties().stacksTo(16), 800, 1f));
     public static final RegistryObject<Item> SUGAR_BOWL = ItemsRegister.register(
@@ -55,6 +50,55 @@ public class ModItems {
     public static final RegistryObject<Item> HOOTNIP_CEREAL = ItemsRegister.register(
             "hootnip_cereal", () -> new Item(new Item.Properties().stacksTo(16)));
 
+    public static final RegistryObject<Item> AMETHYST_DUST = ItemsRegister.register(
+            "amethyst_dust", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PRISTINE_AMETHYST_GRAIN = ItemsRegister.register(
+            "pristine_amethyst_grain", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> IRON_CRYSTAL = ItemsRegister.register(
+            "iron_crystal", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> IRON_DUST = ItemsRegister.register(
+            "iron_dust", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PRISTINE_IRON_SAMPLE = ItemsRegister.register(
+            "pristine_iron_sample", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> COPPER_CRYSTAL = ItemsRegister.register(
+            "copper_crystal", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> COPPER_DUST = ItemsRegister.register(
+            "copper_dust", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PRISTINE_COPPER_SAMPLE = ItemsRegister.register(
+            "pristine_copper_sample", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> GOLD_CRYSTAL = ItemsRegister.register(
+            "gold_crystal", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> GOLD_DUST = ItemsRegister.register(
+            "gold_dust", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PRISTINE_GOLD_SAMPLE = ItemsRegister.register(
+            "pristine_gold_sample", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> DEBRIS_SHARD = ItemsRegister.register(
+            "debris_shard", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> NETHERITE_DUST = ItemsRegister.register(
+            "netherite_dust", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PRISTINE_DEBRIS_SAMPLE = ItemsRegister.register(
+            "pristine_debris_sample", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> REDSTONE_CRYSTAL = ItemsRegister.register(
+            "redstone_crystal", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PRISTINE_REDSTONE_SAMPLE = ItemsRegister.register(
+            "pristine_redstone_sample", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> LAPIS_CRYSTAL = ItemsRegister.register(
+            "lapis_crystal", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PRISTINE_LAPIS_SAMPLE = ItemsRegister.register(
+            "pristine_lapis_sample", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> DIAMOND_SHARD = ItemsRegister.register(
+            "diamond_shard", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PRISTINE_DIAMOND_SAMPLE = ItemsRegister.register(
+            "pristine_diamond_sample", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> EMERALD_SHARD = ItemsRegister.register(
+            "emerald_shard", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PRISTINE_EMERALD_SAMPLE = ItemsRegister.register(
+            "pristine_emerald_sample", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STRAWBERRY_SEEDS = ItemsRegister.register(
+            "strawberry_seeds", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> HOOTNIP_SEEDS = ItemsRegister.register(
+            "hootnip_seeds", () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> SILKY_SWORD = ItemsRegister.register(
             "silky_sword", () -> new SwordItem(ModToolTiers.SILKY, 7, 2f, new Item.Properties()));
     public static final RegistryObject<Item> SILKY_PICKAXE = ItemsRegister.register(
@@ -67,13 +111,13 @@ public class ModItems {
             "silky_hoe", () -> new HoeItem(ModToolTiers.SILKY, 1, 5f, new Item.Properties()));
 
     public static final RegistryObject<Item> SILKY_HELMET = ItemsRegister.register(
-            "silky_helmet", () -> new ArmorItem(ModArmorMaterials.SILKY, ArmorItem.Type.HELMET, new Item.Properties()));
+            "silky_helmet", () -> new SilkyArmorItem(ModArmorMaterials.SILKY, ArmorItem.Type.HELMET, new Item.Properties()));
     public static final RegistryObject<Item> SILKY_CHESTPLATE = ItemsRegister.register(
-            "silky_chestplate", () -> new ArmorItem(ModArmorMaterials.SILKY, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+            "silky_chestplate", () -> new SilkyArmorItem(ModArmorMaterials.SILKY, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
     public static final RegistryObject<Item> SILKY_LEGGINGS = ItemsRegister.register(
-            "silky_leggings", () -> new ArmorItem(ModArmorMaterials.SILKY, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+            "silky_leggings", () -> new SilkyArmorItem(ModArmorMaterials.SILKY, ArmorItem.Type.LEGGINGS, new Item.Properties()));
     public static final RegistryObject<Item> SILKY_BOOTS = ItemsRegister.register(
-            "silky_boots", () -> new ArmorItem(ModArmorMaterials.SILKY, ArmorItem.Type.BOOTS, new Item.Properties()));
+            "silky_boots", () -> new SilkyArmorItem(ModArmorMaterials.SILKY, ArmorItem.Type.BOOTS, new Item.Properties()));
 
     public static final RegistryObject<Item> BOWL_OF_CARAMEL = ItemsRegister.register(
             "bowl_of_caramel", () -> new BowlFoodFairyFoodItem(new Item.Properties().food(ModFoods.BOWL_OF_CARAMEL).stacksTo(16),

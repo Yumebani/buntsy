@@ -148,7 +148,6 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
     }
 
     public void setUpdateBlocksFlag(boolean updateBlocksFlag) {
-        System.out.println("Setting update flags to: " + updateBlocksFlag);
         this.updateBlocksFlag = updateBlocksFlag;
     }
 
@@ -339,7 +338,6 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
         int fairyWeight = entity.getFairyWeight();
         this.currentWeight += fairyWeight;
         this.registeredUtilBlockEntityPos.put(blockEntity.getBlockPos(), fairyWeight);
-        System.out.println("Setting update flag");
         this.setUpdateBlocksFlag(true);
     }
 
@@ -805,7 +803,6 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
         }
 
         private void moveToGoal(){
-            System.out.println("Moving to goal");
             this.moveToBlock(this.nextTarget);
         }
 
@@ -867,7 +864,6 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
                 }
 
                 if ((!hasArrivedAtHarvest() && !hasReachedTarget) || (!hasArrivedAtTray() && fairy.hasCarriedItem())){
-                    System.out.println("Repathing");
                     moveAway();
                     repathTicks = 30;
                 }

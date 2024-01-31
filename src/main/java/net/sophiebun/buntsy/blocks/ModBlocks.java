@@ -34,6 +34,9 @@ public class ModBlocks {
             () -> new ModLeaves(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistryObject<Block> GENTLIT_SAPLING = registerBlock("gentlit_sapling",
             () -> new SaplingBlock(new GentlitTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+    public static final RegistryObject<Block> POTTED_GENTLIT_SAPLING = BlocksRegister.register("potted_gentlit_sapling",
+            () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, ModBlocks.GENTLIT_SAPLING,
+                    BlockBehaviour.Properties.copy(Blocks.POTTED_PINK_TULIP).noOcclusion()));
 
     public static final RegistryObject<Block> GENTLIT_LOG = registerBlock("gentlit_log",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
@@ -68,6 +71,9 @@ public class ModBlocks {
             () -> new ModLeaves(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistryObject<Block> BRAVOT_SAPLING = registerBlock("bravot_sapling",
             () -> new SaplingBlock(new BravotTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+    public static final RegistryObject<Block> POTTED_BRAVOT_SAPLING = BlocksRegister.register("potted_bravot_sapling",
+            () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, ModBlocks.BRAVOT_SAPLING,
+                    BlockBehaviour.Properties.copy(Blocks.POTTED_PINK_TULIP).noOcclusion()));
 
     public static final RegistryObject<Block> BRAVOT_LOG = registerBlock("bravot_log",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
@@ -100,10 +106,19 @@ public class ModBlocks {
 
     //Biome ground blocks
     public static final RegistryObject<Block> PINK_FLUF_CHARMIL_SOIL = registerBlock("pink_fluf_charmil_soil", //MAKE FLUF SPIRAL DOWNWWARDS
-            () -> new SnowyDirtBlock(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK).sound(SoundType.MOSS)));
-
+            () -> new TillableCharmilSoil(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK).sound(SoundType.MOSS)));
     public static final RegistryObject<Block> CHARMIL_SOIL = registerBlock("charmil_soil",
-            () -> new SnowyDirtBlock(BlockBehaviour.Properties.copy(Blocks.DIRT).sound(SoundType.MOSS)));
+            () -> new TillableCharmilSoil(BlockBehaviour.Properties.copy(Blocks.DIRT).sound(SoundType.MOSS)));
+    public static final RegistryObject<Block> CHARMIL_FARMLAND = registerBlock("charmil_farmland",
+            () -> new CharmilFarmland(BlockBehaviour.Properties.copy(Blocks.FARMLAND).sound(SoundType.MOSS)));
+
+    //Crops
+    public static final RegistryObject<Block> WILD_STRAWBERRY = registerBlock("wild_strawberry",
+            () -> new TallGrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> STRAWBERRY_CROP = registerBlock("strawberry_crop",
+            () -> new StrawberryCrop(BlockBehaviour.Properties.copy(Blocks.WHEAT).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> WILD_HOOTNIP = registerBlock("wild_hootnip",
+            () -> new DoublePlantBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
 
     //Biome plants
     public static final RegistryObject<Block> PINK_CHARMIL_GRASS = registerBlock("pink_charmil_grass",
@@ -128,12 +143,24 @@ public class ModBlocks {
     public static final RegistryObject<Block> LOVESHROOM = registerBlock("loveshroom",
             () -> new MushroomBlock(BlockBehaviour.Properties.copy(Blocks.RED_MUSHROOM).noOcclusion().noCollission(),
                     ModConfiguredFeatures.GIANT_LOVESHROOM_KEY));
+    public static final RegistryObject<Block> POTTED_LOVESHROOM = BlocksRegister.register("potted_loveshroom",
+            () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, ModBlocks.LOVESHROOM,
+                    BlockBehaviour.Properties.copy(Blocks.POTTED_PINK_TULIP).noOcclusion()));
     public static final RegistryObject<Block> LOVESHROOM_BLOCK = registerBlock("loveshroom_block",
             () -> new HugeMushroomBlock(BlockBehaviour.Properties.copy(Blocks.RED_MUSHROOM_BLOCK)));
 
     public static final RegistryObject<Block> GLOWSHROOM = registerBlock("glowshroom",
             () -> new MushroomBlock(BlockBehaviour.Properties.copy(Blocks.RED_MUSHROOM).noOcclusion().noCollission(),
                     ModConfiguredFeatures.GIANT_GLOWSHROOM_KEY){
+                @Override
+                public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+                    return 5;
+                }
+            });
+    public static final RegistryObject<Block> POTTED_GLOWSHROOM = BlocksRegister.register("potted_glowshroom",
+            () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, ModBlocks.GLOWSHROOM,
+                    BlockBehaviour.Properties.copy(Blocks.POTTED_PINK_TULIP).noOcclusion()){
+
                 @Override
                 public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
                     return 5;
@@ -157,6 +184,78 @@ public class ModBlocks {
     public static final RegistryObject<Block> SMALL_GROWABLE_AMETHYST_CLUSTER = registerBlock("small_growable_amethyst_cluster",
             () -> new ModGrowableMineral((byte) 0, 0,3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
 
+    public static final RegistryObject<Block> IRON_CRYSTAL_CLUSTER = registerBlock("iron_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 1, 3,7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> LARGE_IRON_CRYSTAL_CLUSTER = registerBlock("large_iron_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 1, 2,5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> MEDIUM_IRON_CRYSTAL_CLUSTER = registerBlock("medium_iron_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 1, 1,4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> SMALL_IRON_CRYSTAL_CLUSTER = registerBlock("small_iron_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 1, 0,3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+
+    public static final RegistryObject<Block> COPPER_CRYSTAL_CLUSTER = registerBlock("copper_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 2, 3,7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> LARGE_COPPER_CRYSTAL_CLUSTER = registerBlock("large_copper_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 2, 2,5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> MEDIUM_COPPER_CRYSTAL_CLUSTER = registerBlock("medium_copper_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 2, 1,4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> SMALL_COPPER_CRYSTAL_CLUSTER = registerBlock("small_copper_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 2, 0,3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+
+    public static final RegistryObject<Block> GOLD_CRYSTAL_CLUSTER = registerBlock("gold_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 3, 3,7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> LARGE_GOLD_CRYSTAL_CLUSTER = registerBlock("large_gold_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 3, 2,5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> MEDIUM_GOLD_CRYSTAL_CLUSTER = registerBlock("medium_gold_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 3, 1,4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> SMALL_GOLD_CRYSTAL_CLUSTER = registerBlock("small_gold_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 3, 0,3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+
+    public static final RegistryObject<Block> REDSTONE_CRYSTAL_CLUSTER = registerBlock("redstone_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 4, 3,7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> LARGE_REDSTONE_CRYSTAL_CLUSTER = registerBlock("large_redstone_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 4, 2,5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> MEDIUM_REDSTONE_CRYSTAL_CLUSTER = registerBlock("medium_redstone_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 4, 1,4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> SMALL_REDSTONE_CRYSTAL_CLUSTER = registerBlock("small_redstone_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 4, 0,3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+
+    public static final RegistryObject<Block> LAPIS_CRYSTAL_CLUSTER = registerBlock("lapis_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 5, 3,7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> LARGE_LAPIS_CRYSTAL_CLUSTER = registerBlock("large_lapis_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 5, 2,5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> MEDIUM_LAPIS_CRYSTAL_CLUSTER = registerBlock("medium_lapis_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 5, 1,4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> SMALL_LAPIS_CRYSTAL_CLUSTER = registerBlock("small_lapis_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 5, 0,3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+
+    public static final RegistryObject<Block> DIAMOND_CRYSTAL_CLUSTER = registerBlock("diamond_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 6, 3,7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> LARGE_DIAMOND_CRYSTAL_CLUSTER = registerBlock("large_diamond_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 6, 2,5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> MEDIUM_DIAMOND_CRYSTAL_CLUSTER = registerBlock("medium_diamond_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 6, 1,4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> SMALL_DIAMOND_CRYSTAL_CLUSTER = registerBlock("small_diamond_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 6, 0,3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+
+    public static final RegistryObject<Block> EMERALD_CRYSTAL_CLUSTER = registerBlock("emerald_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 7, 3,7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> LARGE_EMERALD_CRYSTAL_CLUSTER = registerBlock("large_emerald_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 7, 2,5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> MEDIUM_EMERALD_CRYSTAL_CLUSTER = registerBlock("medium_emerald_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 7, 1,4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> SMALL_EMERALD_CRYSTAL_CLUSTER = registerBlock("small_emerald_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 7, 0,3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+
+    public static final RegistryObject<Block> DEBRIS_CRYSTAL_CLUSTER = registerBlock("debris_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 8, 3,7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> LARGE_DEBRIS_CRYSTAL_CLUSTER = registerBlock("large_debris_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 8, 2,5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> MEDIUM_DEBRIS_CRYSTAL_CLUSTER = registerBlock("medium_debris_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 8, 1,4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> SMALL_DEBRIS_CRYSTAL_CLUSTER = registerBlock("small_debris_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 8, 0,3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+
     //Block entities
     public static final RegistryObject<Block> FAIRY_OFFERING_BENCH = registerBlock("fairy_offering_bench",
             () -> new FairyOfferingBenchBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
@@ -168,6 +267,8 @@ public class ModBlocks {
             () -> new FairyCollectionTrayBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
     public static final RegistryObject<Block> FAIRY_INFUSION_BENCH = registerBlock("fairy_infusion_bench",
             () -> new FairyInfusionBenchBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
+    public static final RegistryObject<Block> MAGIC_CRYSTALIZER = registerBlock("magic_crystalizer",
+            () -> new MagicCrystalizerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){
         RegistryObject<T> toRet = BlocksRegister.register(name, block);

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "buntsy:gentlit_planks"
+    }
+  ],
+  "result": {
+    "item": "buntsy:gentlit_button"
+  }
+}

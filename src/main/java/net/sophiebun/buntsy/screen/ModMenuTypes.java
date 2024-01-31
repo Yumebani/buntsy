@@ -9,6 +9,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
+import net.sophiebun.buntsy.blocks.entity.advancedfairy.MagicCrystalizerBlockEntity;
 
 public class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MenusRegister =
@@ -24,6 +25,8 @@ public class ModMenuTypes {
             registerMenuType("fairy_collection_tray_menu", FairyCollectionTrayMenu::new);
     public static final RegistryObject<MenuType<FairyInfusionBenchMenu>> FAIRY_INFUSION_BENCH_MENU =
             registerMenuType("fairy_infusion_bench_menu", FairyInfusionBenchMenu::new);
+    public static final RegistryObject<MenuType<MagicCrystalizerMenu>> MAGIC_CRYSTALIZER_MENU =
+            registerMenuType("magic_crystalizer_menu", MagicCrystalizerMenu::new);
 
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory){
         return MenusRegister.register(name, () -> IForgeMenuType.create(factory));

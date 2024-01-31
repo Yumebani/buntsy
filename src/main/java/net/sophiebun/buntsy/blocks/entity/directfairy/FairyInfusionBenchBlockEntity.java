@@ -1,5 +1,6 @@
 package net.sophiebun.buntsy.blocks.entity.directfairy;
 
+import com.google.common.collect.ImmutableMultimap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -51,7 +52,7 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
     //TEMPORARY
     private static final List<TempRecipe> recipeList = List.of(
             new TempRecipe(Ingredient.of(ModItems.AMETHYST_DUST.get()), Map.of(
-                    ModItems.FAIRY_DUST.get(), Map.of(1, 1f))));
+                    ModItems.FAIRY_DUST.get(), ImmutableMultimap.of(1, 1f))));
 
     private final List<Integer> randomRotations;
 

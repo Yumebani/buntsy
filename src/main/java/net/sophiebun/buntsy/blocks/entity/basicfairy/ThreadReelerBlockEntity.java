@@ -1,5 +1,6 @@
 package net.sophiebun.buntsy.blocks.entity.basicfairy;
 
+import com.google.common.collect.ImmutableMultimap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -7,6 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -56,12 +58,17 @@ public class ThreadReelerBlockEntity extends BasicFairyBlockEntity implements Me
     //TEMPORARY
     private static final List<TempRecipe> recipeList = List.of(
             new TempRecipe(Ingredient.of(ModItems.COCOON.get()), Map.of(
-                    ModItems.SILK.get(), Map.of(3, 1f))),
+                    ModItems.SILK.get(), ImmutableMultimap.of(3, 1f))),
+
+            new TempRecipe(Ingredient.of(ItemTags.WOOL), Map.of(
+                    Items.STRING, ImmutableMultimap.of(3, 1f))),
+
             new TempRecipe(Ingredient.of(ModItems.MOLTED_MOTH_WINGS.get()), Map.of(
-                    ModItems.MOTH_WING_THREAD.get(), Map.of(3, 1f))));
+                    ModItems.MOTH_WING_THREAD.get(), ImmutableMultimap.of(3, 1f))));
 
     public ThreadReelerBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.THREAD_REELER_BLOCK_ENTITY.get(), pPos, pBlockState);
+        setConsumption(1f);
     }
 
     @Override

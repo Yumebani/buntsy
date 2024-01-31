@@ -18,27 +18,15 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
+import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
 import net.sophiebun.buntsy.item.ModItems;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class ModItemModelProvider extends ItemModelProvider {
     public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, BuntsyMod.MODID, existingFileHelper);
-    }
-
-    private static LinkedHashMap<ResourceKey<TrimMaterial>, Float> trimMaterials = new LinkedHashMap<>();
-    static {
-        trimMaterials.put(TrimMaterials.QUARTZ, 0.1F);
-        trimMaterials.put(TrimMaterials.IRON, 0.2F);
-        trimMaterials.put(TrimMaterials.NETHERITE, 0.3F);
-        trimMaterials.put(TrimMaterials.REDSTONE, 0.4F);
-        trimMaterials.put(TrimMaterials.COPPER, 0.5F);
-        trimMaterials.put(TrimMaterials.GOLD, 0.6F);
-        trimMaterials.put(TrimMaterials.EMERALD, 0.7F);
-        trimMaterials.put(TrimMaterials.DIAMOND, 0.8F);
-        trimMaterials.put(TrimMaterials.LAPIS, 0.9F);
-        trimMaterials.put(TrimMaterials.AMETHYST, 1.0F);
     }
 
     @Override
@@ -60,8 +48,34 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.HOOTNIP);
         simpleItem(ModItems.GROUND_HOOTNIP);
         simpleItem(ModItems.HOOTNIP_CEREAL);
-        simpleItem(ModItems.AMETHYST_DUST);
+        simpleItem(ModItems.STRAWBERRY_SEEDS);
+        simpleItem(ModItems.HOOTNIP_SEEDS);
 
+        //Ores and stuff
+        simpleItem(ModItems.AMETHYST_DUST);
+        simpleItem(ModItems.PRISTINE_AMETHYST_GRAIN);
+        simpleItem(ModItems.IRON_CRYSTAL);
+        simpleItem(ModItems.IRON_DUST);
+        simpleItem(ModItems.PRISTINE_IRON_SAMPLE);
+        simpleItem(ModItems.COPPER_CRYSTAL);
+        simpleItem(ModItems.COPPER_DUST);
+        simpleItem(ModItems.PRISTINE_COPPER_SAMPLE);
+        simpleItem(ModItems.GOLD_CRYSTAL);
+        simpleItem(ModItems.GOLD_DUST);
+        simpleItem(ModItems.PRISTINE_GOLD_SAMPLE);
+        simpleItem(ModItems.DEBRIS_SHARD);
+        simpleItem(ModItems.PRISTINE_DEBRIS_SAMPLE);
+        simpleItem(ModItems.NETHERITE_DUST);
+        simpleItem(ModItems.REDSTONE_CRYSTAL);
+        simpleItem(ModItems.PRISTINE_REDSTONE_SAMPLE);
+        simpleItem(ModItems.LAPIS_CRYSTAL);
+        simpleItem(ModItems.PRISTINE_LAPIS_SAMPLE);
+        simpleItem(ModItems.DIAMOND_SHARD);
+        simpleItem(ModItems.PRISTINE_DIAMOND_SAMPLE);
+        simpleItem(ModItems.EMERALD_SHARD);
+        simpleItem(ModItems.PRISTINE_EMERALD_SAMPLE);
+
+        //Food
         simpleItem(ModItems.STRAWBERRY);
         simpleItem(ModItems.BOWL_OF_CARAMEL);
         simpleItem(ModItems.CARAMEL_STRAWBERRIES);
@@ -117,10 +131,11 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemNonBlockDependent(ModBlocks.GLOWSHROOM_BLOCK);
 
         //Adding mineral blocks
-        simpleCrossBlockItem(ModBlocks.GROWABLE_AMETHYST_CLUSTER);
-        simpleCrossBlockItem(ModBlocks.LARGE_GROWABLE_AMETHYST_CLUSTER);
-        simpleCrossBlockItem(ModBlocks.MEDIUM_GROWABLE_AMETHYST_CLUSTER);
-        simpleCrossBlockItem(ModBlocks.SMALL_GROWABLE_AMETHYST_CLUSTER);
+        for (List<RegistryObject<Block>> minerals : ModGrowableMineral.GROWABLE_MINERAL_STAGES){
+            for (RegistryObject<Block> mineral : minerals){
+                simpleCrossBlockItem(mineral);
+            }
+        }
 
         //Fairy utils
         simpleItem(ModItems.FAIRY_IN_A_BOTTLE);
@@ -136,61 +151,13 @@ public class ModItemModelProvider extends ItemModelProvider {
         handheldItem(ModItems.SILKY_SHOVEL);
         handheldItem(ModItems.SILKY_HOE);
 
-        trimmedArmorItem(ModItems.SILKY_HELMET);
-        trimmedArmorItem(ModItems.SILKY_CHESTPLATE);
-        trimmedArmorItem(ModItems.SILKY_LEGGINGS);
-        trimmedArmorItem(ModItems.SILKY_BOOTS);
+        simpleItem(ModItems.SILKY_HELMET);
+        simpleItem(ModItems.SILKY_CHESTPLATE);
+        simpleItem(ModItems.SILKY_LEGGINGS);
+        simpleItem(ModItems.SILKY_BOOTS);
 
         withExistingParent(ModItems.SILKBUN_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.FAIRY_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
-    }
-
-    // Shoutout to El_Redstoniano for making this
-    private void trimmedArmorItem(RegistryObject<Item> itemRegistryObject) {
-        final String MOD_ID = BuntsyMod.MODID; // Change this to your mod id
-
-        if(itemRegistryObject.get() instanceof ArmorItem armorItem) {
-            trimMaterials.entrySet().forEach(entry -> {
-
-                ResourceKey<TrimMaterial> trimMaterial = entry.getKey();
-                float trimValue = entry.getValue();
-
-                String armorType = switch (armorItem.getEquipmentSlot()) {
-                    case HEAD -> "helmet";
-                    case CHEST -> "chestplate";
-                    case LEGS -> "leggings";
-                    case FEET -> "boots";
-                    default -> "";
-                };
-
-                String armorItemPath = "item/" + armorItem;
-                String trimPath = "trims/items/" + armorType + "_trim_" + trimMaterial.location().getPath();
-                String currentTrimName = armorItemPath + "_" + trimMaterial.location().getPath() + "_trim";
-                ResourceLocation armorItemResLoc = new ResourceLocation(MOD_ID, armorItemPath);
-                ResourceLocation trimResLoc = new ResourceLocation(trimPath); // minecraft namespace
-                ResourceLocation trimNameResLoc = new ResourceLocation(MOD_ID, currentTrimName);
-
-                // This is used for making the ExistingFileHelper acknowledge that this texture exist, so this will
-                // avoid an IllegalArgumentException
-                existingFileHelper.trackGenerated(trimResLoc, PackType.CLIENT_RESOURCES, ".png", "textures");
-
-                // Trimmed armorItem files
-                getBuilder(currentTrimName)
-                        .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                        .texture("layer0", armorItemResLoc)
-                        .texture("layer1", trimResLoc);
-
-                // Non-trimmed armorItem file (normal variant)
-                this.withExistingParent(itemRegistryObject.getId().getPath(),
-                                mcLoc("item/generated"))
-                        .override()
-                        .model(new ModelFile.UncheckedModelFile(trimNameResLoc))
-                        .predicate(mcLoc("trim_type"), trimValue).end()
-                        .texture("layer0",
-                                new ResourceLocation(MOD_ID,
-                                        "item/" + itemRegistryObject.getId().getPath()));
-            });
-        }
     }
 
     private ItemModelBuilder simpleCrossBlockItem (RegistryObject<Block> block){

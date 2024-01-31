@@ -7,6 +7,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
+import net.sophiebun.buntsy.blocks.entity.advancedfairy.MagicCrystalizerBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.basicfairy.GrindingWheelBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.basicfairy.ThreadReelerBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyCollectionTrayBlockEntity;
@@ -38,6 +39,10 @@ public class ModBlockEntities {
             blockEntityRegister.register("fairy_infuse_bench_block_entity",
                     () -> BlockEntityType.Builder.of(FairyInfusionBenchBlockEntity::new,
                             ModBlocks.FAIRY_INFUSION_BENCH.get()).build(null));
+    public static final RegistryObject<BlockEntityType<MagicCrystalizerBlockEntity>> MAGIC_CRYSTALIZER_BLOCK_ENTITY =
+            blockEntityRegister.register("magic_crystalizer_block_entity",
+                    () -> BlockEntityType.Builder.of(MagicCrystalizerBlockEntity::new,
+                            ModBlocks.MAGIC_CRYSTALIZER.get()).build(null));
 
     public static void register(IEventBus eventBus){
 
