@@ -5,7 +5,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraftforge.client.model.IModelBuilder;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -14,7 +16,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
+import net.sophiebun.buntsy.blocks.custom.HootnipCrop;
 import net.sophiebun.buntsy.blocks.custom.StrawberryCrop;
+import net.sophiebun.buntsy.blocks.custom.SyrupExtractorBlock;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
 
 import java.util.List;
@@ -78,6 +82,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
         //Crops
         simpleCrossBlock(ModBlocks.WILD_STRAWBERRY);
         strawberryCrop(ModBlocks.STRAWBERRY_CROP);
+        wildHootnipBlock(ModBlocks.WILD_HOOTNIP);
+        hootnipCrop(ModBlocks.HOOTNIP_CROP);
+
 
         //Adding plants
         variedGrass(ModBlocks.PINK_CHARMIL_GRASS); //Item added in item model gen
@@ -117,8 +124,48 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 new ModelFile.UncheckedModelFile(modLoc("block/fairy_collection_tray")));
         simpleBlockWithItem(ModBlocks.FAIRY_INFUSION_BENCH.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/fairy_infusion_bench")));
-        simpleBlockWithItem(ModBlocks.MAGIC_CRYSTALIZER.get(),
+        XZdirectionalBlock(ModBlocks.MAGIC_CRYSTALIZER,
                 new ModelFile.UncheckedModelFile(modLoc("block/magic_crystalizer")));
+
+        //Other blocks
+        syrupExtractorBlock(ModBlocks.SYRUP_EXTRACTOR);
+        simpleBlockItem(ModBlocks.SYRUP_EXTRACTOR.get(), new ModelFile.UncheckedModelFile(modLoc("block/syrup_extractor_stage0")));
+    }
+
+    private void hootnipCrop(RegistryObject<Block> block){
+        getVariantBuilder(block.get()).forAllStates(blockState ->
+                ConfiguredModel.builder().modelFile(models().crop(block.getId().getPath(),
+                        new ResourceLocation(BuntsyMod.MODID, "textures/block/" + block.getId().getPath() + "_stage" +
+                                blockState.getValue(HootnipCrop.AGE)))).build()
+        );
+    }
+
+    private void wildHootnipBlock(RegistryObject<Block> block){
+        getVariantBuilder(block.get()).partialState()
+                .with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER)
+                .modelForState().modelFile(getCrossModel(block, "_top")).addModel().partialState()
+                .with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER)
+                .modelForState().modelFile(getCrossModel(block, "_bottom")).addModel().partialState();
+    }
+
+    private void syrupExtractorBlock(RegistryObject<Block> block){
+        getVariantBuilder(block.get()).forAllStates(blockState ->
+                ConfiguredModel.builder()
+                        .modelFile(new ModelFile.UncheckedModelFile("block/syrup_extractor_stage" + blockState.getValue(SyrupExtractorBlock.LEVEL)))
+                        .rotationY(Math.round(blockState.getValue(HorizontalDirectionalBlock.FACING).getRotation().y))
+                        .build());
+    }
+
+    private void XZdirectionalBlock(RegistryObject<Block> block, ModelFile modelFile){
+        getVariantBuilder(block.get()).partialState()
+                .with(ModGrowableMineral.FACING, Direction.EAST)
+                .modelForState().modelFile(modelFile).rotationY(90).addModel().partialState()
+                .with(ModGrowableMineral.FACING, Direction.NORTH)
+                .modelForState().modelFile(modelFile).addModel().partialState()
+                .with(ModGrowableMineral.FACING, Direction.SOUTH)
+                .modelForState().modelFile(modelFile).rotationY(180).addModel().partialState()
+                .with(ModGrowableMineral.FACING, Direction.WEST)
+                .modelForState().modelFile(modelFile).rotationY(270).addModel().partialState();
     }
 
     private void strawberryCrop(RegistryObject<Block> block){

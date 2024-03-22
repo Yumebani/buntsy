@@ -118,6 +118,12 @@ public class ModItemModelProvider extends ItemModelProvider {
         evenSimplerBlockItem(ModBlocks.BRAVOT_PRESSURE_PLATE);
         evenSimplerBlockItem(ModBlocks.BRAVOT_FENCE_GATE);
 
+        //Crops
+        simpleCropBlockItem(ModBlocks.WILD_STRAWBERRY, "wild_strawberry");
+        simpleCropBlockItem(ModBlocks.STRAWBERRY_CROP, "strawberry_crop_stage5");
+        simpleCropBlockItem(ModBlocks.WILD_HOOTNIP, "wild_hootnip_top");
+        simpleCropBlockItem(ModBlocks.HOOTNIP_CROP, "hootnip_crop_stage6");
+
         //Adding plants
         specificCrossBlockItem(ModBlocks.PINK_CHARMIL_GRASS, "_3");
         specificCrossBlockItem(ModBlocks.BLUE_CHARMIL_GRASS, "_3");
@@ -164,6 +170,12 @@ public class ModItemModelProvider extends ItemModelProvider {
         return withExistingParent(block.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
                 new ResourceLocation(BuntsyMod.MODID,"block/" + block.getId().getPath()));
+    }
+
+    private ItemModelBuilder simpleCropBlockItem (RegistryObject<Block> block, String path){
+        return withExistingParent(block.getId().getPath(),
+                new ResourceLocation("item/generated")).texture("layer0",
+                new ResourceLocation(BuntsyMod.MODID,"block/" + path));
     }
 
     private ItemModelBuilder specificCrossBlockItem (RegistryObject<Block> block, String extra){

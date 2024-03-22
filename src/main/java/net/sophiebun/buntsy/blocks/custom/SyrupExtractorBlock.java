@@ -1,85 +1,69 @@
-package net.sophiebun.buntsy.blocks.custom.entityblocks;
+package net.sophiebun.buntsy.blocks.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.network.NetworkHooks;
-import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
-import net.sophiebun.buntsy.blocks.entity.advancedfairy.MagicCrystalizerBlockEntity;
-import org.jetbrains.annotations.Nullable;
+import net.sophiebun.buntsy.blocks.ModBlocks;
+import net.sophiebun.buntsy.item.ModItems;
+import net.sophiebun.buntsy.tag.ModTags;
 
-public class MagicCrystalizerBlock extends BaseEntityBlock {
+public class SyrupExtractorBlock extends Block{
 
+    public static final IntegerProperty LEVEL = IntegerProperty.create("level", 0, 3);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 15, 15);
+    public static final VoxelShape SHAPE = Block.box(4, 2, 0, 12, 9, 6);
 
-    public MagicCrystalizerBlock(Properties pProperties) {
+    public SyrupExtractorBlock(Properties pProperties) {
         super(pProperties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new MagicCrystalizerBlockEntity(blockPos, blockState);
-    }
-
-    @Override
-    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-        if (pState.getBlock() != pNewState.getBlock()) {
-            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof MagicCrystalizerBlockEntity) {
-                ((MagicCrystalizerBlockEntity) blockEntity).drops();
-            }
-        }
-
-        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
     }
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
-            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof MagicCrystalizerBlockEntity) {
-                NetworkHooks.openScreen((ServerPlayer) pPlayer,(MagicCrystalizerBlockEntity) blockEntity, pPos);
+            if (pPlayer.getItemInHand(pHand).is(Items.GLASS_BOTTLE) && pState.getValue(SyrupExtractorBlock.LEVEL) == 3){
+                pPlayer.getItemInHand(pHand).shrink(1);
+                pPlayer.addItem(new ItemStack(ModItems.GENTLIT_SYRUP.get()));
+                return InteractionResult.SUCCESS;
             }
-            else {
-                throw new IllegalStateException("No container provider.");
-            }
+            return InteractionResult.FAIL;
         }
 
         super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
         return InteractionResult.SUCCESS;
     }
 
-    @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        if (pLevel.isClientSide()) {
-            return null;
+    public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
+
+        if (pLevel.getBlockState(pPos.relative(pState.getValue(SyrupExtractorBlock.FACING), 1)).is(ModTags.Blocks.GENTLIT_LOGS)
+                && pState.getValue(SyrupExtractorBlock.LEVEL) != 3 && pLevel.random.nextInt(10) == 0){
+            pLevel.setBlockAndUpdate(pPos, this.defaultBlockState()
+                    .setValue(HorizontalDirectionalBlock.FACING, pState.getValue(HorizontalDirectionalBlock.FACING))
+                    .setValue(SyrupExtractorBlock.LEVEL, pState.getValue(SyrupExtractorBlock.LEVEL) + 1));
         }
 
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.MAGIC_CRYSTALIZER_BLOCK_ENTITY.get(),
-                (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
+        super.randomTick(pState, pLevel, pPos, pRandom);
     }
 
-    @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
     }
@@ -108,4 +92,5 @@ public class MagicCrystalizerBlock extends BaseEntityBlock {
     public RenderShape getRenderShape(BlockState pState) {
         return RenderShape.MODEL;
     }
+
 }

@@ -14,6 +14,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePrope
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.blocks.ModBlocks;
+import net.sophiebun.buntsy.blocks.custom.HootnipCrop;
 import net.sophiebun.buntsy.blocks.custom.StrawberryCrop;
 import net.sophiebun.buntsy.item.ModItems;
 
@@ -74,10 +75,25 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         LootItemCondition.Builder strawberryLootBuilder = LootItemBlockStatePropertyCondition
                 .hasBlockStateProperties(ModBlocks.STRAWBERRY_CROP.get())
                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(StrawberryCrop.AGE, 5));
-        this.add(ModBlocks.STRAWBERRY_CROP.get(), this.applyExplosionDecay(ModBlocks.STRAWBERRY_CROP.get(), LootTable.lootTable().withPool(LootPool.lootPool()
-                .when(strawberryLootBuilder)
-                .add(LootItem.lootTableItem(ModItems.STRAWBERRY.get()))
-                .apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 3)))));
+        this.add(ModBlocks.STRAWBERRY_CROP.get(), this.applyExplosionDecay(ModBlocks.STRAWBERRY_CROP.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .add((LootItem.lootTableItem(ModItems.STRAWBERRY.get()))
+                                .when(strawberryLootBuilder).otherwise(LootItem.lootTableItem(ModItems.STRAWBERRY_SEEDS.get())))
+                        .when(strawberryLootBuilder)
+                        .add(LootItem.lootTableItem(ModItems.STRAWBERRY.get()))
+                        .apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 3)))));
+
+        this.add(ModBlocks.WILD_HOOTNIP.get(), block -> createSingleItemTableWithSilkTouch(block, ModItems.HOOTNIP.get()));
+        LootItemCondition.Builder hootnipCropCriteria = LootItemBlockStatePropertyCondition
+                .hasBlockStateProperties(ModBlocks.HOOTNIP_CROP.get())
+                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(HootnipCrop.AGE, 6));
+        this.add(ModBlocks.HOOTNIP_CROP.get(), this.applyExplosionDecay(ModBlocks.HOOTNIP_CROP.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .add((LootItem.lootTableItem(ModItems.HOOTNIP.get()))
+                                .when(hootnipCropCriteria).otherwise(LootItem.lootTableItem(ModItems.HOOTNIP_SEEDS.get())))
+                        .when(hootnipCropCriteria)
+                        .add(LootItem.lootTableItem(ModItems.HOOTNIP.get()))
+                        .apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 3)))));
 
         //Adding plants
         this.add(ModBlocks.PINK_CHARMIL_GRASS.get(), block -> createShearsOnlyDrop(block));
@@ -144,6 +160,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.FAIRY_COLLECTION_TRAY.get());
         this.dropSelf(ModBlocks.FAIRY_INFUSION_BENCH.get());
         this.dropSelf(ModBlocks.MAGIC_CRYSTALIZER.get());
+
+        //Others
+        this.dropSelf(ModBlocks.SYRUP_EXTRACTOR.get());
     }
 
     @Override

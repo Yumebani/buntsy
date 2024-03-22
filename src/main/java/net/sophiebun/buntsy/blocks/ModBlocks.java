@@ -119,6 +119,8 @@ public class ModBlocks {
             () -> new StrawberryCrop(BlockBehaviour.Properties.copy(Blocks.WHEAT).noOcclusion().noCollission()));
     public static final RegistryObject<Block> WILD_HOOTNIP = registerBlock("wild_hootnip",
             () -> new DoublePlantBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> HOOTNIP_CROP = registerBlock("hootnip_crop",
+            () -> new DoublePlantBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
 
     //Biome plants
     public static final RegistryObject<Block> PINK_CHARMIL_GRASS = registerBlock("pink_charmil_grass",
@@ -269,6 +271,9 @@ public class ModBlocks {
             () -> new FairyInfusionBenchBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
     public static final RegistryObject<Block> MAGIC_CRYSTALIZER = registerBlock("magic_crystalizer",
             () -> new MagicCrystalizerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+
+    public static final RegistryObject<Block> SYRUP_EXTRACTOR = registerBlock("syrup_extractor",
+            () -> new SyrupExtractorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){
         RegistryObject<T> toRet = BlocksRegister.register(name, block);
