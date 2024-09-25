@@ -126,6 +126,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 new ModelFile.UncheckedModelFile(modLoc("block/fairy_infusion_bench")));
         XZdirectionalBlock(ModBlocks.MAGIC_CRYSTALIZER,
                 new ModelFile.UncheckedModelFile(modLoc("block/magic_crystalizer")));
+        simpleBlockItem(ModBlocks.MAGIC_CRYSTALIZER.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/magic_crystalizer")));
 
         //Other blocks
         syrupExtractorBlock(ModBlocks.SYRUP_EXTRACTOR);
@@ -133,10 +135,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
 
     private void hootnipCrop(RegistryObject<Block> block){
-        getVariantBuilder(block.get()).forAllStates(blockState ->
-                ConfiguredModel.builder().modelFile(models().crop(block.getId().getPath(),
-                        new ResourceLocation(BuntsyMod.MODID, "textures/block/" + block.getId().getPath() + "_stage" +
-                                blockState.getValue(HootnipCrop.AGE)))).build()
+        getVariantBuilder(block.get()).forAllStates(blockState -> {
+                String modelName = block.getId().getPath() + "_stage" + blockState.getValue(HootnipCrop.AGE);
+                return ConfiguredModel.builder().modelFile(models().crop(modelName,
+                        new ResourceLocation(BuntsyMod.MODID, "block/" + modelName)).renderType("cutout")).build();}
         );
     }
 
@@ -149,30 +151,39 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
 
     private void syrupExtractorBlock(RegistryObject<Block> block){
-        getVariantBuilder(block.get()).forAllStates(blockState ->
-                ConfiguredModel.builder()
-                        .modelFile(new ModelFile.UncheckedModelFile("block/syrup_extractor_stage" + blockState.getValue(SyrupExtractorBlock.LEVEL)))
-                        .rotationY(Math.round(blockState.getValue(HorizontalDirectionalBlock.FACING).getRotation().y))
-                        .build());
+
+        getVariantBuilder(block.get()).forAllStates(blockState -> {
+            ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/syrup_extractor_stage" + blockState.getValue(SyrupExtractorBlock.LEVEL)));
+            switch (blockState.getValue(HorizontalDirectionalBlock.FACING)){
+                case EAST:
+                    return ConfiguredModel.builder().modelFile(model).rotationY(270).build();
+                case SOUTH:
+                    return ConfiguredModel.builder().modelFile(model).rotationY(0).build();
+                case WEST:
+                    return ConfiguredModel.builder().modelFile(model).rotationY(90).build();
+                default:
+                    return ConfiguredModel.builder().modelFile(model).rotationY(180).build();
+            }
+        });
     }
 
     private void XZdirectionalBlock(RegistryObject<Block> block, ModelFile modelFile){
         getVariantBuilder(block.get()).partialState()
-                .with(ModGrowableMineral.FACING, Direction.EAST)
+                .with(HorizontalDirectionalBlock.FACING, Direction.EAST)
                 .modelForState().modelFile(modelFile).rotationY(90).addModel().partialState()
-                .with(ModGrowableMineral.FACING, Direction.NORTH)
+                .with(HorizontalDirectionalBlock.FACING, Direction.NORTH)
                 .modelForState().modelFile(modelFile).addModel().partialState()
-                .with(ModGrowableMineral.FACING, Direction.SOUTH)
+                .with(HorizontalDirectionalBlock.FACING, Direction.SOUTH)
                 .modelForState().modelFile(modelFile).rotationY(180).addModel().partialState()
-                .with(ModGrowableMineral.FACING, Direction.WEST)
+                .with(HorizontalDirectionalBlock.FACING, Direction.WEST)
                 .modelForState().modelFile(modelFile).rotationY(270).addModel().partialState();
     }
 
     private void strawberryCrop(RegistryObject<Block> block){
-        getVariantBuilder(block.get()).forAllStates(blockState ->
-           ConfiguredModel.builder().modelFile(models().crop(block.getId().getPath(),
-                   new ResourceLocation(BuntsyMod.MODID, "textures/block/" + block.getId().getPath() + "_stage" +
-                           blockState.getValue(StrawberryCrop.AGE)))).build()
+        getVariantBuilder(block.get()).forAllStates(blockState -> {
+            String model_name = block.getId().getPath() + "_stage" + blockState.getValue(StrawberryCrop.AGE);
+           return ConfiguredModel.builder().modelFile(models().crop(model_name,
+                   new ResourceLocation(BuntsyMod.MODID, "block/" + model_name)).renderType("cutout")).build();}
         );
     }
 

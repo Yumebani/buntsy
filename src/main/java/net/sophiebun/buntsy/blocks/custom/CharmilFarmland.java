@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraftforge.common.IPlantable;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 
 import javax.annotation.Nullable;
@@ -29,7 +30,12 @@ public class CharmilFarmland extends FarmBlock {
 
     }
 
-   @Override
+    @Override
+    public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
+        return true;
+    }
+
+    @Override
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         int i = pState.getValue(MOISTURE);
         if (!isNearWater(pLevel, pPos) && !pLevel.isRainingAt(pPos.above())) {

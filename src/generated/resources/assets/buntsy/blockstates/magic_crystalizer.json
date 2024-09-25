@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
-      "model": "buntsy:block/fairy_infusion_bench"
+    "facing=east": {
+      "model": "buntsy:block/magic_crystalizer",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "buntsy:block/magic_crystalizer"
+    },
+    "facing=south": {
+      "model": "buntsy:block/magic_crystalizer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "buntsy:block/magic_crystalizer",
+      "y": 270
     }
   }
 }

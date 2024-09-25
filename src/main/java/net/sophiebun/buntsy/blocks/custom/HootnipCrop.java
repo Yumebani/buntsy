@@ -45,11 +45,14 @@ public class HootnipCrop extends BushBlock implements BonemealableBlock {
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D),
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D)};
 
+
+
     public HootnipCrop(Properties pProperties) {
         super(pProperties);
         this.registerDefaultState(this.stateDefinition.any().setValue(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER)
                 .setValue(this.getAgeProperty(), Integer.valueOf(0)));
     }
+
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return SHAPE_BY_AGE[this.getAge(pState)];
     }
@@ -84,61 +87,42 @@ public class HootnipCrop extends BushBlock implements BonemealableBlock {
         return isLower(pState) ? this.getAge(pState) >= MAX_AGE_BOTTOM - 1 : this.getAge(pState) >= this.getMaxAge();
     }
     public boolean isRandomlyTicking(BlockState pState) {
-        return !this.isMaxAge(pState);
+        return this.getAge(pState) != this.getMaxAge();
     }
 
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         if (!pLevel.isAreaLoaded(pPos, 1)) return;
         if (pLevel.getRawBrightness(pPos, 0) >= 9) {
-            int i = this.getAge(pState);
-            if (isLower(pState)){
-                if (!isMaxAge(pState)){
-                    float f = getGrowthSpeed(this, pLevel, pPos);
-
-                    if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(pLevel, pPos, pState, pRandom.nextInt((int)(25.0F / f) + 1) == 0)) {
-                        if (getAge(pState) + 1 < MAX_AGE_BOTTOM - 1){
-                            BlockState topState = this.getStateForAge(MAX_AGE_BOTTOM);
-                            pLevel.setBlock(pPos.relative(Direction.UP, 1),topState, 3);
-                        }
-                        pLevel.setBlock(pPos, this.getStateForAge(i + 1), 2);
-                        net.minecraftforge.common.ForgeHooks.onCropsGrowPost(pLevel, pPos, pState);
-                    }
-                }
-            }
-            else if (i < this.getMaxAge()) {
-                float f = getGrowthSpeed(this, pLevel, pPos);
-                if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(pLevel, pPos, pState, pRandom.nextInt((int)(25.0F / f) + 1) == 0)) {
-                    pLevel.setBlock(pPos, this.getStateForAge(i + 1), 2);
-                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost(pLevel, pPos, pState);
-                }
+            float f = getGrowthSpeed(this, pLevel, pPos);
+            if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(pLevel, pPos, pState, pRandom.nextInt((int)(25.0F / f) + 1) == 0)){
+                growCrop(pState, pLevel, pPos);
             }
         }
 
     }
 
     public void growCrops(Level pLevel, BlockPos pPos, BlockState pState) {
-        int i = this.getAge(pState) + this.getBonemealAgeIncrease(pLevel);
-        int j = this.getMaxAge();
+        int i = this.getBonemealAgeIncrease(pLevel);
+        while (this.getAge(pState) < this.getMaxAge() && i != 0){
+            i--;
+            growCrop(pState, pLevel, pPos);
+        }
+    }
+
+    public void growCrop(BlockState pState, Level pLevel, BlockPos pPos){
+        int i = this.getAge(pState);
         if (isLower(pState)){
-            if (i > MAX_AGE_BOTTOM - 1){
-                pLevel.setBlock(pPos, this.getStateForAge(MAX_AGE_BOTTOM - 1), 2);
-                BlockState topState = pLevel.getBlockState(pPos.relative(Direction.UP, 1));
-                if (i - MAX_AGE_BOTTOM + getAge(topState) > getMaxAge()){
-                    pLevel.setBlock(pPos.relative(Direction.UP, 1), this.getStateForAge(getMaxAge()), 2);
-                }
-                else {
-                    pLevel.setBlock(pPos.relative(Direction.UP, 1), this.getStateForAge(i - MAX_AGE_BOTTOM + getAge(topState)), 2);
-                }
-                pLevel.setBlock(pPos, this.getStateForAge(MAX_AGE_BOTTOM - 1), 2);
+            if (!isMaxAge(pState)){
+                pLevel.setBlock(pPos, this.getStateForAge(i + 1), 2);
+                net.minecraftforge.common.ForgeHooks.onCropsGrowPost(pLevel, pPos, pState);
             }
-            pLevel.setBlock(pPos, this.getStateForAge(i), 2);
-        } else {
-            if (i - MAX_AGE_BOTTOM + getAge(pState) > getMaxAge()){
-                pLevel.setBlock(pPos.relative(Direction.UP, 1), this.getStateForAge(getMaxAge()), 2);
+            else if (isMaxAge(pState) && !pLevel.getBlockState(pPos.relative(Direction.UP, 1)).is(ModBlocks.HOOTNIP_CROP.get())){
+                pLevel.setBlock(pPos.relative(Direction.UP, 1), this.getStateForAge(i + 1), 2);
             }
-            else {
-                pLevel.setBlock(pPos.relative(Direction.UP, 1), this.getStateForAge(i - MAX_AGE_BOTTOM + getAge(pState)), 2);
-            }
+        }
+        else if (i < this.getMaxAge() - 1) {
+            pLevel.setBlock(pPos, this.getStateForAge(i + 1), 2);
+            net.minecraftforge.common.ForgeHooks.onCropsGrowPost(pLevel, pPos, pState);
         }
     }
 
@@ -253,7 +237,7 @@ public class HootnipCrop extends BushBlock implements BonemealableBlock {
     }
 
     public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
-        return !this.isMaxAge(pState);
+        return this.getAge(pState) != this.getMaxAge();
     }
 
     public boolean isBonemealSuccess(Level pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
@@ -264,7 +248,9 @@ public class HootnipCrop extends BushBlock implements BonemealableBlock {
         this.growCrops(pLevel, pPos, pState);
     }
 
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         pBuilder.add(AGE);
+        pBuilder.add(HALF);
     }
 }

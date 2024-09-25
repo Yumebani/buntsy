@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "facing=east,level=0": {
+      "model": "buntsy:block/syrup_extractor_stage0",
+      "y": 270
+    },
+    "facing=east,level=1": {
+      "model": "buntsy:block/syrup_extractor_stage1",
+      "y": 270
+    },
+    "facing=east,level=2": {
+      "model": "buntsy:block/syrup_extractor_stage2",
+      "y": 270
+    },
+    "facing=east,level=3": {
+      "model": "buntsy:block/syrup_extractor_stage3",
+      "y": 270
+    },
+    "facing=north,level=0": {
+      "model": "buntsy:block/syrup_extractor_stage0",
+      "y": 180
+    },
+    "facing=north,level=1": {
+      "model": "buntsy:block/syrup_extractor_stage1",
+      "y": 180
+    },
+    "facing=north,level=2": {
+      "model": "buntsy:block/syrup_extractor_stage2",
+      "y": 180
+    },
+    "facing=north,level=3": {
+      "model": "buntsy:block/syrup_extractor_stage3",
+      "y": 180
+    },
+    "facing=south,level=0": {
+      "model": "buntsy:block/syrup_extractor_stage0"
+    },
+    "facing=south,level=1": {
+      "model": "buntsy:block/syrup_extractor_stage1"
+    },
+    "facing=south,level=2": {
+      "model": "buntsy:block/syrup_extractor_stage2"
+    },
+    "facing=south,level=3": {
+      "model": "buntsy:block/syrup_extractor_stage3"
+    },
+    "facing=west,level=0": {
+      "model": "buntsy:block/syrup_extractor_stage0",
+      "y": 90
+    },
+    "facing=west,level=1": {
+      "model": "buntsy:block/syrup_extractor_stage1",
+      "y": 90
+    },
+    "facing=west,level=2": {
+      "model": "buntsy:block/syrup_extractor_stage2",
+      "y": 90
+    },
+    "facing=west,level=3": {
+      "model": "buntsy:block/syrup_extractor_stage3",
+      "y": 90
+    }
+  }
+}

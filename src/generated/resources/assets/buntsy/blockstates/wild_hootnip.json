@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "buntsy:block/wild_hootnip_bottom"
+    },
+    "half=upper": {
+      "model": "buntsy:block/wild_hootnip_top"
+    }
+  }
+}

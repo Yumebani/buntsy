@@ -1,9 +1,13 @@
-// 1.20.1	2024-01-26T15:06:03.679355569	Tags for minecraft:item mod id buntsy
+// 1.20.1	2024-09-25T19:01:44.545209396	Tags for minecraft:item mod id buntsy
 8dfcac00ff67b8e8fa2d32c38f72d64b5a1a8ded data/buntsy/tags/items/bottled_item.json
 ff756e950d8f253b89d248cdcaf4d44be72d3aef data/buntsy/tags/items/bowl_item.json
 375b70dcc9fd9e50a722f028008e1c11e6e68dd9 data/buntsy/tags/items/bravot_logs.json
 73b1a5042181244742ef2a06d39f27fab477b914 data/buntsy/tags/items/fairy_food.json
 8f30e74d65e15f941591c49161ccf1c7855102a1 data/buntsy/tags/items/gentlit_logs.json
+cfcbd7725eef89b6c7a4a47ea76817e3aa560ddb data/minecraft/tags/items/axes.json
+5dd17ab9c6569dd10de0278c8c9beeeb79255c8c data/minecraft/tags/items/hoes.json
 bdde316ea2c583caaa8383cd4b3805b7ff213c54 data/minecraft/tags/items/logs_that_burn.json
+db2959c06617a13d2de57f6202791059c6cd3f16 data/minecraft/tags/items/pickaxes.json
 870c5923ad1fc8997be2dc7a241deba13bf724cf data/minecraft/tags/items/planks.json
-ad466a642a721b6c7ce6d1ff2a2f407046d7a86b data/minecraft/tags/items/trimmable_armor.json
+2bd74fe4d81befd171c47d6f161a5957f8349f33 data/minecraft/tags/items/shovels.json
+10528c34e2c84a88317991b7620b3a9a6a6b2be4 data/minecraft/tags/items/swords.json

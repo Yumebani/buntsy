@@ -1,4 +1,4 @@
-// 1.20.1	2024-01-26T15:06:03.680086557	Loot Tables
+// 1.20.1	2024-09-25T19:01:44.545926739	Loot Tables
 89827097379284e3cff8aa1eae40585b5a3a87d6 data/buntsy/loot_tables/blocks/blue_bloom.json
 114a61f4b222fad5ef21cd8a9c2433f21ec4fea8 data/buntsy/loot_tables/blocks/blue_charmil_grass.json
 a4f634df261525820e924760c9301e06b3ed0b3e data/buntsy/loot_tables/blocks/bravot_button.json
@@ -14,6 +14,7 @@ a4f634df261525820e924760c9301e06b3ed0b3e data/buntsy/loot_tables/blocks/bravot_b
 1394fe2a6d7307d03e026248fe67cb5ada4b0863 data/buntsy/loot_tables/blocks/bravot_stairs.json
 1f6b7bab7a3b8b4eeb6b05d28bb7304a106ca4af data/buntsy/loot_tables/blocks/bravot_trapdoor.json
 9c78f9f23078f58627e0d38eb7068855a5e8fe22 data/buntsy/loot_tables/blocks/bravot_wood.json
+1bc2768e16214fa1a7c147803a9266483e298eb1 data/buntsy/loot_tables/blocks/charmil_farmland.json
 aae27e8cb2c562a0f2908cfe30267f065757ebec data/buntsy/loot_tables/blocks/charmil_soil.json
 5ba05bbf241268d276e3003544ec01e82a9f9048 data/buntsy/loot_tables/blocks/copper_crystal_cluster.json
 92452e11906839f81d376a2eaa6d6efbeb2cff87 data/buntsy/loot_tables/blocks/debris_crystal_cluster.json
@@ -40,6 +41,7 @@ a626779ad80fc8f3a9d0751675a1b142e468389d data/buntsy/loot_tables/blocks/glowshro
 80b9d2d3973b4400f1bcaeceec7e91c317ceb2ce data/buntsy/loot_tables/blocks/gold_crystal_cluster.json
 99610439b6d85eaea33c1e99cd55845121152e03 data/buntsy/loot_tables/blocks/grinding_wheel.json
 44eca95810951d8a7fb6dc1cbdb58c1cdcd0cc7c data/buntsy/loot_tables/blocks/growable_amethyst_cluster.json
+691b89a088343292c8b9dad88c825b211dfd4340 data/buntsy/loot_tables/blocks/hootnip_crop.json
 b76796b2460e11d8a121db611621af289ebdb6bb data/buntsy/loot_tables/blocks/iron_crystal_cluster.json
 4170cc85f72489916ff43f7056ebc73e502bc644 data/buntsy/loot_tables/blocks/lapis_crystal_cluster.json
 98d3be8b407021c3503e0f5fb71cba02db4d9246 data/buntsy/loot_tables/blocks/large_copper_crystal_cluster.json
@@ -82,8 +84,12 @@ cfe9491c2bd63ab85624a6231a20eab137eb2757 data/buntsy/loot_tables/blocks/small_go
 8037000b225e0958c5b3daa2b8ce8bd8dce938bb data/buntsy/loot_tables/blocks/small_iron_crystal_cluster.json
 e6ee66572a8c13e01a41ac03665f14f2c7812765 data/buntsy/loot_tables/blocks/small_lapis_crystal_cluster.json
 dd209586b437dac74ac55021d8f75026d73d51e7 data/buntsy/loot_tables/blocks/small_redstone_crystal_cluster.json
+90a96dcf57558739d91712be8dc4b8ccffcc1abd data/buntsy/loot_tables/blocks/strawberry_crop.json
 018fe338f9294e44f9fb5110e142a4f139f42767 data/buntsy/loot_tables/blocks/stripped_bravot_log.json
 91683b86fd8d8dcafc9445f33c3f951c21b3d43c data/buntsy/loot_tables/blocks/stripped_bravot_wood.json
 0f3413a27eda123220bddd7ae0feede1057fb8b3 data/buntsy/loot_tables/blocks/stripped_gentlit_log.json
 5ee11a0c45faf1da7793c284d8a26bdb21c0731e data/buntsy/loot_tables/blocks/stripped_gentlit_wood.json
+30b482a223e22a533538c1bdec59cef70fc1ac5e data/buntsy/loot_tables/blocks/syrup_extractor.json
 aef6dd58923f6cd7654a9b3d7f1e97184d3866a8 data/buntsy/loot_tables/blocks/thread_reeler.json
+00dc239e97d64941eac2907b78f02cc65b6bf95d data/buntsy/loot_tables/blocks/wild_hootnip.json
+738afdbdc4c61ae1af0ca5badb5e46ec21eb6906 data/buntsy/loot_tables/blocks/wild_strawberry.json

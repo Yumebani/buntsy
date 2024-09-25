@@ -1,12 +1,15 @@
 package net.sophiebun.buntsy.item;
 
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
+import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.ModFoods;
 import net.sophiebun.buntsy.entity.ModEntities;
 import net.sophiebun.buntsy.item.custom.*;
@@ -95,9 +98,9 @@ public class ModItems {
     public static final RegistryObject<Item> PRISTINE_EMERALD_SAMPLE = ItemsRegister.register(
             "pristine_emerald_sample", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STRAWBERRY_SEEDS = ItemsRegister.register(
-            "strawberry_seeds", () -> new Item(new Item.Properties()));
+            "strawberry_seeds", () -> new ItemNameBlockItem(ModBlocks.STRAWBERRY_CROP.get(), new Item.Properties()));
     public static final RegistryObject<Item> HOOTNIP_SEEDS = ItemsRegister.register(
-            "hootnip_seeds", () -> new Item(new Item.Properties()));
+            "hootnip_seeds", () -> new ItemNameBlockItem(ModBlocks.HOOTNIP_CROP.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> SILKY_SWORD = ItemsRegister.register(
             "silky_sword", () -> new SwordItem(ModToolTiers.SILKY, 7, 2f, new Item.Properties()));

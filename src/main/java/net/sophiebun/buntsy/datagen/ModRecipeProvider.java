@@ -12,6 +12,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
@@ -125,6 +126,74 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(Items.SUGAR), has(Items.SUGAR))
                 .unlockedBy(getHasName(Items.HONEY_BOTTLE), has(Items.HONEY_BOTTLE))
                 .unlockedBy(getHasName(ModItems.GENTLIT_SYRUP.get()), has(ModItems.GENTLIT_SYRUP.get()))
+                .save(consumer);
+
+        //Plant seeds
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.HOOTNIP_SEEDS.get(), 1)
+                .requires(ModItems.HOOTNIP.get(), 1)
+                .unlockedBy(getHasName(ModItems.HOOTNIP.get()), has(ModItems.HOOTNIP.get()))
+                .save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.STRAWBERRY_SEEDS.get(), 1)
+                .requires(ModItems.STRAWBERRY.get(), 1)
+                .unlockedBy(getHasName(ModItems.STRAWBERRY.get()), has(ModItems.STRAWBERRY.get()))
+                .save(consumer);
+
+        //Machine Recipes
+        //Fairy offering bench
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FAIRY_OFFERING_BENCH.get(), 1)
+                .define('L', ModBlocks.GENTLIT_LOG.get())
+                .define('P', ModBlocks.GENTLIT_PLANKS.get())
+                .define('S', ModBlocks.GENTLIT_SLAB.get())
+                .pattern("PSP")
+                .pattern("PSP")
+                .pattern("L L")
+                .unlockedBy(getHasName(ModBlocks.GENTLIT_LOG.get()), has(ModBlocks.GENTLIT_LOG.get()))
+                .save(consumer);
+
+        //Fairy collection tray
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FAIRY_COLLECTION_TRAY.get(), 1)
+                .define('L', ModBlocks.GENTLIT_LOG.get())
+                .define('P', ModBlocks.GENTLIT_PLANKS.get())
+                .define('S', ModBlocks.GENTLIT_SLAB.get())
+                .pattern("PSP")
+                .pattern("PSP")
+                .pattern("LSL")
+                .unlockedBy(getHasName(ModBlocks.GENTLIT_LOG.get()), has(ModBlocks.GENTLIT_LOG.get()))
+                .save(consumer);
+
+        //Fairy infusion bench
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FAIRY_INFUSION_BENCH.get(), 1)
+                .define('L', ModBlocks.GENTLIT_LOG.get())
+                .define('P', ModBlocks.GENTLIT_PLANKS.get())
+                .define('T', ModBlocks.GENTLIT_TRAPDOOR.get())
+                .pattern("PTP")
+                .pattern("PTP")
+                .pattern("L L")
+                .unlockedBy(getHasName(ModBlocks.GENTLIT_LOG.get()), has(ModBlocks.GENTLIT_LOG.get()))
+                .save(consumer);
+
+        //Grinding Wheel
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.GRINDING_WHEEL.get(), 1)
+                .define('B', Blocks.SMOOTH_STONE)
+                .define('S', Blocks.SMOOTH_STONE_SLAB)
+                .define('I', Items.IRON_INGOT)
+                .pattern("SSS")
+                .pattern("BIB")
+                .pattern("BBB")
+                .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                .save(consumer);
+
+        //Reeling Wheel
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.MAGIC_CRYSTALIZER.get(), 1)
+                .define('I', Items.IRON_INGOT)
+                .define('D', ModItems.PRISTINE_DIAMOND_SAMPLE.get())
+                .define('F', ModItems.FAIRY_DUST.get())
+                .define('P', ModBlocks.GENTLIT_PLANKS.get())
+                .define('S', Blocks.SMOOTH_STONE)
+                .pattern("III")
+                .pattern("PDP")
+                .pattern("SFS")
+                .unlockedBy(getHasName(ModItems.FAIRY_DUST.get()), has(ModItems.FAIRY_DUST.get()))
                 .save(consumer);
     }
 

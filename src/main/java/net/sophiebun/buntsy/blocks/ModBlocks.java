@@ -120,7 +120,7 @@ public class ModBlocks {
     public static final RegistryObject<Block> WILD_HOOTNIP = registerBlock("wild_hootnip",
             () -> new DoublePlantBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
     public static final RegistryObject<Block> HOOTNIP_CROP = registerBlock("hootnip_crop",
-            () -> new DoublePlantBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
+            () -> new HootnipCrop(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
 
     //Biome plants
     public static final RegistryObject<Block> PINK_CHARMIL_GRASS = registerBlock("pink_charmil_grass",

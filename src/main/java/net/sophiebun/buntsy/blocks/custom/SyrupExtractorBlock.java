@@ -29,11 +29,15 @@ public class SyrupExtractorBlock extends Block{
 
     public static final IntegerProperty LEVEL = IntegerProperty.create("level", 0, 3);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public static final VoxelShape SHAPE = Block.box(4, 2, 0, 12, 9, 6);
+    public static final VoxelShape[] SHAPE = new VoxelShape[]{Block.box(4, 2, 0, 12, 10, 7),
+                                                            Block.box(0, 2, 4, 7, 10, 12),
+                                                            Block.box(4, 2, 9, 12, 10, 16),
+                                                            Block.box(9, 2, 4, 16, 10, 12)};
+
 
     public SyrupExtractorBlock(Properties pProperties) {
-        super(pProperties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+        super(pProperties.randomTicks());
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LEVEL, Integer.valueOf(0)));
     }
 
     @Override
@@ -42,6 +46,9 @@ public class SyrupExtractorBlock extends Block{
             if (pPlayer.getItemInHand(pHand).is(Items.GLASS_BOTTLE) && pState.getValue(SyrupExtractorBlock.LEVEL) == 3){
                 pPlayer.getItemInHand(pHand).shrink(1);
                 pPlayer.addItem(new ItemStack(ModItems.GENTLIT_SYRUP.get()));
+                pLevel.setBlockAndUpdate(pPos, this.defaultBlockState()
+                        .setValue(HorizontalDirectionalBlock.FACING, pState.getValue(HorizontalDirectionalBlock.FACING))
+                        .setValue(SyrupExtractorBlock.LEVEL, 0));
                 return InteractionResult.SUCCESS;
             }
             return InteractionResult.FAIL;
@@ -52,20 +59,22 @@ public class SyrupExtractorBlock extends Block{
     }
 
     @Override
-    public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
+    public boolean isRandomlyTicking(BlockState pState) {
+        return pState.getValue(SyrupExtractorBlock.LEVEL) != 3;
+    }
 
-        if (pLevel.getBlockState(pPos.relative(pState.getValue(SyrupExtractorBlock.FACING), 1)).is(ModTags.Blocks.GENTLIT_LOGS)
-                && pState.getValue(SyrupExtractorBlock.LEVEL) != 3 && pLevel.random.nextInt(10) == 0){
+    @Override
+    public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
+        if (!pLevel.isAreaLoaded(pPos, 1)) return;
+        if (pLevel.getBlockState(pPos.relative(pState.getValue(SyrupExtractorBlock.FACING).getOpposite(), 1)).is(ModTags.Blocks.GENTLIT_LOGS)){
             pLevel.setBlockAndUpdate(pPos, this.defaultBlockState()
                     .setValue(HorizontalDirectionalBlock.FACING, pState.getValue(HorizontalDirectionalBlock.FACING))
                     .setValue(SyrupExtractorBlock.LEVEL, pState.getValue(SyrupExtractorBlock.LEVEL) + 1));
         }
-
-        super.randomTick(pState, pLevel, pPos, pRandom);
     }
 
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
+        return this.defaultBlockState().setValue(FACING, pContext.getClickedFace()).setValue(LEVEL, Integer.valueOf(0));
     }
 
     @Override
@@ -80,12 +89,21 @@ public class SyrupExtractorBlock extends Block{
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING);
+        pBuilder.add(FACING).add(LEVEL);
     }
 
     @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        return SHAPE;
+        switch (pState.getValue(HorizontalDirectionalBlock.FACING)){
+            case EAST:
+                return SHAPE[1];
+            case SOUTH:
+                return SHAPE[0];
+            case WEST:
+                return SHAPE[3];
+            default:
+                return SHAPE[2];
+        }
     }
 
     @Override
