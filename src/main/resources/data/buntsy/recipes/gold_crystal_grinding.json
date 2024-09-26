@@ -1,0 +1,20 @@
+{
+  "type": "buntsy:grinding_wheel",
+  "ingredients": [
+    {
+      "item": "buntsy:gold_crystal"
+    }
+  ],
+  "output": [
+    {
+      "count": 1,
+      "chance": 1.0,
+      "item": "buntsy:gold_dust"
+    },
+    {
+      "count": 1,
+      "chance": 0.33,
+      "item": "buntsy:gold_dust"
+    }
+  ]
+}

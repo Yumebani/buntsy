@@ -1,0 +1,15 @@
+{
+  "type": "buntsy:thread_reeler",
+  "ingredients": [
+    {
+      "item": "minecraft:wool"
+    }
+  ],
+  "output": [
+    {
+      "count": 3,
+      "chance": 1.0,
+      "item": "minecraft:string"
+    }
+  ]
+}

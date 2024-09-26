@@ -1,0 +1,15 @@
+{
+  "type": "buntsy:thread_reeler",
+  "ingredients": [
+    {
+      "item": "buntsy:molted_moth_wings"
+    }
+  ],
+  "output": [
+    {
+      "count": 3,
+      "chance": 1.0,
+      "item": "buntsy:moth_wing_thread"
+    }
+  ]
+}

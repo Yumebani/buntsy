@@ -29,9 +29,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BasicFairyBlockEntity extends FairyInteractBlockEntity {
+public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
 
-    private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
+    protected final ItemStackHandler itemHandler = new ItemStackHandler(3) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -41,17 +41,17 @@ public class BasicFairyBlockEntity extends FairyInteractBlockEntity {
         }
     };
 
-    private static final int INPUT_SLOT = 0;
-    private static final int OUTPUT_SLOT = 1;
-    private static final int SECONDARY_OUTPUT_SLOT = 2;
-    private static final int FAIRY_WEIGHT = 1;
+    protected static final int INPUT_SLOT = 0;
+    protected static final int OUTPUT_SLOT = 1;
+    protected static final int SECONDARY_OUTPUT_SLOT = 2;
+    protected static final int FAIRY_WEIGHT = 1;
 
     private static final List<TempRecipe> recipeList = new ArrayList<>();
 
     protected final ContainerData data;
-    private int progress = 0;
-    private int maxProgress = 200;
-    private int nextRollChance = 0;
+    protected int progress = 0;
+    protected int maxProgress = 200;
+    protected int nextRollChance = 0;
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
@@ -157,7 +157,7 @@ public class BasicFairyBlockEntity extends FairyInteractBlockEntity {
             if (hasProgressFinished()){
                 resetProgress();
                 rollNewChance();
-                tempCraftItem();
+                craftItem();
                 tick(pLevel, pPos, pState);
             }
         }
@@ -188,8 +188,12 @@ public class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     }
 
     public boolean canRun(){
-        return tempHasRecipe() && isEnchanted();
+        return hasRecipe() && isEnchanted();
     }
+
+    public abstract void craftItem();
+
+    public abstract boolean hasRecipe();
 
     public void rollNewChance(){
         this.nextRollChance = this.level.random.nextInt(0, 100);
@@ -232,6 +236,7 @@ public class BasicFairyBlockEntity extends FairyInteractBlockEntity {
                 && (this.itemHandler.getStackInSlot(slot).getCount() + item.getCount() <= item.getMaxStackSize());
     }
 
+    /*
     public void tempCraftItem() {
         TempRecipe recipe = tempGetCurrentRecipe();
         List<ItemStack> result = recipe.getResults(this.nextRollChance);
@@ -241,8 +246,9 @@ public class BasicFairyBlockEntity extends FairyInteractBlockEntity {
         outputItems(result.get(0), result.size() == 1 ? null : result.get(2));
     }
 
-    public boolean tempHasRecipe() {
-        TempRecipe recipe = tempGetCurrentRecipe();
+    /*
+    public boolean hasRecipe() {
+        TempRecipe recipe = getCurrentRecipe();
         if (recipe == null){
             return false;
         }
@@ -251,6 +257,7 @@ public class BasicFairyBlockEntity extends FairyInteractBlockEntity {
         return isOutputClear(result.get(0), result.size() == 1 ? null : result.get(2));
     }
 
+    /*
     public TempRecipe tempGetCurrentRecipe() {
         SimpleContainer inventory = new SimpleContainer(this.itemHandler.getSlots());
         for(int i = 0; i < itemHandler.getSlots(); i++) {

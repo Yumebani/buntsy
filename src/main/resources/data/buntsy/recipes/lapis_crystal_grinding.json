@@ -1,0 +1,25 @@
+{
+  "type": "buntsy:grinding_wheel",
+  "ingredients": [
+    {
+      "item": "buntsy:lapis_crystal"
+    }
+  ],
+  "output": [
+    {
+      "count": 4,
+      "chance": 1.0,
+      "item": "minecraft:lapis"
+    },
+    {
+      "count": 1,
+      "chance": 0.5,
+      "item": "minecraft:lapis"
+    },
+    {
+      "count": 1,
+      "chance": 0.25,
+      "item": "minecraft:lapis"
+    }
+  ]
+}

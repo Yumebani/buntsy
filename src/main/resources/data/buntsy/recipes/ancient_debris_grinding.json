@@ -1,0 +1,25 @@
+{
+  "type": "buntsy:grinding_wheel",
+  "ingredients": [
+    {
+      "item": "minecraft:ancient_debris"
+    }
+  ],
+  "output": [
+    {
+      "count": 1,
+      "chance": 1.0,
+      "item": "buntsy:netherite_dust"
+    },
+    {
+      "count": 1,
+      "chance": 0.5,
+      "item": "buntsy:netherite_dust"
+    },
+    {
+      "count": 1,
+      "chance": 0.1,
+      "item": "buntsy:pristine_debris_sample"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "type": "buntsy:grinding_wheel",
+  "ingredients": [
+    {
+      "item": "minecraft:lapis_ore"
+    },
+    {
+      "item": "minecraft:deepslate_lapis_ore"
+    }
+  ],
+  "output": [
+    {
+      "count": 14,
+      "chance": 1.0,
+      "item": "minecraft:lapis"
+    },
+    {
+      "count": 2,
+      "chance": 0.5,
+      "item": "minecraft:lapis"
+    },
+    {
+      "count": 1,
+      "chance": 0.5,
+      "item": "minecraft:lapis"
+    },
+    {
+      "count": 1,
+      "chance": 0.1,
+      "item": "buntsy:pristine_lapis_sample"
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 package net.sophiebun.buntsy.recipe;
 
+import com.google.common.collect.ImmutableMultimap;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -8,21 +10,30 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.sophiebun.buntsy.BuntsyMod;
+import org.antlr.v4.runtime.misc.MultiMap;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.*;
+
 public class GrindingWheelRecipe implements Recipe<SimpleContainer> {
-    private final NonNullList<Ingredient> inputItems;
-    private final ItemStack output;
+    private final List<Ingredient> inputItems;
+    private final HashMap<Item, List<Map.Entry<Integer, Float>>> output;
     private final ResourceLocation id;
 
-    public GrindingWheelRecipe(NonNullList<Ingredient> inputItems, ItemStack output, ResourceLocation id) {
+    public GrindingWheelRecipe(List<Ingredient> inputItems, HashMap<Item, List<Map.Entry<Integer, Float>>> output, ResourceLocation id) {
         this.inputItems = inputItems;
         this.output = output;
         this.id = id;
+    }
+
+    public List<Ingredient> getInputs() {
+        return inputItems;
     }
 
     @Override
@@ -31,12 +42,39 @@ public class GrindingWheelRecipe implements Recipe<SimpleContainer> {
             return false;
         }
 
-        return inputItems.get(0).test(pContainer.getItem(3));
+        for (Ingredient ing : inputItems){
+            if (ing.test(pContainer.getItem(0))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public HashMap<Item, List<Map.Entry<Integer, Float>>> getOutput() {
+        return output;
+    }
+
+    public List<ItemStack> getResults(int rollChance) {
+        List<ItemStack> items = new ArrayList<>();
+        for (Map.Entry<Item, List<Map.Entry<Integer, Float>>> itemEntry : output.entrySet()){
+            int finalCount = 0;
+            List<Map.Entry<Integer, Float>> entryCounts = itemEntry.getValue();
+            for (Map.Entry<Integer, Float> entry : entryCounts){
+                float chance = entry.getValue();
+                if (chance >= rollChance / 100f){
+                    finalCount += entry.getKey();
+                }
+            }
+            if (finalCount > 0){
+                items.add(new ItemStack(itemEntry.getKey(), finalCount));
+            }
+        }
+        return items;
     }
 
     @Override
     public ItemStack assemble(SimpleContainer pContainer, RegistryAccess pRegistryAccess) {
-        return output.copy();
+        return null;
     }
 
     @Override
@@ -46,7 +84,7 @@ public class GrindingWheelRecipe implements Recipe<SimpleContainer> {
 
     @Override
     public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
-        return output.copy();
+        return null;
     }
 
     @Override
@@ -75,16 +113,35 @@ public class GrindingWheelRecipe implements Recipe<SimpleContainer> {
 
         @Override
         public GrindingWheelRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
-            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "result"));
 
+            //Inputs
             JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients");
-            NonNullList<Ingredient> inputs = NonNullList.withSize(1, Ingredient.EMPTY);
-
-            for(int i = 0; i < inputs.size(); i++) {
-                inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
+            List<Ingredient> inputs = new ArrayList<>();
+            for(JsonElement entry : ingredients.asList()) {
+                inputs.add(Ingredient.fromJson(entry));
             }
 
-            return new GrindingWheelRecipe(inputs, output, pRecipeId);
+            //Outputs
+            JsonArray outputs = GsonHelper.getAsJsonArray(pSerializedRecipe, "output");
+            HashMap<Item, List<Map.Entry<Integer, Float>>> results = new HashMap<>();
+            for (JsonElement entry : outputs.asList()){
+                JsonObject entryObj = entry.getAsJsonObject();
+                int count = entryObj.get("count").getAsInt();
+                float chance = entryObj.get("chance").getAsFloat();
+                String itemId = entryObj.get("item").getAsString();
+
+                List<Map.Entry<Integer, Float>> result;
+                Item resultItem = CraftingHelper.getItem(itemId, true);
+                if (!results.containsKey(resultItem)){
+                    result = new ArrayList<>();
+                    results.put(resultItem, result);
+                }
+                else result = results.get(resultItem);
+
+                result.add(new AbstractMap.SimpleEntry<>(count, chance));
+            }
+
+            return new GrindingWheelRecipe(inputs, results, pRecipeId);
         }
 
         @Override
@@ -95,8 +152,16 @@ public class GrindingWheelRecipe implements Recipe<SimpleContainer> {
                 inputs.set(i, Ingredient.fromNetwork(pBuffer));
             }
 
-            ItemStack output = pBuffer.readItem();
-            return new GrindingWheelRecipe(inputs, output, pRecipeId);
+            HashMap<Item, List<Map.Entry<Integer, Float>>> results = new HashMap<>();
+            for (int i = 0; i < pBuffer.readInt(); i++){
+                List<Map.Entry<Integer, Float>> result = new ArrayList<>();
+                results.put(pBuffer.readItem().getItem(), result);
+                for (int j = 0; j < pBuffer.readInt(); j++){
+                    result.add(new AbstractMap.SimpleEntry<>(pBuffer.readInt(), pBuffer.readFloat()));
+                }
+            }
+
+            return new GrindingWheelRecipe(inputs, results, pRecipeId);
         }
 
         @Override
@@ -107,7 +172,17 @@ public class GrindingWheelRecipe implements Recipe<SimpleContainer> {
                 ingredient.toNetwork(pBuffer);
             }
 
-            pBuffer.writeItemStack(pRecipe.getResultItem(null), false);
+            HashMap<Item, List<Map.Entry<Integer, Float>>> output = pRecipe.getOutput();
+
+            pBuffer.writeInt(output.size());
+            for (Map.Entry<Item, List<Map.Entry<Integer, Float>>> entry : output.entrySet()){
+                pBuffer.writeItem(new ItemStack(entry.getKey()));
+                pBuffer.writeInt(entry.getValue().size());
+                for (Map.Entry<Integer, Float> entry2 : entry.getValue()){
+                    pBuffer.writeInt(entry2.getKey());
+                    pBuffer.writeFloat(entry2.getValue());
+                }
+            }
         }
     }
 }

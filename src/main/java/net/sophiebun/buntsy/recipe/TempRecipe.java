@@ -33,16 +33,16 @@ public class TempRecipe {
 
     public List<ItemStack> getResults(int rollChance) {
         List<ItemStack> items = new ArrayList<>();
-        for (Map.Entry<Item, ImmutableMultimap<Integer, Float>> itemEntry : results.entrySet()){
+        for (Map.Entry<Item, ImmutableMultimap<Integer, Float>> itemEntry : results.entrySet()) {
             int finalCount = 0;
             ImmutableMultimap<Integer, Float> entryCounts = itemEntry.getValue();
-            for (Integer count : entryCounts.keys()){
+            for (Integer count : entryCounts.keys()) {
                 for (Float chance : entryCounts.get(count))
-                    if (chance >= rollChance / 100f){
+                    if (chance >= rollChance / 100f) {
                         finalCount += count;
                     }
             }
-            if (finalCount > 0){
+            if (finalCount > 0) {
                 items.add(new ItemStack(itemEntry.getKey(), finalCount));
             }
         }

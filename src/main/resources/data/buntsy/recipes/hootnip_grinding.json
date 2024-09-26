@@ -2,14 +2,14 @@
   "type": "buntsy:grinding_wheel",
   "ingredients": [
     {
-      "item": "minecraft:amethyst_shard"
+      "item": "buntsy:hootnip"
     }
   ],
   "output": [
     {
       "count": 1,
       "chance": 1.0,
-      "item": "buntsy:amethyst_dust"
+      "item": "buntsy:ground_hootnip"
     }
   ]
 }
