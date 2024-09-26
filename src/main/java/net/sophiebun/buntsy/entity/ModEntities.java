@@ -14,6 +14,7 @@ public class ModEntities {
     public static final DeferredRegister<EntityType<?>> enitityRegister =
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, BuntsyMod.MODID);
 
+
     public static final RegistryObject<EntityType<Silkbun>> SILKBUN_ENTITY =
             enitityRegister.register("silkbun", () -> EntityType.Builder.of(Silkbun::new, MobCategory.CREATURE)
                     .sized(0.5f, 0.8f).build("silkbun"));

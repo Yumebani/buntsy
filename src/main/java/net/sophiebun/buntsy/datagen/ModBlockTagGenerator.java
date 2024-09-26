@@ -76,7 +76,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
                 .add(ModBlocks.CHARMIL_SOIL.get());
 
-        this.tag(ModTags.Blocks.SILKBUN_SPAWNABLE_ON)
+        this.tag(ModTags.Blocks.CUTERLY_SPAWNER)
+                .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
+                .add(ModBlocks.CHARMIL_SOIL.get());
+
+        this.tag(BlockTags.VALID_SPAWN)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
                 .add(ModBlocks.CHARMIL_SOIL.get());
 

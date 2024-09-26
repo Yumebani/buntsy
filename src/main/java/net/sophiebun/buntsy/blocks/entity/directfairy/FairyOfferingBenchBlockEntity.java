@@ -19,6 +19,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -28,15 +29,14 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
 import net.sophiebun.buntsy.item.custom.FairyFoodItem;
+import net.sophiebun.buntsy.recipe.FairyOfferingRecipe;
+import net.sophiebun.buntsy.recipe.GrindingWheelRecipe;
 import net.sophiebun.buntsy.screen.FairyOfferingBenchMenu;
 import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity implements MenuProvider {
 
@@ -54,16 +54,6 @@ public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity impl
     private static final int FAIRY_FOOD_SLOT_COUNT = 4;
     private static final int FAIRY_FOOD_OUTPUT_SLOT_START = 4;
     private static final int FAIRY_FOOD_OUTPUT_SLOT_COUNT = 4;
-
-    private static final Map<Item, Integer> foodMaps = Map.of(
-            Items.SUGAR, 400,
-            Items.HONEY_BOTTLE, 800
-    );
-
-    private static final Map<Item, Float> chanceMaps = Map.of(
-            Items.SUGAR, 0.5f,
-            Items.HONEY_BOTTLE, 1f
-    );
 
     public final ContainerData data;
     private final List<Integer> randomRotations;
@@ -186,37 +176,23 @@ public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity impl
         return getFirstValidInputSlot() != null;
     }
 
-    public Item getNextFoodItem(){
-        int slot = getFirstValidInputSlot();
-        Item foodItem = this.itemHandler.getStackInSlot(slot).getItem();
-        return foodItem;
+    public Optional<FairyOfferingRecipe> getCurrentRecipe() {
+        SimpleContainer inventory = new SimpleContainer(this.itemHandler.getSlots());
+        for(int i = 0; i < itemHandler.getSlots(); i++) {
+            inventory.setItem(i, this.itemHandler.getStackInSlot(i));
+        }
+
+        return this.level.getRecipeManager().getRecipeFor(FairyOfferingRecipe.Type.INSTANCE, inventory, level);
     }
 
     public void consumeFood() {
+        outputFoodItem(getCurrentRecipe().get().getResultItem(null));
         int slot = getFirstValidInputSlot();
-        Item foodItem = this.itemHandler.getStackInSlot(slot).getItem();
-
-        outputFoodItem(new ItemStack(foodItem));
         this.itemHandler.extractItem(slot, 1, false);
     }
 
-    public static float getChanceModifier(Item item) {
-        return chanceMaps.containsKey(item) ? chanceMaps.get(item) : ((FairyFoodItem) item).getTerrariumChanceMult();
-    }
-
-    public static int getFoodTick(Item item) {
-        return foodMaps.containsKey(item) ? foodMaps.get(item) : ((FairyFoodItem) item).getFoodTick();
-    }
-
-    private ItemStack getFoodItemToOutput(ItemStack consumed){
-        return consumed.is(ModTags.Items.BOTTLED_ITEM) ?
-                new ItemStack(Items.GLASS_BOTTLE) : consumed.is(ModTags.Items.BOWL_ITEM) ?
-                new ItemStack(Items.BOWL) : null;
-    }
-
-    private void outputFoodItem(ItemStack consumed){
-        ItemStack outputItem = getFoodItemToOutput(consumed);
-        if (outputItem != null){
+    private void outputFoodItem(ItemStack outputItem){
+        if (!outputItem.is(Blocks.AIR.asItem())){
             int slot = getClearOutput(outputItem);
             this.itemHandler.setStackInSlot(slot,
                     new ItemStack(outputItem.getItem(),this.itemHandler.getStackInSlot(slot).getCount() + 1));
@@ -224,13 +200,13 @@ public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity impl
     }
 
     private Integer getFirstValidInputSlot(){
-        List<Integer> values = getFilledInputSlotList().stream().filter((value) -> isOutputClear(this.itemHandler.getStackInSlot(value))).toList();
+        List<Integer> values = getFilledInputSlotList().stream().filter((value) -> isOutputClear()).toList();
         return values.isEmpty() ? null : values.get(0);
     }
 
     private List<Integer> getFilledInputSlotList() {
 
-        List<Integer> slots = new ArrayList<Integer>();
+        List<Integer> slots = new ArrayList<>();
         for (int i = FAIRY_FOOD_SLOT_START; i < FAIRY_FOOD_SLOT_START + FAIRY_FOOD_SLOT_COUNT; i++){
             if (!this.itemHandler.getStackInSlot(i).isEmpty() && this.itemHandler.getStackInSlot(i).is(ModTags.Items.FAIRY_FOOD)){
                 slots.add(i);
@@ -241,7 +217,7 @@ public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity impl
 
     private List<Integer> getFilledOutputSlotList() {
 
-        List<Integer> slots = new ArrayList<Integer>();
+        List<Integer> slots = new ArrayList<>();
         for (int i = FAIRY_FOOD_OUTPUT_SLOT_START; i < FAIRY_FOOD_OUTPUT_SLOT_START + FAIRY_FOOD_OUTPUT_SLOT_COUNT; i++){
             if (!this.itemHandler.getStackInSlot(i).isEmpty() && this.itemHandler.getStackInSlot(i).is(ModTags.Items.FAIRY_FOOD)){
                 slots.add(i);
@@ -250,9 +226,9 @@ public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity impl
         return slots;
     }
 
-    private boolean isOutputClear(ItemStack consumed) {
-        ItemStack output = getFoodItemToOutput(consumed);
-        return output == null ? true : getClearOutput(output) != null;
+    private boolean isOutputClear() {
+        ItemStack output = getCurrentRecipe().get().getResultItem(null);
+        return output.is(Blocks.AIR.asItem()) || getClearOutput(output) != null;
     }
 
     private Integer getClearOutput(ItemStack result) {

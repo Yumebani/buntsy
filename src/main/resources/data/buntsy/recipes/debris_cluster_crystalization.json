@@ -1,0 +1,34 @@
+{
+  "type": "buntsy:magic_crystalizer",
+  "ingredients": [
+    {
+      "item": "buntsy:pristine_debris_sample"
+    },
+    {
+      "item": "buntsy:fairy_dust"
+    },
+    {
+      "item": "buntsy:fairy_dust"
+    },
+    {
+      "item": "buntsy:fairy_dust"
+    },
+    {
+      "item": "buntsy:fairy_dust"
+    },
+    {
+      "item": "buntsy:fairy_dust"
+    },
+    {
+      "item": "buntsy:fairy_dust"
+    },
+    {
+      "item": "buntsy:fairy_dust"
+    }
+  ],
+  "output":
+    {
+      "count": 1,
+      "item": "buntsy:small_debris_crystal_cluster"
+    }
+}

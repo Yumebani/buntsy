@@ -1,0 +1,16 @@
+{
+  "type": "buntsy:fairy_offering",
+  "ingredients": [
+    {
+      "item": "buntsy:sugar_bowl"
+    }
+  ],
+  "output":
+    {
+      "count": 1,
+      "item": "minecraft:bowl"
+    },
+  "has_output": true,
+  "food_tick": 1000,
+  "chance_modifier": 1
+}

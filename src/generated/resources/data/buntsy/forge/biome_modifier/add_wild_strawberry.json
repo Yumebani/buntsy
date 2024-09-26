@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": "buntsy:wild_strawberry_placed",
+  "step": "vegetal_decoration"
+}

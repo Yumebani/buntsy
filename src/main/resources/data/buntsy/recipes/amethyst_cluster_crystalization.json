@@ -1,0 +1,34 @@
+{
+  "type": "buntsy:magic_crystalizer",
+  "ingredients": [
+    {
+      "item": "buntsy:pristine_amethyst_grain"
+    },
+    {
+      "item": "buntsy:fairy_dust"
+    },
+    {
+      "item": "buntsy:fairy_dust"
+    },
+    {
+      "item": "buntsy:fairy_dust"
+    },
+    {
+      "item": "buntsy:fairy_dust"
+    },
+    {
+      "item": "buntsy:fairy_dust"
+    },
+    {
+      "item": "buntsy:fairy_dust"
+    },
+    {
+      "item": "buntsy:fairy_dust"
+    }
+  ],
+  "output":
+    {
+      "count": 1,
+      "item": "buntsy:small_growable_amethyst_cluster"
+    }
+}

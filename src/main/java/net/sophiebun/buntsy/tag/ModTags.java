@@ -20,7 +20,7 @@ public class ModTags {
         public static final TagKey<Block> FAIRY_HARVESTABLE = tag("fairy_harvestable");
         public static final TagKey<Block> FAIRY_INTERACTABLE_BLOCK_ENTITY = tag("fairy_interactable_block_entity");
 
-        public static final TagKey<Block> SILKBUN_SPAWNABLE_ON = tag("silkbun_spawnable_on");
+        public static final TagKey<Block> CUTERLY_SPAWNER = tag("cuterly_spawner");
 
         private static TagKey<Block> tag(String name) {
             return BlockTags.create(new ResourceLocation(BuntsyMod.MODID, name));

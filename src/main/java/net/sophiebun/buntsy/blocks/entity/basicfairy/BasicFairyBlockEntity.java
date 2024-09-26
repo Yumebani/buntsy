@@ -12,7 +12,6 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -22,12 +21,8 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.custom.entityblocks.ThreadReelerBlock;
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
-import net.sophiebun.buntsy.recipe.TempRecipe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
 
@@ -45,8 +40,6 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     protected static final int OUTPUT_SLOT = 1;
     protected static final int SECONDARY_OUTPUT_SLOT = 2;
     protected static final int FAIRY_WEIGHT = 1;
-
-    private static final List<TempRecipe> recipeList = new ArrayList<>();
 
     protected final ContainerData data;
     protected int progress = 0;

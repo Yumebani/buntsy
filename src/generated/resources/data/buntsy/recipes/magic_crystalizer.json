@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "buntsy:pristine_diamond_sample"
+    },
+    "F": {
+      "item": "buntsy:fairy_dust"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "P": {
+      "item": "buntsy:gentlit_planks"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "pattern": [
+    "III",
+    "PDP",
+    "SFS"
+  ],
+  "result": {
+    "item": "buntsy:magic_crystalizer"
+  },
+  "show_notification": true
+}

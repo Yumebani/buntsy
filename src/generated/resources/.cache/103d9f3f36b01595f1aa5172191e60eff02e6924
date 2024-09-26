@@ -1,5 +1,7 @@
-// 1.20.1	2024-01-23T17:46:45.69067661	Registries
-6cc62037a48689704ffdbd8025c6c60eac6f932f data/buntsy/worldgen/biome/cuterly_biome.json
+// 1.20.1	2024-09-26T20:07:57.877334559	Registries
+0774d67e15d344b0af4664acf0effbbe597253d0 data/buntsy/forge/biome_modifier/add_wild_hootnip.json
+7103105e7d4d3bc4223502756b53703d74766448 data/buntsy/forge/biome_modifier/add_wild_strawberry.json
+cbed8064d41a5ed3355dc0c1249b716b2a52f1a8 data/buntsy/worldgen/biome/cuterly_biome.json
 ab097dead8e291ea82b33a2aa6ca1ee8a40956c4 data/buntsy/worldgen/configured_feature/blue_bloom.json
 3d5f83129c7eab1697bef9f07fb0e9118e5c00a4 data/buntsy/worldgen/configured_feature/blue_charmil_grass.json
 234f06c86ab615beae31aec0b8bbab6b202e5b4b data/buntsy/worldgen/configured_feature/bravot.json
@@ -12,6 +14,8 @@ f231c965e02c0087432d57c3a599255b2f44a26c data/buntsy/worldgen/configured_feature
 ed744c0cd0497b4a8adafcd2d271b9782ccbf418 data/buntsy/worldgen/configured_feature/loveshroom.json
 b62f806d31ec74ca2a82ddbed225f96eaa301f70 data/buntsy/worldgen/configured_feature/pink_bloom.json
 754d2f1c8c3e75592a5434094233636d0a79e077 data/buntsy/worldgen/configured_feature/pink_charmil_grass.json
+b60d6e16d50dd7668eaff5db06324bfbace08b7c data/buntsy/worldgen/configured_feature/wild_hootnip.json
+267cdf3c4012f16d916dff01f898e01772acda61 data/buntsy/worldgen/configured_feature/wild_strawberry.json
 c10ce469ab10814b7fb57d5fd3d3a15bf26ddedf data/buntsy/worldgen/placed_feature/blue_bloom_placed.json
 0c5a6b35ca3d5501076863512c31a3a24e4ea889 data/buntsy/worldgen/placed_feature/blue_charmil_grass_placed.json
 eb52cc0363c7f5cb63a5a44b48d7da69491368e7 data/buntsy/worldgen/placed_feature/bravot_placed.json
@@ -24,3 +28,5 @@ db7d3a75087b28a471d977daf4c1ed572adbd968 data/buntsy/worldgen/placed_feature/gro
 1db2284b57e2ab295eb818d7bd1b496f2d85b8cb data/buntsy/worldgen/placed_feature/loveshroom_placed.json
 c823be129d5e100e95f253960cb5d73419e38321 data/buntsy/worldgen/placed_feature/pink_bloom_placed.json
 80d6477ed6ab2509c16b510d2b94073830915d5b data/buntsy/worldgen/placed_feature/pink_charmil_grass_placed.json
+db45bf3402d0ef1ffb503c5d27699a01427c4a4c data/buntsy/worldgen/placed_feature/wild_hootnip_placed.json
+d1aa425ff629a53faa0150b4a9a1efb4ff0b86d7 data/buntsy/worldgen/placed_feature/wild_strawberry_placed.json

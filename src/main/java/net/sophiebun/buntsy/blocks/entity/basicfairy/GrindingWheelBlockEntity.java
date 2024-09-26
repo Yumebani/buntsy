@@ -1,27 +1,21 @@
 package net.sophiebun.buntsy.blocks.entity.basicfairy;
 
-import com.google.common.collect.ImmutableMultimap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.state.BlockState;
 import net.sophiebun.buntsy.blocks.custom.entityblocks.ThreadReelerBlock;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
-import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.recipe.GrindingWheelRecipe;
-import net.sophiebun.buntsy.recipe.TempRecipe;
 import net.sophiebun.buntsy.screen.GrindingWheelMenu;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
@@ -31,7 +25,6 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class GrindingWheelBlockEntity extends BasicFairyBlockEntity implements MenuProvider, GeoBlockEntity {

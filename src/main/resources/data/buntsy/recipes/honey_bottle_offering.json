@@ -1,0 +1,16 @@
+{
+  "type": "buntsy:fairy_offering",
+  "ingredients": [
+    {
+      "item": "minecraft:honey_bottle"
+    }
+  ],
+  "output":
+    {
+      "count": 1,
+      "item": "minecraft:bottle"
+    },
+  "has_output": true,
+  "food_tick": 800,
+  "chance_modifier": 1
+}

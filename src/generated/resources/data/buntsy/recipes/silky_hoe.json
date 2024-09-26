@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "buntsy:silky_crystal"
+    },
+    "I": {
+      "item": "buntsy:silky_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "CI",
+    "S ",
+    "S "
+  ],
+  "result": {
+    "item": "buntsy:silky_hoe"
+  },
+  "show_notification": true
+}

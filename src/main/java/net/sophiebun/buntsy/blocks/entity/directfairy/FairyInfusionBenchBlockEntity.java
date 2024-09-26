@@ -1,6 +1,5 @@
 package net.sophiebun.buntsy.blocks.entity.directfairy;
 
-import com.google.common.collect.ImmutableMultimap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -15,7 +14,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -24,8 +22,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
-import net.sophiebun.buntsy.item.ModItems;
-import net.sophiebun.buntsy.recipe.TempRecipe;
+import net.sophiebun.buntsy.recipe.FairyInfusionRecipe;
 import net.sophiebun.buntsy.screen.FairyInfusionBenchMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -48,11 +45,6 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
     private static final int INPUT_SLOT_COUNT = 5;
     private static final int OUTPUT_SLOT_START = 5;
     private static final int OUTPUT_SLOT_COUNT = 5;
-
-    //TEMPORARY
-    private static final List<TempRecipe> recipeList = List.of(
-            new TempRecipe(Ingredient.of(ModItems.AMETHYST_DUST.get()), Map.of(
-                    ModItems.FAIRY_DUST.get(), ImmutableMultimap.of(1, 1f))));
 
     private final List<Integer> randomRotations;
 
@@ -158,9 +150,9 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
     }
 
     public void infuse() {
-        int slot = getRandomFilledInputSlot();
-        TempRecipe recipe = tempGetCurrentInfusion(slot);
-        ItemStack result = recipe.getResults(100).get(0);
+        int slot = getFirstFilledInputSlot();
+        FairyInfusionRecipe recipe = getCurrentInfusion().get();
+        ItemStack result = recipe.getResultItem(null);
         int outputSlot = getClearOutput(result);
 
         this.itemHandler.extractItem(slot, 1, false);
@@ -171,42 +163,31 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
     }
 
     public boolean hasInfusion() {
-        Integer slot = getRandomFilledInputSlot();
-        if (slot == null){
-            return false;
-        }
-        TempRecipe recipe = tempGetCurrentInfusion(getRandomFilledInputSlot());
-        if (recipe == null){
+        Optional<FairyInfusionRecipe> recipe = getCurrentInfusion();
+        if (recipe.isEmpty()){
             return false;
         }
 
-        ItemStack result = recipe.getResults(100).get(0);
-        return isOutputClear(result);
+        return isOutputClear();
     }
 
-    private TempRecipe tempGetCurrentInfusion(int slot) {
+    private Optional<FairyInfusionRecipe> getCurrentInfusion() {
         SimpleContainer inventory = new SimpleContainer(this.itemHandler.getSlots());
         for(int i = 0; i < itemHandler.getSlots(); i++) {
             inventory.setItem(i, this.itemHandler.getStackInSlot(i));
         }
 
-        for (TempRecipe recipe : recipeList){
-            if (recipe.isPresent(inventory, new int[]{slot})){
-                return recipe;
-            }
-        }
-
-        return null;
+        return this.level.getRecipeManager().getRecipeFor(FairyInfusionRecipe.Type.INSTANCE, inventory, level);
     }
 
-    private Integer getRandomFilledInputSlot() {
+    private Integer getFirstFilledInputSlot() {
         List<Integer> slotList = new ArrayList<Integer>();
         for (int i = INPUT_SLOT_START; i < INPUT_SLOT_START + INPUT_SLOT_COUNT; i++){
             if (!this.itemHandler.getStackInSlot(i).isEmpty()){
                 slotList.add(i);
             }
         }
-        return slotList.isEmpty() ? null : slotList.get(level.random.nextInt(slotList.size()));
+        return slotList.isEmpty() ? null : slotList.get(0);
     }
     private List<Integer> getFilledInputSlotList() {
         List<Integer> slotList = new ArrayList<Integer>();
@@ -218,8 +199,8 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
         return slotList;
     }
 
-    private boolean isOutputClear(ItemStack result) {
-        return getClearOutput(result) != null;
+    private boolean isOutputClear() {
+        return getClearOutput(getCurrentInfusion().get().getResultItem(null)) != null;
     }
 
     private Integer getClearOutput(ItemStack result) {

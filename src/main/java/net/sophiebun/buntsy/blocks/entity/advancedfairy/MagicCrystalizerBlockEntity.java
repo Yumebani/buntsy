@@ -1,6 +1,5 @@
 package net.sophiebun.buntsy.blocks.entity.advancedfairy;
 
-import com.google.common.collect.ImmutableMultimap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -17,7 +16,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -25,17 +23,14 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
-import net.sophiebun.buntsy.item.ModItems;
-import net.sophiebun.buntsy.recipe.TempRecipe;
+import net.sophiebun.buntsy.recipe.MagicCrystalizerRecipe;
 import net.sophiebun.buntsy.screen.MagicCrystalizerMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 public class MagicCrystalizerBlockEntity extends FairyInteractBlockEntity implements MenuProvider {
 
@@ -54,52 +49,6 @@ public class MagicCrystalizerBlockEntity extends FairyInteractBlockEntity implem
     private static final int EXTRA_INPUT_SLOT_COUNT = 7;
     private static final int OUTPUT_SLOT = 8;
     private static final int FAIRY_WEIGHT = 2;
-
-    private static final List<TempRecipe> recipeList = List.of(
-            new TempRecipe(Ingredient.of(ModItems.PRISTINE_AMETHYST_GRAIN.get(), ModItems.FAIRY_DUST.get(),
-                    ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(),
-                    ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get()), Map.of(
-                    ModBlocks.SMALL_GROWABLE_AMETHYST_CLUSTER.get().asItem(), ImmutableMultimap.of(1, 1f))),
-
-            new TempRecipe(Ingredient.of(ModItems.PRISTINE_IRON_SAMPLE.get(), ModItems.FAIRY_DUST.get(),
-                    ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(),
-                    ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get()), Map.of(
-                    ModBlocks.SMALL_IRON_CRYSTAL_CLUSTER.get().asItem(), ImmutableMultimap.of(1, 1f))),
-
-            new TempRecipe(Ingredient.of(ModItems.PRISTINE_COPPER_SAMPLE.get(), ModItems.FAIRY_DUST.get(),
-                    ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(),
-                    ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get()), Map.of(
-                    ModBlocks.SMALL_COPPER_CRYSTAL_CLUSTER.get().asItem(), ImmutableMultimap.of(1, 1f))),
-
-            new TempRecipe(Ingredient.of(ModItems.PRISTINE_GOLD_SAMPLE.get(), ModItems.FAIRY_DUST.get(),
-                    ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(),
-                    ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get()), Map.of(
-                    ModBlocks.SMALL_GOLD_CRYSTAL_CLUSTER.get().asItem(), ImmutableMultimap.of(1, 1f))),
-
-            new TempRecipe(Ingredient.of(ModItems.PRISTINE_REDSTONE_SAMPLE.get(), ModItems.FAIRY_DUST.get(),
-                    ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(),
-                    ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get()), Map.of(
-                    ModBlocks.SMALL_REDSTONE_CRYSTAL_CLUSTER.get().asItem(), ImmutableMultimap.of(1, 1f))),
-
-            new TempRecipe(Ingredient.of(ModItems.PRISTINE_LAPIS_SAMPLE.get(), ModItems.FAIRY_DUST.get(),
-                    ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(),
-                    ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get()), Map.of(
-                    ModBlocks.SMALL_LAPIS_CRYSTAL_CLUSTER.get().asItem(), ImmutableMultimap.of(1, 1f))),
-
-            new TempRecipe(Ingredient.of(ModItems.PRISTINE_DIAMOND_SAMPLE.get(), ModItems.FAIRY_DUST.get(),
-                    ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(),
-                    ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get()), Map.of(
-                    ModBlocks.SMALL_DIAMOND_CRYSTAL_CLUSTER.get().asItem(), ImmutableMultimap.of(1, 1f))),
-
-            new TempRecipe(Ingredient.of(ModItems.PRISTINE_EMERALD_SAMPLE.get(), ModItems.FAIRY_DUST.get(),
-                    ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(),
-                    ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get()), Map.of(
-                    ModBlocks.SMALL_EMERALD_CRYSTAL_CLUSTER.get().asItem(), ImmutableMultimap.of(1, 1f))),
-
-            new TempRecipe(Ingredient.of(ModItems.PRISTINE_DEBRIS_SAMPLE.get(), ModItems.FAIRY_DUST.get(),
-                    ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(),
-                    ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get(), ModItems.FAIRY_DUST.get()), Map.of(
-                    ModBlocks.SMALL_DEBRIS_CRYSTAL_CLUSTER.get().asItem(), ImmutableMultimap.of(1, 1f))));
 
     protected final ContainerData data;
     private int progress = 0;
@@ -228,7 +177,7 @@ public class MagicCrystalizerBlockEntity extends FairyInteractBlockEntity implem
     }
 
     public boolean canRun(){
-        return tempHasRecipe() && isEnchanted();
+        return hasRecipe() && isEnchanted();
     }
 
     public boolean isOutputClear(ItemStack primary){
@@ -247,44 +196,35 @@ public class MagicCrystalizerBlockEntity extends FairyInteractBlockEntity implem
     }
 
     public void tempCraftItem() {
-        TempRecipe recipe = tempGetCurrentRecipe();
-        List<ItemStack> result = recipe.getResults(100);
+        MagicCrystalizerRecipe recipe = getCurrentRecipe().get();
+        ItemStack result = recipe.getResultItem(null);
 
         this.itemHandler.extractItem(SAMPLE_INPUT_SLOT, 1, false);
         for (int slot = EXTRA_INPUT_SLOT_START; slot < EXTRA_INPUT_SLOT_START + EXTRA_INPUT_SLOT_COUNT; slot++){
             this.itemHandler.extractItem(slot, 1, false);
         }
 
-        outputItems(result.get(0));
+        outputItems(result);
     }
 
-    public boolean tempHasRecipe() {
-        TempRecipe recipe = tempGetCurrentRecipe();
-        if (recipe == null){
+    public boolean hasRecipe() {
+        Optional<MagicCrystalizerRecipe> recipe = getCurrentRecipe();
+
+        if (recipe.isEmpty()){
             return false;
         }
 
-        List<ItemStack> result = recipe.getResults(100);
-        return isOutputClear(result.get(0));
+        ItemStack result = recipe.get().getResultItem(null);
+        return isOutputClear(result);
     }
 
-    public TempRecipe tempGetCurrentRecipe() {
+    public Optional<MagicCrystalizerRecipe> getCurrentRecipe() {
         SimpleContainer inventory = new SimpleContainer(this.itemHandler.getSlots());
         for(int i = 0; i < itemHandler.getSlots(); i++) {
             inventory.setItem(i, this.itemHandler.getStackInSlot(i));
         }
 
-        for (TempRecipe recipe : getRecipeList()){
-            if (recipe.isPresent(inventory, new int[]{SAMPLE_INPUT_SLOT, EXTRA_INPUT_SLOT_START + EXTRA_INPUT_SLOT_COUNT - 1})){
-                return recipe;
-            }
-        }
-
-        return null;
-    }
-
-    public List<TempRecipe> getRecipeList() {
-        return recipeList;
+        return this.level.getRecipeManager().getRecipeFor(MagicCrystalizerRecipe.Type.INSTANCE, inventory, level);
     }
 
     private boolean hasProgressFinished() {

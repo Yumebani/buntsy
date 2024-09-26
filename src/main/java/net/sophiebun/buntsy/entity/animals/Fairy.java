@@ -18,10 +18,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
@@ -39,6 +36,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.AmethystClusterBlock;
 import net.minecraft.world.level.block.Block;
@@ -58,6 +56,7 @@ import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyOfferingBenchBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
 import net.sophiebun.buntsy.item.ModItems;
+import net.sophiebun.buntsy.recipe.FairyOfferingRecipe;
 import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -86,7 +85,9 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
     //Client side
     public AnimationState flyAnimationState = new AnimationState();
 
-
+    public static boolean canSpawn(EntityType<Fairy> entityType, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random){
+        return level.getBlockState(pos.below()).is(ModTags.Blocks.CUTERLY_SPAWNER);
+    }
     public Fairy(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.moveControl = new FlyingMoveControl(this, 20, true);
@@ -596,8 +597,8 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
 
         @Override
         void playUseParticle() {
-            Item foodItem = fairy.getofferingBench().getNextFoodItem();
-            this.makeItemParticle(foodItem);
+            ItemStack foodItem = fairy.getofferingBench().getCurrentRecipe().get().getInputs().get(0).getItems()[0];
+            this.makeItemParticle(foodItem.getItem());
         }
 
         @Override
@@ -616,11 +617,11 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
             this.playFinishUseSound();
 
             FairyOfferingBenchBlockEntity offeringBench = fairy.getofferingBench();
-            Item foodItem = offeringBench.getNextFoodItem();
+            FairyOfferingRecipe recipe = offeringBench.getCurrentRecipe().get();
             offeringBench.consumeFood();
 
-            this.fairy.setFood(FairyOfferingBenchBlockEntity.getFoodTick(foodItem));
-            this.fairy.setFoodModifier(FairyOfferingBenchBlockEntity.getChanceModifier(foodItem));
+            this.fairy.setFood(recipe.getFoodTick());
+            this.fairy.setFoodModifier(recipe.getChanceModifier());
 
             this.fairy.getofferingBench().setEnchanted(true);
 

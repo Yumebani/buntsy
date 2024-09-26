@@ -10,6 +10,11 @@
       "count": 1,
       "chance": 1.0,
       "item": "buntsy:amethyst_dust"
+    },
+    {
+      "count": 1,
+      "chance": 0.1,
+      "item": "buntsy:pristine_amethyst_grain"
     }
   ]
 }

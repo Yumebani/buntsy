@@ -9,8 +9,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.sophiebun.buntsy.BuntsyMod;
-import net.sophiebun.buntsy.recipe.GrindingWheelRecipe;
-import net.sophiebun.buntsy.screen.GrindingWheelScreen;
+import net.sophiebun.buntsy.recipe.*;
+import net.sophiebun.buntsy.screen.*;
 
 import java.util.List;
 
@@ -24,6 +24,10 @@ public class JEIBuntsyPlugin implements IModPlugin {
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
         registration.addRecipeCategories(new GrindingWheelCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new ThreadReelerCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new FairyOfferingCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new FairyInfusionCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new MagicCrystalizerCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -32,11 +36,35 @@ public class JEIBuntsyPlugin implements IModPlugin {
 
         List<GrindingWheelRecipe> grindingWheelRecipes = recipeManager.getAllRecipesFor(GrindingWheelRecipe.Type.INSTANCE);
         registration.addRecipes(GrindingWheelCategory.GRINDING_WHEEL_RECIPE_TYPE, grindingWheelRecipes);
+
+        List<ThreadReelerRecipe> threadReelerRecipes = recipeManager.getAllRecipesFor(ThreadReelerRecipe.Type.INSTANCE);
+        registration.addRecipes(ThreadReelerCategory.THREAD_REELER_RECIPE_TYPE, threadReelerRecipes);
+
+        List<FairyOfferingRecipe> fairyOfferingRecipes = recipeManager.getAllRecipesFor(FairyOfferingRecipe.Type.INSTANCE);
+        registration.addRecipes(FairyOfferingCategory.FAIRY_OFFERING_RECIPE_TYPE, fairyOfferingRecipes);
+
+        List<FairyInfusionRecipe> fairyInfusionRecipes = recipeManager.getAllRecipesFor(FairyInfusionRecipe.Type.INSTANCE);
+        registration.addRecipes(FairyInfusionCategory.FAIRY_INFUSION_RECIPE_TYPE, fairyInfusionRecipes);
+
+        List<MagicCrystalizerRecipe> magicCrystalizerRecipes = recipeManager.getAllRecipesFor(MagicCrystalizerRecipe.Type.INSTANCE);
+        registration.addRecipes(MagicCrystalizerCategory.MAGIC_CRYSTALIZER_RECIPE_TYPE, magicCrystalizerRecipes);
     }
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addRecipeClickArea(GrindingWheelScreen.class, 66, 33, 24, 24,
                 GrindingWheelCategory.GRINDING_WHEEL_RECIPE_TYPE);
+
+        registration.addRecipeClickArea(ThreadReelerScreen.class, 66, 33, 24, 24,
+                ThreadReelerCategory.THREAD_REELER_RECIPE_TYPE);
+
+        registration.addRecipeClickArea(FairyOfferingBenchScreen.class, 70, 24, 20, 35,
+                FairyOfferingCategory.FAIRY_OFFERING_RECIPE_TYPE);
+
+        registration.addRecipeClickArea(FairyInfusionBenchScreen.class, 52, 35, 71, 15,
+                FairyInfusionCategory.FAIRY_INFUSION_RECIPE_TYPE);
+
+        registration.addRecipeClickArea(MagicCrystalizerScreen.class, 98, 34, 24, 24,
+                MagicCrystalizerCategory.MAGIC_CRYSTALIZER_RECIPE_TYPE);
     }
 }

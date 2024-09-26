@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -80,6 +81,10 @@ public class Silkbun extends Animal {
         super(pEntityType, pLevel);
         this.jumpControl = new SilkbunJumpControl(this);
         this.moveControl = new SilkbunMoveControl(this);
+    }
+
+    public static boolean canSpawn(EntityType<Silkbun> entityType, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random){
+        return level.getBlockState(pos.below()).is(ModTags.Blocks.CUTERLY_SPAWNER);
     }
 
     protected void registerGoals() {
@@ -503,10 +508,6 @@ public class Silkbun extends Animal {
         this.setSleeping(false);
         this.nextSleepShift = this.random.nextInt(14000,18000);
         return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
-    }
-
-    public static boolean checkSilkBunSpawnRules(LevelAccessor pLevel, BlockPos pPos, RandomSource pRandom) {
-        return pLevel.getBlockState(pPos.below()).is(ModTags.Blocks.SILKBUN_SPAWNABLE_ON) && isBrightEnoughToSpawn(pLevel, pPos);
     }
 
     public void handleEntityEvent(byte pId) {

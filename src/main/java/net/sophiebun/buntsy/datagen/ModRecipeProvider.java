@@ -195,6 +195,119 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("SFS")
                 .unlockedBy(getHasName(ModItems.FAIRY_DUST.get()), has(ModItems.FAIRY_DUST.get()))
                 .save(consumer);
+
+        //Syrup Extractor
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.SYRUP_EXTRACTOR.get(), 1)
+                .define('P', ModBlocks.GENTLIT_PLANKS.get())
+                .pattern("P P")
+                .pattern("P P")
+                .pattern(" P ")
+                .unlockedBy(getHasName(ModBlocks.GENTLIT_PLANKS.get()), has(ModBlocks.GENTLIT_PLANKS.get()))
+                .save(consumer);
+
+        //Fairy Staff
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.FAIRY_STAFF.get(), 1)
+                .define('S', Items.STICK)
+                .define('G', Items.GOLD_INGOT)
+                .define('A', Items.AMETHYST_SHARD)
+                .pattern(" AS")
+                .pattern(" SG")
+                .pattern("S  ")
+                .unlockedBy(getHasName(Items.AMETHYST_SHARD), has(Items.AMETHYST_SHARD))
+                .save(consumer);
+
+        //Silky Stuff
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SILKY_SWORD.get(), 1)
+                .define('S', Items.STICK)
+                .define('I', ModItems.SILKY_INGOT.get())
+                .define('C', ModItems.SILKY_CRYSTAL.get())
+                .pattern("I")
+                .pattern("C")
+                .pattern("S")
+                .unlockedBy(getHasName(ModItems.SILKY_INGOT.get()), has(ModItems.SILKY_INGOT.get()))
+                .unlockedBy(getHasName(ModItems.SILKY_CRYSTAL.get()), has(ModItems.SILKY_CRYSTAL.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SILKY_AXE.get(), 1)
+                .define('C', Items.STICK)
+                .define('I', ModItems.SILKY_INGOT.get())
+                .define('S', ModItems.SILKY_CRYSTAL.get())
+                .pattern("CI")
+                .pattern("SI")
+                .pattern("S ")
+                .unlockedBy(getHasName(ModItems.SILKY_INGOT.get()), has(ModItems.SILKY_INGOT.get()))
+                .unlockedBy(getHasName(ModItems.SILKY_CRYSTAL.get()), has(ModItems.SILKY_CRYSTAL.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SILKY_PICKAXE.get(), 1)
+                .define('S', Items.STICK)
+                .define('I', ModItems.SILKY_INGOT.get())
+                .define('C', ModItems.SILKY_CRYSTAL.get())
+                .pattern("ICI")
+                .pattern(" S ")
+                .pattern(" S ")
+                .unlockedBy(getHasName(ModItems.SILKY_INGOT.get()), has(ModItems.SILKY_INGOT.get()))
+                .unlockedBy(getHasName(ModItems.SILKY_CRYSTAL.get()), has(ModItems.SILKY_CRYSTAL.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SILKY_SHOVEL.get(), 1)
+                .define('S', Items.STICK)
+                .define('C', ModItems.SILKY_CRYSTAL.get())
+                .pattern("C")
+                .pattern("S")
+                .pattern("S")
+                .unlockedBy(getHasName(ModItems.SILKY_INGOT.get()), has(ModItems.SILKY_INGOT.get()))
+                .unlockedBy(getHasName(ModItems.SILKY_CRYSTAL.get()), has(ModItems.SILKY_CRYSTAL.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SILKY_HOE.get(), 1)
+                .define('S', Items.STICK)
+                .define('I', ModItems.SILKY_INGOT.get())
+                .define('C', ModItems.SILKY_CRYSTAL.get())
+                .pattern("CI")
+                .pattern("S ")
+                .pattern("S ")
+                .unlockedBy(getHasName(ModItems.SILKY_INGOT.get()), has(ModItems.SILKY_INGOT.get()))
+                .unlockedBy(getHasName(ModItems.SILKY_CRYSTAL.get()), has(ModItems.SILKY_CRYSTAL.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SILKY_HELMET.get(), 1)
+                .define('I', ModItems.SILKY_INGOT.get())
+                .define('C', ModItems.SILKY_CRYSTAL.get())
+                .pattern("ICI")
+                .pattern("I I")
+                .unlockedBy(getHasName(ModItems.SILKY_INGOT.get()), has(ModItems.SILKY_INGOT.get()))
+                .unlockedBy(getHasName(ModItems.SILKY_CRYSTAL.get()), has(ModItems.SILKY_CRYSTAL.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SILKY_CHESTPLATE.get(), 1)
+                .define('I', ModItems.SILKY_INGOT.get())
+                .define('C', ModItems.SILKY_CRYSTAL.get())
+                .pattern("I I")
+                .pattern("ICI")
+                .pattern("ICI")
+                .unlockedBy(getHasName(ModItems.SILKY_INGOT.get()), has(ModItems.SILKY_INGOT.get()))
+                .unlockedBy(getHasName(ModItems.SILKY_CRYSTAL.get()), has(ModItems.SILKY_CRYSTAL.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SILKY_LEGGINGS.get(), 1)
+                .define('I', ModItems.SILKY_INGOT.get())
+                .define('C', ModItems.SILKY_CRYSTAL.get())
+                .pattern("ICI")
+                .pattern("I I")
+                .pattern("I I")
+                .unlockedBy(getHasName(ModItems.SILKY_INGOT.get()), has(ModItems.SILKY_INGOT.get()))
+                .unlockedBy(getHasName(ModItems.SILKY_CRYSTAL.get()), has(ModItems.SILKY_CRYSTAL.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SILKY_BOOTS.get(), 1)
+                .define('I', ModItems.SILKY_INGOT.get())
+                .define('C', ModItems.SILKY_CRYSTAL.get())
+                .pattern("C C")
+                .pattern("I I")
+                .unlockedBy(getHasName(ModItems.SILKY_INGOT.get()), has(ModItems.SILKY_INGOT.get()))
+                .unlockedBy(getHasName(ModItems.SILKY_CRYSTAL.get()), has(ModItems.SILKY_CRYSTAL.get()))
+                .save(consumer);
     }
 
     private void cookingFoodRecipe(ItemLike material, ItemLike result, float experience, Consumer<FinishedRecipe> consumer) {

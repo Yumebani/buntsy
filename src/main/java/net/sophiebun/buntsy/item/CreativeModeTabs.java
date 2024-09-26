@@ -141,6 +141,7 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.FAIRY_COLLECTION_TRAY.get());
                         pOutput.accept(ModBlocks.FAIRY_INFUSION_BENCH.get());
                         pOutput.accept(ModBlocks.MAGIC_CRYSTALIZER.get());
+                        pOutput.accept(ModBlocks.SYRUP_EXTRACTOR.get());
 
                         pOutput.accept(ModItems.FAIRY_STAFF.get());
 
@@ -168,6 +169,7 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.FAIRY_IN_A_BOTTLE.get());
 
                         pOutput.accept(ModItems.HOOTNIP.get());
+                        pOutput.accept(ModItems.HOOTNIP_SEEDS.get());
                         pOutput.accept(ModItems.GROUND_HOOTNIP.get());
                         pOutput.accept(ModItems.HOOTNIP_CEREAL.get());
                         pOutput.accept(ModItems.BOWL_OF_ROCKCANDY.get());
@@ -176,6 +178,7 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.SYRUPY_MIXTURE_BOWL.get());
                         pOutput.accept(ModItems.BOWL_OF_CARAMEL.get());
                         pOutput.accept(ModItems.STRAWBERRY.get());
+                        pOutput.accept(ModItems.STRAWBERRY_SEEDS.get());
                         pOutput.accept(ModItems.CARAMEL_STRAWBERRIES.get());
                         pOutput.accept(ModItems.GOLDEN_STRAWBERRY.get());
 

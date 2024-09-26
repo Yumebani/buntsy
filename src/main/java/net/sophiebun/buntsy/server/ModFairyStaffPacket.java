@@ -36,7 +36,10 @@ public class ModFairyStaffPacket {
 
     public static ModFairyStaffPacket read(FriendlyByteBuf buf) {
         int fairyId = buf.readInt();
-        BlockPos block = buf.readBlockPos();
+        BlockPos block = null;
+        if (buf.readBoolean()){
+            block = buf.readBlockPos();
+        }
         FairyStaffOperationType operationType = FairyStaffOperationType.values()[buf.readInt()];
 
         return new ModFairyStaffPacket(fairyId, block, operationType);
@@ -44,7 +47,13 @@ public class ModFairyStaffPacket {
 
     public void write(FriendlyByteBuf buf){
         buf.writeInt(fairyId);
-        buf.writeBlockPos(block);
+        if (block != null){
+            buf.writeBoolean(true);
+            buf.writeBlockPos(block);
+        }
+        else {
+            buf.writeBoolean(false);
+        }
         buf.writeInt(operationType.ordinal());
     }
 

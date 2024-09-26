@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": {
+      "item": "buntsy:gentlit_log"
+    },
+    "P": {
+      "item": "buntsy:gentlit_planks"
+    },
+    "S": {
+      "item": "buntsy:gentlit_slab"
+    }
+  },
+  "pattern": [
+    "PSP",
+    "PSP",
+    "L L"
+  ],
+  "result": {
+    "item": "buntsy:fairy_offering_bench"
+  },
+  "show_notification": true
+}

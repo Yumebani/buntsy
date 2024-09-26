@@ -34,6 +34,8 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> GIANT_LOVESHROOM_KEY = registerKey("giant_loveshroom");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GIANT_GLOWSHROOM_KEY = registerKey("giant_glowshroom");
 
+    public static final ResourceKey<ConfiguredFeature<?, ?>> WILD_STRAWBERRY_KEY = registerKey("wild_strawberry");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> WILD_HOOTNIP_KEY = registerKey("wild_hootnip");
     public static final ResourceKey<ConfiguredFeature<?, ?>> PINK_CHARMIL_GRASS_KEY = registerKey("pink_charmil_grass");
     public static final ResourceKey<ConfiguredFeature<?, ?>> BLUE_CHARMIL_GRASS_KEY = registerKey("blue_charmil_grass");
     public static final ResourceKey<ConfiguredFeature<?, ?>> PINK_BLOOM_KEY = registerKey("pink_bloom");
@@ -88,6 +90,14 @@ public class ModConfiguredFeatures {
 
 
         //Plant Patches
+        register(context, WILD_STRAWBERRY_KEY, Feature.FLOWER, new RandomPatchConfiguration(
+                16, 8, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.WILD_STRAWBERRY.get())))));
+
+        register(context, WILD_HOOTNIP_KEY, Feature.FLOWER, new RandomPatchConfiguration(
+                16, 8, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.WILD_HOOTNIP.get())))));
+
         register(context, PINK_CHARMIL_GRASS_KEY, Feature.FLOWER, new RandomPatchConfiguration(
                 128, 10, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.PINK_CHARMIL_GRASS.get())))));

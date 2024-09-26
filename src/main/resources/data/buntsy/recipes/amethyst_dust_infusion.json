@@ -1,0 +1,13 @@
+{
+  "type": "buntsy:fairy_infusion",
+  "ingredients": [
+    {
+      "item": "buntsy:amethyst_dust"
+    }
+  ],
+  "output":
+    {
+      "count": 1,
+      "item": "buntsy:fairy_dust"
+    }
+}

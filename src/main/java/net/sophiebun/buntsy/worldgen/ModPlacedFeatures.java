@@ -29,6 +29,8 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> GIANT_LOVESHROOM_PLACED_KEY = registerKey("giant_loveshroom_placed");
     public static final ResourceKey<PlacedFeature> GIANT_GLOWSHROOM_PLACED_KEY = registerKey("giant_glowshroom_placed");
 
+    public static final ResourceKey<PlacedFeature> WILD_STRAWBERRY_PLACED_KEY = registerKey("wild_strawberry_placed");
+    public static final ResourceKey<PlacedFeature> WILD_HOOTNIP_PLACED_KEY = registerKey("wild_hootnip_placed");
     public static final ResourceKey<PlacedFeature> PINK_CHARMIL_GRASS_PLACED_KEY = registerKey("pink_charmil_grass_placed");
     public static final ResourceKey<PlacedFeature> BLUE_CHARMIL_GRASS_PLACED_KEY = registerKey("blue_charmil_grass_placed");
     public static final ResourceKey<PlacedFeature> PINK_BLOOM_PLACED_KEY = registerKey("pink_bloom_placed");
@@ -64,6 +66,11 @@ public class ModPlacedFeatures {
                         ModBlocks.GLOWSHROOM.get()));
 
         //Plants
+        register(context, WILD_STRAWBERRY_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.WILD_STRAWBERRY_KEY),
+                List.of(PlacementUtils.countExtra(0, 0.025f, 6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+        register(context, WILD_HOOTNIP_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.WILD_HOOTNIP_KEY),
+                List.of(PlacementUtils.countExtra(0, 0.025f, 6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+
         register(context, PINK_CHARMIL_GRASS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.PINK_CHARMIL_GRASS_KEY),
                 List.of(CountPlacement.of(6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
         register(context, BLUE_CHARMIL_GRASS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.BLUE_CHARMIL_GRASS_KEY),

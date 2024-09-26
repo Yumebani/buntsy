@@ -6,14 +6,16 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.SnowyDirtBlock;
+import net.minecraft.world.level.block.SpreadingSnowyDirtBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 
-public class TillableCharmilSoil extends SnowyDirtBlock {
+public class TillableCharmilSoil extends SpreadingSnowyDirtBlock {
 
     public TillableCharmilSoil(Properties pProperties) {
         super(pProperties);
