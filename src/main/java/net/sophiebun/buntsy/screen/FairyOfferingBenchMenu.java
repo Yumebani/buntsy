@@ -26,7 +26,6 @@ public class FairyOfferingBenchMenu extends AbstractContainerMenu {
 
     public FairyOfferingBenchMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModMenuTypes.FAIRY_OFFERING_BENCH_MENU.get(), pContainerId);
-        checkContainerSize(inv, 8);
         blockEntity = ((FairyOfferingBenchBlockEntity) entity);
         this.level = inv.player.level();
         this.data = data;
@@ -34,12 +33,15 @@ public class FairyOfferingBenchMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
         addPlayerInventory(inv);
 
-        this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
+        this.blockEntity.getInputLazyItemHandler().ifPresent(iItemHandler -> {
             for (int i = 0; i < 4; i++){
                 this.addSlot(new SlotItemHandler(iItemHandler, i, 34 + (18 * (i % 2)), 25 + (18 * (i / 2))));
             }
-            for (int i = 4; i < 8; i++){
-                this.addSlot(new OutputSlot(iItemHandler, i, 93 + (18 * ((i - 4) % 2)), 25 + (18 * ((i - 4) / 2))));
+        });
+
+        this.blockEntity.getOutputLazyItemHandler().ifPresent(iItemHandler -> {
+            for (int i = 0; i < 4; i++){
+                this.addSlot(new OutputSlot(iItemHandler, i, 93 + (18 * ((i) % 2)), 25 + (18 * ((i) / 2))));
             }
         });
 

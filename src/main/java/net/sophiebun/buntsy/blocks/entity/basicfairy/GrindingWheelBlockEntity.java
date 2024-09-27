@@ -68,7 +68,7 @@ public class GrindingWheelBlockEntity extends BasicFairyBlockEntity implements M
         Optional<GrindingWheelRecipe> recipe = getCurrentRecipe();
         List<ItemStack> result = recipe.get().getResults(this.nextRollChance);
 
-        this.itemHandler.extractItem(INPUT_SLOT, 1, false);
+        this.inputItemHandler.extractItem(INPUT_SLOT, 1, false);
 
         outputItems(result.get(0), result.size() == 1 ? null : result.get(1));
     }
@@ -85,10 +85,12 @@ public class GrindingWheelBlockEntity extends BasicFairyBlockEntity implements M
     }
 
     public Optional<GrindingWheelRecipe> getCurrentRecipe() {
-        SimpleContainer inventory = new SimpleContainer(this.itemHandler.getSlots());
-        for(int i = 0; i < itemHandler.getSlots(); i++) {
-            inventory.setItem(i, this.itemHandler.getStackInSlot(i));
+        SimpleContainer inventory = new SimpleContainer(3);
+        inventory.setItem(0, inputItemHandler.getStackInSlot(0));
+        for (int i = 0; i < outputItemHandler.getSlots(); i++) {
+            inventory.setItem(i + 1, outputItemHandler.getStackInSlot(i));
         }
+
 
         return this.level.getRecipeManager().getRecipeFor(GrindingWheelRecipe.Type.INSTANCE, inventory, level);
     }

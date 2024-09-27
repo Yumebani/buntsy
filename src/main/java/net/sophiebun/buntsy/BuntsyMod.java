@@ -5,8 +5,21 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockSource;
+import net.minecraft.core.dispenser.DispenseItemBehavior;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Containers;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -18,10 +31,12 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.sophiebun.buntsy.blocks.ModBlocks;
+import net.sophiebun.buntsy.blocks.custom.SyrupExtractorBlock;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.client.GrindingWheelBlockRenderer;
 import net.sophiebun.buntsy.blocks.entity.client.ThreadReelerBlockRenderer;
 import net.sophiebun.buntsy.datagen.ModBlockTagGenerator;
+import net.sophiebun.buntsy.dispenser.DispenserBehaviourAditions;
 import net.sophiebun.buntsy.entity.ModEntities;
 import net.sophiebun.buntsy.entity.client.FairyRenderer;
 import net.sophiebun.buntsy.entity.client.SilkbunRenderer;
@@ -54,6 +69,8 @@ public class BuntsyMod
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         GeckoLib.initialize();
+
+        DispenserBlock.registerBehavior(Items.GLASS_BOTTLE, (pSource, pStack) -> DispenserBehaviourAditions.interactWithSExtractor(pSource, pStack));
 
         ModPacketHandler.register();
 

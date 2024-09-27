@@ -34,19 +34,23 @@ public class MagicCrystalizerMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
         addPlayerInventory(inv);
 
-        this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
-
+        this.blockEntity.getSampleLazyItemHandler().ifPresent(iItemHandler -> {
             this.addSlot(new SlotItemHandler(iItemHandler, 0, 50, 26));
+        });
+
+        this.blockEntity.getDustLazyItemHandler().ifPresent(iItemHandler -> {
 
             for (int i = 0; i < 4; i++){
-                this.addSlot(new SlotItemHandler(iItemHandler, i + 1, 23 + (54 * (i % 2)), 17 + (18 * (i / 2))));
+                this.addSlot(new SlotItemHandler(iItemHandler, i, 23 + (54 * (i % 2)), 17 + (18 * (i / 2))));
             }
 
             for (int i = 0; i < 3; i++){
-                this.addSlot(new SlotItemHandler(iItemHandler, i + 5, 32 + (18 * i), 53));
+                this.addSlot(new SlotItemHandler(iItemHandler, i + 4, 32 + (18 * i), 53));
             }
+        });
 
-            this.addSlot(new OutputSlot(iItemHandler, 8, 132, 35));
+        this.blockEntity.getOutputLazyItemHandler().ifPresent(iItemHandler -> {
+            this.addSlot(new OutputSlot(iItemHandler, 0, 132, 35));
         });
 
         addDataSlots(data);

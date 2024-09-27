@@ -26,7 +26,6 @@ public class ThreadReelerMenu extends AbstractContainerMenu {
 
     public ThreadReelerMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModMenuTypes.THREAD_REELER_MENU.get(), pContainerId);
-        checkContainerSize(inv, 3);
         blockEntity = ((ThreadReelerBlockEntity) entity);
         this.level = inv.player.level();
         this.data = data;
@@ -34,10 +33,13 @@ public class ThreadReelerMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
         addPlayerInventory(inv);
 
-        this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
+        this.blockEntity.getInputLazyItemHandler().ifPresent(iItemHandler -> {
             this.addSlot(new SlotItemHandler(iItemHandler, 0, 40, 25));
-            this.addSlot(new OutputSlot(iItemHandler, 1, 103, 35));
-            this.addSlot(new OutputSlot(iItemHandler, 2, 121, 35));
+        });
+
+        this.blockEntity.getOutputLazyItemHandler().ifPresent(iItemHandler -> {
+            this.addSlot(new OutputSlot(iItemHandler, 0, 103, 35));
+            this.addSlot(new OutputSlot(iItemHandler, 1, 121, 35));
         });
 
         addDataSlots(data);

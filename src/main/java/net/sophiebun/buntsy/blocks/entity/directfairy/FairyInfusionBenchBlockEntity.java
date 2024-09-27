@@ -33,7 +33,16 @@ import java.util.*;
 
 public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity implements MenuProvider {
 
-    private final ItemStackHandler itemHandler = new ItemStackHandler(10) {
+    private final ItemStackHandler inputItemHandler = new ItemStackHandler(5) {
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+            if (!level.isClientSide()){
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+            }
+        }
+    };
+    private final ItemStackHandler outputItemHandler = new ItemStackHandler(5) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -45,12 +54,21 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
 
     private static final int INPUT_SLOT_START = 0;
     private static final int INPUT_SLOT_COUNT = 5;
-    private static final int OUTPUT_SLOT_START = 5;
+    private static final int OUTPUT_SLOT_START = 0;
     private static final int OUTPUT_SLOT_COUNT = 5;
 
     private final List<Integer> randomRotations;
 
-    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+    private LazyOptional<IItemHandler> inputLazyItemHandler = LazyOptional.of(() -> inputItemHandler);
+    private LazyOptional<IItemHandler> outputLazyItemHandler = LazyOptional.of(() -> outputItemHandler);
+
+    public LazyOptional<IItemHandler> getInputLazyItemHandler() {
+        return inputLazyItemHandler;
+    }
+
+    public LazyOptional<IItemHandler> getOutputLazyItemHandler() {
+        return outputLazyItemHandler;
+    }
 
     public List<Integer> getRandomRotations() {
         return randomRotations;
@@ -76,7 +94,12 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            return lazyItemHandler.cast();
+            if (side.equals(Direction.DOWN)){
+                return outputLazyItemHandler.cast();
+            }
+            else {
+                return inputLazyItemHandler.cast();
+            }
         }
         return super.getCapability(cap, side);
     }
@@ -84,19 +107,24 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
     @Override
     public void onLoad() {
         super.onLoad();
-        lazyItemHandler = LazyOptional.of((() -> itemHandler));
+        inputLazyItemHandler = LazyOptional.of((() -> this.inputItemHandler));
+        outputLazyItemHandler = LazyOptional.of((() -> this.outputItemHandler));
     }
 
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
-        lazyItemHandler.invalidate();
+        inputLazyItemHandler.invalidate();
+        outputLazyItemHandler.invalidate();
     }
 
     public void drops() {
-        SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
-        for (int i = 0; i < itemHandler.getSlots(); i++) {
-            inventory.setItem(i, itemHandler.getStackInSlot(i));
+        SimpleContainer inventory = new SimpleContainer(INPUT_SLOT_COUNT + OUTPUT_SLOT_COUNT);
+        for (int i = 0; i < outputItemHandler.getSlots(); i++) {
+            inventory.setItem(i, outputItemHandler.getStackInSlot(i));
+        }
+        for (int i = 0; i < outputItemHandler.getSlots(); i++) {
+            inventory.setItem(i + OUTPUT_SLOT_COUNT, outputItemHandler.getStackInSlot(i));
         }
 
         Containers.dropContents(this.level, this.worldPosition, inventory);
@@ -113,18 +141,19 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
         return new FairyInfusionBenchMenu(i, inventory, this);
     }
 
+
     @Override
     protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("inventory", itemHandler.serializeNBT());
-
+        pTag.put("inputInventory", inputItemHandler.serializeNBT());
+        pTag.put("outputInventory", outputItemHandler.serializeNBT());
         super.saveAdditional(pTag);
     }
 
     @Override
     public void load(CompoundTag pTag) {
         super.load(pTag);
-
-        this.itemHandler.deserializeNBT(pTag.getCompound("inventory"));
+        this.inputItemHandler.deserializeNBT(pTag.getCompound("inputInventory"));
+        this.outputItemHandler.deserializeNBT(pTag.getCompound("outputInventory"));
     }
 
     public List<ItemStack> getRenderInputItems(){
@@ -135,7 +164,7 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
 
         for (Integer i : inputs){
             if (renderItems.size() < 4){
-                renderItems.add(this.itemHandler.getStackInSlot(i));
+                renderItems.add(this.inputItemHandler.getStackInSlot(i));
             }
         }
 
@@ -144,11 +173,11 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
 
     public ItemStack getFirstOutputItemStack(){
         for (int i = OUTPUT_SLOT_START; i < OUTPUT_SLOT_START + OUTPUT_SLOT_COUNT; i++){
-            if (!itemHandler.getStackInSlot(i).isEmpty()){
-                return itemHandler.getStackInSlot(i);
+            if (!outputItemHandler.getStackInSlot(i).isEmpty()){
+                return outputItemHandler.getStackInSlot(i);
             }
         }
-        return itemHandler.getStackInSlot(OUTPUT_SLOT_START);
+        return outputItemHandler.getStackInSlot(OUTPUT_SLOT_START);
     }
 
     public void infuse() {
@@ -157,11 +186,11 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
         ItemStack result = recipe.getResultItem(null);
         int outputSlot = getClearOutput(result);
 
-        this.itemHandler.extractItem(slot, 1, false);
+        this.inputItemHandler.extractItem(slot, 1, false);
 
-        this.itemHandler.setStackInSlot(outputSlot,
+        this.outputItemHandler.setStackInSlot(outputSlot,
                 new ItemStack(result.getItem(),
-                        this.itemHandler.getStackInSlot(outputSlot).getCount() + result.getCount()));
+                        this.outputItemHandler.getStackInSlot(outputSlot).getCount() + result.getCount()));
     }
 
     public boolean hasInfusion() {
@@ -174,9 +203,9 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
     }
 
     private Optional<FairyInfusionRecipe> getCurrentInfusion() {
-        SimpleContainer inventory = new SimpleContainer(this.itemHandler.getSlots());
-        for(int i = 0; i < itemHandler.getSlots(); i++) {
-            inventory.setItem(i, this.itemHandler.getStackInSlot(i));
+        SimpleContainer inventory = new SimpleContainer(this.inputItemHandler.getSlots());
+        for(int i = 0; i < inputItemHandler.getSlots(); i++) {
+            inventory.setItem(i, this.inputItemHandler.getStackInSlot(i));
         }
 
         return this.level.getRecipeManager().getRecipeFor(FairyInfusionRecipe.Type.INSTANCE, inventory, level);
@@ -185,7 +214,7 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
     private Integer getFirstFilledInputSlot(Item item) {
         List<Integer> slotList = new ArrayList<Integer>();
         for (int i = INPUT_SLOT_START; i < INPUT_SLOT_START + INPUT_SLOT_COUNT; i++){
-            if (this.itemHandler.getStackInSlot(i).is(item)){
+            if (this.inputItemHandler.getStackInSlot(i).is(item)){
                 slotList.add(i);
             }
         }
@@ -194,7 +223,7 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
     private List<Integer> getFilledInputSlotList() {
         List<Integer> slotList = new ArrayList<Integer>();
         for (int i = INPUT_SLOT_START; i < INPUT_SLOT_START + INPUT_SLOT_COUNT; i++){
-            if (!this.itemHandler.getStackInSlot(i).isEmpty()){
+            if (!this.inputItemHandler.getStackInSlot(i).isEmpty()){
                 slotList.add(i);
             }
         }
@@ -207,8 +236,8 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
 
     private Integer getClearOutput(ItemStack result) {
         for (int i = OUTPUT_SLOT_START; i < OUTPUT_SLOT_START + OUTPUT_SLOT_COUNT; i++){
-            if ((itemHandler.getStackInSlot(i).isEmpty() || this.itemHandler.getStackInSlot(i).getItem() == result.getItem())
-                    && (this.itemHandler.getStackInSlot(i).getCount() + result.getCount() <= result.getMaxStackSize())){
+            if ((outputItemHandler.getStackInSlot(i).isEmpty() || this.outputItemHandler.getStackInSlot(i).getItem() == result.getItem())
+                    && (this.outputItemHandler.getStackInSlot(i).getCount() + result.getCount() <= result.getMaxStackSize())){
                 return i;
             }
         }

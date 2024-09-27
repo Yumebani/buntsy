@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.common.util.NonNullFunction;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.custom.entityblocks.ThreadReelerBlock;
@@ -26,7 +27,25 @@ import org.jetbrains.annotations.Nullable;
 
 public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
 
-    protected final ItemStackHandler itemHandler = new ItemStackHandler(3) {
+    protected final ItemStackHandler inputItemHandler = new ItemStackHandler(1) {
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+            if (!level.isClientSide()){
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+            }
+        }
+    };
+
+    public LazyOptional<IItemHandler> getInputLazyItemHandler() {
+        return inputLazyItemHandler;
+    }
+
+    public LazyOptional<IItemHandler> getOutputLazyItemHandler() {
+        return outputLazyItemHandler;
+    }
+
+    protected final ItemStackHandler outputItemHandler = new ItemStackHandler(2) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -37,8 +56,8 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     };
 
     protected static final int INPUT_SLOT = 0;
-    protected static final int OUTPUT_SLOT = 1;
-    protected static final int SECONDARY_OUTPUT_SLOT = 2;
+    protected static final int OUTPUT_SLOT = 0;
+    protected static final int SECONDARY_OUTPUT_SLOT = 1;
     protected static final int FAIRY_WEIGHT = 1;
 
     protected final ContainerData data;
@@ -46,7 +65,9 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     protected int maxProgress = 200;
     protected int nextRollChance = 0;
 
-    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+
+    private LazyOptional<IItemHandler> inputLazyItemHandler = LazyOptional.of(() -> this.inputItemHandler);
+    private LazyOptional<IItemHandler> outputLazyItemHandler = LazyOptional.of(() -> this.outputItemHandler);
 
     public BasicFairyBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
         super(pType, pPos, pBlockState);
@@ -82,7 +103,12 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            return lazyItemHandler.cast();
+            if (side.equals(Direction.DOWN)){
+                return outputLazyItemHandler.cast();
+            }
+            else {
+                return inputLazyItemHandler.cast();
+            }
         }
         return super.getCapability(cap, side);
     }
@@ -90,19 +116,22 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     @Override
     public void onLoad() {
         super.onLoad();
-        lazyItemHandler = LazyOptional.of((() -> itemHandler));
+        inputLazyItemHandler = LazyOptional.of((() -> this.inputItemHandler));
+        outputLazyItemHandler = LazyOptional.of((() -> this.outputItemHandler));
     }
 
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
-        lazyItemHandler.invalidate();
+        inputLazyItemHandler.invalidate();
+        outputLazyItemHandler.invalidate();
     }
 
     public void drops() {
-        SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
-        for (int i = 0; i < itemHandler.getSlots(); i++) {
-            inventory.setItem(i, itemHandler.getStackInSlot(i));
+        SimpleContainer inventory = new SimpleContainer(3);
+        inventory.setItem(0, inputItemHandler.getStackInSlot(0));
+        for (int i = 0; i < outputItemHandler.getSlots(); i++) {
+            inventory.setItem(i + 1, outputItemHandler.getStackInSlot(i));
         }
 
         Containers.dropContents(this.level, this.worldPosition, inventory);
@@ -110,7 +139,8 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
 
     @Override
     protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("inventory", itemHandler.serializeNBT());
+        pTag.put("inputInventory", inputItemHandler.serializeNBT());
+        pTag.put("outputInventory", outputItemHandler.serializeNBT());
         pTag.putInt("basic_fairy_block.progress", this.progress);
         pTag.putInt("basic_fairy_block.max_progress", this.maxProgress);
         pTag.putInt("basic_fairy_block.next_roll_chance", this.nextRollChance);
@@ -122,7 +152,8 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     public void load(CompoundTag pTag) {
         super.load(pTag);
 
-        this.itemHandler.deserializeNBT(pTag.getCompound("inventory"));
+        this.inputItemHandler.deserializeNBT(pTag.getCompound("inputInventory"));
+        this.outputItemHandler.deserializeNBT(pTag.getCompound("outputInventory"));
         this.progress = pTag.getInt("basic_fairy_block.progress");
         this.maxProgress = pTag.getInt("basic_fairy_block.max_progress");
         this.nextRollChance = pTag.getInt("basic_fairy_block.next_roll_chance");
@@ -206,13 +237,13 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     }
 
     public ItemStack getInputStack(){
-        return this.itemHandler.getStackInSlot(INPUT_SLOT);
+        return this.inputItemHandler.getStackInSlot(0);
     }
 
     public void insertIntoSlot(int slot, ItemStack item){
-        this.itemHandler.setStackInSlot(slot,
+        this.outputItemHandler.setStackInSlot(slot,
                 new ItemStack(item.getItem(),
-                        this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + item.getCount()));
+                        this.outputItemHandler.getStackInSlot(slot).getCount() + item.getCount()));
     }
 
     public Integer getPrimaryAvailableSlot(ItemStack item){
@@ -225,90 +256,9 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     }
 
     public boolean isSlotClear(int slot, ItemStack item){
-        return (this.itemHandler.getStackInSlot(slot).isEmpty() || this.itemHandler.getStackInSlot(slot).getItem() == item.getItem())
-                && (this.itemHandler.getStackInSlot(slot).getCount() + item.getCount() <= item.getMaxStackSize());
+        return (this.outputItemHandler.getStackInSlot(slot).isEmpty() || this.outputItemHandler.getStackInSlot(slot).getItem() == item.getItem())
+                && (this.outputItemHandler.getStackInSlot(slot).getCount() + item.getCount() <= item.getMaxStackSize());
     }
-
-    /*
-    public void tempCraftItem() {
-        TempRecipe recipe = tempGetCurrentRecipe();
-        List<ItemStack> result = recipe.getResults(this.nextRollChance);
-
-        this.itemHandler.extractItem(INPUT_SLOT, 1, false);
-
-        outputItems(result.get(0), result.size() == 1 ? null : result.get(2));
-    }
-
-    /*
-    public boolean hasRecipe() {
-        TempRecipe recipe = getCurrentRecipe();
-        if (recipe == null){
-            return false;
-        }
-
-        List<ItemStack> result = recipe.getResults(this.nextRollChance);
-        return isOutputClear(result.get(0), result.size() == 1 ? null : result.get(2));
-    }
-
-    /*
-    public TempRecipe tempGetCurrentRecipe() {
-        SimpleContainer inventory = new SimpleContainer(this.itemHandler.getSlots());
-        for(int i = 0; i < itemHandler.getSlots(); i++) {
-            inventory.setItem(i, this.itemHandler.getStackInSlot(i));
-        }
-
-        for (TempRecipe recipe : getRecipeList()){
-            if (recipe.isPresent(inventory, new int[]{INPUT_SLOT})){
-                return recipe;
-            }
-        }
-
-        return null;
-    }
-
-    public List<TempRecipe> getRecipeList() {
-        return recipeList;
-    }
-    /*
-
-    private void craftItem() {
-        Optional<GrindingWheelRecipe> recipe = getCurrentRecipe();
-        ItemStack result = recipe.get().getResultItem(null);
-
-        this.itemHandler.extractItem(INPUT_SLOT, 1, false);
-
-        this.itemHandler.setStackInSlot(OUTPUT_SLOT,
-                new ItemStack(result.getItem(),
-                        this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
-    }
-
-    private boolean hasRecipe() {
-        Optional<GrindingWheelRecipe> recipe = getCurrentRecipe();
-
-        if (recipe.isEmpty()){
-            System.out.println("no recipe detected");
-            return false;
-        }
-        ItemStack result = recipe.get().getResultItem(null);
-
-        return isOutputClear(result, OUTPUT_SLOT);
-    }
-
-    private boolean isOutputClear(ItemStack result, int slot) {
-        return (this.itemHandler.getStackInSlot(slot).isEmpty() || this.itemHandler.getStackInSlot(slot).getItem() == result.getItem())
-                && (this.itemHandler.getStackInSlot(slot).getCount() + result.getCount() <= result.getMaxStackSize());
-    }
-
-
-    private Optional<GrindingWheelRecipe> getCurrentRecipe() {
-        SimpleContainer inventory = new SimpleContainer(this.itemHandler.getSlots());
-        for(int i = 0; i < itemHandler.getSlots(); i++) {
-            inventory.setItem(i, this.itemHandler.getStackInSlot(i));
-        }
-
-        return this.level.getRecipeManager().getRecipeFor(GrindingWheelRecipe.Type.INSTANCE, inventory, level);
-    }
-     */
 
     private boolean hasProgressFinished() {
         return this.progress >= this.maxProgress;

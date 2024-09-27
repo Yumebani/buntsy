@@ -1,23 +1,20 @@
 package net.sophiebun.buntsy.datagen;
 
-import com.mojang.datafixers.functions.PointFreeRule;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.tag.ModTags;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
@@ -27,7 +24,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     }
 
     @Override
-    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
 
         //Wood recipes
         planksRecipe(ModTags.Items.GENTLIT_LOGS, ModBlocks.GENTLIT_PLANKS.get(), consumer);
@@ -65,20 +62,20 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer);
 
         //Smelting dust
-        oreSmeltingRecipe(ModItems.IRON_DUST.get(), Items.IRON_INGOT, 0.35f, consumer);
-        oreSmeltingRecipe(ModItems.COPPER_DUST.get(), Items.COPPER_INGOT, 0.35f, consumer);
-        oreSmeltingRecipe(ModItems.GOLD_DUST.get(), Items.GOLD_INGOT, 0.35f, consumer);
-        oreSmeltingRecipe(ModItems.NETHERITE_DUST.get(), Items.NETHERITE_SCRAP, 0.35f, consumer);
+        oreSmeltingRecipe(ModItems.IRON_DUST.get(), Items.IRON_INGOT, consumer);
+        oreSmeltingRecipe(ModItems.COPPER_DUST.get(), Items.COPPER_INGOT, consumer);
+        oreSmeltingRecipe(ModItems.GOLD_DUST.get(), Items.GOLD_INGOT, consumer);
+        oreSmeltingRecipe(ModItems.NETHERITE_DUST.get(), Items.NETHERITE_SCRAP, consumer);
 
         //Silky solids
         upgradeSmithing(ModItems.FAIRY_DUST.get(), Items.NETHERITE_SCRAP, ModItems.TOUGH_SILK_FABRIC.get(), ModItems.SILKY_INGOT.get(), consumer);
         upgradeSmithing(ModItems.FAIRY_DUST.get(), Items.DIAMOND, ModItems.TOUGH_SILK_FABRIC.get(), ModItems.SILKY_CRYSTAL.get(), consumer);
-        compact3By3(ModItems.SILKY_NUGGET.get(), ModItems.SILKY_INGOT.get(), 1, consumer);
-        uncompact(ModItems.SILKY_INGOT.get(), ModItems.SILKY_NUGGET.get(), 9, consumer);
+        compact3By3(ModItems.SILKY_NUGGET.get(), ModItems.SILKY_INGOT.get(), consumer);
+        uncompact(ModItems.SILKY_INGOT.get(), ModItems.SILKY_NUGGET.get(), consumer);
 
         //Foods
-        cookingFoodRecipe(ModItems.SUGAR_BOWL.get(), ModItems.BOWL_OF_CARAMEL.get(), 0.35f, consumer);
-        cookingFoodRecipe(ModItems.SYRUPY_MIXTURE_BOWL.get(), ModItems.BOWL_OF_ROCKCANDY.get(), 0.35f, consumer);
+        cookingFoodRecipe(ModItems.SUGAR_BOWL.get(), ModItems.BOWL_OF_CARAMEL.get(), consumer);
+        cookingFoodRecipe(ModItems.SYRUPY_MIXTURE_BOWL.get(), ModItems.BOWL_OF_ROCKCANDY.get(), consumer);
 
         //Silk spool
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SILK_SPOOL.get(), 1)
@@ -310,47 +307,47 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer);
     }
 
-    private void cookingFoodRecipe(ItemLike material, ItemLike result, float experience, Consumer<FinishedRecipe> consumer) {
-        smeltingFoodRecipe(material, result, experience, consumer);
-        smokingFoodRecipe(material, result, experience, consumer);
-        campfireFoodRecipe(material, result, experience, consumer);
+    private void cookingFoodRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+        smeltingFoodRecipe(material, result, consumer);
+        smokingFoodRecipe(material, result, consumer);
+        campfireFoodRecipe(material, result, consumer);
     }
 
-    private void smeltingFoodRecipe(ItemLike material, ItemLike result, float experience, Consumer<FinishedRecipe> consumer) {
-        SimpleCookingRecipeBuilder.generic(Ingredient.of(new ItemLike[]{material}),
-                        RecipeCategory.FOOD, result, experience, 200, RecipeSerializer.SMELTING_RECIPE)
+    private void smeltingFoodRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+        SimpleCookingRecipeBuilder.generic(Ingredient.of(material),
+                        RecipeCategory.FOOD, result, (float) 0.35, 200, RecipeSerializer.SMELTING_RECIPE)
                 .unlockedBy(getHasName(material), has(material))
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_from_smelting");
     }
 
-    private void smokingFoodRecipe(ItemLike material, ItemLike result, float experience, Consumer<FinishedRecipe> consumer) {
-        SimpleCookingRecipeBuilder.generic(Ingredient.of(new ItemLike[]{material}),
-                        RecipeCategory.FOOD, result, experience, 100, RecipeSerializer.SMOKING_RECIPE)
+    private void smokingFoodRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+        SimpleCookingRecipeBuilder.generic(Ingredient.of(material),
+                        RecipeCategory.FOOD, result, (float) 0.35, 100, RecipeSerializer.SMOKING_RECIPE)
                 .unlockedBy(getHasName(material), has(material))
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_from_smoking");
     }
 
-    private void campfireFoodRecipe(ItemLike material, ItemLike result, float experience, Consumer<FinishedRecipe> consumer) {
-        SimpleCookingRecipeBuilder.generic(Ingredient.of(new ItemLike[]{material}),
-                        RecipeCategory.FOOD, result, experience, 600, RecipeSerializer.CAMPFIRE_COOKING_RECIPE)
+    private void campfireFoodRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+        SimpleCookingRecipeBuilder.generic(Ingredient.of(material),
+                        RecipeCategory.FOOD, result, (float) 0.35, 600, RecipeSerializer.CAMPFIRE_COOKING_RECIPE)
                 .unlockedBy(getHasName(material), has(material))
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_from_campfire_cooking");
     }
 
     private void smeltingRecipe(ItemLike material, ItemLike result, float experience, Consumer<FinishedRecipe> consumer) {
-        SimpleCookingRecipeBuilder.generic(Ingredient.of(new ItemLike[]{material}),
+        SimpleCookingRecipeBuilder.generic(Ingredient.of(material),
                         RecipeCategory.MISC, result, experience, 200, RecipeSerializer.SMELTING_RECIPE)
                 .unlockedBy(getHasName(material), has(material))
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_from_smelting");
     }
 
-    private void oreSmeltingRecipe(ItemLike material, ItemLike result, float experience, Consumer<FinishedRecipe> consumer) {
+    private void oreSmeltingRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
         SimpleCookingRecipeBuilder.generic(Ingredient.of(material),
-                        RecipeCategory.MISC, result, experience, 200, RecipeSerializer.BLASTING_RECIPE)
+                        RecipeCategory.MISC, result, (float) 0.35, 200, RecipeSerializer.BLASTING_RECIPE)
                 .unlockedBy(getHasName(material), has(material))
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_from_blasting");
         SimpleCookingRecipeBuilder.generic(Ingredient.of(material),
-                        RecipeCategory.MISC, result, experience, 200, RecipeSerializer.SMELTING_RECIPE)
+                        RecipeCategory.MISC, result, (float) 0.35, 200, RecipeSerializer.SMELTING_RECIPE)
                 .unlockedBy(getHasName(material), has(material))
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_from_smelting");
     }
@@ -364,8 +361,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer);
     }
 
-    private void compact3By3(ItemLike material, ItemLike result, int count, Consumer<FinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, count)
+    private void compact3By3(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .define('#', material)
                 .pattern("###")
                 .pattern("###")
@@ -374,8 +371,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer);
     }
 
-    private void uncompact(ItemLike material, ItemLike result, int count, Consumer<FinishedRecipe> consumer) {
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, result, count)
+    private void uncompact(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, result, 9)
                 .requires(material, 1)
                 .unlockedBy(getHasName(material), has(material))
                 .save(consumer);
@@ -383,9 +380,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     private void upgradeSmithing(ItemLike template, ItemLike upgradable, ItemLike material, Item result, Consumer<FinishedRecipe> consumer) {
         SmithingTransformRecipeBuilder.smithing(
-                        Ingredient.of(new ItemLike[]{template}),
-                        Ingredient.of(new ItemLike[]{upgradable}),
-                        Ingredient.of(new ItemLike[]{material}),
+                        Ingredient.of(template),
+                        Ingredient.of(upgradable),
+                        Ingredient.of(material),
                         RecipeCategory.MISC, result)
                 .unlocks("has_" + getItemName(material), has(material))
                 .unlocks("has_" + getItemName(template), has(template))

@@ -34,12 +34,15 @@ public class FairyInfusionBenchMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
         addPlayerInventory(inv);
 
-        this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
+        this.blockEntity.getInputLazyItemHandler().ifPresent(iItemHandler -> {
             for (int i = 0; i < 5; i++){
                 this.addSlot(new SlotItemHandler(iItemHandler, i, 44 + (18 * i), 17));
             }
-            for (int i = 5; i < 10; i++){
-                this.addSlot(new OutputSlot(iItemHandler, i, 44 + (18 * (i - 5)), 53));
+        });
+
+        this.blockEntity.getOutputLazyItemHandler().ifPresent(iItemHandler -> {
+            for (int i = 0; i < 5; i++){
+                this.addSlot(new OutputSlot(iItemHandler, i, 44 + (18 * (i)), 53));
             }
         });
     }
