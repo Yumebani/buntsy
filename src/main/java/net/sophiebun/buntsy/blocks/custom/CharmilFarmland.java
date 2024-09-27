@@ -52,11 +52,11 @@ public class CharmilFarmland extends FarmBlock {
 
     @Override
     public void fallOn(Level pLevel, BlockState pState, BlockPos pPos, Entity pEntity, float pFallDistance) {
-        if (!pLevel.isClientSide && net.minecraftforge.common.ForgeHooks.onFarmlandTrample(pLevel, pPos, Blocks.DIRT.defaultBlockState(), pFallDistance, pEntity)) { // Forge: Move logic to Entity#canTrample
+        if (!pLevel.isClientSide && net.minecraftforge.common.ForgeHooks.onFarmlandTrample(pLevel, pPos, ModBlocks.CHARMIL_SOIL.get().defaultBlockState(), pFallDistance, pEntity)) { // Forge: Move logic to Entity#canTrample
             turnToDirt(pEntity, pState, pLevel, pPos);
         }
 
-        super.fallOn(pLevel, pState, pPos, pEntity, pFallDistance);
+        this.fallOn(pLevel, pState, pPos, pEntity, pFallDistance);
     }
     public static void turnToDirt(@Nullable Entity pEntity, BlockState pState, Level pLevel, BlockPos pPos) {
         BlockState blockstate = pushEntitiesUp(pState, ModBlocks.CHARMIL_SOIL.get().defaultBlockState(), pLevel, pPos);

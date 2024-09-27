@@ -40,11 +40,11 @@ public class MagicCrystalizerRecipe implements Recipe<SimpleContainer> {
         }
 
         for (int i = 0; i < 7; i++){
-            if (inputItems.get(i).test(pContainer.getItem(i))){
-                return true;
+            if (!inputItems.get(i).test(pContainer.getItem(i))){
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     @Override

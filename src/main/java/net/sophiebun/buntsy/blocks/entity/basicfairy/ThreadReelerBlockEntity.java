@@ -92,7 +92,7 @@ public class ThreadReelerBlockEntity extends BasicFairyBlockEntity implements Me
     @Override
     public void setAdditional(Level pLevel, BlockPos pPos, BlockState pState) {
         boolean value = false;
-        if (canRun() && getCurrentRecipe().get().getIngredients().get(0).test(new ItemStack(ModItems.MOLTED_MOTH_WINGS.get()))){
+        if (canRun() && getCurrentRecipe().get().getInputs().get(0).test(new ItemStack(ModItems.MOLTED_MOTH_WINGS.get()))){
             value = true;
         }
 

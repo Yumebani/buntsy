@@ -27,6 +27,6 @@ public class FairyRenderer extends MobRenderer<Fairy, FairyModel<Fairy>> {
             pPoseStack.scale(0.75f, 0.75f, 0.75f);
         }
 
-        super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, 15728640);
+        super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, 15728880);
     }
 }

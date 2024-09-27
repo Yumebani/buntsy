@@ -11,6 +11,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.TreeConfigurati
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
+import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.worldgen.tree.ModTrunkPlacerTypes;
 
 import java.util.ArrayList;
@@ -31,6 +32,9 @@ public class GentlitTrunkPlacer extends TrunkPlacer {
         return ModTrunkPlacerTypes.GENTLIT_TRUNK_PLACER.get();
     }
 
+    protected static void setDirtAt(LevelSimulatedReader pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter, RandomSource pRandom, BlockPos pPos, TreeConfiguration pConfig) {
+        pBlockSetter.accept(pPos, ModBlocks.CHARMIL_SOIL.get().defaultBlockState());
+    }
     @Override
     public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader levelSimulatedReader, BiConsumer<BlockPos, BlockState> biConsumer, RandomSource randomSource, int id, BlockPos blockPos, TreeConfiguration treeConfiguration) {
 

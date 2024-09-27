@@ -13,7 +13,9 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -150,8 +152,8 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
     }
 
     public void infuse() {
-        int slot = getFirstFilledInputSlot();
         FairyInfusionRecipe recipe = getCurrentInfusion().get();
+        int slot = getFirstFilledInputSlot(recipe.getInputs().get(0).getItems()[0].getItem());
         ItemStack result = recipe.getResultItem(null);
         int outputSlot = getClearOutput(result);
 
@@ -180,10 +182,10 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
         return this.level.getRecipeManager().getRecipeFor(FairyInfusionRecipe.Type.INSTANCE, inventory, level);
     }
 
-    private Integer getFirstFilledInputSlot() {
+    private Integer getFirstFilledInputSlot(Item item) {
         List<Integer> slotList = new ArrayList<Integer>();
         for (int i = INPUT_SLOT_START; i < INPUT_SLOT_START + INPUT_SLOT_COUNT; i++){
-            if (!this.itemHandler.getStackInSlot(i).isEmpty()){
+            if (this.itemHandler.getStackInSlot(i).is(item)){
                 slotList.add(i);
             }
         }

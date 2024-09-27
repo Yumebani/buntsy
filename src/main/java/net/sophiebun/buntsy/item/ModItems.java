@@ -103,15 +103,15 @@ public class ModItems {
             "hootnip_seeds", () -> new ItemNameBlockItem(ModBlocks.HOOTNIP_CROP.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> SILKY_SWORD = ItemsRegister.register(
-            "silky_sword", () -> new SwordItem(ModToolTiers.SILKY, 7, 2f, new Item.Properties()));
+            "silky_sword", () -> new SwordItem(ModToolTiers.SILKY, 7, -2.0F, new Item.Properties()));
     public static final RegistryObject<Item> SILKY_PICKAXE = ItemsRegister.register(
-            "silky_pickaxe", () -> new PickaxeItem(ModToolTiers.SILKY, 5, 1.4f, new Item.Properties()));
+            "silky_pickaxe", () -> new PickaxeItem(ModToolTiers.SILKY, 5, -2.4F, new Item.Properties()));
     public static final RegistryObject<Item> SILKY_AXE = ItemsRegister.register(
-            "silky_axe", () -> new AxeItem(ModToolTiers.SILKY, 7, 1.2f, new Item.Properties()));
+            "silky_axe", () -> new AxeItem(ModToolTiers.SILKY, 7, -2.8F, new Item.Properties()));
     public static final RegistryObject<Item> SILKY_SHOVEL = ItemsRegister.register(
-            "silky_shovel", () -> new ShovelItem(ModToolTiers.SILKY, 5.5f, 1.2f, new Item.Properties()));
+            "silky_shovel", () -> new ShovelItem(ModToolTiers.SILKY, 5.5f, -2.6F, new Item.Properties()));
     public static final RegistryObject<Item> SILKY_HOE = ItemsRegister.register(
-            "silky_hoe", () -> new HoeItem(ModToolTiers.SILKY, 1, 5f, new Item.Properties()));
+            "silky_hoe", () -> new HoeItem(ModToolTiers.SILKY, 1, -2.6F, new Item.Properties()));
 
     public static final RegistryObject<Item> SILKY_HELMET = ItemsRegister.register(
             "silky_helmet", () -> new SilkyArmorItem(ModArmorMaterials.SILKY, ArmorItem.Type.HELMET, new Item.Properties()));

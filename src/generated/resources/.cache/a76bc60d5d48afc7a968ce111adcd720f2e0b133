@@ -1,16 +1,17 @@
-// 1.20.1	2024-09-26T19:18:57.128417935	Tags for minecraft:block mod id buntsy
+// 1.20.1	2024-09-27T17:33:28.009127603	Tags for minecraft:block mod id buntsy
 375b70dcc9fd9e50a722f028008e1c11e6e68dd9 data/buntsy/tags/blocks/bravot_logs.json
 22debb79ff2ee672d037593170cf5894806e4fb8 data/buntsy/tags/blocks/cuterly_spawner.json
 de52d4e144d1fdcc9bb81a3dda042d48296ebb65 data/buntsy/tags/blocks/fairy_harvestable.json
 a1cbf596737267688192871099fdc9e85f20336e data/buntsy/tags/blocks/fairy_interactable_block_entity.json
 8f30e74d65e15f941591c49161ccf1c7855102a1 data/buntsy/tags/blocks/gentlit_logs.json
 22debb79ff2ee672d037593170cf5894806e4fb8 data/minecraft/tags/blocks/dirt.json
-eaa67ae19c8ddfff91b2949ddeb11f3dfefe5770 data/minecraft/tags/blocks/fence_gates.json
+db8325e8d770e82b91d26c6202af35c41cd27a26 data/minecraft/tags/blocks/fence_gates.json
 5f9ec0e8e88bae80ad085876e5a8efba81521991 data/minecraft/tags/blocks/leaves.json
 6076bb2f2e4e51c6d3d9b0798428c739406894e1 data/minecraft/tags/blocks/logs.json
 6076bb2f2e4e51c6d3d9b0798428c739406894e1 data/minecraft/tags/blocks/logs_that_burn.json
-c1c410427dc4c858277f2a4386479139e9ab7422 data/minecraft/tags/blocks/mineable/axe.json
-71c38c8cdb46d21ff68665e5cf7a3d13585e38ba data/minecraft/tags/blocks/mushroom_grow_block.json
+7b1d0583c3bb0dbf7d738f6d80a42576fb247ea9 data/minecraft/tags/blocks/mineable/axe.json
+f55050626f925b9a1f40fff730a4dfee4436e2c6 data/minecraft/tags/blocks/mineable/shovel.json
+22debb79ff2ee672d037593170cf5894806e4fb8 data/minecraft/tags/blocks/mushroom_grow_block.json
 3c0a37829999806003244d1c4350ae59c31ff6c3 data/minecraft/tags/blocks/planks.json
 22debb79ff2ee672d037593170cf5894806e4fb8 data/minecraft/tags/blocks/valid_spawn.json
-125f702b3d2b38f8e5be3563c6867ab6634a5e80 data/minecraft/tags/blocks/wooden_fences.json
+5b4f57f7350d7097161a79ce1a34e33489913aba data/minecraft/tags/blocks/wooden_fences.json

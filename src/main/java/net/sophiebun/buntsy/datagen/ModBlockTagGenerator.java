@@ -25,7 +25,14 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.STRIPPED_GENTLIT_LOG.get())
                 .add(ModBlocks.GENTLIT_WOOD.get())
                 .add(ModBlocks.STRIPPED_GENTLIT_WOOD.get())
-                .add(ModBlocks.GENTLIT_PLANKS.get());
+                .add(ModBlocks.GENTLIT_PLANKS.get())
+                .add(ModBlocks.LOVESHROOM_BLOCK.get())
+                .add(ModBlocks.GLOWSHROOM_BLOCK.get());
+
+        this.tag(BlockTags.MINEABLE_WITH_SHOVEL)
+                .add(ModBlocks.CHARMIL_SOIL.get())
+                .add(ModBlocks.CHARMIL_FARMLAND.get())
+                .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get());
 
         this.tag(ModTags.Blocks.GENTLIT_LOGS)
                 .add(ModBlocks.GENTLIT_LOG.get())
@@ -40,10 +47,12 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get());
 
         this.tag(BlockTags.WOODEN_FENCES)
-                .add(ModBlocks.GENTLIT_FENCE.get());
+                .add(ModBlocks.GENTLIT_FENCE.get())
+                .add(ModBlocks.BRAVOT_FENCE.get());
 
         this.tag(BlockTags.FENCE_GATES)
-                .add(ModBlocks.GENTLIT_FENCE_GATE.get());
+                .add(ModBlocks.GENTLIT_FENCE_GATE.get())
+                .add(ModBlocks.BRAVOT_FENCE_GATE.get());
 
         this.tag(BlockTags.LEAVES)
                 .add(ModBlocks.GENTLIT_LEAVES.get())
@@ -70,7 +79,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get());
 
         this.tag(BlockTags.MUSHROOM_GROW_BLOCK)
-                .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get());
+                .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
+                .add(ModBlocks.CHARMIL_SOIL.get());
 
         this.tag(BlockTags.DIRT)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())

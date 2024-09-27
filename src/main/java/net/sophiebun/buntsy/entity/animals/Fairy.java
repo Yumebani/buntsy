@@ -762,7 +762,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
                     return true;
                 }
                 else{
-                    this.nextStartTick = 200 + this.fairy.random.nextInt(100);
+                    this.nextStartTick = 50 + this.fairy.random.nextInt(50);
                 }
             }
 
@@ -921,7 +921,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
                         .withParameter(LootContextParams.BLOCK_STATE, blockState)
                         .withParameter(LootContextParams.TOOL, new ItemStack(Items.DIAMOND_PICKAXE));
 
-                this.fairy.setCarriedItem(blockState.getDrops(params).get(0));
+                this.fairy.setCarriedItem(new ItemStack(blockState.getDrops(params).get(0).getItem(), this.fairy.random.nextInt(0,4)));
 
                 ModGrowableMineral mineral = ((ModGrowableMineral) blockState.getBlock());
                 BlockState newBlockState = mineral.getStages().get(this.fairy.random.nextInt(2)).get().defaultBlockState();

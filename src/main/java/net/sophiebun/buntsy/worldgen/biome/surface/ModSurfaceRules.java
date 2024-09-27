@@ -14,13 +14,15 @@ public class ModSurfaceRules {
     public static SurfaceRules.RuleSource makeRules()
     {
         SurfaceRules.ConditionSource isAtOrAboveWaterLevel = SurfaceRules.waterBlockCheck(-1, 0);
-        SurfaceRules.RuleSource pinkGrassSurface = SurfaceRules.sequence(SurfaceRules.ifTrue(isAtOrAboveWaterLevel, CHARMIL_SOIL_PINK_FLUF), CHARMIL_SOIL);
+        SurfaceRules.ConditionSource isAboveGround = SurfaceRules.abovePreliminarySurface();
+        SurfaceRules.RuleSource pinkGrassSurface = SurfaceRules.sequence(
+                SurfaceRules.ifTrue(isAtOrAboveWaterLevel, CHARMIL_SOIL_PINK_FLUF), CHARMIL_SOIL);
 
         return SurfaceRules.sequence(
                 SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.CUTERLY_BIOME),
-                        SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, pinkGrassSurface)),
+                        SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.ifTrue(isAboveGround, pinkGrassSurface))),
                 SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.CUTERLY_BIOME),
-                        SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, CHARMIL_SOIL))
+                        SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, SurfaceRules.ifTrue(isAboveGround, CHARMIL_SOIL)))
         );
     }
 

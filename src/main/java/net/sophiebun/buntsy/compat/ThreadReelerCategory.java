@@ -76,16 +76,10 @@ public class ThreadReelerCategory implements IRecipeCategory<ThreadReelerRecipe>
         for (Map.Entry<Item, List<Map.Entry<Integer, Float>>> itemEntry : outputs.entrySet()){
             List<Map.Entry<Integer, Float>> entryCounts = itemEntry.getValue();
             for (Map.Entry<Integer, Float> entry : entryCounts){
-                iRecipeLayoutBuilder.addSlot(RecipeIngredientRole.INPUT,99 + ((i % 3)* 18), 26 + ((i / 3) * 18))
+                iRecipeLayoutBuilder.addSlot(RecipeIngredientRole.OUTPUT,99 + ((i % 3)* 18), 26 + ((i / 3) * 18))
                         .addItemStack(new ItemStack(itemEntry.getKey(), entry.getKey()))
-                        .addTooltipCallback(new IRecipeSlotTooltipCallback() {
-                            @Override
-                            public void onTooltip(IRecipeSlotView iRecipeSlotView, List<Component> list) {
-                               list.add(Component.literal((entry.getValue() * 100) + "% Chance"));
-                            }
-                        });
+                        .addTooltipCallback((iRecipeSlotView, list) -> list.add(Component.literal((entry.getValue() * 100) + "% Chance")));
                 i++;
-                float chance = entry.getValue();
             }
         }
     }

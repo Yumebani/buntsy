@@ -63,9 +63,9 @@ public class ModBlocks {
             () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.OAK_PRESSURE_PLATE),
                     BlockSetType.OAK));
     public static final RegistryObject<Block> GENTLIT_FENCE = registerBlock("gentlit_fence",
-            () -> new ModWoodFence(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
+            () -> new ModWoodFence(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE)));
     public static final RegistryObject<Block> GENTLIT_FENCE_GATE = registerBlock("gentlit_fence_gate",
-            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS), SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE), SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
     public static final RegistryObject<Block> GENTLIT_DOOR = registerBlock("gentlit_door",
             () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noCollission(), BlockSetType.OAK));
     public static final RegistryObject<Block> GENTLIT_TRAPDOOR = registerBlock("gentlit_trapdoor",
@@ -100,9 +100,9 @@ public class ModBlocks {
             () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.OAK_PRESSURE_PLATE),
                     BlockSetType.OAK));
     public static final RegistryObject<Block> BRAVOT_FENCE = registerBlock("bravot_fence",
-            () -> new ModWoodFence(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
+            () -> new ModWoodFence(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE)));
     public static final RegistryObject<Block> BRAVOT_FENCE_GATE = registerBlock("bravot_fence_gate",
-            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS), SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE), SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
     public static final RegistryObject<Block> BRAVOT_DOOR = registerBlock("bravot_door",
             () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noCollission(), BlockSetType.OAK));
     public static final RegistryObject<Block> BRAVOT_TRAPDOOR = registerBlock("bravot_trapdoor",
@@ -110,7 +110,7 @@ public class ModBlocks {
 
     //Biome ground blocks
     public static final RegistryObject<Block> PINK_FLUF_CHARMIL_SOIL = registerBlock("pink_fluf_charmil_soil", //MAKE FLUF SPIRAL DOWNWWARDS
-            () -> new TillableCharmilSoil(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK).sound(SoundType.MOSS)));
+            () -> new TillableCharmilGrass(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK).sound(SoundType.MOSS)));
     public static final RegistryObject<Block> CHARMIL_SOIL = registerBlock("charmil_soil",
             () -> new TillableCharmilSoil(BlockBehaviour.Properties.copy(Blocks.DIRT).sound(SoundType.MOSS)));
     public static final RegistryObject<Block> CHARMIL_FARMLAND = registerBlock("charmil_farmland",

@@ -75,8 +75,6 @@ public class BuntsyMod
 
         ModFeatures.register(modEventBus);
 
-        ModTerrablender.registerBiomes();
-
         modEventBus.addListener(this::commonSetup);
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -85,6 +83,8 @@ public class BuntsyMod
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
+        ModTerrablender.registerBiomes();
+
         event.enqueueWork(() -> {
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.PINK_BLOOM.getId(), ModBlocks.POTTED_PINK_BLOOM);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.BLUE_BLOOM.getId(), ModBlocks.POTTED_BLUE_BLOOM);

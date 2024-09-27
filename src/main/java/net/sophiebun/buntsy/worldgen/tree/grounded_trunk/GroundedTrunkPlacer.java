@@ -12,6 +12,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.TreeConfigurati
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
+import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.worldgen.tree.ModTrunkPlacerTypes;
 
 import java.util.ArrayList;

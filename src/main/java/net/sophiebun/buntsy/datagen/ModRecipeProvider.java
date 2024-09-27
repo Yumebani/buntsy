@@ -65,13 +65,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer);
 
         //Smelting dust
-        smeltingRecipe(ModItems.IRON_DUST.get(), Items.IRON_INGOT, 0.35f, consumer);
-        smeltingRecipe(ModItems.COPPER_DUST.get(), Items.COPPER_INGOT, 0.35f, consumer);
-        smeltingRecipe(ModItems.GOLD_DUST.get(), Items.GOLD_INGOT, 0.35f, consumer);
-        smeltingRecipe(ModItems.NETHERITE_DUST.get(), Items.NETHERITE_SCRAP, 0.35f, consumer);
+        oreSmeltingRecipe(ModItems.IRON_DUST.get(), Items.IRON_INGOT, 0.35f, consumer);
+        oreSmeltingRecipe(ModItems.COPPER_DUST.get(), Items.COPPER_INGOT, 0.35f, consumer);
+        oreSmeltingRecipe(ModItems.GOLD_DUST.get(), Items.GOLD_INGOT, 0.35f, consumer);
+        oreSmeltingRecipe(ModItems.NETHERITE_DUST.get(), Items.NETHERITE_SCRAP, 0.35f, consumer);
 
         //Silky solids
-        upgradeSmithing(ModItems.FAIRY_DUST.get(), Items.IRON_INGOT, ModItems.TOUGH_SILK_FABRIC.get(), ModItems.SILKY_INGOT.get(), consumer);
+        upgradeSmithing(ModItems.FAIRY_DUST.get(), Items.NETHERITE_SCRAP, ModItems.TOUGH_SILK_FABRIC.get(), ModItems.SILKY_INGOT.get(), consumer);
         upgradeSmithing(ModItems.FAIRY_DUST.get(), Items.DIAMOND, ModItems.TOUGH_SILK_FABRIC.get(), ModItems.SILKY_CRYSTAL.get(), consumer);
         compact3By3(ModItems.SILKY_NUGGET.get(), ModItems.SILKY_INGOT.get(), 1, consumer);
         uncompact(ModItems.SILKY_INGOT.get(), ModItems.SILKY_NUGGET.get(), 9, consumer);
@@ -285,7 +285,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('C', ModItems.SILKY_CRYSTAL.get())
                 .pattern("I I")
                 .pattern("ICI")
-                .pattern("ICI")
+                .pattern("III")
                 .unlockedBy(getHasName(ModItems.SILKY_INGOT.get()), has(ModItems.SILKY_INGOT.get()))
                 .unlockedBy(getHasName(ModItems.SILKY_CRYSTAL.get()), has(ModItems.SILKY_CRYSTAL.get()))
                 .save(consumer);
@@ -339,6 +339,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     private void smeltingRecipe(ItemLike material, ItemLike result, float experience, Consumer<FinishedRecipe> consumer) {
         SimpleCookingRecipeBuilder.generic(Ingredient.of(new ItemLike[]{material}),
+                        RecipeCategory.MISC, result, experience, 200, RecipeSerializer.SMELTING_RECIPE)
+                .unlockedBy(getHasName(material), has(material))
+                .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_from_smelting");
+    }
+
+    private void oreSmeltingRecipe(ItemLike material, ItemLike result, float experience, Consumer<FinishedRecipe> consumer) {
+        SimpleCookingRecipeBuilder.generic(Ingredient.of(material),
+                        RecipeCategory.MISC, result, experience, 200, RecipeSerializer.BLASTING_RECIPE)
+                .unlockedBy(getHasName(material), has(material))
+                .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_from_blasting");
+        SimpleCookingRecipeBuilder.generic(Ingredient.of(material),
                         RecipeCategory.MISC, result, experience, 200, RecipeSerializer.SMELTING_RECIPE)
                 .unlockedBy(getHasName(material), has(material))
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_from_smelting");

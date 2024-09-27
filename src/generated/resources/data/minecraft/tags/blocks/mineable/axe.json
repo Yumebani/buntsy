@@ -4,6 +4,8 @@
     "buntsy:stripped_gentlit_log",
     "buntsy:gentlit_wood",
     "buntsy:stripped_gentlit_wood",
-    "buntsy:gentlit_planks"
+    "buntsy:gentlit_planks",
+    "buntsy:loveshroom_block",
+    "buntsy:glowshroom_block"
   ]
 }

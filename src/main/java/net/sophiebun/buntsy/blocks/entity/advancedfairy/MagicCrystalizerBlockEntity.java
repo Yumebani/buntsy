@@ -162,7 +162,7 @@ public class MagicCrystalizerBlockEntity extends FairyInteractBlockEntity implem
 
             if (hasProgressFinished()){
                 resetProgress();
-                tempCraftItem();
+                craftItem();
                 tick(pLevel, pPos, pState);
             }
         }
@@ -195,7 +195,7 @@ public class MagicCrystalizerBlockEntity extends FairyInteractBlockEntity implem
                 && (this.itemHandler.getStackInSlot(slot).getCount() + item.getCount() <= item.getMaxStackSize());
     }
 
-    public void tempCraftItem() {
+    public void craftItem() {
         MagicCrystalizerRecipe recipe = getCurrentRecipe().get();
         ItemStack result = recipe.getResultItem(null);
 

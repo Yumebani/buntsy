@@ -33,6 +33,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 import net.sophiebun.buntsy.entity.ModEntities;
@@ -296,6 +297,8 @@ public class Silkbun extends Animal {
     }
 
     public void customServerAiStep() {
+
+        if (this.fallDistance > 0) this.fallDistance = 0;
 
         if (!this.isBaby()){
             if (this.nextSleepShift > 0){
