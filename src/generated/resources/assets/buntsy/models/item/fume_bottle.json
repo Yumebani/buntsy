@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "buntsy:item/fume_bottle_fume",
+    "layer1": "buntsy:item/fume_bottle"
+  }
+}

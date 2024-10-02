@@ -39,12 +39,14 @@ import net.sophiebun.buntsy.datagen.ModBlockTagGenerator;
 import net.sophiebun.buntsy.dispenser.DispenserBehaviourAditions;
 import net.sophiebun.buntsy.entity.ModEntities;
 import net.sophiebun.buntsy.entity.client.FairyRenderer;
+import net.sophiebun.buntsy.entity.client.HootcatRenderer;
 import net.sophiebun.buntsy.entity.client.SilkbunRenderer;
 import net.sophiebun.buntsy.item.CreativeModeTabs;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.recipe.ModRecipes;
 import net.sophiebun.buntsy.screen.*;
 import net.sophiebun.buntsy.server.ModPacketHandler;
+import net.sophiebun.buntsy.worldgen.biome.ModBiomes;
 import net.sophiebun.buntsy.worldgen.biome.ModTerrablender;
 import net.sophiebun.buntsy.worldgen.biome.surface.ModSurfaceRules;
 import net.sophiebun.buntsy.worldgen.feature.ModFeatures;
@@ -100,9 +102,10 @@ public class BuntsyMod
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-        ModTerrablender.registerBiomes();
 
         event.enqueueWork(() -> {
+            ModTerrablender.registerBiomes();
+
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.PINK_BLOOM.getId(), ModBlocks.POTTED_PINK_BLOOM);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.BLUE_BLOOM.getId(), ModBlocks.POTTED_BLUE_BLOOM);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.GENTLIT_SAPLING.getId(), ModBlocks.POTTED_GENTLIT_SAPLING);
@@ -134,9 +137,12 @@ public class BuntsyMod
             MenuScreens.register(ModMenuTypes.FAIRY_COLLECTION_TRAY_MENU.get(), FairyCollectionTrayScreen::new);
             MenuScreens.register(ModMenuTypes.FAIRY_INFUSION_BENCH_MENU.get(), FairyInfusionBenchScreen::new);
             MenuScreens.register(ModMenuTypes.MAGIC_CRYSTALIZER_MENU.get(), MagicCrystalizerScreen::new);
+            MenuScreens.register(ModMenuTypes.FUME_DISTILLERY_MENU.get(), FumeDistilleryScreen::new);
+            MenuScreens.register(ModMenuTypes.FUME_SPREADER_MENU.get(), FumeSpreaderScreen::new);
 
             EntityRenderers.register(ModEntities.SILKBUN_ENTITY.get(), SilkbunRenderer::new);
             EntityRenderers.register(ModEntities.FAIRY_ENTITY.get(), FairyRenderer::new);
+            EntityRenderers.register(ModEntities.HOOTCAT_ENTITY.get(), HootcatRenderer::new);
 
             BlockEntityRenderers.register(ModBlockEntities.THREAD_REELER_BLOCK_ENTITY.get(), ThreadReelerBlockRenderer::new);
             BlockEntityRenderers.register(ModBlockEntities.GRINDING_WHEEL_BLOCK_ENTITY.get(), GrindingWheelBlockRenderer::new);

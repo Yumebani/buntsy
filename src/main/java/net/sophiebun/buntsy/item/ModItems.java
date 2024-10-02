@@ -18,6 +18,12 @@ public class ModItems {
     public static final DeferredRegister<Item> ItemsRegister =
             DeferredRegister.create(ForgeRegistries.ITEMS, BuntsyMod.MODID);
 
+    public static final RegistryObject<Item> HOOTCAT_FEATHER = ItemsRegister.register(
+            "hootcat_feather", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> HOOTCAT_PLUME = ItemsRegister.register(
+            "hootcat_plume", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PHELINIX_FEATHER = ItemsRegister.register(
+            "phelinix_feather", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> COCOON = ItemsRegister.register(
             "cocoon", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SILK = ItemsRegister.register(
@@ -41,18 +47,32 @@ public class ModItems {
     public static final RegistryObject<Item> FAIRY_DUST = ItemsRegister.register(
             "fairy_dust", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> GENTLIT_SYRUP = ItemsRegister.register(
-            "gentlit_syrup", () -> new FairyFoodItem(new Item.Properties().stacksTo(16), 800, 1f));
+            "gentlit_syrup", () -> new BottleItem(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> SUGAR_BOWL = ItemsRegister.register(
-            "sugar_bowl", () -> new FairyFoodItem(new Item.Properties().stacksTo(16), 1000, 1f));
+            "sugar_bowl", () -> new BowlFoodItem(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> SYRUPY_MIXTURE_BOWL = ItemsRegister.register(
-            "syrupy_mixture_bowl", () -> new FairyFoodItem(new Item.Properties().stacksTo(16), 2000, 1.5f));
+            "syrupy_mixture_bowl", () -> new BowlFoodItem(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> HOOTNIP = ItemsRegister.register(
             "hootnip", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> BLAZING_HOOTNIP = ItemsRegister.register(
+            "blazing_hootnip", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> GROUND_HOOTNIP = ItemsRegister.register(
             "ground_hootnip", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> HOOTNIP_CEREAL = ItemsRegister.register(
             "hootnip_cereal", () -> new Item(new Item.Properties().stacksTo(16)));
 
+    public static final RegistryObject<Item> FUME_BOTTLE = ItemsRegister.register(
+            "fume_bottle", () -> new FumeBottle(new Item.Properties()));
+    public static final RegistryObject<Item> CATALYST = ItemsRegister.register(
+            "catalyst", () -> new Catalyst(new Item.Properties()));
+    public static final RegistryObject<Item> EMPTY_CATALYST = ItemsRegister.register(
+            "empty_catalyst", () -> new Item(new Item.Properties()));
+
+
+    public static final RegistryObject<Item> FAIRY_POWER_RECEPTOR = ItemsRegister.register(
+            "fairy_power_receptor", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> FAIRY_POWER_EMITTER = ItemsRegister.register(
+            "fairy_power_emitter", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> AMETHYST_DUST = ItemsRegister.register(
             "amethyst_dust", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> PRISTINE_AMETHYST_GRAIN = ItemsRegister.register(
@@ -63,6 +83,12 @@ public class ModItems {
             "iron_dust", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> PRISTINE_IRON_SAMPLE = ItemsRegister.register(
             "pristine_iron_sample", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> GLOWSTONE_CRYSTAL = ItemsRegister.register(
+            "glowstone_crystal", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PRISTINE_GLOWSTONE_SAMPLE = ItemsRegister.register(
+            "pristine_glowstone_sample", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PRISTINE_QUARTZ_SAMPLE = ItemsRegister.register(
+            "pristine_quartz_sample", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> COPPER_CRYSTAL = ItemsRegister.register(
             "copper_crystal", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> COPPER_DUST = ItemsRegister.register(
@@ -122,12 +148,26 @@ public class ModItems {
     public static final RegistryObject<Item> SILKY_BOOTS = ItemsRegister.register(
             "silky_boots", () -> new SilkyArmorItem(ModArmorMaterials.SILKY, ArmorItem.Type.BOOTS, new Item.Properties()));
 
+    public static final RegistryObject<Item> HOOTCAT_HELMET = ItemsRegister.register(
+            "hootcat_helmet", () -> new HootcatArmorItem(HootcatArmorMaterial.HOOTCAT, ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final RegistryObject<Item> HOOTCAT_CHESTPLATE = ItemsRegister.register(
+            "hootcat_chestplate", () -> new HootcatArmorItem(HootcatArmorMaterial.HOOTCAT, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+    public static final RegistryObject<Item> HOOTCAT_LEGGINGS = ItemsRegister.register(
+            "hootcat_leggings", () -> new HootcatArmorItem(HootcatArmorMaterial.HOOTCAT, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+    public static final RegistryObject<Item> HOOTCAT_BOOTS = ItemsRegister.register(
+            "hootcat_boots", () -> new HootcatArmorItem(HootcatArmorMaterial.HOOTCAT, ArmorItem.Type.BOOTS, new Item.Properties()));
+
+    public static final RegistryObject<Item> BUNNY_EARS = ItemsRegister.register(
+            "bunny_ears", () -> new BunnyEarsItem(ClothArmorMaterial.CLOTH, ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final RegistryObject<Item> CAT_EARS = ItemsRegister.register(
+            "cat_ears", () -> new CatEarsItem(ClothArmorMaterial.CLOTH, ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final RegistryObject<Item> HEAD_BOW = ItemsRegister.register(
+            "head_bow", () -> new HeadBowItem(ClothArmorMaterial.CLOTH, ArmorItem.Type.HELMET, new Item.Properties()));
+
     public static final RegistryObject<Item> BOWL_OF_CARAMEL = ItemsRegister.register(
-            "bowl_of_caramel", () -> new BowlFoodFairyFoodItem(new Item.Properties().food(ModFoods.BOWL_OF_CARAMEL).stacksTo(16),
-                    2000, 1.5f));
+            "bowl_of_caramel", () -> new BowlFoodItem(new Item.Properties().food(ModFoods.BOWL_OF_CARAMEL).stacksTo(16)));
     public static final RegistryObject<Item> BOWL_OF_ROCKCANDY = ItemsRegister.register(
-            "bowl_of_rockcandy", () -> new BowlFoodFairyFoodItem(new Item.Properties().food(ModFoods.BOWL_OF_ROCKCANDY)
-                    .stacksTo(16),4000, 2f));
+            "bowl_of_rockcandy", () -> new BowlFoodItem(new Item.Properties().food(ModFoods.BOWL_OF_ROCKCANDY).stacksTo(16)));
     public static final RegistryObject<Item> CARAMEL_STRAWBERRIES = ItemsRegister.register(
             "caramel_strawberries", () -> new Item(new Item.Properties().food(ModFoods.CARAMEL_STRAWBERRIES).stacksTo(16)));
     public static final RegistryObject<Item> STRAWBERRY = ItemsRegister.register(
@@ -139,11 +179,15 @@ public class ModItems {
             "fairy_in_a_bottle", () -> new FairyBottle(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> FAIRY_STAFF = ItemsRegister.register(
             "fairy_staff", () -> new FairyStaff(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> BINDING_STAFF = ItemsRegister.register(
+            "binding_staff", () -> new BindingStaff(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> SILKBUN_SPAWN_EGG = ItemsRegister.register(
             "silkbun_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.SILKBUN_ENTITY, 0xfdf4f7, 0x673f4e , new Item.Properties()));
     public static final RegistryObject<Item> FAIRY_SPAWN_EGG = ItemsRegister.register(
             "fairy_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.FAIRY_ENTITY, 0xfae54e, 0xfff4ac , new Item.Properties()));
+    public static final RegistryObject<Item> HOOTCAT_SPAWN_EGG = ItemsRegister.register(
+            "hootcat_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.HOOTCAT_ENTITY, 0x4d3f3f, 0x9e7f4b , new Item.Properties()));
 
     public static void register(IEventBus eventBus){
         ItemsRegister.register(eventBus);

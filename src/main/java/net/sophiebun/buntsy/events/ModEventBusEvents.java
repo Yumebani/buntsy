@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.entity.ModEntities;
 import net.sophiebun.buntsy.entity.animals.Fairy;
+import net.sophiebun.buntsy.entity.animals.Hootcat;
 import net.sophiebun.buntsy.entity.animals.Silkbun;
 
 @Mod.EventBusSubscriber(modid = BuntsyMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -18,6 +19,7 @@ public class ModEventBusEvents {
     public static void registerAtributes(EntityAttributeCreationEvent event) {
         event.put(ModEntities.SILKBUN_ENTITY.get(), Silkbun.createAtributes().build());
         event.put(ModEntities.FAIRY_ENTITY.get(), Fairy.createAtributes().build());
+        event.put(ModEntities.HOOTCAT_ENTITY.get(), Hootcat.createAttributes().build());
     }
 
     @SubscribeEvent
@@ -26,5 +28,7 @@ public class ModEventBusEvents {
                 Fairy::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
         event.register(ModEntities.SILKBUN_ENTITY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Silkbun::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
+        event.register(ModEntities.HOOTCAT_ENTITY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Hootcat::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
     }
 }

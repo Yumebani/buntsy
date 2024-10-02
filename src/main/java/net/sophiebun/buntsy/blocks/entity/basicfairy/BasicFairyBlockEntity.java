@@ -265,7 +265,7 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     }
 
     private void increaseProgress() {
-        this.progress++;
+        this.progress += getSpeedUp();
     }
 
     private void resetProgress() {

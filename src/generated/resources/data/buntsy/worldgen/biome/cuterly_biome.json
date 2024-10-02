@@ -6,6 +6,7 @@
       "minecraft:canyon"
     ]
   },
+  "creature_spawn_probability": 10.0,
   "downfall": 0.8,
   "effects": {
     "fog_color": 12638463,
@@ -89,73 +90,23 @@
   "spawners": {
     "ambient": [
       {
-        "type": "minecraft:bat",
-        "maxCount": 8,
-        "minCount": 8,
+        "type": "buntsy:silkbun",
+        "maxCount": 4,
+        "minCount": 2,
+        "weight": 10
+      },
+      {
+        "type": "buntsy:fairy",
+        "maxCount": 4,
+        "minCount": 2,
         "weight": 10
       }
     ],
     "axolotls": [],
     "creature": [],
     "misc": [],
-    "monster": [
-      {
-        "type": "minecraft:spider",
-        "maxCount": 4,
-        "minCount": 4,
-        "weight": 100
-      },
-      {
-        "type": "minecraft:zombie",
-        "maxCount": 4,
-        "minCount": 4,
-        "weight": 95
-      },
-      {
-        "type": "minecraft:zombie_villager",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 5
-      },
-      {
-        "type": "minecraft:skeleton",
-        "maxCount": 4,
-        "minCount": 4,
-        "weight": 100
-      },
-      {
-        "type": "minecraft:creeper",
-        "maxCount": 4,
-        "minCount": 4,
-        "weight": 100
-      },
-      {
-        "type": "minecraft:slime",
-        "maxCount": 4,
-        "minCount": 4,
-        "weight": 100
-      },
-      {
-        "type": "minecraft:enderman",
-        "maxCount": 4,
-        "minCount": 1,
-        "weight": 10
-      },
-      {
-        "type": "minecraft:witch",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 5
-      }
-    ],
-    "underground_water_creature": [
-      {
-        "type": "minecraft:glow_squid",
-        "maxCount": 6,
-        "minCount": 4,
-        "weight": 10
-      }
-    ],
+    "monster": [],
+    "underground_water_creature": [],
     "water_ambient": [],
     "water_creature": []
   },

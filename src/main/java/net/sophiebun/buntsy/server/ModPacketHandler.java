@@ -21,5 +21,10 @@ public class ModPacketHandler {
                 ModFairyStaffPacket::write,
                 ModFairyStaffPacket::read,
                 ModFairyStaffPacket::handle);
+
+        INSTANCE.registerMessage(1, ModBindingStaffPacket.class,
+                ModBindingStaffPacket::write,
+                ModBindingStaffPacket::read,
+                ModBindingStaffPacket::handle);
     }
 }

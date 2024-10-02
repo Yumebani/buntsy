@@ -1,0 +1,67 @@
+{
+  "type": "buntsy:infusion_altar_basic",
+  "inputs": [
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:catalyst"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.fumeType",
+          "value": 3
+        },
+        {
+          "field": "buntsy.catalystType",
+          "value": "creation"
+        }
+      ]
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:glowstone_crystal"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:debris_shard"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:diamond_shard"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:netherite_ingot"
+      },
+      "nbt": []
+    }
+  ],
+  "output":
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:catalyst"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.fumeType",
+          "value": 3
+        },
+        {
+          "field": "buntsy.catalystType",
+          "value": "enhancer"
+        }
+      ]
+    },
+  "max_progress": 1000
+}

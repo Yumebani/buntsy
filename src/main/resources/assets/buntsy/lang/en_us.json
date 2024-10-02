@@ -89,6 +89,14 @@
   "block.buntsy.large_emerald_crystal_cluster": "Large Emerald Crystal Cluster",
   "block.buntsy.medium_emerald_crystal_cluster": "Medium Emerald Crystal Cluster",
   "block.buntsy.small_emerald_crystal_cluster": "Small Emerald Crystal Cluster",
+  "block.buntsy.quartz_crystal_cluster": "Quartz Crystal Cluster",
+  "block.buntsy.large_quartz_crystal_cluster": "Large Quartz Crystal Cluster",
+  "block.buntsy.medium_quartz_crystal_cluster": "Medium Quartz Crystal Cluster",
+  "block.buntsy.small_quartz_crystal_cluster": "Small Quartz Crystal Cluster",
+  "block.buntsy.glowstone_crystal_cluster": "Glowstone Crystal Cluster",
+  "block.buntsy.large_glowstone_crystal_cluster": "Large Glowstone Crystal Cluster",
+  "block.buntsy.medium_glowstone_crystal_cluster": "Medium Glowstone Crystal Cluster",
+  "block.buntsy.small_glowstone_crystal_cluster": "Small Glowstone Crystal Cluster",
 
   "block.buntsy.fairy_offering_bench": "Fairy Offering Bench",
   "block.buntsy.grinding_wheel": "Grinding Wheel",
@@ -96,11 +104,41 @@
   "block.buntsy.fairy_collection_tray": "Fairy Collection Tray",
   "block.buntsy.fairy_infusion_bench": "Fairy Infusion Bench",
   "block.buntsy.magic_crystalizer": "Magic Crystalizer",
+  "block.buntsy.fume_distillery": "Fume Distillery",
+  "block.buntsy.fume_spreader": "Fume Spreader",
+  "block.buntsy.infusion_pedestal": "Infusion Pedestal",
+  "block.buntsy.fairy_power_relay": "Fairy Power Relay",
+  "block.buntsy.infusion_altar_basic": "Basic Infusion Altar",
 
   "block.buntsy.syrup_extractor": "Syrup Extractor",
 
 
+  "item.buntsy.fume_bottle": "Fume Bottle",
+  "item.buntsy.empty_catalyst": "Empty Catalyst",
+
+  "fume.buntsy.productivity": "Productivity",
+  "fume.buntsy.efficiency": "Efficiency",
+  "fume.buntsy.acceleration": "Acceleration",
+  "fume.buntsy.growth": "Growth",
+  "fume.buntsy.change": "Change",
+  "fume.buntsy.rejuvenation": "Rejuvenation",
+  "fume.buntsy.sin": "Sin",
+  "fume.buntsy.gluttony": "Gluttony",
+  "fume.buntsy.sloth": "Sloth",
+
+  "fume.buntsy.level.1": "I",
+  "fume.buntsy.level.2": "II",
+  "fume.buntsy.level.3": "III",
+
+  "item.buntsy.catalyst": "Catalyst",
+
+  "item.buntsy.catalystType.creation": "",
+  "item.buntsy.catalystType.enhancer": "Enhancer",
+
   "item.buntsy.fairy_dust": "Fairy Dust",
+  "item.buntsy.hootcat_feather": "Hootcat Feather",
+  "item.buntsy.hootcat_plume": "Hootcat Plume",
+  "item.buntsy.phelinix_feather": "Phelinix Feather",
   "item.buntsy.cocoon": "Cocoon",
   "item.buntsy.silk": "Silk",
   "item.buntsy.silk_spool": "Silk Spool",
@@ -114,6 +152,8 @@
   "item.buntsy.strawberry_seeds": "Strawberry Seeds",
   "item.buntsy.hootnip_seeds": "Hootnip Seeds",
 
+  "item.buntsy.fairy_power_receptor": "Fairy Power Receptor",
+  "item.buntsy.fairy_power_emitter": "Fairy Power Emitter",
   "item.buntsy.amethyst_dust": "Amethyst Dust",
   "item.buntsy.pristine_amethyst_grain": "Pristine Amethyst Grain",
   "item.buntsy.iron_crystal": "Iron Crystal",
@@ -136,6 +176,9 @@
   "item.buntsy.pristine_diamond_sample": "Pristine Diamond Sample",
   "item.buntsy.emerald_shard": "Emerald Shard",
   "item.buntsy.pristine_emerald_sample": "Pristine Emerald Sample",
+  "item.buntsy.pristine_quartz_sample": "Pristine Quartz Sample",
+  "item.buntsy.pristine_glowstone_sample": "Pristine Glowstone Sample",
+  "item.buntsy.glowstone_crystal": "Glowstone Crystal",
 
   "item.buntsy.silky_sword": "Silky Sword",
   "item.buntsy.silky_pickaxe": "Silky Pickaxe",
@@ -146,7 +189,15 @@
   "item.buntsy.silky_chestplate": "Silky Chestplate",
   "item.buntsy.silky_leggings": "Silky Leggings",
   "item.buntsy.silky_boots": "Silky Boots",
+  "item.buntsy.hootcat_helmet": "Hootcat Helmet",
+  "item.buntsy.hootcat_chestplate": "Hootcat Chestplate",
+  "item.buntsy.hootcat_leggings": "Hootcat Leggings",
+  "item.buntsy.hootcat_boots": "Hootcat Boots",
+  "item.buntsy.head_bow": "Head Bow",
+  "item.buntsy.bunny_ears": "Bunny Ears",
+  "item.buntsy.cat_ears": "Cat Ears",
 
+  "item.buntsy.blazing_hootnip": "Blazing Hootnip",
   "item.buntsy.hootnip": "Hootnip",
   "item.buntsy.ground_hootnip": "Ground Hootnip",
   "item.buntsy.hootnip_cereal": "Hootnip Cereal",
@@ -161,12 +212,15 @@
 
   "item.buntsy.fairy_in_a_bottle": "Fairy in a Bottle",
   "item.buntsy.fairy_staff": "Fairy Staff",
+  "item.buntsy.binding_staff": "Binding Staff",
 
   "item.buntsy.silkbun_spawn_egg": "Silkbun Spawn Egg",
   "item.buntsy.fairy_spawn_egg": "Fairy Spawn Egg",
+  "item.buntsy.hootcat_spawn_egg": "Hootcat Spawn Egg",
 
   "entity.buntsy.fairy": "Fairy",
   "entity.buntsy.silkbun": "Silkbun",
+  "entity.buntsy.hootcat": "Hootcat",
 
   "creativetab.buntsy_tab": "Buntsy"
 }

@@ -28,6 +28,8 @@ public class JEIBuntsyPlugin implements IModPlugin {
         registration.addRecipeCategories(new FairyOfferingCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new FairyInfusionCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new MagicCrystalizerCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new FumeDistilleryCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new InfusionAltarBasicCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -48,6 +50,12 @@ public class JEIBuntsyPlugin implements IModPlugin {
 
         List<MagicCrystalizerRecipe> magicCrystalizerRecipes = recipeManager.getAllRecipesFor(MagicCrystalizerRecipe.Type.INSTANCE);
         registration.addRecipes(MagicCrystalizerCategory.MAGIC_CRYSTALIZER_RECIPE_TYPE, magicCrystalizerRecipes);
+
+        List<FumeDistilleryRecipe> fumeDistilleryRecipes = recipeManager.getAllRecipesFor(FumeDistilleryRecipe.Type.INSTANCE);
+        registration.addRecipes(FumeDistilleryCategory.FUME_DISTILLERY_RECIPE_TYPE, fumeDistilleryRecipes);
+
+        List<InfusionAltarBasicRecipe> infusionAltarBasicCategories = recipeManager.getAllRecipesFor(InfusionAltarBasicRecipe.Type.INSTANCE);
+        registration.addRecipes(InfusionAltarBasicCategory.INFUSION_ALTAR_BASIC_RECIPE_TYPE, infusionAltarBasicCategories);
     }
 
     @Override
@@ -66,5 +74,8 @@ public class JEIBuntsyPlugin implements IModPlugin {
 
         registration.addRecipeClickArea(MagicCrystalizerScreen.class, 98, 34, 24, 24,
                 MagicCrystalizerCategory.MAGIC_CRYSTALIZER_RECIPE_TYPE);
+
+        registration.addRecipeClickArea(FumeDistilleryScreen.class, 79, 34, 24, 24,
+                FumeDistilleryCategory.FUME_DISTILLERY_RECIPE_TYPE);
     }
 }

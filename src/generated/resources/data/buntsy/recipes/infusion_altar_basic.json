@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:gold_block"
+    },
+    "F": {
+      "item": "buntsy:fairy_dust"
+    },
+    "I": {
+      "item": "minecraft:gold_ingot"
+    },
+    "L": {
+      "item": "buntsy:gentlit_log"
+    },
+    "R": {
+      "item": "buntsy:fairy_power_receptor"
+    }
+  },
+  "pattern": [
+    "IFI",
+    "RBR",
+    "LLL"
+  ],
+  "result": {
+    "item": "buntsy:infusion_altar_basic"
+  },
+  "show_notification": true
+}

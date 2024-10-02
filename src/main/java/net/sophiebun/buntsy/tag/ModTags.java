@@ -1,10 +1,12 @@
 package net.sophiebun.buntsy.tag;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.sophiebun.buntsy.BuntsyMod;
 
@@ -16,7 +18,7 @@ public class ModTags {
         public static final TagKey<Block> BRAVOT_LOGS = tag("bravot_logs");
         public static final TagKey<Block> NEEDS_SIlKY_TOOL = tag("needs_silky_tool");
 
-        public static final TagKey<Block> FAIRY_MINERAL = tag("fairy_mineral");
+        public static final TagKey<Block> FUME_TICKABLE = tag("fume_tickable");
         public static final TagKey<Block> FAIRY_HARVESTABLE = tag("fairy_harvestable");
         public static final TagKey<Block> FAIRY_INTERACTABLE_BLOCK_ENTITY = tag("fairy_interactable_block_entity");
 
@@ -39,6 +41,16 @@ public class ModTags {
 
         private static TagKey<Item> tag(String name) {
             return ItemTags.create(new ResourceLocation(BuntsyMod.MODID, name));
+        }
+    }
+    
+    public static class Biomes {
+
+
+        public static final TagKey<Biome> CUTE_BIOMES = tag("cute_biomes");
+
+        private static TagKey<Biome> tag(String name) {
+            return TagKey.create(Registries.BIOME, new ResourceLocation(BuntsyMod.MODID, name));
         }
     }
 }

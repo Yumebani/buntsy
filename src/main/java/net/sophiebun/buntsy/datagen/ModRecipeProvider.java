@@ -99,6 +99,39 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(ModItems.MOTH_WING_THREAD.get()), has(ModItems.MOTH_WING_THREAD.get()))
                 .save(consumer);
 
+        //Fairy power receptor
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.FAIRY_POWER_RECEPTOR.get(), 1)
+                .define('G', Items.GOLD_INGOT)
+                .define('C', Items.AMETHYST_SHARD)
+                .pattern(" C ")
+                .pattern("GCG")
+                .pattern(" C ")
+                .unlockedBy(getHasName(Items.AMETHYST_SHARD), has(Items.AMETHYST_SHARD))
+                .unlockedBy(getHasName(Items.GOLD_INGOT), has(Items.GOLD_INGOT))
+                .save(consumer);
+
+        //Fairy power emitter
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.FAIRY_POWER_EMITTER.get(), 1)
+                .define('G', Items.GOLD_INGOT)
+                .define('C', Items.AMETHYST_SHARD)
+                .pattern(" G ")
+                .pattern("CCC")
+                .pattern(" G ")
+                .unlockedBy(getHasName(Items.AMETHYST_SHARD), has(Items.AMETHYST_SHARD))
+                .unlockedBy(getHasName(Items.GOLD_INGOT), has(Items.GOLD_INGOT))
+                .save(consumer);
+
+        //Empty catalyst
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.EMPTY_CATALYST.get(), 1)
+                .define('G', Items.GOLD_INGOT)
+                .define('C', Items.AMETHYST_SHARD)
+                .pattern(" G ")
+                .pattern("GCG")
+                .pattern(" G ")
+                .unlockedBy(getHasName(Items.AMETHYST_SHARD), has(Items.AMETHYST_SHARD))
+                .unlockedBy(getHasName(Items.GOLD_INGOT), has(Items.GOLD_INGOT))
+                .save(consumer);
+
         //Sugar bowl
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.SUGAR_BOWL.get(), 1)
                 .requires(Items.SUGAR, 4)
@@ -125,6 +158,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(ModItems.GENTLIT_SYRUP.get()), has(ModItems.GENTLIT_SYRUP.get()))
                 .save(consumer);
 
+        //Blazing hootnip
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.BLAZING_HOOTNIP.get(), 1)
+                .requires(ModItems.HOOTNIP.get(), 1)
+                .requires(Items.BLAZE_POWDER, 1)
+                .unlockedBy(getHasName(Items.BLAZE_POWDER), has(Items.BLAZE_POWDER))
+                .save(consumer);
+
         //Plant seeds
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.HOOTNIP_SEEDS.get(), 1)
                 .requires(ModItems.HOOTNIP.get(), 1)
@@ -143,6 +183,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', ModBlocks.GENTLIT_SLAB.get())
                 .pattern("PSP")
                 .pattern("PSP")
+                .pattern("L L")
+                .unlockedBy(getHasName(ModBlocks.GENTLIT_LOG.get()), has(ModBlocks.GENTLIT_LOG.get()))
+                .save(consumer);
+
+        //Infusion Pedestal
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.INFUSION_PEDESTAL.get(), 1)
+                .define('L', ModBlocks.GENTLIT_LOG.get())
+                .define('S', ModBlocks.GENTLIT_SLAB.get())
+                .pattern("LSL")
+                .pattern("LLL")
                 .pattern("L L")
                 .unlockedBy(getHasName(ModBlocks.GENTLIT_LOG.get()), has(ModBlocks.GENTLIT_LOG.get()))
                 .save(consumer);
@@ -174,23 +224,90 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('B', Blocks.SMOOTH_STONE)
                 .define('S', Blocks.SMOOTH_STONE_SLAB)
                 .define('I', Items.IRON_INGOT)
+                .define('F', ModItems.FAIRY_POWER_RECEPTOR.get())
                 .pattern("SSS")
+                .pattern("BFB")
                 .pattern("BIB")
-                .pattern("BBB")
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                .unlockedBy(getHasName(ModItems.FAIRY_POWER_RECEPTOR.get()), has(ModItems.FAIRY_POWER_RECEPTOR.get()))
                 .save(consumer);
 
         //Reeling Wheel
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.THREAD_REELER.get(), 1)
+                .define('W', Items.WATER_BUCKET)
+                .define('P', ModBlocks.GENTLIT_PLANKS.get())
+                .define('L', ModBlocks.GENTLIT_LOG.get())
+                .define('F', ModItems.FAIRY_POWER_RECEPTOR.get())
+                .pattern("LPL")
+                .pattern("LFL")
+                .pattern("LWL")
+                .unlockedBy(getHasName(ModItems.FAIRY_DUST.get()), has(ModItems.FAIRY_DUST.get()))
+                .unlockedBy(getHasName(ModItems.FAIRY_POWER_RECEPTOR.get()), has(ModItems.FAIRY_POWER_RECEPTOR.get()))
+                .save(consumer);
+
+        //Magic Crystalizer
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.MAGIC_CRYSTALIZER.get(), 1)
                 .define('I', Items.IRON_INGOT)
                 .define('D', ModItems.PRISTINE_DIAMOND_SAMPLE.get())
                 .define('F', ModItems.FAIRY_DUST.get())
                 .define('P', ModBlocks.GENTLIT_PLANKS.get())
                 .define('S', Blocks.SMOOTH_STONE)
-                .pattern("III")
+                .define('R', ModItems.FAIRY_POWER_RECEPTOR.get())
+                .pattern("IRI")
                 .pattern("PDP")
                 .pattern("SFS")
                 .unlockedBy(getHasName(ModItems.FAIRY_DUST.get()), has(ModItems.FAIRY_DUST.get()))
+                .unlockedBy(getHasName(ModItems.FAIRY_POWER_RECEPTOR.get()), has(ModItems.FAIRY_POWER_RECEPTOR.get()))
+                .save(consumer);
+
+        //Fume Distillery
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FUME_DISTILLERY.get(), 1)
+                .define('C', Items.COPPER_INGOT)
+                .define('L', ModBlocks.GENTLIT_LOG.get())
+                .define('B', Blocks.COPPER_BLOCK)
+                .define('R', ModItems.FAIRY_POWER_RECEPTOR.get())
+                .pattern("LCC")
+                .pattern("LBB")
+                .pattern("LRR")
+                .unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
+                .unlockedBy(getHasName(ModItems.FAIRY_POWER_RECEPTOR.get()), has(ModItems.FAIRY_POWER_RECEPTOR.get()))
+                .save(consumer);
+
+        //Fume Spreader
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FUME_SPREADER.get(), 1)
+                .define('C', Items.COPPER_INGOT)
+                .define('L', ModBlocks.GENTLIT_LOG.get())
+                .define('B', Blocks.COPPER_BLOCK)
+                .define('P', ModBlocks.GENTLIT_PLANKS.get())
+                .pattern("CCC")
+                .pattern("PBP")
+                .pattern("L L")
+                .unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
+                .save(consumer);
+
+        //Basic altar
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.INFUSION_ALTAR_BASIC.get(), 1)
+                .define('I', Items.GOLD_INGOT)
+                .define('L', ModBlocks.GENTLIT_LOG.get())
+                .define('R', ModItems.FAIRY_POWER_RECEPTOR.get())
+                .define('F', ModItems.FAIRY_DUST.get())
+                .define('B', Blocks.GOLD_BLOCK)
+                .pattern("IFI")
+                .pattern("RBR")
+                .pattern("LLL")
+                .unlockedBy(getHasName(ModItems.FAIRY_POWER_RECEPTOR.get()), has(ModItems.FAIRY_POWER_RECEPTOR.get()))
+                .save(consumer);
+
+        //Fairy Power Relay
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FAIRY_POWER_RELAY.get(), 1)
+                .define('I', Items.GOLD_INGOT)
+                .define('R', ModItems.FAIRY_POWER_RECEPTOR.get())
+                .define('E', ModItems.FAIRY_POWER_EMITTER.get())
+                .define('F', ModItems.FAIRY_DUST.get())
+                .pattern(" F ")
+                .pattern("FEF")
+                .pattern("IRI")
+                .unlockedBy(getHasName(ModItems.FAIRY_POWER_RECEPTOR.get()), has(ModItems.FAIRY_POWER_RECEPTOR.get()))
                 .save(consumer);
 
         //Syrup Extractor
@@ -211,6 +328,26 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern(" SG")
                 .pattern("S  ")
                 .unlockedBy(getHasName(Items.AMETHYST_SHARD), has(Items.AMETHYST_SHARD))
+                .save(consumer);
+
+        //Binding staff
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.BINDING_STAFF.get(), 1)
+                .define('S', Items.STICK)
+                .define('G', Items.GOLD_INGOT)
+                .define('F', ModItems.FAIRY_DUST.get())
+                .pattern(" GF")
+                .pattern(" SG")
+                .pattern("S  ")
+                .unlockedBy(getHasName(ModItems.FAIRY_DUST.get()), has(ModItems.FAIRY_DUST.get()))
+                .save(consumer);
+
+        //Hootcat plume
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.HOOTCAT_PLUME.get(), 1)
+                .define('H', ModItems.HOOTCAT_FEATHER.get())
+                .define('G', Items.GOLD_INGOT)
+                .pattern("HHH")
+                .pattern(" G ")
+                .unlockedBy(getHasName(ModItems.HOOTCAT_FEATHER.get()), has(ModItems.HOOTCAT_FEATHER.get()))
                 .save(consumer);
 
         //Silky Stuff
@@ -304,6 +441,67 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("I I")
                 .unlockedBy(getHasName(ModItems.SILKY_INGOT.get()), has(ModItems.SILKY_INGOT.get()))
                 .unlockedBy(getHasName(ModItems.SILKY_CRYSTAL.get()), has(ModItems.SILKY_CRYSTAL.get()))
+                .save(consumer);
+
+        //Hootcat armor
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.HOOTCAT_HELMET.get(), 1)
+                .define('H', ModItems.HOOTCAT_FEATHER.get())
+                .define('G', Items.GOLD_INGOT)
+                .define('P', ModItems.HOOTCAT_PLUME.get())
+                .pattern("GPG")
+                .pattern("H H")
+                .unlockedBy(getHasName(ModItems.HOOTCAT_FEATHER.get()), has(ModItems.HOOTCAT_FEATHER.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.HOOTCAT_CHESTPLATE.get(), 1)
+                .define('H', ModItems.HOOTCAT_FEATHER.get())
+                .define('G', Items.GOLD_INGOT)
+                .define('P', ModItems.HOOTCAT_PLUME.get())
+                .pattern("G G")
+                .pattern("GPG")
+                .pattern("HHH")
+                .unlockedBy(getHasName(ModItems.HOOTCAT_FEATHER.get()), has(ModItems.HOOTCAT_FEATHER.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.HOOTCAT_LEGGINGS.get(), 1)
+                .define('H', ModItems.HOOTCAT_FEATHER.get())
+                .define('G', Items.GOLD_INGOT)
+                .define('P', ModItems.HOOTCAT_PLUME.get())
+                .pattern("GPG")
+                .pattern("H H")
+                .pattern("H H")
+                .unlockedBy(getHasName(ModItems.HOOTCAT_FEATHER.get()), has(ModItems.HOOTCAT_FEATHER.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.HOOTCAT_BOOTS.get(), 1)
+                .define('H', ModItems.HOOTCAT_FEATHER.get())
+                .define('G', Items.GOLD_INGOT)
+                .pattern("G G")
+                .pattern("H H")
+                .unlockedBy(getHasName(ModItems.HOOTCAT_FEATHER.get()), has(ModItems.HOOTCAT_FEATHER.get()))
+                .save(consumer);
+
+        //Cosmetics
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.BUNNY_EARS.get(), 1)
+                .define('F', ModItems.SILK_FABRIC.get())
+                .pattern("F F")
+                .pattern("F F")
+                .pattern("F F")
+                .unlockedBy(getHasName(ModItems.SILK_FABRIC.get()), has(ModItems.SILK_FABRIC.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CAT_EARS.get(), 1)
+                .define('F', ModItems.SILK_FABRIC.get())
+                .define('B', Items.BLACK_DYE)
+                .pattern("FBF")
+                .unlockedBy(getHasName(ModItems.SILK_FABRIC.get()), has(ModItems.SILK_FABRIC.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.HEAD_BOW.get(), 1)
+                .define('F', ModItems.SILK_FABRIC.get())
+                .define('P', Items.PINK_DYE)
+                .pattern("FPF")
+                .unlockedBy(getHasName(ModItems.SILK_FABRIC.get()), has(ModItems.SILK_FABRIC.get()))
                 .save(consumer);
     }
 

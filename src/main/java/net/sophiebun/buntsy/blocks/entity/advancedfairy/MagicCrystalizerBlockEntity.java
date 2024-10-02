@@ -284,7 +284,7 @@ public class MagicCrystalizerBlockEntity extends FairyInteractBlockEntity implem
     }
 
     private void increaseProgress() {
-        this.progress++;
+        this.progress += getSpeedUp();
     }
 
     private void resetProgress() {

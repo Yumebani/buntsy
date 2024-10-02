@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": {
+      "item": "buntsy:gentlit_log"
+    },
+    "S": {
+      "item": "buntsy:gentlit_slab"
+    }
+  },
+  "pattern": [
+    "LSL",
+    "LLL",
+    "L L"
+  ],
+  "result": {
+    "item": "buntsy:infusion_pedestal"
+  },
+  "show_notification": true
+}

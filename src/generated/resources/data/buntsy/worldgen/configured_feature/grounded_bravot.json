@@ -18,7 +18,7 @@
       "state": {
         "Name": "buntsy:bravot_leaves",
         "Properties": {
-          "distance": "7",
+          "distance": "12",
           "persistent": "false",
           "waterlogged": "false"
         }

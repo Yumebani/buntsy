@@ -152,6 +152,14 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlocks.LARGE_DEBRIS_CRYSTAL_CLUSTER.get(), block -> createSilkTouchOnlyTable(block));
         this.add(ModBlocks.MEDIUM_DEBRIS_CRYSTAL_CLUSTER.get(), block -> createSilkTouchOnlyTable(block));
         this.add(ModBlocks.SMALL_DEBRIS_CRYSTAL_CLUSTER.get(), block -> createSilkTouchOnlyTable(block));
+        this.add(ModBlocks.QUARTZ_CRYSTAL_CLUSTER.get(), block -> createOreDrop(block, Items.QUARTZ));
+        this.add(ModBlocks.LARGE_QUARTZ_CRYSTAL_CLUSTER.get(), block -> createSilkTouchOnlyTable(block));
+        this.add(ModBlocks.MEDIUM_QUARTZ_CRYSTAL_CLUSTER.get(), block -> createSilkTouchOnlyTable(block));
+        this.add(ModBlocks.SMALL_QUARTZ_CRYSTAL_CLUSTER.get(), block -> createSilkTouchOnlyTable(block));
+        this.add(ModBlocks.GLOWSTONE_CRYSTAL_CLUSTER.get(), block -> createOreDrop(block, ModItems.GLOWSTONE_CRYSTAL.get()));
+        this.add(ModBlocks.LARGE_GLOWSTONE_CRYSTAL_CLUSTER.get(), block -> createSilkTouchOnlyTable(block));
+        this.add(ModBlocks.MEDIUM_GLOWSTONE_CRYSTAL_CLUSTER.get(), block -> createSilkTouchOnlyTable(block));
+        this.add(ModBlocks.SMALL_GLOWSTONE_CRYSTAL_CLUSTER.get(), block -> createSilkTouchOnlyTable(block));
 
         //Adding tile entities
         this.dropSelf(ModBlocks.FAIRY_OFFERING_BENCH.get());
@@ -160,6 +168,11 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.FAIRY_COLLECTION_TRAY.get());
         this.dropSelf(ModBlocks.FAIRY_INFUSION_BENCH.get());
         this.dropSelf(ModBlocks.MAGIC_CRYSTALIZER.get());
+        this.dropSelf(ModBlocks.FUME_DISTILLERY.get());
+        this.dropSelf(ModBlocks.FUME_SPREADER.get());
+        this.dropSelf(ModBlocks.INFUSION_PEDESTAL.get());
+        this.dropSelf(ModBlocks.FAIRY_POWER_RELAY.get());
+        this.dropSelf(ModBlocks.INFUSION_ALTAR_BASIC.get());
 
         //Others
         this.dropSelf(ModBlocks.SYRUP_EXTRACTOR.get());

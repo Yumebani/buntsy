@@ -4,12 +4,14 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.sophiebun.buntsy.BuntsyMod;
+import net.sophiebun.buntsy.datagen.loot.ModBiomeTagGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,8 @@ public class DataGenerators {
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
+        lookupProvider = generator.addProvider(event.includeServer(), new ModWorldGenProvider(packOutput, lookupProvider)).getRegistryProvider();
+
         generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput));
         generator.addProvider(event.includeServer(), ModLootTableProvider.create(packOutput));
 
@@ -36,7 +40,8 @@ public class DataGenerators {
         ModBlockTagGenerator blockTagGenerator = generator.addProvider(event.includeServer(),
                 new ModBlockTagGenerator(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new ModItemTagGenerator(packOutput, lookupProvider, blockTagGenerator.contentsGetter(), existingFileHelper));
+        BiomeTagsProvider biomeTagsProvider = new ModBiomeTagGenerator(packOutput, lookupProvider, existingFileHelper);
+        generator.addProvider(event.includeServer(), biomeTagsProvider);
 
-        generator.addProvider(event.includeServer(), new ModWorldGenProvider(packOutput, lookupProvider));
     }
 }

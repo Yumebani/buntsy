@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "buntsy:item/catalyst_shine",
+    "layer1": "buntsy:item/catalyst"
+  }
+}

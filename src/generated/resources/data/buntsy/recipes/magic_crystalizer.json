@@ -14,12 +14,15 @@
     "P": {
       "item": "buntsy:gentlit_planks"
     },
+    "R": {
+      "item": "buntsy:fairy_power_receptor"
+    },
     "S": {
       "item": "minecraft:smooth_stone"
     }
   },
   "pattern": [
-    "III",
+    "IRI",
     "PDP",
     "SFS"
   ],

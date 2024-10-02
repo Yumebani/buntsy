@@ -1,13 +1,9 @@
 package net.sophiebun.buntsy.entity.animals;
 
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.sounds.SoundEvents;
@@ -55,15 +51,16 @@ import net.sophiebun.buntsy.blocks.entity.directfairy.FairyInfusionBenchBlockEnt
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyOfferingBenchBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
-import net.sophiebun.buntsy.item.ModItems;
+import net.sophiebun.buntsy.entity.interfaces.IFumeAffectedEntity;
 import net.sophiebun.buntsy.recipe.FairyOfferingRecipe;
+import net.sophiebun.buntsy.screen.FumeSpreaderMenu;
 import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class Fairy extends TamableAnimal implements FlyingAnimal {
+public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedEntity {
 
     private static final int MAX_UTIL_BLOCK_POOL = 4;
     private static final int MAX_OFFERING_BENCH_RANGE = 8;
@@ -80,6 +77,9 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
     private float consumptionRate;
     private float toConsume;
 
+    private final Map<Integer, List<Integer>> fumes = new HashMap<>();
+    private int fumeTickCount = 0;
+
     private boolean busy;
 
     //Client side
@@ -90,6 +90,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
     }
     public Fairy(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+        this.setPersistenceRequired();
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
@@ -103,6 +104,25 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
         super.tick();
 
         playAnimations();
+    }
+
+    public void addFume(int fumeType, int level, int duration){
+        List<Integer> list = new ArrayList<>();
+        list.add(level);
+        list.add(duration);
+        fumes.put(fumeType, list);
+        setUpdateBlocksFlag(true);
+    }
+
+    public void tickFumes(){
+        for (Integer key : fumes.keySet().stream().toList()){
+            List<Integer> list = fumes.get(key);
+            list.set(1, list.get(1) - 1);
+            if (list.get(1) <= 0){
+                fumes.remove(key);
+                setUpdateBlocksFlag(true);
+            }
+        }
     }
 
     public void playAnimations(){
@@ -144,6 +164,10 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
         return flyingpathnavigation;
     }
 
+    public int getMaxFairyWeight() {
+        return MAX_UTIL_BLOCK_POOL * (fumes.containsKey(1) ? fumes.get(1).get(0) + 1 : 1);
+    }
+
     @Override
     protected void checkFallDamage(double pY, boolean pOnGround, BlockState pState, BlockPos pPos) {
     }
@@ -170,8 +194,8 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
         return hungry;
     }
 
-    public void setFood(int food) {
-        this.food = food;
+    public void addFood(int food) {
+        this.food += food;
     }
 
     public int getFood() {
@@ -191,7 +215,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
     }
 
     public float getConsumptionRate() {
-        return consumptionRate;
+        return (consumptionRate * (fumes.containsKey(2) ? fumes.get(2).get(0) + 1 : 1)) / (fumes.containsKey(1) ? fumes.get(1).get(0) + 1 : 1);
     }
 
     public void setConsumptionRate(float consumptionRate) {
@@ -321,7 +345,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
     }
 
     public boolean canRegisterNewBlock(BlockEntity blockEntity){
-        return ((FairyInteractBlockEntity) blockEntity).getFairyWeight() + this.currentWeight <= Fairy.MAX_UTIL_BLOCK_POOL;
+        return ((FairyInteractBlockEntity) blockEntity).getFairyWeight() + this.currentWeight <= this.getMaxFairyWeight();
     }
 
     public boolean isBlockRegistered(BlockEntity blockEntity){
@@ -380,6 +404,19 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
             pCompound.put("fairy.registered_block_entity_pos_" + i, NbtUtils.writeBlockPos(pos));
             pCompound.putInt("fairy.registered_block_entity_weight_" + i, this.registeredUtilBlockEntityPos.get(pos));
         }
+
+        pCompound.putInt("fairy.applied_fume_count", this.fumes.size());
+        if (!this.fumes.keySet().isEmpty()){
+            List<Integer> keys = this.fumes.keySet().stream().toList();
+
+            for (int i = 0; i < this.fumes.size(); i++){
+                pCompound.putInt("fairy.applied_fume_type_" + i, keys.get(i));
+                pCompound.putInt("fairy.applied_fume_level_" + i, this.fumes.get(keys.get(i)).get(0));
+                pCompound.putInt("fairy.applied_fume_duration_" + i, this.fumes.get(keys.get(i)).get(1));
+            }
+        }
+
+        pCompound.putInt("fairy.fume_tick_count", this.fumeTickCount);
     }
 
     public void readAdditionalSaveData(@NotNull CompoundTag pCompound) {
@@ -417,6 +454,18 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
                     pCompound.getInt("fairy.registered_block_entity_weight_" + i));
         }
 
+        int fumeCount = pCompound.getInt("fairy.applied_fume_count");
+
+        for (int i = 0; i < fumeCount; i++){
+            List<Integer> list = new ArrayList<>();
+            list.add(pCompound.getInt("fairy.applied_fume_level_" + i));
+            list.add(pCompound.getInt("fairy.applied_fume_duration_" + i));
+            this.fumes.put(
+                    pCompound.getInt("fairy.applied_fume_type_" + i), list);
+        }
+
+        this.fumeTickCount = pCompound.getInt("fairy.fume_tick_count");
+
         super.readAdditionalSaveData(pCompound);
     }
 
@@ -428,6 +477,14 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
+
+        if (this.fumeTickCount <= 0){
+            this.fumeTickCount = 20;
+            this.tickFumes();
+        }
+        else {
+            this.fumeTickCount--;
+        }
 
         if (this.isTame() && !this.hasCarriedItem() && this.getFood() <= 0 && !canEatFromOfferings()){
 
@@ -617,17 +674,22 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
             this.playFinishUseSound();
 
             FairyOfferingBenchBlockEntity offeringBench = fairy.getofferingBench();
-            FairyOfferingRecipe recipe = offeringBench.getCurrentRecipe().get();
-            offeringBench.consumeFood();
 
-            this.fairy.setFood(recipe.getFoodTick());
-            this.fairy.setFoodModifier(recipe.getChanceModifier());
+            for (int i = 0; i < (this.fairy.fumes.containsKey(7) ? this.fairy.fumes.get(7).get(0) + 1 : 1); i++){
+                if (offeringBench.hasFood()){
+                    FairyOfferingRecipe recipe = offeringBench.getCurrentRecipe().get();
+                    offeringBench.consumeFood();
 
-            this.fairy.getofferingBench().setEnchanted(true);
+                    this.fairy.addFood(recipe.getFoodTick());
+                    this.fairy.setFoodModifier(recipe.getChanceModifier());
 
-            if (this.fairy.isHungry()) {
-                this.fairy.setHungry(false);
-                this.fairy.setUpdateBlocksFlag(true);
+                    this.fairy.getofferingBench().setEnchanted(true);
+
+                    if (this.fairy.isHungry()) {
+                        this.fairy.setHungry(false);
+                        this.fairy.setUpdateBlocksFlag(true);
+                    }
+                }
             }
         }
     }
@@ -636,7 +698,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
 
         private final static BlockEntityType TYPE = ModBlockEntities.FAIRY_INFUSE_BENCH_BLOCK_ENTITY.get();
 
-        private int nextUseTicks = 0;
+        private float nextUseTicks = 0;
 
         public FairyEnchantResources(Fairy fairy, float speedModifier, int useTime) {
             super(fairy, speedModifier, useTime);
@@ -669,7 +731,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
         @Override
         protected boolean canUseExtra() {
             if (nextUseTicks > 0){
-                nextUseTicks -= fairy.foodModifier;
+                nextUseTicks -= fairy.foodModifier * (fairy.fumes.containsKey(2) ? fairy.fumes.get(2).get(0) + 1 : 1);
             }
             else{
                 return this.fairy.getFood() > 0 && hasValidBlockEntity();
@@ -753,7 +815,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
         @Override
         public boolean canUse() {
             if (this.nextStartTick > 0){
-                this.nextStartTick -= fairy.foodModifier;
+                this.nextStartTick -= (int)Math.ceil(fairy.foodModifier * (fairy.fumes.containsKey(2) ? fairy.fumes.get(2).get(0) + 1 : 1));
             }
             else if (this.fairy.isTame() && this.fairy.getFood() > 0 && !this.fairy.registeredUtilBlockEntityPos.isEmpty()
                     && hasValidBlockEntity(this.fairy.getRegisteredBlockPosArray().get(0))) {
@@ -791,7 +853,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
         public void start() {
             super.start();
             this.fairy.setBusy(true);
-            this.nextStartTick = 200 + this.fairy.random.nextInt(100);
+            this.nextStartTick = 50 + this.fairy.random.nextInt(50);
 
             this.hasReachedTarget = false;
             this.collectionTime = 0;
@@ -1029,15 +1091,25 @@ public class Fairy extends TamableAnimal implements FlyingAnimal {
         public void tick() {
 
             for (BlockPos pos : this.fairy.getRegisteredBlockPosArray()){
-                if (this.fairy.level().getBlockEntity(pos) == null){
+                if (this.fairy.level().getBlockEntity(pos) == null || this.fairy.currentWeight > this.fairy.getMaxFairyWeight()){
                     this.fairy.currentWeight -= this.fairy.registeredUtilBlockEntityPos.get(pos);
                     this.fairy.registeredUtilBlockEntityPos.remove(pos);
+                }
+                else if (this.fairy.currentWeight > this.fairy.getMaxFairyWeight()){
+                    this.fairy.unregisterBlock(this.fairy.level().getBlockEntity(pos));
                 }
                 else if (this.fairy.isHungry()){
                     ((FairyInteractBlockEntity) this.fairy.level().getBlockEntity(pos)).setEnchanted(false);
                 }
                 else{
                     ((FairyInteractBlockEntity) this.fairy.level().getBlockEntity(pos)).setEnchanted(true);
+                }
+
+                if (this.fairy.fumes.containsKey(2)){
+                    ((FairyInteractBlockEntity) this.fairy.level().getBlockEntity(pos)).setSpeedUp(this.fairy.fumes.get(2).get(0) + 1);
+                }
+                else {
+                    ((FairyInteractBlockEntity) this.fairy.level().getBlockEntity(pos)).setSpeedUp(1);
                 }
             }
 

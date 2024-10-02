@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "buntsy:fairy_power_receptor"
+    },
+    "L": {
+      "item": "buntsy:gentlit_log"
+    },
+    "P": {
+      "item": "buntsy:gentlit_planks"
+    },
+    "W": {
+      "item": "minecraft:water_bucket"
+    }
+  },
+  "pattern": [
+    "LPL",
+    "LFL",
+    "LWL"
+  ],
+  "result": {
+    "item": "buntsy:thread_reeler"
+  },
+  "show_notification": true
+}

@@ -3,8 +3,6 @@ package net.sophiebun.buntsy.blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
@@ -12,7 +10,6 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -21,7 +18,6 @@ import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.custom.*;
 import net.sophiebun.buntsy.blocks.custom.entityblocks.*;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
-import net.sophiebun.buntsy.entity.animals.Fairy;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.worldgen.ModConfiguredFeatures;
 import net.sophiebun.buntsy.worldgen.tree.BravotTreeGrower;
@@ -65,11 +61,11 @@ public class ModBlocks {
     public static final RegistryObject<Block> GENTLIT_FENCE = registerBlock("gentlit_fence",
             () -> new ModWoodFence(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE)));
     public static final RegistryObject<Block> GENTLIT_FENCE_GATE = registerBlock("gentlit_fence_gate",
-            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE), SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE).noOcclusion(), SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
     public static final RegistryObject<Block> GENTLIT_DOOR = registerBlock("gentlit_door",
-            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noCollission(), BlockSetType.OAK));
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion(), BlockSetType.OAK));
     public static final RegistryObject<Block> GENTLIT_TRAPDOOR = registerBlock("gentlit_trapdoor",
-            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noCollission(), BlockSetType.OAK));
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion(), BlockSetType.OAK));
 
     public static final RegistryObject<Block> BRAVOT_LEAVES = registerBlock("bravot_leaves",
             () -> new ModLeaves(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
@@ -102,11 +98,11 @@ public class ModBlocks {
     public static final RegistryObject<Block> BRAVOT_FENCE = registerBlock("bravot_fence",
             () -> new ModWoodFence(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE)));
     public static final RegistryObject<Block> BRAVOT_FENCE_GATE = registerBlock("bravot_fence_gate",
-            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE), SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE).noOcclusion(), SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
     public static final RegistryObject<Block> BRAVOT_DOOR = registerBlock("bravot_door",
-            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noCollission(), BlockSetType.OAK));
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion(), BlockSetType.OAK));
     public static final RegistryObject<Block> BRAVOT_TRAPDOOR = registerBlock("bravot_trapdoor",
-            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noCollission(), BlockSetType.OAK));
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion(), BlockSetType.OAK));
 
     //Biome ground blocks
     public static final RegistryObject<Block> PINK_FLUF_CHARMIL_SOIL = registerBlock("pink_fluf_charmil_soil", //MAKE FLUF SPIRAL DOWNWWARDS
@@ -262,6 +258,24 @@ public class ModBlocks {
     public static final RegistryObject<Block> SMALL_DEBRIS_CRYSTAL_CLUSTER = registerBlock("small_debris_crystal_cluster",
             () -> new ModGrowableMineral((byte) 8, 0,3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
 
+    public static final RegistryObject<Block> QUARTZ_CRYSTAL_CLUSTER = registerBlock("quartz_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 9, 3,7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> LARGE_QUARTZ_CRYSTAL_CLUSTER = registerBlock("large_quartz_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 9, 2,5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> MEDIUM_QUARTZ_CRYSTAL_CLUSTER = registerBlock("medium_quartz_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 9, 1,4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> SMALL_QUARTZ_CRYSTAL_CLUSTER = registerBlock("small_quartz_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 9, 0,3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+
+    public static final RegistryObject<Block> GLOWSTONE_CRYSTAL_CLUSTER = registerBlock("glowstone_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 10, 3,7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> LARGE_GLOWSTONE_CRYSTAL_CLUSTER = registerBlock("large_glowstone_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 10, 2,5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> MEDIUM_GLOWSTONE_CRYSTAL_CLUSTER = registerBlock("medium_glowstone_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 10, 1,4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> SMALL_GLOWSTONE_CRYSTAL_CLUSTER = registerBlock("small_glowstone_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 10, 0,3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+
     //Block entities
     public static final RegistryObject<Block> FAIRY_OFFERING_BENCH = registerBlock("fairy_offering_bench",
             () -> new FairyOfferingBenchBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
@@ -275,6 +289,16 @@ public class ModBlocks {
             () -> new FairyInfusionBenchBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
     public static final RegistryObject<Block> MAGIC_CRYSTALIZER = registerBlock("magic_crystalizer",
             () -> new MagicCrystalizerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> FUME_DISTILLERY = registerBlock("fume_distillery",
+            () -> new FumeDistilleryBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> FUME_SPREADER = registerBlock("fume_spreader",
+            () -> new FumeSpreaderBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> INFUSION_PEDESTAL = registerBlock("infusion_pedestal",
+            () -> new InfusionPedestal(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> FAIRY_POWER_RELAY = registerBlock("fairy_power_relay",
+            () -> new FairyPowerRelayBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> INFUSION_ALTAR_BASIC = registerBlock("infusion_altar_basic",
+            () -> new InfusionAltarBasic(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
 
     public static final RegistryObject<Block> SYRUP_EXTRACTOR = registerBlock("syrup_extractor",
             () -> new SyrupExtractorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));

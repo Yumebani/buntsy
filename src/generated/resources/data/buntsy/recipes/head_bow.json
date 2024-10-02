@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "buntsy:silk_fabric"
+    },
+    "P": {
+      "item": "minecraft:pink_dye"
+    }
+  },
+  "pattern": [
+    "FPF"
+  ],
+  "result": {
+    "item": "buntsy:head_bow"
+  },
+  "show_notification": true
+}

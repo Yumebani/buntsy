@@ -3,6 +3,7 @@ package net.sophiebun.buntsy.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.sophiebun.buntsy.BuntsyMod;
@@ -26,13 +27,37 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.GENTLIT_WOOD.get())
                 .add(ModBlocks.STRIPPED_GENTLIT_WOOD.get())
                 .add(ModBlocks.GENTLIT_PLANKS.get())
+                .add(ModBlocks.GENTLIT_TRAPDOOR.get())
+                .add(ModBlocks.GENTLIT_BUTTON.get())
+                .add(ModBlocks.GENTLIT_STAIRS.get())
+                .add(ModBlocks.GENTLIT_SLAB.get())
+                .add(ModBlocks.GENTLIT_DOOR.get())
+                .add(ModBlocks.BRAVOT_PLANKS.get())
+                .add(ModBlocks.BRAVOT_TRAPDOOR.get())
+                .add(ModBlocks.BRAVOT_BUTTON.get())
+                .add(ModBlocks.BRAVOT_STAIRS.get())
+                .add(ModBlocks.BRAVOT_SLAB.get())
+                .add(ModBlocks.BRAVOT_DOOR.get())
                 .add(ModBlocks.LOVESHROOM_BLOCK.get())
-                .add(ModBlocks.GLOWSHROOM_BLOCK.get());
+                .add(ModBlocks.GLOWSHROOM_BLOCK.get())
+                .add(ModBlocks.FAIRY_OFFERING_BENCH.get())
+                .add(ModBlocks.FAIRY_COLLECTION_TRAY.get())
+                .add(ModBlocks.FAIRY_INFUSION_BENCH.get())
+                .add(ModBlocks.THREAD_REELER.get());
 
         this.tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(ModBlocks.CHARMIL_SOIL.get())
                 .add(ModBlocks.CHARMIL_FARMLAND.get())
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get());
+
+        this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(ModBlocks.MAGIC_CRYSTALIZER.get())
+                .add(ModBlocks.FUME_DISTILLERY.get())
+                .add(ModBlocks.FUME_SPREADER.get())
+                .add(ModBlocks.INFUSION_PEDESTAL.get())
+                .add(ModBlocks.FAIRY_POWER_RELAY.get())
+                .add(ModBlocks.INFUSION_ALTAR_BASIC.get())
+                .add(ModBlocks.GRINDING_WHEEL.get());
 
         this.tag(ModTags.Blocks.GENTLIT_LOGS)
                 .add(ModBlocks.GENTLIT_LOG.get())
@@ -86,6 +111,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
                 .add(ModBlocks.CHARMIL_SOIL.get());
 
+        this.tag(BlockTags.ANIMALS_SPAWNABLE_ON)
+                .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
+                .add(ModBlocks.CHARMIL_SOIL.get());
+
         this.tag(ModTags.Blocks.CUTERLY_SPAWNER)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
                 .add(ModBlocks.CHARMIL_SOIL.get());
@@ -100,6 +129,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.THREAD_REELER.get())
                 .add(ModBlocks.FAIRY_COLLECTION_TRAY.get())
                 .add(ModBlocks.FAIRY_INFUSION_BENCH.get())
+                .add(ModBlocks.FUME_DISTILLERY.get())
+                .add(ModBlocks.FAIRY_POWER_RELAY.get())
                 .add(ModBlocks.MAGIC_CRYSTALIZER.get());
 
         this.tag(ModTags.Blocks.FAIRY_HARVESTABLE)
@@ -112,9 +143,17 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.LAPIS_CRYSTAL_CLUSTER.get())
                 .add(ModBlocks.DIAMOND_CRYSTAL_CLUSTER.get())
                 .add(ModBlocks.EMERALD_CRYSTAL_CLUSTER.get())
+                .add(ModBlocks.QUARTZ_CRYSTAL_CLUSTER.get())
+                .add(ModBlocks.GLOWSTONE_CRYSTAL_CLUSTER.get())
                 .add(ModBlocks.DEBRIS_CRYSTAL_CLUSTER.get());
 
         this.tag(BlockTags.PLANKS)
                 .add(ModBlocks.GENTLIT_PLANKS.get());
+
+        this.tag(ModTags.Blocks.FUME_TICKABLE)
+                .addTag(BlockTags.CROPS)
+                .addTag(BlockTags.SAPLINGS)
+                .addTag(BlockTags.MUSHROOM_GROW_BLOCK)
+                .add(Blocks.SUGAR_CANE);
     }
 }

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "buntsy:fairy_dust"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " GF",
+    " SG",
+    "S  "
+  ],
+  "result": {
+    "item": "buntsy:binding_staff"
+  },
+  "show_notification": true
+}

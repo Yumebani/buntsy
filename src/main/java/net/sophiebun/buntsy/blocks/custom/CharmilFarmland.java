@@ -56,7 +56,7 @@ public class CharmilFarmland extends FarmBlock {
             turnToDirt(pEntity, pState, pLevel, pPos);
         }
 
-        this.fallOn(pLevel, pState, pPos, pEntity, pFallDistance);
+        pEntity.causeFallDamage(pFallDistance, 1.0F, pEntity.damageSources().fall());
     }
     public static void turnToDirt(@Nullable Entity pEntity, BlockState pState, Level pLevel, BlockPos pPos) {
         BlockState blockstate = pushEntitiesUp(pState, ModBlocks.CHARMIL_SOIL.get().defaultBlockState(), pLevel, pPos);

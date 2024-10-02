@@ -6,6 +6,9 @@
     },
     {
       "item": "minecraft:deepslate_gold_ore"
+    },
+    {
+      "item": "minecraft:nether_gold_ore"
     }
   ],
   "output": [

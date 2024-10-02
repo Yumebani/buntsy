@@ -9,6 +9,8 @@
     "buntsy:lapis_crystal_cluster",
     "buntsy:diamond_crystal_cluster",
     "buntsy:emerald_crystal_cluster",
+    "buntsy:quartz_crystal_cluster",
+    "buntsy:glowstone_crystal_cluster",
     "buntsy:debris_crystal_cluster"
   ]
 }

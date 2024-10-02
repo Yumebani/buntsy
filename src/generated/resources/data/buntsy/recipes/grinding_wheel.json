@@ -5,6 +5,9 @@
     "B": {
       "item": "minecraft:smooth_stone"
     },
+    "F": {
+      "item": "buntsy:fairy_power_receptor"
+    },
     "I": {
       "item": "minecraft:iron_ingot"
     },
@@ -14,8 +17,8 @@
   },
   "pattern": [
     "SSS",
-    "BIB",
-    "BBB"
+    "BFB",
+    "BIB"
   ],
   "result": {
     "item": "buntsy:grinding_wheel"

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "buntsy:silk_fabric"
+    }
+  },
+  "pattern": [
+    "F F",
+    "F F",
+    "F F"
+  ],
+  "result": {
+    "item": "buntsy:bunny_ears"
+  },
+  "show_notification": true
+}

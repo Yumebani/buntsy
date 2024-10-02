@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "H": {
+      "item": "buntsy:hootcat_feather"
+    }
+  },
+  "pattern": [
+    "G G",
+    "H H"
+  ],
+  "result": {
+    "item": "buntsy:hootcat_boots"
+  },
+  "show_notification": true
+}

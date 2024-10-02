@@ -1,6 +1,7 @@
 package net.sophiebun.buntsy.item;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -9,6 +10,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
+import net.sophiebun.buntsy.item.custom.FumeBottle;
 
 public class CreativeModeTabs {
 
@@ -107,6 +109,19 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.MEDIUM_DEBRIS_CRYSTAL_CLUSTER.get());
                         pOutput.accept(ModBlocks.SMALL_DEBRIS_CRYSTAL_CLUSTER.get());
 
+                        pOutput.accept(ModItems.PRISTINE_QUARTZ_SAMPLE.get());
+                        pOutput.accept(ModBlocks.QUARTZ_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.LARGE_QUARTZ_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.MEDIUM_QUARTZ_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.SMALL_QUARTZ_CRYSTAL_CLUSTER.get());
+
+                        pOutput.accept(ModItems.GLOWSTONE_CRYSTAL.get());
+                        pOutput.accept(ModItems.PRISTINE_GLOWSTONE_SAMPLE.get());
+                        pOutput.accept(ModBlocks.GLOWSTONE_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.LARGE_GLOWSTONE_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.MEDIUM_GLOWSTONE_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.SMALL_GLOWSTONE_CRYSTAL_CLUSTER.get());
+
                         pOutput.accept(ModItems.REDSTONE_CRYSTAL.get());
                         pOutput.accept(ModItems.PRISTINE_REDSTONE_SAMPLE.get());
                         pOutput.accept(ModBlocks.REDSTONE_CRYSTAL_CLUSTER.get());
@@ -141,11 +156,22 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.FAIRY_COLLECTION_TRAY.get());
                         pOutput.accept(ModBlocks.FAIRY_INFUSION_BENCH.get());
                         pOutput.accept(ModBlocks.MAGIC_CRYSTALIZER.get());
+                        pOutput.accept(ModBlocks.FUME_DISTILLERY.get());
+                        pOutput.accept(ModBlocks.FUME_SPREADER.get());
+                        pOutput.accept(ModBlocks.INFUSION_PEDESTAL.get());
+                        pOutput.accept(ModBlocks.FAIRY_POWER_RELAY.get());
+                        pOutput.accept(ModBlocks.INFUSION_ALTAR_BASIC.get());
                         pOutput.accept(ModBlocks.SYRUP_EXTRACTOR.get());
 
                         pOutput.accept(ModItems.FAIRY_STAFF.get());
+                        pOutput.accept(ModItems.BINDING_STAFF.get());
 
+                        pOutput.accept(ModItems.FAIRY_POWER_RECEPTOR.get());
+                        pOutput.accept(ModItems.FAIRY_POWER_EMITTER.get());
                         pOutput.accept(ModItems.FAIRY_DUST.get());
+                        pOutput.accept(ModItems.HOOTCAT_FEATHER.get());
+                        pOutput.accept(ModItems.HOOTCAT_PLUME.get());
+                        pOutput.accept(ModItems.PHELINIX_FEATHER.get());
                         pOutput.accept(ModItems.COCOON.get());
                         pOutput.accept(ModItems.SILK.get());
                         pOutput.accept(ModItems.SILK_SPOOL.get());
@@ -166,9 +192,50 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.SILKY_CHESTPLATE.get());
                         pOutput.accept(ModItems.SILKY_LEGGINGS.get());
                         pOutput.accept(ModItems.SILKY_BOOTS.get());
-                        pOutput.accept(ModItems.FAIRY_IN_A_BOTTLE.get());
+                        pOutput.accept(ModItems.HOOTCAT_HELMET.get());
+                        pOutput.accept(ModItems.HOOTCAT_CHESTPLATE.get());
+                        pOutput.accept(ModItems.HOOTCAT_LEGGINGS.get());
+                        pOutput.accept(ModItems.HOOTCAT_BOOTS.get());
+                        pOutput.accept(ModItems.BUNNY_EARS.get());
+                        pOutput.accept(ModItems.CAT_EARS.get());
+                        pOutput.accept(ModItems.HEAD_BOW.get());
+
+                        for (FumeBottle.FumeType fumeType : FumeBottle.FumeType.values()){
+
+                            for (int i = 1; i < 4; i++){
+                                CompoundTag nbt = new CompoundTag();
+                                nbt.putInt("buntsy.fumeType", fumeType.ordinal());
+                                nbt.putInt("buntsy.fumeLevel", i);
+
+                                ItemStack stack = new ItemStack(ModItems.FUME_BOTTLE.get());
+                                stack.setTag(nbt);
+                                pOutput.accept(stack);
+                            }
+                        }
+
+                        pOutput.accept(ModItems.EMPTY_CATALYST.get());
+
+                        for (FumeBottle.FumeType fumeType : FumeBottle.FumeType.values()){
+
+                            CompoundTag nbt = new CompoundTag();
+                            nbt.putInt("buntsy.fumeType", fumeType.ordinal());
+                            nbt.putString("buntsy.catalystType", "creation");
+
+                            ItemStack stack = new ItemStack(ModItems.CATALYST.get());
+                            stack.setTag(nbt);
+                            pOutput.accept(stack);
+
+                            nbt = new CompoundTag();
+                            nbt.putInt("buntsy.fumeType", fumeType.ordinal());
+                            nbt.putString("buntsy.catalystType", "enhancer");
+
+                            stack = new ItemStack(ModItems.CATALYST.get());
+                            stack.setTag(nbt);
+                            pOutput.accept(stack);
+                        }
 
                         pOutput.accept(ModItems.HOOTNIP.get());
+                        pOutput.accept(ModItems.BLAZING_HOOTNIP.get());
                         pOutput.accept(ModItems.HOOTNIP_SEEDS.get());
                         pOutput.accept(ModItems.GROUND_HOOTNIP.get());
                         pOutput.accept(ModItems.HOOTNIP_CEREAL.get());
@@ -184,6 +251,7 @@ public class CreativeModeTabs {
 
                         pOutput.accept(ModItems.SILKBUN_SPAWN_EGG.get());
                         pOutput.accept(ModItems.FAIRY_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.HOOTCAT_SPAWN_EGG.get());
 
                     })
                     .build());

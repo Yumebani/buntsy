@@ -8,6 +8,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.entity.animals.Fairy;
+import net.sophiebun.buntsy.entity.animals.Hootcat;
 import net.sophiebun.buntsy.entity.animals.Silkbun;
 
 public class ModEntities {
@@ -21,6 +22,9 @@ public class ModEntities {
     public static final RegistryObject<EntityType<Fairy>> FAIRY_ENTITY =
             enitityRegister.register("fairy", () -> EntityType.Builder.of(Fairy::new, MobCategory.CREATURE)
                     .sized(0.25f, 0.25f).build("fairy"));
+    public static final RegistryObject<EntityType<Hootcat>> HOOTCAT_ENTITY =
+            enitityRegister.register("hootcat", () -> EntityType.Builder.of(Hootcat::new, MobCategory.CREATURE)
+                    .sized(0.5f, 0.8f).build("hootcat"));
 
     public static void register(IEventBus eventBus){
         enitityRegister.register(eventBus);

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:copper_block"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "L": {
+      "item": "buntsy:gentlit_log"
+    },
+    "P": {
+      "item": "buntsy:gentlit_planks"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "PBP",
+    "L L"
+  ],
+  "result": {
+    "item": "buntsy:fume_spreader"
+  },
+  "show_notification": true
+}

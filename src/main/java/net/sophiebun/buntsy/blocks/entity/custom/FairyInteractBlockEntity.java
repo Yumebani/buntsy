@@ -12,6 +12,7 @@ public class FairyInteractBlockEntity extends BlockEntity {
 
     private boolean isWatched = false;
     private boolean isEnchanted = false;
+    private int speedUp = 1;
     private float consumption;
 
     public FairyInteractBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
@@ -21,6 +22,7 @@ public class FairyInteractBlockEntity extends BlockEntity {
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         pTag.putFloat("fairy_interaction_block.consumption", this.consumption);
+        pTag.putInt("fairy_interaction_block.speedUp", this.speedUp);
         pTag.putBoolean("fairy_interaction_block.is_enchanted", this.isEnchanted);
         pTag.putBoolean("fairy_interaction_block.is_watched", this.isWatched);
 
@@ -32,8 +34,17 @@ public class FairyInteractBlockEntity extends BlockEntity {
         super.load(pTag);
 
         this.consumption = pTag.getFloat("fairy_interaction_block.consumption");
+        this.speedUp = pTag.getInt("fairy_interaction_block.speedUp");
         this.isEnchanted = pTag.getBoolean("fairy_interaction_block.is_enchanted");
         this.isWatched = pTag.getBoolean("fairy_interaction_block.is_watched");
+    }
+
+    public void setSpeedUp(int speed){
+        this.speedUp = speed;
+    }
+
+    public int getSpeedUp() {
+        return this.speedUp;
     }
 
     public boolean isWatched() {

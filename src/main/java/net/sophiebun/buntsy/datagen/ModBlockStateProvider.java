@@ -128,6 +128,18 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 new ModelFile.UncheckedModelFile(modLoc("block/magic_crystalizer")));
         simpleBlockItem(ModBlocks.MAGIC_CRYSTALIZER.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/magic_crystalizer")));
+        XZdirectionalBlock(ModBlocks.FUME_DISTILLERY,
+                new ModelFile.UncheckedModelFile(modLoc("block/fume_distiller")));
+        simpleBlockItem(ModBlocks.FUME_DISTILLERY.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/fume_distiller")));
+        simpleBlockWithItem(ModBlocks.FUME_SPREADER.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/fume_spreader")));
+        simpleBlockWithItem(ModBlocks.INFUSION_PEDESTAL.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/infusion_pedestal")));
+        simpleBlockWithItem(ModBlocks.FAIRY_POWER_RELAY.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/fairy_power_relay")));
+        simpleBlockWithItem(ModBlocks.INFUSION_ALTAR_BASIC.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/infusion_altar_basic")));
 
         //Other blocks
         syrupExtractorBlock(ModBlocks.SYRUP_EXTRACTOR);

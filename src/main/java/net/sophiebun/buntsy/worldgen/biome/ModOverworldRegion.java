@@ -35,6 +35,6 @@ public class ModOverworldRegion extends Region {
                 .build().forEach(point -> builder.add(point, ModBiomes.CUTERLY_BIOME));
 
         // Add our points to the mapper
-        builder.build().forEach(mapper);
+        builder.build().forEach(mapper::accept);
     }
 }

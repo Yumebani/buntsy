@@ -1,0 +1,25 @@
+{
+  "type": "buntsy:grinding_wheel",
+  "ingredients": [
+    {
+      "item": "minecraft:glowstone"
+    }
+  ],
+  "output": [
+    {
+      "count": 3,
+      "chance": 1.0,
+      "item": "minecraft:glowstone_dust"
+    },
+    {
+      "count": 1,
+      "chance": 0.5,
+      "item": "minecraft:glowstone_dust"
+    },
+    {
+      "count": 1,
+      "chance": 0.05,
+      "item": "buntsy:pristine_glowstone_sample"
+    }
+  ]
+}

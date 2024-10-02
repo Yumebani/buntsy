@@ -12,17 +12,17 @@
     {
       "count": 14,
       "chance": 1.0,
-      "item": "minecraft:lapis"
+      "item": "minecraft:lapis_lazuli"
     },
     {
       "count": 2,
       "chance": 0.5,
-      "item": "minecraft:lapis"
+      "item": "minecraft:lapis_lazuli"
     },
     {
       "count": 1,
       "chance": 0.5,
-      "item": "minecraft:lapis"
+      "item": "minecraft:lapis_lazuli"
     },
     {
       "count": 1,

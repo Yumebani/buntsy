@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "buntsy:block/fume_distiller",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "buntsy:block/fume_distiller"
+    },
+    "facing=south": {
+      "model": "buntsy:block/fume_distiller",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "buntsy:block/fume_distiller",
+      "y": 270
+    }
+  }
+}

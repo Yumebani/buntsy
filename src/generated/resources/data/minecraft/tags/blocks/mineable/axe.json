@@ -5,7 +5,22 @@
     "buntsy:gentlit_wood",
     "buntsy:stripped_gentlit_wood",
     "buntsy:gentlit_planks",
+    "buntsy:gentlit_trapdoor",
+    "buntsy:gentlit_button",
+    "buntsy:gentlit_stairs",
+    "buntsy:gentlit_slab",
+    "buntsy:gentlit_door",
+    "buntsy:bravot_planks",
+    "buntsy:bravot_trapdoor",
+    "buntsy:bravot_button",
+    "buntsy:bravot_stairs",
+    "buntsy:bravot_slab",
+    "buntsy:bravot_door",
     "buntsy:loveshroom_block",
-    "buntsy:glowshroom_block"
+    "buntsy:glowshroom_block",
+    "buntsy:fairy_offering_bench",
+    "buntsy:fairy_collection_tray",
+    "buntsy:fairy_infusion_bench",
+    "buntsy:thread_reeler"
   ]
 }

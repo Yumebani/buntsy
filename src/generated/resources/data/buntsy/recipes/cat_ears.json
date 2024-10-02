@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:black_dye"
+    },
+    "F": {
+      "item": "buntsy:silk_fabric"
+    }
+  },
+  "pattern": [
+    "FBF"
+  ],
+  "result": {
+    "item": "buntsy:cat_ears"
+  },
+  "show_notification": true
+}

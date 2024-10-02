@@ -5,16 +5,29 @@ import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.*;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.entity.ModEntities;
+import net.sophiebun.buntsy.item.custom.FairyStaff;
 import net.sophiebun.buntsy.worldgen.ModPlacedFeatures;
+
+import javax.swing.*;
 
 public class ModBiomes {
 
-    public static final ResourceKey<Biome> CUTERLY_BIOME = ResourceKey.create(Registries.BIOME,
+    public static final DeferredRegister<Biome> biomeRegister =
+            DeferredRegister.create(ForgeRegistries.BIOMES, BuntsyMod.MODID);
+
+    public static final ResourceKey<Biome> CUTERLY_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
             new ResourceLocation(BuntsyMod.MODID,"cuterly_biome"));
 
     public static void bootstrap(BootstapContext<Biome> context){
@@ -31,7 +44,10 @@ public class ModBiomes {
 
     private static Biome cutelyBiome(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
-        BiomeDefaultFeatures.commonSpawns(spawnBuilder);
+        spawnBuilder.creatureGenerationProbability(10);
+
+        spawnBuilder.addSpawn(MobCategory.AMBIENT, new MobSpawnSettings.SpawnerData(ModEntities.SILKBUN_ENTITY.get(), 10, 2, 4));
+        spawnBuilder.addSpawn(MobCategory.AMBIENT, new MobSpawnSettings.SpawnerData(ModEntities.FAIRY_ENTITY.get(), 10, 2, 4));
 
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
@@ -55,7 +71,7 @@ public class ModBiomes {
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.LOVESHROOM_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.GLOWSHROOM_PLACED_KEY);
 
-        return new Biome.BiomeBuilder()
+        Biome biome = new Biome.BiomeBuilder()
                 .hasPrecipitation(true)
                 .downfall(0.8f)
                 .temperature(0.7f)
@@ -71,5 +87,9 @@ public class ModBiomes {
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
                         .build())
                 .build();
+
+        //biomeRegister.register("cuterly_biome", () -> biome);
+
+        return biome;
     }
 }

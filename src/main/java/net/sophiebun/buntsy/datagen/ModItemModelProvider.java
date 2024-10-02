@@ -31,6 +31,13 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+
+        simpleItem(ModItems.EMPTY_CATALYST);
+        simpleItem(ModItems.FAIRY_POWER_RECEPTOR);
+        simpleItem(ModItems.FAIRY_POWER_EMITTER);
+        simpleItem(ModItems.HOOTCAT_FEATHER);
+        simpleItem(ModItems.HOOTCAT_PLUME);
+        simpleItem(ModItems.PHELINIX_FEATHER);
         simpleItem(ModItems.COCOON);
         simpleItem(ModItems.SILK);
         simpleItem(ModItems.SILK_SPOOL);
@@ -46,6 +53,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.SUGAR_BOWL);
         simpleItem(ModItems.SYRUPY_MIXTURE_BOWL);
         simpleItem(ModItems.HOOTNIP);
+        simpleItem(ModItems.BLAZING_HOOTNIP);
         simpleItem(ModItems.GROUND_HOOTNIP);
         simpleItem(ModItems.HOOTNIP_CEREAL);
         simpleItem(ModItems.STRAWBERRY_SEEDS);
@@ -57,6 +65,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.IRON_CRYSTAL);
         simpleItem(ModItems.IRON_DUST);
         simpleItem(ModItems.PRISTINE_IRON_SAMPLE);
+        simpleItem(ModItems.PRISTINE_QUARTZ_SAMPLE);
+        simpleItem(ModItems.PRISTINE_GLOWSTONE_SAMPLE);
+        simpleItem(ModItems.GLOWSTONE_CRYSTAL);
         simpleItem(ModItems.COPPER_CRYSTAL);
         simpleItem(ModItems.COPPER_DUST);
         simpleItem(ModItems.PRISTINE_COPPER_SAMPLE);
@@ -146,6 +157,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         //Fairy utils
         simpleItem(ModItems.FAIRY_IN_A_BOTTLE);
         simpleItem(ModItems.FAIRY_STAFF);
+        simpleItem(ModItems.BINDING_STAFF);
 
         //this.getBuilder(ForgeRegistries.BLOCKS.getKey(ModBlocks.THREAD_REELER.get()).getPath())
         //        .parent(new ModelFile.UncheckedModelFile(modLoc("block/thread_reeler_item")));
@@ -162,8 +174,22 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.SILKY_LEGGINGS);
         simpleItem(ModItems.SILKY_BOOTS);
 
+        simpleItem(ModItems.HOOTCAT_HELMET);
+        simpleItem(ModItems.HOOTCAT_CHESTPLATE);
+        simpleItem(ModItems.HOOTCAT_LEGGINGS);
+        simpleItem(ModItems.HOOTCAT_BOOTS);
+
+        simpleItem(ModItems.BUNNY_EARS);
+        simpleItem(ModItems.CAT_EARS);
+        simpleItem(ModItems.HEAD_BOW);
+
         withExistingParent(ModItems.SILKBUN_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.FAIRY_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.HOOTCAT_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+
+        //Fume bottle
+        fumeBottleItem(ModItems.FUME_BOTTLE);
+        catalystItem(ModItems.CATALYST);
     }
 
     private ItemModelBuilder simpleCrossBlockItem (RegistryObject<Block> block){
@@ -189,6 +215,20 @@ public class ModItemModelProvider extends ItemModelProvider {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
                 new ResourceLocation(BuntsyMod.MODID,"item/" + item.getId().getPath()));
+    }
+
+    private ItemModelBuilder fumeBottleItem (RegistryObject<Item> item){
+        return withExistingParent(item.getId().getPath(),
+                new ResourceLocation("item/generated")).texture("layer0",
+                new ResourceLocation(BuntsyMod.MODID,"item/fume_bottle_fume")).texture("layer1",
+                new ResourceLocation(BuntsyMod.MODID,"item/fume_bottle"));
+    }
+
+    private ItemModelBuilder catalystItem (RegistryObject<Item> item){
+        return withExistingParent(item.getId().getPath(),
+                new ResourceLocation("item/generated")).texture("layer0",
+                new ResourceLocation(BuntsyMod.MODID,"item/catalyst_shine")).texture("layer1",
+                new ResourceLocation(BuntsyMod.MODID,"item/catalyst"));
     }
 
     private ItemModelBuilder simpleBlockItem (RegistryObject<Block> block){

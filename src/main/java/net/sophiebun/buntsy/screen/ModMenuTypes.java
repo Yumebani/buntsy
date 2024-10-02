@@ -27,6 +27,10 @@ public class ModMenuTypes {
             registerMenuType("fairy_infusion_bench_menu", FairyInfusionBenchMenu::new);
     public static final RegistryObject<MenuType<MagicCrystalizerMenu>> MAGIC_CRYSTALIZER_MENU =
             registerMenuType("magic_crystalizer_menu", MagicCrystalizerMenu::new);
+    public static final RegistryObject<MenuType<FumeDistilleryMenu>> FUME_DISTILLERY_MENU =
+            registerMenuType("fume_distillery_menu", FumeDistilleryMenu::new);
+    public static final RegistryObject<MenuType<FumeSpreaderMenu>> FUME_SPREADER_MENU =
+            registerMenuType("fume_spreader_menu", FumeSpreaderMenu::new);
 
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory){
         return MenusRegister.register(name, () -> IForgeMenuType.create(factory));
