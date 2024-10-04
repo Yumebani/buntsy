@@ -3,6 +3,7 @@ package net.sophiebun.buntsy.blocks.entity.basicfairy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -241,9 +242,10 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     }
 
     public void insertIntoSlot(int slot, ItemStack item){
-        this.outputItemHandler.setStackInSlot(slot,
-                new ItemStack(item.getItem(),
-                        this.outputItemHandler.getStackInSlot(slot).getCount() + item.getCount()));
+        ItemStack inserted = new ItemStack(item.getItem(),
+                this.outputItemHandler.getStackInSlot(slot).getCount() + item.getCount());
+        if (item.hasTag()) inserted.setTag(item.getTag());
+        this.outputItemHandler.setStackInSlot(slot, item);
     }
 
     public Integer getPrimaryAvailableSlot(ItemStack item){
@@ -281,5 +283,10 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     @Override
     public CompoundTag getUpdateTag() {
         return saveWithoutMetadata();
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        super.onDataPacket(net, pkt);
     }
 }

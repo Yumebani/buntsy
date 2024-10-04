@@ -109,7 +109,6 @@ public class FumeDistilleryRecipe implements Recipe<SimpleContainer> {
         public ItemStack itemFromCustomJson(JsonObject obj){
             ItemStack item = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(obj, "item"));
             JsonArray nbtObj = GsonHelper.getAsJsonArray(obj, "nbt");
-            System.out.println(nbtObj.isEmpty());
             if (!nbtObj.isEmpty()){
                 CompoundTag nbt = new CompoundTag();
                 for (JsonElement entry : nbtObj.asList()){

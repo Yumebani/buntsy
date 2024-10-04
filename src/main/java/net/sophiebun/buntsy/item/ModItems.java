@@ -68,6 +68,13 @@ public class ModItems {
     public static final RegistryObject<Item> EMPTY_CATALYST = ItemsRegister.register(
             "empty_catalyst", () -> new Item(new Item.Properties()));
 
+    public static final RegistryObject<Item> URO = ItemsRegister.register(
+            "uro", () -> new Item(new Item.Properties().stacksTo(2)));
+    public static final RegistryObject<Item> COCOON_BAG = ItemsRegister.register(
+            "cocoon_bag", () -> new CocoonBag(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> STRANGE_COCOON = ItemsRegister.register(
+            "strange_cocoon", () -> new CocoonBag(new Item.Properties().stacksTo(1)));
+
 
     public static final RegistryObject<Item> FAIRY_POWER_RECEPTOR = ItemsRegister.register(
             "fairy_power_receptor", () -> new Item(new Item.Properties()));

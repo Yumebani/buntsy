@@ -1,4 +1,4 @@
-// 1.20.1	2024-10-02T18:00:12.843540209	Item Models: buntsy
+// 1.20.1	2024-10-04T13:44:20.420648511	Item Models: buntsy
 eeb88518e910489d20bafae39dd12a926895cb2b assets/buntsy/models/item/amethyst_dust.json
 ed0711e135e428c5b179073706c6432f256f2731 assets/buntsy/models/item/binding_staff.json
 73f545fa0d002fdfc4b1282ad7b122c64576abfd assets/buntsy/models/item/blazing_hootnip.json
@@ -24,6 +24,7 @@ af5f90a07fbca34469854c02826e55a60d308f75 assets/buntsy/models/item/bravot_trapdo
 2410babbbf992ac6b3cf957660950f370912ad8c assets/buntsy/models/item/cat_ears.json
 56fd30a5e7533d75208cfa5381a1bdc53bada29e assets/buntsy/models/item/catalyst.json
 98b8e0e29a81f4934ae81a714059565311b2937b assets/buntsy/models/item/cocoon.json
+573943a024215d703e40334dca36e886dc4f7305 assets/buntsy/models/item/cocoon_bag.json
 2585f3b0c8835120ac893cf2693e6262b8033d57 assets/buntsy/models/item/copper_crystal.json
 a17bcf343f6e905019b930c9b59c87a6d5f06075 assets/buntsy/models/item/copper_crystal_cluster.json
 6d716f5a0b1d5cc6123ee61a62b0139b9e8c8b1d assets/buntsy/models/item/copper_dust.json
@@ -153,6 +154,7 @@ f9d68d44df16fba921e350c642e0e91b07af6e8c assets/buntsy/models/item/small_copper_
 d575618e3ea8b33a49be6ce8cc76537e2b8cb42b assets/buntsy/models/item/small_lapis_crystal_cluster.json
 7fc309f46f12f05302380494dcbba56e89aff3ef assets/buntsy/models/item/small_quartz_crystal_cluster.json
 9e78692877f064c434cb24d44c3d27730cfdd2eb assets/buntsy/models/item/small_redstone_crystal_cluster.json
+2e6cd0df738026d2503cb55c5458701f024d656d assets/buntsy/models/item/strange_cocoon.json
 2dc7ea4e772143dc1ead0d838368d9abd4bc1103 assets/buntsy/models/item/strawberry.json
 a1a4811b42bb75bb82ba6845f96de3e8427c8e02 assets/buntsy/models/item/strawberry_crop.json
 465ab5624c3dd22402a03b6e2ce054f4d2b2b24d assets/buntsy/models/item/strawberry_seeds.json
@@ -163,5 +165,6 @@ e50e349cd1d2fe2dbbf0b16b4042221b9745df02 assets/buntsy/models/item/stripped_gent
 c880cd3b83fca6d24ab1a6cdc0d1c071f6826164 assets/buntsy/models/item/sugar_bowl.json
 e05269f395e4b70ceddfa57d68f2b897d99135ad assets/buntsy/models/item/syrupy_mixture_bowl.json
 ae4e237c295d9faab22fdab6d5b8c9005fdffa6d assets/buntsy/models/item/tough_silk_fabric.json
+1803b903391f80a697e2a17bf095c06b62b0f4f9 assets/buntsy/models/item/uro.json
 897c4244b31c7e30aa7686a4fc3fe202a52687f6 assets/buntsy/models/item/wild_hootnip.json
 9e8278d78598b1397cfc54ac58854cee5eb95321 assets/buntsy/models/item/wild_strawberry.json

@@ -99,6 +99,29 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(ModItems.MOTH_WING_THREAD.get()), has(ModItems.MOTH_WING_THREAD.get()))
                 .save(consumer);
 
+        //Giant Cocoon
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.GIANT_COCOON.get(), 1)
+                .define('A', ModItems.SILK_FABRIC.get())
+                .define('B', ModItems.TOUGH_SILK_FABRIC.get())
+                .pattern("ABA")
+                .pattern("B B")
+                .pattern("ABA")
+                .unlockedBy(getHasName(ModItems.SILK_FABRIC.get()), has(ModItems.SILK_FABRIC.get()))
+                .unlockedBy(getHasName(ModItems.MOTH_WING_THREAD.get()), has(ModItems.MOTH_WING_THREAD.get()))
+                .save(consumer);
+
+        //Cocoon bag
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.GIANT_COCOON.get(), 1)
+                .define('A', ModItems.SILK_FABRIC.get())
+                .define('S', ModItems.SILK.get())
+                .define('B', ModItems.TOUGH_SILK_FABRIC.get())
+                .pattern(" S")
+                .pattern("BAB")
+                .pattern(" B ")
+                .unlockedBy(getHasName(ModItems.SILK_FABRIC.get()), has(ModItems.SILK_FABRIC.get()))
+                .unlockedBy(getHasName(ModItems.MOTH_WING_THREAD.get()), has(ModItems.MOTH_WING_THREAD.get()))
+                .save(consumer);
+
         //Fairy power receptor
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.FAIRY_POWER_RECEPTOR.get(), 1)
                 .define('G', Items.GOLD_INGOT)

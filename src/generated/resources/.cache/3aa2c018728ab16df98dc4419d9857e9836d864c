@@ -1,4 +1,4 @@
-// 1.20.1	2024-10-02T17:53:49.611946169	Block States: buntsy
+// 1.20.1	2024-10-04T15:49:49.769031115	Block States: buntsy
 f5ef56828a3d71dd5d2d6a69e4416bd6b774e2cb assets/buntsy/blockstates/blue_bloom.json
 3ce0b25335a033f36c35386ff2092e1354d4fd12 assets/buntsy/blockstates/blue_charmil_grass.json
 4690b18f511bb74c015b9313a5ee3b611820e043 assets/buntsy/blockstates/bravot_button.json
@@ -39,6 +39,7 @@ f62affd768ee604f43b219c0ff3ee84d4861c6b9 assets/buntsy/blockstates/gentlit_sapli
 879cb21fab6b33ef354287458dab644bf2502a80 assets/buntsy/blockstates/gentlit_stairs.json
 3447e362d6daf136fd541456eb423294a1282e51 assets/buntsy/blockstates/gentlit_trapdoor.json
 44ad8fab9a4b0c4773d90e26854b99109ac2b5b6 assets/buntsy/blockstates/gentlit_wood.json
+a1958a42c015fad25d96143aeee0dacd0b559381 assets/buntsy/blockstates/giant_cocoon.json
 596601a6ea8f4d1e6bb76ce041f249b4212e2339 assets/buntsy/blockstates/glowshroom.json
 470e7dc3562bc395c32b7f1d9c38842de8c975f1 assets/buntsy/blockstates/glowshroom_block.json
 6355dcd1872f8516aa7d770281040d62889617ae assets/buntsy/blockstates/glowstone_crystal_cluster.json
@@ -182,6 +183,7 @@ eafec48abf14b71ce085edb423355eb6ec98bfa5 assets/buntsy/models/block/gentlit_trap
 19195a8d36877911e0c79f0f9501a46e002bb6f5 assets/buntsy/models/block/gentlit_trapdoor_top.json
 27d7093e620d55b1c5c62f918374ca31d2dac468 assets/buntsy/models/block/gentlit_wood.json
 b3051cfb68d96d2099932d3a5800425144d386fb assets/buntsy/models/block/gentlit_wood_horizontal.json
+1128033df2c9352e91d14b2e62a33436804566b3 assets/buntsy/models/block/giant_cocoon.json
 e6eda3c68db7c16abdfa9de4ccbbbdd5b52accb2 assets/buntsy/models/block/glowshroom.json
 3d5868b64cc36635c0142573b81c36aa6e2fb88c assets/buntsy/models/block/glowshroom_block.json
 a40984db0c3e9f350a72587b4001bd08d5b59688 assets/buntsy/models/block/glowshroom_block_inside.json
@@ -272,6 +274,7 @@ b06e2d42c433ef38496caee0e9f63b08bb0cc66d assets/buntsy/models/block/stripped_bra
 969b4c3da2d9b634904cd267801fbf5e98046175 assets/buntsy/models/item/fume_distillery.json
 57cd5842c74668fcfcecbb1e396008a0a36a10c7 assets/buntsy/models/item/fume_spreader.json
 3ca7f608fe8dcb53a430b14fd52969ceada9db10 assets/buntsy/models/item/gentlit_planks.json
+39b8a28c30d44b305ecfb7eb3594f4823aee77f4 assets/buntsy/models/item/giant_cocoon.json
 5aabc224bc5fad824926b246a1e1f9a7ff35c043 assets/buntsy/models/item/grinding_wheel.json
 2f9cf633b23503367ad551dea3e44b721e92fd2a assets/buntsy/models/item/infusion_altar_basic.json
 1c28480a2219a86ede9425d9aa60709aee502728 assets/buntsy/models/item/infusion_pedestal.json

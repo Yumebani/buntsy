@@ -45,7 +45,7 @@ public class InfusionPedestalBlockEntity extends BlockEntity {
 
     private final Integer randomRotation;
 
-    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.of(() -> itemHandler);
 
     public Integer getRandomRotation() {
         return randomRotation;

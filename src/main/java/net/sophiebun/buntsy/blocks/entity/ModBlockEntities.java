@@ -12,6 +12,7 @@ import net.sophiebun.buntsy.blocks.entity.advancedfairy.FumeSpreaderBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.advancedfairy.MagicCrystalizerBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.basicfairy.GrindingWheelBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.basicfairy.ThreadReelerBlockEntity;
+import net.sophiebun.buntsy.blocks.entity.custom.GiantCocoonBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.custom.InfusionAltarBasicBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.custom.InfusionPedestalBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyCollectionTrayBlockEntity;
@@ -68,6 +69,10 @@ public class ModBlockEntities {
             blockEntityRegister.register("infusion_altar_basic_entity",
                     () -> BlockEntityType.Builder.of(InfusionAltarBasicBlockEntity::new,
                             ModBlocks.INFUSION_ALTAR_BASIC.get()).build(null));
+    public static final RegistryObject<BlockEntityType<GiantCocoonBlockEntity>> GIANT_COCOON_BLOCK_ENTITY =
+            blockEntityRegister.register("giant_cocoon_block_entity",
+                    () -> BlockEntityType.Builder.of(GiantCocoonBlockEntity::new,
+                            ModBlocks.GIANT_COCOON.get()).build(null));
 
     public static void register(IEventBus eventBus){
 

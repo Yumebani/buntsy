@@ -88,7 +88,7 @@ public class Silkbun extends Animal implements IFumeAffectedEntity {
 
     public Silkbun(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        this.setPersistenceRequired();
+        //this.setPersistenceRequired();
         this.jumpControl = new SilkbunJumpControl(this);
         this.moveControl = new SilkbunMoveControl(this);
     }
@@ -345,7 +345,9 @@ public class Silkbun extends Animal implements IFumeAffectedEntity {
                 if (!getIsSleeping()){
                     setDataIsWakingUp(true);
                     if (!level().isClientSide()){
-                        Containers.dropItemStack(level(), this.getX(), this.getY(), this.getZ(), new ItemStack(ModItems.COCOON.get()));
+                        ItemStack stackToDrop = level().getRandom().nextIntBetweenInclusive(0, 100) <= 5 ?
+                                new ItemStack(ModItems.STRANGE_COCOON.get()) : new ItemStack(ModItems.COCOON.get());
+                        Containers.dropItemStack(level(), this.getX(), this.getY(), this.getZ(), stackToDrop);
                     }
                 }
 

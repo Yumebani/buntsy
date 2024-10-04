@@ -19,6 +19,8 @@ import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.recipe.ThreadReelerRecipe;
 import net.sophiebun.buntsy.screen.ThreadReelerMenu;
+import net.sophiebun.buntsy.server.GiantCocoonSavedData;
+import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -65,6 +67,16 @@ public class ThreadReelerBlockEntity extends BasicFairyBlockEntity implements Me
         List<ItemStack> result = recipe.get().getResults(this.nextRollChance);
 
         this.inputItemHandler.extractItem(INPUT_SLOT, 1, false);
+
+        if (result.get(0).is(ModItems.URO.get())){
+            CompoundTag tag = new CompoundTag();
+            GiantCocoonSavedData data = GiantCocoonSavedData.computeIfAbsent(this.level.getServer());
+            tag.putInt("buntsy.uro_id", data.generateId());
+            ItemStack item = result.get(0);
+            item.setTag(tag);
+            outputItems(item, null);
+            return;
+        }
 
         outputItems(result.get(0), result.size() == 1 ? null : result.get(1));
     }

@@ -1,4 +1,4 @@
-// 1.20.1	2024-10-02T19:29:19.476222454	Tags for minecraft:block mod id buntsy
+// 1.20.1	2024-10-03T14:47:59.728246643	Tags for minecraft:block mod id buntsy
 375b70dcc9fd9e50a722f028008e1c11e6e68dd9 data/buntsy/tags/blocks/bravot_logs.json
 22debb79ff2ee672d037593170cf5894806e4fb8 data/buntsy/tags/blocks/cuterly_spawner.json
 b3d96bd84ab6316c778c2cb6433833cfb82bc3c1 data/buntsy/tags/blocks/fairy_harvestable.json
@@ -16,5 +16,5 @@ db8325e8d770e82b91d26c6202af35c41cd27a26 data/minecraft/tags/blocks/fence_gates.
 f55050626f925b9a1f40fff730a4dfee4436e2c6 data/minecraft/tags/blocks/mineable/shovel.json
 22debb79ff2ee672d037593170cf5894806e4fb8 data/minecraft/tags/blocks/mushroom_grow_block.json
 3c0a37829999806003244d1c4350ae59c31ff6c3 data/minecraft/tags/blocks/planks.json
-22debb79ff2ee672d037593170cf5894806e4fb8 data/minecraft/tags/blocks/valid_spawn.json
+180ce9b18b18943fa0c997d7bd538e4f013c4a9c data/minecraft/tags/blocks/valid_spawn.json
 5b4f57f7350d7097161a79ce1a34e33489913aba data/minecraft/tags/blocks/wooden_fences.json

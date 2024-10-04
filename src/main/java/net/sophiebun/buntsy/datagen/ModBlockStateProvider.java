@@ -140,6 +140,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 new ModelFile.UncheckedModelFile(modLoc("block/fairy_power_relay")));
         simpleBlockWithItem(ModBlocks.INFUSION_ALTAR_BASIC.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/infusion_altar_basic")));
+        simpleBlockWithItem(ModBlocks.GIANT_COCOON.get(),
+                models().cubeColumn(ModBlocks.GIANT_COCOON.getId().getPath(),
+                new ResourceLocation(BuntsyMod.MODID, "block/giant_cocoon_side"),
+                new ResourceLocation(BuntsyMod.MODID, "block/giant_cocoon_top")));
 
         //Other blocks
         syrupExtractorBlock(ModBlocks.SYRUP_EXTRACTOR);
@@ -153,6 +157,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
                         new ResourceLocation(BuntsyMod.MODID, "block/" + modelName)).renderType("cutout")).build();}
         );
     }
+
 
     private void wildHootnipBlock(RegistryObject<Block> block){
         getVariantBuilder(block.get()).partialState()

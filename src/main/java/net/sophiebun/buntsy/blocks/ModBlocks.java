@@ -299,6 +299,8 @@ public class ModBlocks {
             () -> new FairyPowerRelayBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
     public static final RegistryObject<Block> INFUSION_ALTAR_BASIC = registerBlock("infusion_altar_basic",
             () -> new InfusionAltarBasic(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> GIANT_COCOON = registerBlock("giant_cocoon",
+            () -> new GiantCocoonBlock(BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL).noOcclusion()));
 
     public static final RegistryObject<Block> SYRUP_EXTRACTOR = registerBlock("syrup_extractor",
             () -> new SyrupExtractorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));

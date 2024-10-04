@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "buntsy:block/giant_cocoon_top",
+    "side": "buntsy:block/giant_cocoon_side"
+  }
+}

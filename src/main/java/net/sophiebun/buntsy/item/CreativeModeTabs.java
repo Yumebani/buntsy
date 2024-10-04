@@ -161,6 +161,7 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.INFUSION_PEDESTAL.get());
                         pOutput.accept(ModBlocks.FAIRY_POWER_RELAY.get());
                         pOutput.accept(ModBlocks.INFUSION_ALTAR_BASIC.get());
+                        pOutput.accept(ModBlocks.GIANT_COCOON.get());
                         pOutput.accept(ModBlocks.SYRUP_EXTRACTOR.get());
 
                         pOutput.accept(ModItems.FAIRY_STAFF.get());
@@ -182,6 +183,9 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.SILKY_NUGGET.get());
                         pOutput.accept(ModItems.SILKY_INGOT.get());
                         pOutput.accept(ModItems.SILKY_CRYSTAL.get());
+
+                        pOutput.accept(ModItems.STRANGE_COCOON.get());
+                        pOutput.accept(ModItems.COCOON_BAG.get());
 
                         pOutput.accept(ModItems.SILKY_SWORD.get());
                         pOutput.accept(ModItems.SILKY_PICKAXE.get());

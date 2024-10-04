@@ -90,7 +90,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
     }
     public Fairy(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        this.setPersistenceRequired();
+        //this.setPersistenceRequired();
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
@@ -815,7 +815,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
         @Override
         public boolean canUse() {
             if (this.nextStartTick > 0){
-                this.nextStartTick -= (int)Math.ceil(fairy.foodModifier * (fairy.fumes.containsKey(2) ? fairy.fumes.get(2).get(0) + 1 : 1));
+                this.nextStartTick -= Math.round(Math.ceil(fairy.foodModifier * (fairy.fumes.containsKey(2) ? fairy.fumes.get(2).get(0) + 1 : 1)));
             }
             else if (this.fairy.isTame() && this.fairy.getFood() > 0 && !this.fairy.registeredUtilBlockEntityPos.isEmpty()
                     && hasValidBlockEntity(this.fairy.getRegisteredBlockPosArray().get(0))) {
@@ -1103,13 +1103,13 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
                 }
                 else{
                     ((FairyInteractBlockEntity) this.fairy.level().getBlockEntity(pos)).setEnchanted(true);
-                }
 
-                if (this.fairy.fumes.containsKey(2)){
-                    ((FairyInteractBlockEntity) this.fairy.level().getBlockEntity(pos)).setSpeedUp(this.fairy.fumes.get(2).get(0) + 1);
-                }
-                else {
-                    ((FairyInteractBlockEntity) this.fairy.level().getBlockEntity(pos)).setSpeedUp(1);
+                    if (this.fairy.fumes.containsKey(2)){
+                        ((FairyInteractBlockEntity) this.fairy.level().getBlockEntity(pos)).setSpeedUp(this.fairy.fumes.get(2).get(0) + 1);
+                    }
+                    else {
+                        ((FairyInteractBlockEntity) this.fairy.level().getBlockEntity(pos)).setSpeedUp(1);
+                    }
                 }
             }
 

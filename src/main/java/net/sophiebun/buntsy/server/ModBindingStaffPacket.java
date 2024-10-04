@@ -47,8 +47,6 @@ public class ModBindingStaffPacket {
             ServerPlayer player = ctx.getSender();
             ServerLevel level = ctx.getSender().serverLevel();
 
-            System.out.println("Binding " + binding + " Master " + master);
-
             if (level == null || (binding != null && !level.hasChunkAt(binding)) || (master != null && !level.hasChunkAt(master))) return;
 
             if (level.getBlockEntity(master) instanceof InfusionAltarBasicBlockEntity &&

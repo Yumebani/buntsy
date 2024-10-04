@@ -76,8 +76,6 @@ public class ModFairyStaffPacket {
             }
             else if (operationType == FairyStaffOperationType.SET_BLOCK){
 
-                System.out.println("Handling packet");
-
                 BlockState blockState = level.getBlockState(this.block);
                 if (blockState.is(ModTags.Blocks.FAIRY_INTERACTABLE_BLOCK_ENTITY)) {
 

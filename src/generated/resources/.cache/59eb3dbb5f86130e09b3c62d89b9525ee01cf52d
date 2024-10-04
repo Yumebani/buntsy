@@ -1,4 +1,4 @@
-// 1.20.1	2024-10-02T17:53:49.617397435	Loot Tables
+// 1.20.1	2024-10-02T23:54:11.302347987	Loot Tables
 89827097379284e3cff8aa1eae40585b5a3a87d6 data/buntsy/loot_tables/blocks/blue_bloom.json
 114a61f4b222fad5ef21cd8a9c2433f21ec4fea8 data/buntsy/loot_tables/blocks/blue_charmil_grass.json
 a4f634df261525820e924760c9301e06b3ed0b3e data/buntsy/loot_tables/blocks/bravot_button.json
@@ -39,6 +39,7 @@ f6fcd69994d647178f59f8fb8fe2a168c19a34f5 data/buntsy/loot_tables/blocks/gentlit_
 760b42c1a5de9d69cf74dba8b02f37a2e985fcc8 data/buntsy/loot_tables/blocks/gentlit_stairs.json
 4859cab84cb02227d206613e08c91414fe73a003 data/buntsy/loot_tables/blocks/gentlit_trapdoor.json
 ca37ffa372d4a4a04e0514d3acd2351f96d4abb0 data/buntsy/loot_tables/blocks/gentlit_wood.json
+b23e0c4907483e873391719de4cad3e713161c52 data/buntsy/loot_tables/blocks/giant_cocoon.json
 9a7ac783000109e7a64d8789416b260e5e02c616 data/buntsy/loot_tables/blocks/glowshroom.json
 a626779ad80fc8f3a9d0751675a1b142e468389d data/buntsy/loot_tables/blocks/glowshroom_block.json
 b7c7e8e85141978da8c73661d61ddb9cc1fba02c data/buntsy/loot_tables/blocks/glowstone_crystal_cluster.json

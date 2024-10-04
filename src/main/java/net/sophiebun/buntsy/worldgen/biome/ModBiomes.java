@@ -46,8 +46,10 @@ public class ModBiomes {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
         spawnBuilder.creatureGenerationProbability(10);
 
-        spawnBuilder.addSpawn(MobCategory.AMBIENT, new MobSpawnSettings.SpawnerData(ModEntities.SILKBUN_ENTITY.get(), 10, 2, 4));
-        spawnBuilder.addSpawn(MobCategory.AMBIENT, new MobSpawnSettings.SpawnerData(ModEntities.FAIRY_ENTITY.get(), 10, 2, 4));
+        MobCategory cat = MobCategory.create("ambient", "custom", 10, true, true, 128);
+
+        spawnBuilder.addSpawn(cat, new MobSpawnSettings.SpawnerData(ModEntities.SILKBUN_ENTITY.get(), 10, 2, 4));
+        spawnBuilder.addSpawn(cat, new MobSpawnSettings.SpawnerData(ModEntities.FAIRY_ENTITY.get(), 10, 2, 4));
 
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));

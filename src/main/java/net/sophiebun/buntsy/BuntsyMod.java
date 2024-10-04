@@ -139,6 +139,8 @@ public class BuntsyMod
             MenuScreens.register(ModMenuTypes.MAGIC_CRYSTALIZER_MENU.get(), MagicCrystalizerScreen::new);
             MenuScreens.register(ModMenuTypes.FUME_DISTILLERY_MENU.get(), FumeDistilleryScreen::new);
             MenuScreens.register(ModMenuTypes.FUME_SPREADER_MENU.get(), FumeSpreaderScreen::new);
+            MenuScreens.register(ModMenuTypes.GIANT_COCOON_MENU.get(), GiantCocoonScreen::new);
+            MenuScreens.register(ModMenuTypes.COCOON_BAG_MENU.get(), CocoonBagScreen::new);
 
             EntityRenderers.register(ModEntities.SILKBUN_ENTITY.get(), SilkbunRenderer::new);
             EntityRenderers.register(ModEntities.FAIRY_ENTITY.get(), FairyRenderer::new);

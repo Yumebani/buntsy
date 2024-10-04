@@ -1,8 +1,13 @@
 package net.sophiebun.buntsy.events;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.sophiebun.buntsy.BuntsyMod;
@@ -13,6 +18,7 @@ import net.sophiebun.buntsy.entity.client.HootCatModel;
 import net.sophiebun.buntsy.entity.client.ModModelLayers;
 import net.sophiebun.buntsy.entity.client.SilkbunModel;
 import net.sophiebun.buntsy.item.ModItems;
+import net.sophiebun.buntsy.item.custom.CocoonBag;
 import net.sophiebun.buntsy.item.custom.FumeBottle;
 
 @Mod.EventBusSubscriber(modid = BuntsyMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

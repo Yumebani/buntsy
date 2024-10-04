@@ -37,7 +37,6 @@ public class FairyStaff extends Item {
     public InteractionResult useOn(UseOnContext pContext) {
 
         if (pContext.getLevel().isClientSide() && this.selectedFairyId != null){
-            System.out.println("Sending packet");
             ModPacketHandler.INSTANCE.sendToServer(new ModFairyStaffPacket(this.selectedFairyId, pContext.getClickedPos(), FairyStaffOperationType.SET_BLOCK));
             this.selectedFairyId = null;
             return InteractionResult.SUCCESS;

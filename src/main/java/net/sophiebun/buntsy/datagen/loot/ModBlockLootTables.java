@@ -173,6 +173,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.INFUSION_PEDESTAL.get());
         this.dropSelf(ModBlocks.FAIRY_POWER_RELAY.get());
         this.dropSelf(ModBlocks.INFUSION_ALTAR_BASIC.get());
+        this.dropSelf(ModBlocks.GIANT_COCOON.get());
 
         //Others
         this.dropSelf(ModBlocks.SYRUP_EXTRACTOR.get());

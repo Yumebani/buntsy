@@ -44,11 +44,11 @@ public class ModBiomeModifiers {
 
         context.register(ADD_SILKBUN, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(ModTags.Biomes.CUTE_BIOMES),
-                List.of(new MobSpawnSettings.SpawnerData(ModEntities.SILKBUN_ENTITY.get(), 1000, 2, 4))));
+                List.of(new MobSpawnSettings.SpawnerData(ModEntities.SILKBUN_ENTITY.get(), 5, 2, 4))));
 
         context.register(ADD_FAIRY, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(ModTags.Biomes.CUTE_BIOMES),
-                List.of(new MobSpawnSettings.SpawnerData(ModEntities.FAIRY_ENTITY.get(), 1000, 2, 4))));
+                List.of(new MobSpawnSettings.SpawnerData(ModEntities.FAIRY_ENTITY.get(), 5, 2, 4))));
 
     }
 
