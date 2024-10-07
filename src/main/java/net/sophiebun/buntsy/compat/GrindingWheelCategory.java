@@ -16,6 +16,7 @@ import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -75,15 +76,14 @@ public class GrindingWheelCategory implements IRecipeCategory<GrindingWheelRecip
         iRecipeLayoutBuilder.addSlot(RecipeIngredientRole.INPUT,40, 25).addItemStacks(inputs);
 
         int i = 0;
-        HashMap<Item, List<Map.Entry<Integer, Float>>> outputs = grindingWheelRecipe.getOutput();
-        for (Map.Entry<Item, List<Map.Entry<Integer, Float>>> itemEntry : outputs.entrySet()){
-            List<Map.Entry<Integer, Float>> entryCounts = itemEntry.getValue();
-            for (Map.Entry<Integer, Float> entry : entryCounts){
+        HashMap<Item, List<Tuple<Integer, Float>>> outputs = grindingWheelRecipe.getOutput();
+        for (Map.Entry<Item, List<Tuple<Integer, Float>>> itemEntry : outputs.entrySet()){
+            List<Tuple<Integer, Float>> entryCounts = itemEntry.getValue();
+            for (Tuple<Integer, Float> entry : entryCounts){
                 iRecipeLayoutBuilder.addSlot(RecipeIngredientRole.OUTPUT,99 + ((i % 3)* 18), 26 + ((i / 3) * 18))
-                        .addItemStack(new ItemStack(itemEntry.getKey(), entry.getKey()))
-                        .addTooltipCallback((iRecipeSlotView, list) -> list.add(Component.literal((entry.getValue() * 100) + "% Chance")));
+                        .addItemStack(new ItemStack(itemEntry.getKey(), entry.getA()))
+                        .addTooltipCallback((iRecipeSlotView, list) -> list.add(Component.literal((entry.getB() * 100) + "% Chance")));
                 i++;
-                float chance = entry.getValue();
             }
         }
     }

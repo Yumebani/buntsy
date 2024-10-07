@@ -37,17 +37,20 @@ public class CocoonBagScreen extends AbstractContainerScreen<CocoonBagMenu> {
     protected void containerTick() {
         ItemStack cocoonBagIn = playerInventory.player.getItemBySlot(EquipmentSlot.MAINHAND).is(ModItems.COCOON_BAG.get()) ?
                 playerInventory.player.getItemBySlot(EquipmentSlot.MAINHAND) : playerInventory.player.getItemBySlot(EquipmentSlot.OFFHAND);
-        CompoundTag tag = cocoonBagIn.getTag();
-        if (tag.contains("in_update") && tag.getBoolean("in_update")) {
-            menu.updateNbt(cocoonBagIn.getTag().getCompound("uro_contents"));
-            tag.remove("in_update");
-            menu.getCocoonBag().setTag(tag);
-        }
-        if (tag.contains("out_update") && tag.getBoolean("out_update")) {
-            ModPacketHandler.INSTANCE.sendToServer( new ModCocoonBagServerPacket(CocoonBag.getUroId(menu.getCocoonBag()),
-                    menu.getCocoonBag().getTag().getCompound("uro_contents"), false, false));
-            tag.remove("out_update");
-            menu.getCocoonBag().setTag(tag);
+
+        if (cocoonBagIn.hasTag()){
+            CompoundTag tag = cocoonBagIn.getTag();
+            if (tag.contains("in_update") && tag.getBoolean("in_update")) {
+                menu.updateNbt(cocoonBagIn.getTag().getCompound("uro_contents"));
+                tag.remove("in_update");
+                menu.getCocoonBag().setTag(tag);
+            }
+            if (tag.contains("out_update") && tag.getBoolean("out_update")) {
+                ModPacketHandler.INSTANCE.sendToServer( new ModCocoonBagServerPacket(CocoonBag.getUroId(menu.getCocoonBag()),
+                        menu.getCocoonBag().getTag().getCompound("uro_contents"), false, false));
+                tag.remove("out_update");
+                menu.getCocoonBag().setTag(tag);
+            }
         }
     }
 

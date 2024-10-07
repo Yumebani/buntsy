@@ -1,9 +1,9 @@
-// 1.20.1	2024-10-03T18:07:37.786217511	Registries
+// 1.20.1	2024-10-05T18:54:09.853524901	Registries
 0774d67e15d344b0af4664acf0effbbe597253d0 data/buntsy/forge/biome_modifier/add_wild_hootnip.json
 7103105e7d4d3bc4223502756b53703d74766448 data/buntsy/forge/biome_modifier/add_wild_strawberry.json
-6c1d1ca86a2151b591de4f02561733af0ff7d8ff data/buntsy/forge/biome_modifier/fairy.json
-dd11da29e6b66113341b1782674639899b4b5fb1 data/buntsy/forge/biome_modifier/silkbun.json
-5b5419c68e858885902beea2a15aa42152908547 data/buntsy/worldgen/biome/cuterly_biome.json
+627d1afc30bb34e271f76725aa264f06ec2f17c4 data/buntsy/forge/biome_modifier/fairy.json
+2b9a35195af84fbdb8c973b030cf7fd41f0a23c5 data/buntsy/forge/biome_modifier/silkbun.json
+4abf36a266d279469b647efda495fac81836c273 data/buntsy/worldgen/biome/cuterly_biome.json
 ab097dead8e291ea82b33a2aa6ca1ee8a40956c4 data/buntsy/worldgen/configured_feature/blue_bloom.json
 3d5f83129c7eab1697bef9f07fb0e9118e5c00a4 data/buntsy/worldgen/configured_feature/blue_charmil_grass.json
 08b248cf182bc89cfd5c5098042e0f30cdd8e109 data/buntsy/worldgen/configured_feature/bravot.json

@@ -226,7 +226,7 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
 
     public boolean isOutputClear(ItemStack primary, ItemStack secondary){
         Integer pSlot = getPrimaryAvailableSlot(primary);
-        return ((secondary == null && pSlot != null) || (secondary != null && pSlot == OUTPUT_SLOT));
+        return (pSlot != null) && ((secondary == null && pSlot != null) || (secondary != null && pSlot == OUTPUT_SLOT));
     }
 
     public void outputItems(ItemStack primary, ItemStack secondary){
@@ -245,7 +245,7 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
         ItemStack inserted = new ItemStack(item.getItem(),
                 this.outputItemHandler.getStackInSlot(slot).getCount() + item.getCount());
         if (item.hasTag()) inserted.setTag(item.getTag());
-        this.outputItemHandler.setStackInSlot(slot, item);
+        this.outputItemHandler.setStackInSlot(slot, inserted);
     }
 
     public Integer getPrimaryAvailableSlot(ItemStack item){

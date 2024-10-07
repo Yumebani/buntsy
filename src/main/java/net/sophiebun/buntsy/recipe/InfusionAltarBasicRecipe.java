@@ -157,8 +157,8 @@ public class InfusionAltarBasicRecipe implements Recipe<SimpleContainer> {
         public @Nullable InfusionAltarBasicRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
             List<ItemStack> inputs = new ArrayList<>();
 
-            for(int i = 0; i < inputs.size(); i++) {
-                inputs.set(i, pBuffer.readItem());
+            for(int i = 0; i < 5; i++) {
+                inputs.add(pBuffer.readItem());
             }
 
             ItemStack output = pBuffer.readItem();
@@ -170,8 +170,6 @@ public class InfusionAltarBasicRecipe implements Recipe<SimpleContainer> {
 
         @Override
         public void toNetwork(FriendlyByteBuf pBuffer, InfusionAltarBasicRecipe pRecipe) {
-            pBuffer.writeInt(pRecipe.inputItems.size());
-
             for (ItemStack item : pRecipe.getInputs()) {
                 pBuffer.writeItemStack(item, false);
             }

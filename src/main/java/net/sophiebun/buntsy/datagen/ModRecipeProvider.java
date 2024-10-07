@@ -111,11 +111,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer);
 
         //Cocoon bag
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.GIANT_COCOON.get(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.COCOON_BAG.get(), 1)
                 .define('A', ModItems.SILK_FABRIC.get())
                 .define('S', ModItems.SILK.get())
                 .define('B', ModItems.TOUGH_SILK_FABRIC.get())
-                .pattern(" S")
+                .pattern(" S ")
                 .pattern("BAB")
                 .pattern(" B ")
                 .unlockedBy(getHasName(ModItems.SILK_FABRIC.get()), has(ModItems.SILK_FABRIC.get()))

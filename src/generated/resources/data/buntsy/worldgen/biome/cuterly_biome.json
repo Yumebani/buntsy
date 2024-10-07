@@ -91,15 +91,15 @@
     "ambient": [
       {
         "type": "buntsy:silkbun",
-        "maxCount": 4,
+        "maxCount": 3,
         "minCount": 2,
-        "weight": 10
+        "weight": 1
       },
       {
         "type": "buntsy:fairy",
-        "maxCount": 4,
+        "maxCount": 3,
         "minCount": 2,
-        "weight": 10
+        "weight": 1
       }
     ],
     "axolotls": [],

@@ -43,6 +43,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
@@ -86,11 +87,11 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
     public AnimationState flyAnimationState = new AnimationState();
 
     public static boolean canSpawn(EntityType<Fairy> entityType, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random){
-        return level.getBlockState(pos.below()).is(ModTags.Blocks.CUTERLY_SPAWNER);
+        return level.getEntitiesOfClass(Fairy.class, AABB.ofSize(pos.getCenter(), 10, 10, 10)).isEmpty() && level.getBlockState(pos.below()).is(ModTags.Blocks.CUTERLY_SPAWNER);
     }
     public Fairy(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        //this.setPersistenceRequired();
+        this.setPersistenceRequired();
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);

@@ -30,6 +30,8 @@ public class ModRecipes {
             SERIALIZERS.register("fume_distillery", () -> FumeDistilleryRecipe.Serializer.INSTANCE);
     public static final RegistryObject<RecipeSerializer<InfusionAltarBasicRecipe>> INFUSION_ALTAR_BASIC_RECIPE =
             SERIALIZERS.register("infusion_altar_basic", () -> InfusionAltarBasicRecipe.Serializer.INSTANCE);
+    public static final RegistryObject<RecipeSerializer<InfusionAltarAdvancedRecipe>> INFUSION_ALTAR_ADVANCED_RECIPE =
+            SERIALIZERS.register("infusion_altar_advanced", () -> InfusionAltarAdvancedRecipe.Serializer.INSTANCE);
 
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);

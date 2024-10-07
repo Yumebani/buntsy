@@ -1,4 +1,4 @@
-// 1.20.1	2024-10-02T18:09:11.821851497	Recipes
+// 1.20.1	2024-10-05T03:53:15.466618966	Recipes
 49bf6421ffb0bf7066fb7c2eec93900d5dc0fddd data/buntsy/advancements/recipes/food/bowl_of_caramel_from_campfire_cooking.json
 a0234123e454c018771af36535ad86c98369da16 data/buntsy/advancements/recipes/food/bowl_of_caramel_from_smelting.json
 195963561e189e6a422c05d6ed454761b4daec6c data/buntsy/advancements/recipes/food/bowl_of_caramel_from_smoking.json
@@ -19,6 +19,7 @@ bec58bad3ca334f7e781f64fd0dc7e3d779c77e5 data/buntsy/advancements/recipes/misc/b
 a377811fa92d2f557500b7d0c51e7d84290b8aaf data/buntsy/advancements/recipes/misc/bunny_ears.json
 c834e8ded65f1931977fec26b1947eb30d0c0bfa data/buntsy/advancements/recipes/misc/caramel_strawberries.json
 5752a3cff651d59a6cca39a0e53784d154c6738f data/buntsy/advancements/recipes/misc/cat_ears.json
+0ce3ed6a60cb2d8d3f2d0a16e03939be5e5a5cc7 data/buntsy/advancements/recipes/misc/cocoon_bag.json
 32a2c35327613cedba8d4468bb5daafe4ac1e1b6 data/buntsy/advancements/recipes/misc/copper_ingot_from_blasting.json
 6ea9126582f169309ef6b7c44b9f2fe35f20e6e0 data/buntsy/advancements/recipes/misc/copper_ingot_from_smelting.json
 71e6ab4f378ca5a823cbfa40b16048cfc4131fe0 data/buntsy/advancements/recipes/misc/empty_catalyst.json
@@ -40,6 +41,7 @@ e91645fecddcd2f6dacddd271596cef7878db022 data/buntsy/advancements/recipes/misc/g
 cb640f942235516c33aa505a35f747cca894439a data/buntsy/advancements/recipes/misc/gentlit_slab.json
 d15c64ae98add242797ab80aa494211a81cde093 data/buntsy/advancements/recipes/misc/gentlit_stairs.json
 3fad224828c5cdb870c816a3ccfd4e852a7687cc data/buntsy/advancements/recipes/misc/gentlit_trapdoor.json
+3815a575578b791dcd84d1c893a24d7d768e05d2 data/buntsy/advancements/recipes/misc/giant_cocoon.json
 18cbb3fc828700967c95377bb5264f8f474140b9 data/buntsy/advancements/recipes/misc/gold_ingot_from_blasting.json
 ae15cf7bd01f444e6e7e1a320cff99afe2633d09 data/buntsy/advancements/recipes/misc/gold_ingot_from_smelting.json
 b338697396f81ea57e6f608ac103d271a6c302e3 data/buntsy/advancements/recipes/misc/grinding_wheel.json
@@ -98,6 +100,7 @@ d699fa60ff703cc9853072a1648f8051be421105 data/buntsy/recipes/bravot_pressure_pla
 631963210891c5a2711c9f661d217e770d9022cd data/buntsy/recipes/bunny_ears.json
 e6acc4153a71b7d3ef76052b953812a4e31843cc data/buntsy/recipes/caramel_strawberries.json
 2334696a90540c09a73e87892fb8e5cffd1bc533 data/buntsy/recipes/cat_ears.json
+ad079b8e43628cba22544f7ab8c861bfd9aa9e49 data/buntsy/recipes/cocoon_bag.json
 6bdac1c27e9a506d03469a09ae607ebb81e4eaa3 data/buntsy/recipes/copper_ingot_from_blasting.json
 698aba6143eae75330d6d9bb469105cbd7125d09 data/buntsy/recipes/copper_ingot_from_smelting.json
 d8fae6870af04a3ceaa0e0a5bcb2652750592477 data/buntsy/recipes/empty_catalyst.json
@@ -119,6 +122,7 @@ e2681928b2bf9b1918fa858207740c704e46516f data/buntsy/recipes/gentlit_pressure_pl
 b4cb8c1241415dae9d880ef4516525c91607eba4 data/buntsy/recipes/gentlit_slab.json
 ba7b981a54bd1b123756d37472ba9d336141c459 data/buntsy/recipes/gentlit_stairs.json
 372aae1a505e61f8d017614b6cca5fe7a7e39e11 data/buntsy/recipes/gentlit_trapdoor.json
+ce2006f1f9abba332e980ca8ba4a53cd4167aeef data/buntsy/recipes/giant_cocoon.json
 dfeb30901975413d4a5ad2410b65ccadb1367526 data/buntsy/recipes/gold_ingot_from_blasting.json
 45291359bb14f83d5e385f646b27c0057ebeaaa2 data/buntsy/recipes/gold_ingot_from_smelting.json
 8587353854688f6642671c531cfdc8a0d20cda9f data/buntsy/recipes/grinding_wheel.json

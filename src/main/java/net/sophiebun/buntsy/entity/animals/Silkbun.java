@@ -2,6 +2,7 @@ package net.sophiebun.buntsy.entity.animals;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -35,6 +36,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.sophiebun.buntsy.entity.ModEntities;
 import net.sophiebun.buntsy.entity.interfaces.IFumeAffectedEntity;
@@ -94,12 +96,13 @@ public class Silkbun extends Animal implements IFumeAffectedEntity {
     }
 
     public static boolean canSpawn(EntityType<Silkbun> entityType, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random){
-        return level.getBlockState(pos.below()).is(ModTags.Blocks.CUTERLY_SPAWNER);
+        return level.getEntitiesOfClass(Silkbun.class, AABB.ofSize(pos.getCenter(), 10, 10, 10)).isEmpty() && level.getBlockState(pos.below()).is(ModTags.Blocks.CUTERLY_SPAWNER);
     }
 
     protected void registerGoals() {
         if (!getIsSleeping()){
             resetGoals();
+            this.setPersistenceRequired();
             this.goalSelector.addGoal(1, new FloatGoal(this));
             this.goalSelector.addGoal(1, new ClimbOnTopOfPowderSnowGoal(this, this.level()));
             this.goalSelector.addGoal(1, new SilkbunPanicGoal(this, 2.2));
