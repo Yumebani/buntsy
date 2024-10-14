@@ -4,20 +4,26 @@ import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SeaPickleBlock;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.custom.HootnipCrop;
 import net.sophiebun.buntsy.blocks.custom.StrawberryCrop;
 import net.sophiebun.buntsy.item.ModItems;
 
+import java.util.List;
 import java.util.Set;
 
 public class ModBlockLootTables extends BlockLootSubProvider {
@@ -68,6 +74,10 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         //Adding soil
         this.add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get(), block -> createSingleItemTableWithSilkTouch(block, ModBlocks.CHARMIL_SOIL.get()));
         this.dropSelf(ModBlocks.CHARMIL_SOIL.get());
+        this.dropSelf(ModBlocks.SWEET_CORAL_SAND.get());
+        this.dropSelf(ModBlocks.SWEET_CANDY_ROCK.get());
+        this.dropSelf(ModBlocks.BITTER_CANDY_ROCK.get());
+        this.dropSelf(ModBlocks.SOUR_CANDY_ROCK.get());
         this.add(ModBlocks.CHARMIL_FARMLAND.get(), block -> createSingleItemTable(ModBlocks.CHARMIL_SOIL.get()));
 
         //Adding crops
@@ -96,6 +106,39 @@ public class ModBlockLootTables extends BlockLootSubProvider {
                         .apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 3)))));
 
         //Adding plants
+        this.add(ModBlocks.SWEETGRASS.get(), block -> createShearsOnlyDrop(block));
+        this.add(ModBlocks.TALL_SWEETGRASS.get(), block -> createDoublePlantShearsDrop(ModBlocks.SWEETGRASS.get()));
+        this.dropSelf(ModBlocks.COTTON_VINE.get());
+        this.dropOther(ModBlocks.COTTON_VINE_PLANT.get(), ModBlocks.COTTON_VINE.get());
+        this.add(ModBlocks.SWEET_PICKLE.get(), (p_248918_) -> {
+            return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(this.applyExplosionDecay(ModBlocks.SWEET_PICKLE.get(), LootItem.lootTableItem(p_248918_).apply(List.of(2, 3, 4), (p_251952_) -> {
+                return SetItemCountFunction.setCount(ConstantValue.exactly((float)p_251952_.intValue())).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(p_248918_).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SeaPickleBlock.PICKLES, p_251952_)));
+            }))));
+        });
+
+
+        this.otherWhenSilkTouch(ModBlocks.DEAD_SWEET_CORAL_WALL_FAN.get(), ModBlocks.DEAD_SWEET_CORAL_FAN.get());
+        this.otherWhenSilkTouch(ModBlocks.DEAD_BITTER_CORAL_WALL_FAN.get(), ModBlocks.DEAD_BITTER_CORAL_FAN.get());
+        this.otherWhenSilkTouch(ModBlocks.SWEET_CORAL_WALL_FAN.get(), ModBlocks.SWEET_CORAL_FAN.get());
+        this.otherWhenSilkTouch(ModBlocks.BITTER_CORAL_WALL_FAN.get(), ModBlocks.BITTER_CORAL_FAN.get());
+        this.dropWhenSilkTouch(ModBlocks.DEAD_SWEET_CORAL.get());
+        this.dropWhenSilkTouch(ModBlocks.DEAD_BITTER_CORAL.get());
+        this.dropWhenSilkTouch(ModBlocks.SWEET_CORAL.get());
+        this.dropWhenSilkTouch(ModBlocks.BITTER_CORAL.get());
+        this.dropWhenSilkTouch(ModBlocks.DEAD_SWEET_CORAL_FAN.get());
+        this.dropWhenSilkTouch(ModBlocks.DEAD_BITTER_CORAL_FAN.get());
+        this.dropWhenSilkTouch(ModBlocks.SWEET_CORAL_FAN.get());
+        this.dropWhenSilkTouch(ModBlocks.BITTER_CORAL_FAN.get());
+        this.dropSelf(ModBlocks.DEAD_SWEET_CORAL_BLOCK.get());
+        this.dropSelf(ModBlocks.DEAD_BITTER_CORAL_BLOCK.get());
+        this.add(ModBlocks.SWEET_CORAL_BLOCK.get(), (p_248608_) -> {
+            return this.createSingleItemTableWithSilkTouch(p_248608_, ModBlocks.DEAD_SWEET_CORAL_BLOCK.get());
+        });
+
+        this.add(ModBlocks.BITTER_CORAL_BLOCK.get(), (p_248608_) -> {
+            return this.createSingleItemTableWithSilkTouch(p_248608_, ModBlocks.DEAD_BITTER_CORAL_BLOCK.get());
+        });
+
         this.add(ModBlocks.PINK_CHARMIL_GRASS.get(), block -> createShearsOnlyDrop(block));
         this.add(ModBlocks.BLUE_CHARMIL_GRASS.get(), block -> createShearsOnlyDrop(block));
         this.dropSelf(ModBlocks.PINK_BLOOM.get());
@@ -173,7 +216,22 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.INFUSION_PEDESTAL.get());
         this.dropSelf(ModBlocks.FAIRY_POWER_RELAY.get());
         this.dropSelf(ModBlocks.INFUSION_ALTAR_BASIC.get());
+        this.dropSelf(ModBlocks.INFUSION_ALTAR_ADVANCED.get());
         this.dropSelf(ModBlocks.GIANT_COCOON.get());
+        this.dropSelf(ModBlocks.MIXER_BLOCK.get());
+
+        this.dropSelf(ModBlocks.PRISMATIC_BEACON.get());
+        this.dropSelf(ModBlocks.PRISMATIC_BEACON_BASE.get());
+        this.dropSelf(ModBlocks.BEACON_HEALTH_BOOST_MODIFIER.get());
+        this.dropSelf(ModBlocks.BEACON_SPEED_MODIFIER.get());
+        this.dropSelf(ModBlocks.BEACON_HASTE_MODIFIER.get());
+        this.dropSelf(ModBlocks.BEACON_STRENGTH_MODIFIER.get());
+        this.dropSelf(ModBlocks.BEACON_JUMP_BOOST_MODIFIER.get());
+        this.dropSelf(ModBlocks.BEACON_REGENERATION_MODIFIER.get());
+        this.dropSelf(ModBlocks.BEACON_RESISTANCE_MODIFIER.get());
+        this.dropSelf(ModBlocks.BEACON_FIRE_RESISTANCE_MODIFIER.get());
+        this.dropSelf(ModBlocks.BEACON_WATER_BREATHING_MODIFIER.get());
+
 
         //Others
         this.dropSelf(ModBlocks.SYRUP_EXTRACTOR.get());

@@ -14,6 +14,12 @@ public class ModTags {
 
     public static class Blocks {
 
+
+        public static final TagKey<Block> BUNTSY_CORAL_BLOCKS = tag("buntsy_coral_blocks");
+        public static final TagKey<Block> BUNTSY_WALL_CORALS = tag("buntsy_wall_corals");
+        public static final TagKey<Block> BUNTSY_CORAL_PLANTS = tag("buntsy_coral_plants");
+        public static final TagKey<Block> BUNTSY_CORALS = tag("buntsy_corals");
+
         public static final TagKey<Block> GENTLIT_LOGS = tag("gentlit_logs");
         public static final TagKey<Block> BRAVOT_LOGS = tag("bravot_logs");
         public static final TagKey<Block> NEEDS_SIlKY_TOOL = tag("needs_silky_tool");
@@ -23,6 +29,7 @@ public class ModTags {
         public static final TagKey<Block> FAIRY_INTERACTABLE_BLOCK_ENTITY = tag("fairy_interactable_block_entity");
 
         public static final TagKey<Block> CUTERLY_SPAWNER = tag("cuterly_spawner");
+        public static final TagKey<Block> PRISMATIC_BEACON_EFFECT_BLOCK = tag("prismatic_beacon_effect_block");
 
         private static TagKey<Block> tag(String name) {
             return BlockTags.create(new ResourceLocation(BuntsyMod.MODID, name));
@@ -47,7 +54,8 @@ public class ModTags {
     public static class Biomes {
 
 
-        public static final TagKey<Biome> CUTE_BIOMES = tag("cute_biomes");
+        public static final TagKey<Biome> SILK_BUN_SPAWN = tag("silk_bun_spawn");
+        public static final TagKey<Biome> FAIRY_SPAWN = tag("fairy_spawn");
 
         private static TagKey<Biome> tag(String name) {
             return TagKey.create(Registries.BIOME, new ResourceLocation(BuntsyMod.MODID, name));

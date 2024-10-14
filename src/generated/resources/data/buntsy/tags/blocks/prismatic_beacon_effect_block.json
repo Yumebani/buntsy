@@ -1,0 +1,13 @@
+{
+  "values": [
+    "buntsy:beacon_health_boost_modifier",
+    "buntsy:beacon_speed_modifier",
+    "buntsy:beacon_haste_modifier",
+    "buntsy:beacon_strength_modifier",
+    "buntsy:beacon_jump_boost_modifier",
+    "buntsy:beacon_regeneration_modifier",
+    "buntsy:beacon_resistance_modifier",
+    "buntsy:beacon_fire_resistance_modifier",
+    "buntsy:beacon_water_breathing_modifier"
+  ]
+}

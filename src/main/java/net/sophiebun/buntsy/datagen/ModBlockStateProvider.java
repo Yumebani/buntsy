@@ -77,7 +77,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
         //Adding soil models
         grassBlock(ModBlocks.PINK_FLUF_CHARMIL_SOIL, ModBlocks.CHARMIL_SOIL.getId().getPath());
         blockWithItem(ModBlocks.CHARMIL_SOIL);
+        blockWithItem(ModBlocks.SWEET_CORAL_SAND);
+        blockWithItem(ModBlocks.SWEET_CANDY_ROCK);
+        blockWithItem(ModBlocks.BITTER_CANDY_ROCK);
+        blockWithItem(ModBlocks.SOUR_CANDY_ROCK);
         farmlandBlock(ModBlocks.CHARMIL_FARMLAND, ModBlocks.CHARMIL_SOIL);
+
 
         //Crops
         simpleCrossBlock(ModBlocks.WILD_STRAWBERRY);
@@ -140,14 +145,41 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 new ModelFile.UncheckedModelFile(modLoc("block/fairy_power_relay")));
         simpleBlockWithItem(ModBlocks.INFUSION_ALTAR_BASIC.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/infusion_altar_basic")));
+        simpleBlockWithItem(ModBlocks.INFUSION_ALTAR_ADVANCED.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/infusion_altar_advanced")));
+        simpleBlockWithItem(ModBlocks.MIXER_BLOCK.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/mixer")));
         simpleBlockWithItem(ModBlocks.GIANT_COCOON.get(),
                 models().cubeColumn(ModBlocks.GIANT_COCOON.getId().getPath(),
                 new ResourceLocation(BuntsyMod.MODID, "block/giant_cocoon_side"),
                 new ResourceLocation(BuntsyMod.MODID, "block/giant_cocoon_top")));
 
+
+
+
+        //Beacon
+        simpleBlockWithItem(ModBlocks.PRISMATIC_BEACON.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/prismatic_beacon")));
+        simpleBlockWithItem(ModBlocks.PRISMATIC_BEACON_BASE.get(),
+                models().cubeBottomTop(ModBlocks.PRISMATIC_BEACON_BASE.getId().getPath(),
+                new ResourceLocation(BuntsyMod.MODID, "block/prismatic_beacon_base_side"),
+                new ResourceLocation(BuntsyMod.MODID, "block/prismatic_beacon_base_bottom"),
+                new ResourceLocation(BuntsyMod.MODID, "block/prismatic_beacon_base_top")));
+        blockWithItem(ModBlocks.BEACON_HASTE_MODIFIER);
+        blockWithItem(ModBlocks.BEACON_FIRE_RESISTANCE_MODIFIER);
+        blockWithItem(ModBlocks.BEACON_HEALTH_BOOST_MODIFIER);
+        blockWithItem(ModBlocks.BEACON_JUMP_BOOST_MODIFIER);
+        blockWithItem(ModBlocks.BEACON_SPEED_MODIFIER);
+        blockWithItem(ModBlocks.BEACON_RESISTANCE_MODIFIER);
+        blockWithItem(ModBlocks.BEACON_REGENERATION_MODIFIER);
+        blockWithItem(ModBlocks.BEACON_STRENGTH_MODIFIER);
+        blockWithItem(ModBlocks.BEACON_WATER_BREATHING_MODIFIER);
+
         //Other blocks
         syrupExtractorBlock(ModBlocks.SYRUP_EXTRACTOR);
         simpleBlockItem(ModBlocks.SYRUP_EXTRACTOR.get(), new ModelFile.UncheckedModelFile(modLoc("block/syrup_extractor_stage0")));
+
+
     }
 
     private void hootnipCrop(RegistryObject<Block> block){

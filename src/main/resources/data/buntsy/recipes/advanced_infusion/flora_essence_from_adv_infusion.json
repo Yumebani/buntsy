@@ -1,0 +1,82 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:fairy_dust"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:glowshroom"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:loveshroom"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:cactus"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:sugar_cane"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:kelp"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:wheat_seeds"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:glow_berries"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:cocoa_beans"
+      },
+      "nbt": []
+    }
+  ],
+  "output":
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:essence"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.essenceType",
+          "value": "flora"
+        }
+      ]
+    },
+  "max_progress": 1000
+}

@@ -16,6 +16,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.CatVariant;
@@ -58,14 +59,15 @@ public class FumeSpreaderBlockEntity extends BlockEntity implements MenuProvider
             3, List.of(400, 2),
             4, List.of(10, 200),
             5, List.of(10, 200),
-            6, List.of(100, 20),
+            6, List.of(500, 1),
             7, List.of(30, 40),
-            8, List.of(30, 40)
+            8, List.of(30, 40),
+            9, List.of(100, 20)
     );
 
-    private static final int RANGE_X = 8;
-    private static final int RANGE_Y = 4;
-    private static final int RANGE_Y_DOWN = 0;
+    private static final int RANGE_X = 10;
+    private static final int RANGE_Y = 5;
+    private static final int RANGE_Y_DOWN = 5;
 
     private static final int GROWTH_RANGE_X = 4;
     private static final int GROWTH_RANGE_Y = 1;
@@ -275,7 +277,7 @@ public class FumeSpreaderBlockEntity extends BlockEntity implements MenuProvider
             case 5:
                 turnRandomAgeableToBaby(pLevel, pPos);
                 break;
-            case 6:
+            case 9:
                 damageNearbyEntities(pLevel, pPos); //TODO TEST FOR PLAYER DAMAGE
                 break;
             case 7:
@@ -317,7 +319,9 @@ public class FumeSpreaderBlockEntity extends BlockEntity implements MenuProvider
 
     private void damageNearbyEntities(Level pLevel, BlockPos pPos){
         for (LivingEntity entity : getAnyEntities(pLevel, pPos)){
-            entity.hurt(entity.damageSources().mobAttack(entity), 3 * this.fumeLevel);
+            if (!entity.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.GAS_MASK.get())){
+                entity.hurt(entity.damageSources().mobAttack(entity), 2 * this.fumeLevel);
+            }
         }
     }
 

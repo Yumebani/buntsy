@@ -185,7 +185,7 @@ public class GiantCocoonSavedData extends SavedData {
     }
 
     public static GiantCocoonSavedData computeIfAbsent(MinecraftServer server){
-        return server.overworld().getDataStorage().computeIfAbsent(GiantCocoonSavedData::load, GiantCocoonSavedData::create, "cocoons");
+        return server.overworld().getDataStorage().computeIfAbsent(GiantCocoonSavedData::load, GiantCocoonSavedData::create, "cocoons_data");
     }
 
 }

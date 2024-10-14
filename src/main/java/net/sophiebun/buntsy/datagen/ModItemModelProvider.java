@@ -58,6 +58,11 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.HOOTNIP_CEREAL);
         simpleItem(ModItems.STRAWBERRY_SEEDS);
         simpleItem(ModItems.HOOTNIP_SEEDS);
+        simpleItem(ModItems.SPEED_BLEND);
+        simpleItem(ModItems.EFFICIENCY_BLEND);
+        simpleItem(ModItems.GROWTH_BLEND);
+        simpleItem(ModItems.SLOTH_BLEND);
+        simpleItem(ModItems.ROTTEN_BLEND);
 
         //Ores and stuff
         simpleItem(ModItems.AMETHYST_DUST);
@@ -184,6 +189,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.BUNNY_EARS);
         simpleItem(ModItems.CAT_EARS);
         simpleItem(ModItems.HEAD_BOW);
+        simpleItem(ModItems.GAS_MASK);
 
         withExistingParent(ModItems.SILKBUN_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.FAIRY_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
@@ -192,6 +198,10 @@ public class ModItemModelProvider extends ItemModelProvider {
         //Fume bottle
         fumeBottleItem(ModItems.FUME_BOTTLE);
         catalystItem(ModItems.CATALYST);
+
+        //Essences
+        simpleItem(ModItems.ESSENCE);
+        simpleItem(ModItems.PRISM);
     }
 
     private ItemModelBuilder simpleCrossBlockItem (RegistryObject<Block> block){

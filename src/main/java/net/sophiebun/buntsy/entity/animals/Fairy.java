@@ -87,7 +87,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
     public AnimationState flyAnimationState = new AnimationState();
 
     public static boolean canSpawn(EntityType<Fairy> entityType, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random){
-        return level.getEntitiesOfClass(Fairy.class, AABB.ofSize(pos.getCenter(), 10, 10, 10)).isEmpty() && level.getBlockState(pos.below()).is(ModTags.Blocks.CUTERLY_SPAWNER);
+        return level.getEntitiesOfClass(Fairy.class, AABB.ofSize(pos.getCenter(), 20, 20, 20)).isEmpty() && level.getBlockState(pos.below()).is(ModTags.Blocks.CUTERLY_SPAWNER);
     }
     public Fairy(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -146,7 +146,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
         this.goalSelector.addGoal(1, new FairyUpdateRegisteredBlocks(this));
         this.goalSelector.addGoal(2, new FairyEatFromOfferings(this, 0.8f, 30));
         this.goalSelector.addGoal(5, new FairyCollectResources(this, 0.6f, 8, 45));
-        this.goalSelector.addGoal(10, new FairyEnchantResources(this, 0.6f, 30));
+        this.goalSelector.addGoal(5, new FairyEnchantResources(this, 0.6f, 30));
         this.goalSelector.addGoal(15, new FairyWanderGoal(this, 8, 0.4f));
     }
 
@@ -500,8 +500,8 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
         }
 
         if (this.isTame() && this.getFood() > 0){
-            this.toConsume += this.getConsumptionRate();
-            this.decrementFood(Mth.floor(this.toConsume));
+            this.toConsume += this.getConsumptionRate() / (fumes.containsKey(1) ? fumes.get(1).get(0) + 1 : 1);
+            this.decrementFood(Mth.ceil(this.toConsume));
             this.toConsume %= 1;
         }
     }
@@ -748,7 +748,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
         @Override
         public void start() {
             super.start();
-            this.nextUseTicks = 1000 + fairy.random.nextInt(500);
+            this.nextUseTicks = 200 + fairy.random.nextInt(100);
         }
 
         @Override
@@ -778,7 +778,12 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
 
         @Override
         protected void useBlock() {
-            getBench(this.target).infuse();
+            FairyInfusionBenchBlockEntity bench = getBench(this.target);
+            for (int i = 0; i < random.nextInt(1,3); i++){
+                if (bench.hasInfusion()){
+                    bench.infuse();
+                }
+            }
             this.playFinishUseParticle();
             this.playFinishUseSound();
         }
@@ -984,7 +989,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
                         .withParameter(LootContextParams.BLOCK_STATE, blockState)
                         .withParameter(LootContextParams.TOOL, new ItemStack(Items.DIAMOND_PICKAXE));
 
-                this.fairy.setCarriedItem(new ItemStack(blockState.getDrops(params).get(0).getItem(), this.fairy.random.nextInt(0,4)));
+                this.fairy.setCarriedItem(new ItemStack(blockState.getDrops(params).get(0).getItem(), this.fairy.random.nextInt(2,5)));
 
                 ModGrowableMineral mineral = ((ModGrowableMineral) blockState.getBlock());
                 BlockState newBlockState = mineral.getStages().get(this.fairy.random.nextInt(2)).get().defaultBlockState();

@@ -1,5 +1,6 @@
 package net.sophiebun.buntsy.worldgen;
 
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
@@ -33,6 +34,14 @@ public class ModConfiguredFeatures {
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> GIANT_LOVESHROOM_KEY = registerKey("giant_loveshroom");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GIANT_GLOWSHROOM_KEY = registerKey("giant_glowshroom");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SWEETGRASS_KEY = registerKey("sweetgrass");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SWEET_PICKLE_KEY = registerKey("sweet_pickle");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> COTTON_VINE_KEY = registerKey("cotton_vine");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MOD_CORAL_KEY = registerKey("mod_coral_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CORAL_SAND_NEAR_WATER_KEY = registerKey("coral_sand_near_water_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CANDY_CRAG_PILE_KEY = registerKey("candy_crag_pile_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CANDY_BOULDER_KEY = registerKey("candy_boulder_key");
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> WILD_STRAWBERRY_KEY = registerKey("wild_strawberry");
     public static final ResourceKey<ConfiguredFeature<?, ?>> WILD_HOOTNIP_KEY = registerKey("wild_hootnip");
@@ -87,6 +96,21 @@ public class ModConfiguredFeatures {
                 BlockStateProvider.simple(ModBlocks.GLOWSHROOM_BLOCK.get()),
                 BlockStateProvider.simple(Blocks.MUSHROOM_STEM.defaultBlockState().setValue(HugeMushroomBlock.UP, false)
                         .setValue(HugeMushroomBlock.DOWN, false)), 0));
+
+
+        //Sea Stuff Patches
+        register(context, SWEETGRASS_KEY, ModFeatures.SWEETGRASS_FEATURE.get(), new ProbabilityFeatureConfiguration(0.4F));
+        register(context, SWEET_PICKLE_KEY, ModFeatures.SWEETPICKLE_FEATURE.get(), new CountConfiguration(20));
+        register(context, COTTON_VINE_KEY, ModFeatures.COTTON_VINE_FEATURE.get(), new NoneFeatureConfiguration());
+        register(context, CORAL_SAND_NEAR_WATER_KEY, ModFeatures.CORAL_SAND_NEAR_WATER.get(), new NoneFeatureConfiguration());
+        register(context, MOD_CORAL_KEY, Feature.SIMPLE_RANDOM_SELECTOR, new SimpleRandomFeatureConfiguration(
+                HolderSet.direct(PlacementUtils.inlinePlaced(ModFeatures.MOD_CORAL_MUSHROOM.get(), FeatureConfiguration.NONE),
+                        PlacementUtils.inlinePlaced(ModFeatures.MOD_CORAL_TREE.get(), FeatureConfiguration.NONE),
+                        PlacementUtils.inlinePlaced(ModFeatures.MOD_CORAL_CLAW.get(), FeatureConfiguration.NONE))));
+
+        //Candy crag
+        register(context, CANDY_CRAG_PILE_KEY, ModFeatures.CANDY_CRAG_PILE.get(), new NoneFeatureConfiguration());
+        register(context, CANDY_BOULDER_KEY, ModFeatures.CANDY_BOULDER.get(), new NoneFeatureConfiguration());
 
 
         //Plant Patches

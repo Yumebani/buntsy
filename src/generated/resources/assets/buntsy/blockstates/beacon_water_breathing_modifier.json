@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "buntsy:block/beacon_water_breathing_modifier"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "type": "buntsy:sweetgrass_feature",
+  "config": {
+    "probability": 0.4
+  }
+}

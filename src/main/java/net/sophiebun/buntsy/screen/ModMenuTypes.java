@@ -35,6 +35,8 @@ public class ModMenuTypes {
             registerMenuType("giant_cocoon_menu", GiantCocoonMenu::new);
     public static final RegistryObject<MenuType<CocoonBagMenu>> COCOON_BAG_MENU =
             registerMenuType("cocoon_bag_menu", CocoonBagMenu::new);
+    public static final RegistryObject<MenuType<MixerMenu>> MIXER_MENU =
+            registerMenuType("mixer_menu", MixerMenu::new);
 
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory){
         return MenusRegister.register(name, () -> IForgeMenuType.create(factory));

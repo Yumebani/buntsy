@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.sophiebun.buntsy.BuntsyMod;
+import net.sophiebun.buntsy.blocks.custom.entityblocks.InfusionAltarAdvanced;
 import net.sophiebun.buntsy.recipe.*;
 import net.sophiebun.buntsy.screen.*;
 
@@ -30,6 +31,8 @@ public class JEIBuntsyPlugin implements IModPlugin {
         registration.addRecipeCategories(new MagicCrystalizerCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new FumeDistilleryCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new InfusionAltarBasicCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new InfusionAltarAdvancedCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new MixerCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -56,6 +59,12 @@ public class JEIBuntsyPlugin implements IModPlugin {
 
         List<InfusionAltarBasicRecipe> infusionAltarBasicCategories = recipeManager.getAllRecipesFor(InfusionAltarBasicRecipe.Type.INSTANCE);
         registration.addRecipes(InfusionAltarBasicCategory.INFUSION_ALTAR_BASIC_RECIPE_TYPE, infusionAltarBasicCategories);
+
+        List<InfusionAltarAdvancedRecipe> infusionAltarAdvancedRecipes = recipeManager.getAllRecipesFor(InfusionAltarAdvancedRecipe.Type.INSTANCE);
+        registration.addRecipes(InfusionAltarAdvancedCategory.INFUSION_ALTAR_ADVANCED_RECIPE_TYPE, infusionAltarAdvancedRecipes);
+
+        List<MixerRecipe> mixerRecipes = recipeManager.getAllRecipesFor(MixerRecipe.Type.INSTANCE);
+        registration.addRecipes(MixerCategory.MIXER_RECIPE_TYPE, mixerRecipes);
     }
 
     @Override
@@ -77,5 +86,8 @@ public class JEIBuntsyPlugin implements IModPlugin {
 
         registration.addRecipeClickArea(FumeDistilleryScreen.class, 79, 34, 24, 24,
                 FumeDistilleryCategory.FUME_DISTILLERY_RECIPE_TYPE);
+
+        registration.addRecipeClickArea(MixerScreen.class, 87, 23, 24, 36,
+                MixerCategory.MIXER_RECIPE_TYPE);
     }
 }

@@ -1,0 +1,26 @@
+{
+  "type": "buntsy:grinding_wheel",
+  "ingredients": [
+    {
+      "item": "buntsy:sweet_candy_rock"
+    },
+    {
+      "item": "buntsy:bitter_candy_rock"
+    },
+    {
+      "item": "buntsy:sour_candy_rock"
+    }
+  ],
+  "output": [
+    {
+      "count": 2,
+      "chance": 1.0,
+      "item": "minecraft:sugar"
+    },
+    {
+      "count": 1,
+      "chance": 0.5,
+      "item": "minecraft:sugar"
+    }
+  ]
+}

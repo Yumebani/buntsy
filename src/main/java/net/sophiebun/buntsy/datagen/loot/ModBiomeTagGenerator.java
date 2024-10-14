@@ -23,6 +23,7 @@ public class ModBiomeTagGenerator extends BiomeTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        this.tag(ModTags.Biomes.CUTE_BIOMES).add(ModBiomes.CUTERLY_BIOME);
+        this.tag(ModTags.Biomes.FAIRY_SPAWN).add(ModBiomes.CUTERLY_BIOME).add(ModBiomes.CANDY_CRAGS_BIOME);
+        this.tag(ModTags.Biomes.SILK_BUN_SPAWN).add(ModBiomes.CUTERLY_BIOME);
     }
 }

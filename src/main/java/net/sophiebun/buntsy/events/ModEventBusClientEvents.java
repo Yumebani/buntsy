@@ -19,7 +19,9 @@ import net.sophiebun.buntsy.entity.client.ModModelLayers;
 import net.sophiebun.buntsy.entity.client.SilkbunModel;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.item.custom.CocoonBag;
+import net.sophiebun.buntsy.item.custom.Essence;
 import net.sophiebun.buntsy.item.custom.FumeBottle;
+import net.sophiebun.buntsy.item.custom.Prism;
 
 @Mod.EventBusSubscriber(modid = BuntsyMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModEventBusClientEvents {
@@ -50,5 +52,7 @@ public class ModEventBusClientEvents {
     public static void registerBlockEntityRenderes(RegisterColorHandlersEvent.Item event){
         event.register(FumeBottle.getTint(), ModItems.FUME_BOTTLE.get());
         event.register(FumeBottle.getTint(), ModItems.CATALYST.get());
+        event.register(Essence.getTint(), ModItems.ESSENCE.get());
+        event.register(Prism.getTint(), ModItems.PRISM.get());
     }
 }

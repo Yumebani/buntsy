@@ -32,6 +32,8 @@ public class ModRecipes {
             SERIALIZERS.register("infusion_altar_basic", () -> InfusionAltarBasicRecipe.Serializer.INSTANCE);
     public static final RegistryObject<RecipeSerializer<InfusionAltarAdvancedRecipe>> INFUSION_ALTAR_ADVANCED_RECIPE =
             SERIALIZERS.register("infusion_altar_advanced", () -> InfusionAltarAdvancedRecipe.Serializer.INSTANCE);
+    public static final RegistryObject<RecipeSerializer<MixerRecipe>> MIXER_RECIPE =
+            SERIALIZERS.register("mixer", () -> MixerRecipe.Serializer.INSTANCE);
 
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "buntsy:block/beacon_health_boost_modifier"
+  }
+}

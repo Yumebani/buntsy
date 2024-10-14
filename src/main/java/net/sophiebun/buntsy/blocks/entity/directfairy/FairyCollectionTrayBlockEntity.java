@@ -56,7 +56,7 @@ public class FairyCollectionTrayBlockEntity extends FairyInteractBlockEntity imp
 
     public FairyCollectionTrayBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.FAIRY_COLLECTION_TRAY_BLOCK_ENTITY.get(), pPos, pBlockState);
-        setConsumption(1.25f);
+        setConsumption(0.7f);
 
         Random random = new Random();
 

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "buntsy:block/prismatic_beacon_base_bottom",
+    "side": "buntsy:block/prismatic_beacon_base_side",
+    "top": "buntsy:block/prismatic_beacon_base_top"
+  }
+}

@@ -135,6 +135,23 @@ public class ModItems {
     public static final RegistryObject<Item> HOOTNIP_SEEDS = ItemsRegister.register(
             "hootnip_seeds", () -> new ItemNameBlockItem(ModBlocks.HOOTNIP_CROP.get(), new Item.Properties()));
 
+    public static final RegistryObject<Item> SPEED_BLEND = ItemsRegister.register(
+            "speed_blend", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> EFFICIENCY_BLEND = ItemsRegister.register(
+            "efficiency_blend", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> GROWTH_BLEND = ItemsRegister.register(
+            "growth_blend", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> SLOTH_BLEND = ItemsRegister.register(
+            "sloth_blend", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> ROTTEN_BLEND = ItemsRegister.register(
+            "rotten_blend", () -> new Item(new Item.Properties()));
+
+
+    public static final RegistryObject<Item> ESSENCE = ItemsRegister.register(
+            "essence", () -> new Essence(new Item.Properties()));
+    public static final RegistryObject<Item> PRISM = ItemsRegister.register(
+            "prism", () -> new Prism(new Item.Properties()));
+
     public static final RegistryObject<Item> SILKY_SWORD = ItemsRegister.register(
             "silky_sword", () -> new SwordItem(ModToolTiers.SILKY, 7, -2.0F, new Item.Properties()));
     public static final RegistryObject<Item> SILKY_PICKAXE = ItemsRegister.register(
@@ -170,6 +187,8 @@ public class ModItems {
             "cat_ears", () -> new CatEarsItem(ClothArmorMaterial.CLOTH, ArmorItem.Type.HELMET, new Item.Properties()));
     public static final RegistryObject<Item> HEAD_BOW = ItemsRegister.register(
             "head_bow", () -> new HeadBowItem(ClothArmorMaterial.CLOTH, ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final RegistryObject<Item> GAS_MASK = ItemsRegister.register(
+            "gas_mask", () -> new GasMaskItem(ClothArmorMaterial.CLOTH, ArmorItem.Type.HELMET, new Item.Properties()));
 
     public static final RegistryObject<Item> BOWL_OF_CARAMEL = ItemsRegister.register(
             "bowl_of_caramel", () -> new BowlFoodItem(new Item.Properties().food(ModFoods.BOWL_OF_CARAMEL).stacksTo(16)));

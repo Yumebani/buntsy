@@ -1,6 +1,6 @@
 {
   "type": "forge:add_spawns",
-  "biomes": "#buntsy:cute_biomes",
+  "biomes": "#buntsy:silk_bun_spawn",
   "spawners": {
     "type": "buntsy:silkbun",
     "maxCount": 4,

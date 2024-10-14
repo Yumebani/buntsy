@@ -157,7 +157,7 @@ public class InfusionAltarAdvancedRecipe implements Recipe<SimpleContainer> {
         public @Nullable InfusionAltarAdvancedRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
             List<ItemStack> inputs = new ArrayList<>();
 
-            for(int i = 0; i < 5; i++) {
+            for(int i = 0; i < 9; i++) {
                 inputs.add(pBuffer.readItem());
             }
 

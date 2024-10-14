@@ -64,12 +64,15 @@ public class InfusionAltarBasicBlockEntity extends BlockEntity {
     }
 
     public void removeRelay(Level pLevel, BlockPos pos){
-        ((FairyPowerRelayBlockEntity) pLevel.getBlockEntity(pos)).removeLinked(pLevel);
+        if (pLevel.getBlockEntity(pos) != null && pLevel.getBlockEntity(pos) instanceof  FairyPowerRelayBlockEntity){
+            ((FairyPowerRelayBlockEntity) pLevel.getBlockEntity(pos)).removeLinked(pLevel);
+        }
     }
 
     public void removeAllRelays(Level pLevel){
         for (BlockPos relayPos : infusionPedestals.stream().toList()){
             removeRelay(pLevel, relayPos);
+            this.infusionPedestals.remove(relayPos);
         }
     }
 

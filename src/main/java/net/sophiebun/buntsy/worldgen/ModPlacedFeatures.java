@@ -14,6 +14,7 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
+import net.sophiebun.buntsy.blocks.custom.CottonvineBlock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,14 @@ public class ModPlacedFeatures {
 
     public static final ResourceKey<PlacedFeature> GIANT_LOVESHROOM_PLACED_KEY = registerKey("giant_loveshroom_placed");
     public static final ResourceKey<PlacedFeature> GIANT_GLOWSHROOM_PLACED_KEY = registerKey("giant_glowshroom_placed");
+
+    public static final ResourceKey<PlacedFeature> SWEETGRASS_PLACED_KEY = registerKey("sweetgrass_placed_key");
+    public static final ResourceKey<PlacedFeature> SWEET_PICKLE_PLACED_KEY = registerKey("sweet_pickle_placed_key");
+    public static final ResourceKey<PlacedFeature> COTTON_VINE_PLACED_KEY = registerKey("cotton_vine_placed_key");
+    public static final ResourceKey<PlacedFeature> MOD_CORAL_PLACED_KEY = registerKey("mod_coral_placed_key");
+    public static final ResourceKey<PlacedFeature> CORAL_SAND_NEAR_WATER_PLACED_KEY = registerKey("coral_sand_near_water_placed_key");
+    public static final ResourceKey<PlacedFeature> CANDY_CRAG_PILE_PLACED_KEY = registerKey("candy_crag_pile_placed_key");
+    public static final ResourceKey<PlacedFeature> CANDY_BOULDER_PLACED_KEY = registerKey("candy_boulder_placed_key");
 
     public static final ResourceKey<PlacedFeature> WILD_STRAWBERRY_PLACED_KEY = registerKey("wild_strawberry_placed");
     public static final ResourceKey<PlacedFeature> WILD_HOOTNIP_PLACED_KEY = registerKey("wild_hootnip_placed");
@@ -64,6 +73,24 @@ public class ModPlacedFeatures {
         register(context, GIANT_GLOWSHROOM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.GIANT_GLOWSHROOM_KEY),
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.5f, 2),
                         ModBlocks.GLOWSHROOM.get()));
+
+        //Sea plants
+        register(context, SWEETGRASS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SWEETGRASS_KEY),
+            List.of(InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, CountPlacement.of(60), BiomeFilter.biome()));
+        register(context, SWEET_PICKLE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SWEET_PICKLE_KEY),
+            List.of(RarityFilter.onAverageOnceEvery(16), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+        register(context, COTTON_VINE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.COTTON_VINE_KEY),
+            List.of(NoiseBasedCountPlacement.of(80, 80.0D, 0.0D), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+        register(context, MOD_CORAL_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.MOD_CORAL_KEY),
+            List.of(NoiseBasedCountPlacement.of(30, 200.0D, 0.0D), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+        register(context, CORAL_SAND_NEAR_WATER_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CORAL_SAND_NEAR_WATER_KEY),
+                List.of(NoiseBasedCountPlacement.of(10, 400.0D, 0.0D), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+
+        //Candy crag
+        register(context, CANDY_CRAG_PILE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CANDY_CRAG_PILE_KEY),
+                List.of(PlacementUtils.countExtra(0, 0.25f, 3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+       register(context, CANDY_BOULDER_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CANDY_BOULDER_KEY),
+                List.of(CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
 
         //Plants
         register(context, WILD_STRAWBERRY_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.WILD_STRAWBERRY_KEY),

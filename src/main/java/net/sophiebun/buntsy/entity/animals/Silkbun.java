@@ -90,13 +90,13 @@ public class Silkbun extends Animal implements IFumeAffectedEntity {
 
     public Silkbun(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        //this.setPersistenceRequired();
+        this.setPersistenceRequired();
         this.jumpControl = new SilkbunJumpControl(this);
         this.moveControl = new SilkbunMoveControl(this);
     }
 
     public static boolean canSpawn(EntityType<Silkbun> entityType, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random){
-        return level.getEntitiesOfClass(Silkbun.class, AABB.ofSize(pos.getCenter(), 10, 10, 10)).isEmpty() && level.getBlockState(pos.below()).is(ModTags.Blocks.CUTERLY_SPAWNER);
+        return level.getEntitiesOfClass(Silkbun.class, AABB.ofSize(pos.getCenter(), 20, 20, 20)).isEmpty() && level.getBlockState(pos.below()).is(ModTags.Blocks.CUTERLY_SPAWNER);
     }
 
     protected void registerGoals() {

@@ -1,4 +1,4 @@
-// 1.20.1	2024-10-05T03:53:15.466618966	Recipes
+// 1.20.1	2024-10-11T18:12:47.933492453	Recipes
 49bf6421ffb0bf7066fb7c2eec93900d5dc0fddd data/buntsy/advancements/recipes/food/bowl_of_caramel_from_campfire_cooking.json
 a0234123e454c018771af36535ad86c98369da16 data/buntsy/advancements/recipes/food/bowl_of_caramel_from_smelting.json
 195963561e189e6a422c05d6ed454761b4daec6c data/buntsy/advancements/recipes/food/bowl_of_caramel_from_smoking.json
@@ -32,6 +32,7 @@ acb34ce9fd67e14137bb7d28f6348b4ceffabeb8 data/buntsy/advancements/recipes/misc/f
 16bec64ac3dfedf0675bd6bf1afc0808af7c1ec4 data/buntsy/advancements/recipes/misc/fairy_staff.json
 69f635b8a5b54a6708cc387dd696efc6af98335a data/buntsy/advancements/recipes/misc/fume_distillery.json
 face2b08265e69e8afc772da2cb2b78d41c79467 data/buntsy/advancements/recipes/misc/fume_spreader.json
+2f4f978156cdee05974a137685831b66eeb91bd0 data/buntsy/advancements/recipes/misc/gas_mask.json
 42c0617a2898ec95a6fdce94dbea066242c13b5b data/buntsy/advancements/recipes/misc/gentlit_button.json
 df65217d087cab721b55649aca7cf96c74f10d8c data/buntsy/advancements/recipes/misc/gentlit_door.json
 d25f96a8edc2ec21af1eb5eaf2b0a5211d304dc0 data/buntsy/advancements/recipes/misc/gentlit_fence.json
@@ -57,6 +58,7 @@ f36b961e70c9c1df706db0f418f87d790bea9e7d data/buntsy/advancements/recipes/misc/h
 3e09e2e55abe93e6c458cf9f9de9e5af12a2318f data/buntsy/advancements/recipes/misc/iron_ingot_from_blasting.json
 ba58e449cf43f9a8671e9ced27ff7793b8d430ab data/buntsy/advancements/recipes/misc/iron_ingot_from_smelting.json
 d7260dc1843ee627d183a6861d5e9d3b34cbd3f0 data/buntsy/advancements/recipes/misc/magic_crystalizer.json
+b7090d54dc6f1a40071dec2da63e23ace30a7afe data/buntsy/advancements/recipes/misc/mixer_block.json
 ac17f91e4e775963bc55cce74c9fcc76652edcbd data/buntsy/advancements/recipes/misc/netherite_scrap_from_blasting.json
 a9c233c16532ebb8900e6d0ca92384b86b1b6f0d data/buntsy/advancements/recipes/misc/netherite_scrap_from_smelting.json
 791ca016b8d5a479dbc8760e6f59ef298ed229e1 data/buntsy/advancements/recipes/misc/silk_fabric.json
@@ -113,6 +115,7 @@ cb83bb86ff55d5949c00214b8a3d363debfa3041 data/buntsy/recipes/fairy_power_recepto
 9181fc06f6c35dcd0a2c43761476c3845c829e43 data/buntsy/recipes/fairy_staff.json
 efb398b2b16e465f99941ce56886dca257533b21 data/buntsy/recipes/fume_distillery.json
 96ba3d44f903cfb72501c817e0af3b448fcace5e data/buntsy/recipes/fume_spreader.json
+52d40ded88ee8b54d361bd0870c3964240a65f91 data/buntsy/recipes/gas_mask.json
 36388462902ae22f8eee258771875f89ffcdb7fb data/buntsy/recipes/gentlit_button.json
 e5d833c3f78224287699bf5f4a7f7a6de859ac37 data/buntsy/recipes/gentlit_door.json
 40f73f519ee7f3e6f961ef75d06c9a9c59fcfa58 data/buntsy/recipes/gentlit_fence.json
@@ -138,6 +141,7 @@ ade62003b7bf6478ea468cdb154e889ce345dbc0 data/buntsy/recipes/infusion_altar_basi
 61f757f7e0fa16a212d0ead59edf52981501be2b data/buntsy/recipes/iron_ingot_from_blasting.json
 da28201f3c132f8f5cf78799ec93f5c2020cc6bd data/buntsy/recipes/iron_ingot_from_smelting.json
 3935b55aa29a0cf5a3de53380ae5421d87bdfb34 data/buntsy/recipes/magic_crystalizer.json
+baf3b93179369bcf8aee5be50181313dd0132d00 data/buntsy/recipes/mixer_block.json
 a7ba4d696e9c4e3be3920e7b58471cc806f8929a data/buntsy/recipes/netherite_scrap_from_blasting.json
 968c88389e9c5ee4d01f798b1f339994f89b3345 data/buntsy/recipes/netherite_scrap_from_smelting.json
 d39f1e26754fc20b5509857c1db589b09b04ef53 data/buntsy/recipes/silk_fabric.json
@@ -160,7 +164,7 @@ b07e932e919223c87aeb79d19012ca3bee00af37 data/buntsy/recipes/sugar_bowl.json
 a842b379e69dae84437179329b7b1b98e8c85497 data/buntsy/recipes/syrup_extractor.json
 72abb79e813b9ed5eae1348844145cd6c25de9b1 data/buntsy/recipes/syrupy_mixture_bowl.json
 85eaf90dd1d0afee45cb5440b1501ec51b6aa9be data/buntsy/recipes/thread_reeler.json
-0a38dd524a8c75252f90ae4ccb2e7d62c32e2227 data/buntsy/recipes/tough_silk_fabric.json
+65af4448417b3b871db311a10b26356730560f87 data/buntsy/recipes/tough_silk_fabric.json
 e7f9b1975dbd8bafefbd7ee41cc0a259987d00d7 data/minecraft/advancements/recipes/misc/diamond.json
 82fc863179b17b211df6fc14e1f401bafdb55b5b data/minecraft/advancements/recipes/misc/emerald.json
 c3e3988f5054bca8d0b1b75f23e29fa9b7e9cb94 data/minecraft/advancements/recipes/misc/netherite_scrap.json

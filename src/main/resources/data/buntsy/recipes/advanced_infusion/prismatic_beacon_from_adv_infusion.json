@@ -1,0 +1,117 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:beacon"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:prism"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.prismType",
+          "value": "mineral"
+        }
+      ]
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:prism"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.prismType",
+          "value": "fauna"
+        }
+      ]
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:prism"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.prismType",
+          "value": "flora"
+        }
+      ]
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:prism"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.prismType",
+          "value": "collectors"
+        }
+      ]
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:prism"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.prismType",
+          "value": "overworld"
+        }
+      ]
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:prism"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.prismType",
+          "value": "nether"
+        }
+      ]
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:prism"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.prismType",
+          "value": "end"
+        }
+      ]
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:prism"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.prismType",
+          "value": "dense_matter"
+        }
+      ]
+    }
+  ],
+  "output":
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:prismatic_beacon"
+      },
+      "nbt": []
+    },
+  "max_progress": 1000
+}

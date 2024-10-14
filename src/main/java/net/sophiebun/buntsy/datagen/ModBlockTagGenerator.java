@@ -3,14 +3,18 @@ package net.sophiebun.buntsy.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
+import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
 import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class ModBlockTagGenerator extends BlockTagsProvider {
@@ -43,21 +47,51 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.FAIRY_OFFERING_BENCH.get())
                 .add(ModBlocks.FAIRY_COLLECTION_TRAY.get())
                 .add(ModBlocks.FAIRY_INFUSION_BENCH.get())
+                .add(ModBlocks.INFUSION_PEDESTAL.get())
                 .add(ModBlocks.THREAD_REELER.get());
 
         this.tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(ModBlocks.CHARMIL_SOIL.get())
                 .add(ModBlocks.CHARMIL_FARMLAND.get())
+                .add(ModBlocks.SWEET_CORAL_SAND.get())
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get());
 
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlocks.MAGIC_CRYSTALIZER.get())
                 .add(ModBlocks.FUME_DISTILLERY.get())
                 .add(ModBlocks.FUME_SPREADER.get())
-                .add(ModBlocks.INFUSION_PEDESTAL.get())
                 .add(ModBlocks.FAIRY_POWER_RELAY.get())
                 .add(ModBlocks.INFUSION_ALTAR_BASIC.get())
+                .add(ModBlocks.INFUSION_ALTAR_ADVANCED.get())
+                .add(ModBlocks.MIXER_BLOCK.get())
+                .add(ModBlocks.DEAD_SWEET_CORAL_BLOCK.get())
+                .add(ModBlocks.SWEET_CORAL_BLOCK.get())
+                .add(ModBlocks.BITTER_CORAL_BLOCK.get())
+                .add(ModBlocks.DEAD_BITTER_CORAL_BLOCK.get())
                 .add(ModBlocks.GRINDING_WHEEL.get());
+
+        for (List<RegistryObject<Block>> blocks : ModGrowableMineral.GROWABLE_MINERAL_STAGES){
+            for (RegistryObject<Block> block : blocks){
+                this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block.get());
+            }
+        }
+
+        this.tag(ModTags.Blocks.BUNTSY_CORAL_PLANTS)
+                .add(ModBlocks.SWEET_CORAL.get())
+                .add(ModBlocks.BITTER_CORAL.get());
+
+        this.tag(ModTags.Blocks.BUNTSY_CORAL_BLOCKS)
+                .add(ModBlocks.SWEET_CORAL_BLOCK.get())
+                .add(ModBlocks.BITTER_CORAL_BLOCK.get());
+
+        this.tag(ModTags.Blocks.BUNTSY_WALL_CORALS)
+                .add(ModBlocks.SWEET_CORAL_WALL_FAN.get())
+                .add(ModBlocks.BITTER_CORAL_WALL_FAN.get());
+
+        this.tag(ModTags.Blocks.BUNTSY_CORALS)
+                .addTag(ModTags.Blocks.BUNTSY_CORAL_PLANTS)
+                .add(ModBlocks.SWEET_CORAL_FAN.get())
+                .add(ModBlocks.BITTER_CORAL_FAN.get());
 
         this.tag(ModTags.Blocks.GENTLIT_LOGS)
                 .add(ModBlocks.GENTLIT_LOG.get())
@@ -113,18 +147,27 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
         this.tag(BlockTags.ANIMALS_SPAWNABLE_ON)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
+                .add(ModBlocks.SWEET_CORAL_SAND.get())
                 .add(ModBlocks.CHARMIL_SOIL.get());
 
         this.tag(BlockTags.VALID_SPAWN)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
+                .add(ModBlocks.SWEET_CORAL_SAND.get())
                 .add(ModBlocks.CHARMIL_SOIL.get());
 
         this.tag(ModTags.Blocks.CUTERLY_SPAWNER)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
+                .add(ModBlocks.SWEET_CORAL_SAND.get())
                 .add(ModBlocks.CHARMIL_SOIL.get());
+
+        this.tag(BlockTags.MUSHROOM_GROW_BLOCK)
+                .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
+                .add(ModBlocks.CHARMIL_SOIL.get())
+                .add(ModBlocks.SWEET_CORAL_SAND.get());
 
         this.tag(BlockTags.VALID_SPAWN)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
+                .add(ModBlocks.SWEET_CORAL_SAND.get())
                 .add(ModBlocks.CHARMIL_SOIL.get());
 
         this.tag(ModTags.Blocks.FAIRY_INTERACTABLE_BLOCK_ENTITY)
@@ -135,7 +178,19 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.FAIRY_INFUSION_BENCH.get())
                 .add(ModBlocks.FUME_DISTILLERY.get())
                 .add(ModBlocks.FAIRY_POWER_RELAY.get())
+                .add(ModBlocks.MIXER_BLOCK.get())
                 .add(ModBlocks.MAGIC_CRYSTALIZER.get());
+
+        this.tag(ModTags.Blocks.PRISMATIC_BEACON_EFFECT_BLOCK)
+                .add(ModBlocks.BEACON_HEALTH_BOOST_MODIFIER.get())
+                .add(ModBlocks.BEACON_SPEED_MODIFIER.get())
+                .add(ModBlocks.BEACON_HASTE_MODIFIER.get())
+                .add(ModBlocks.BEACON_STRENGTH_MODIFIER.get())
+                .add(ModBlocks.BEACON_JUMP_BOOST_MODIFIER.get())
+                .add(ModBlocks.BEACON_REGENERATION_MODIFIER.get())
+                .add(ModBlocks.BEACON_RESISTANCE_MODIFIER.get())
+                .add(ModBlocks.BEACON_FIRE_RESISTANCE_MODIFIER.get())
+                .add(ModBlocks.BEACON_WATER_BREATHING_MODIFIER.get());
 
         this.tag(ModTags.Blocks.FAIRY_HARVESTABLE)
                 .addTag(BlockTags.FLOWERS)

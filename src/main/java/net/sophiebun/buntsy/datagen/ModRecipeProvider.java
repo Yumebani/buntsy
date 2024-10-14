@@ -89,7 +89,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
 
         //Tough silk fabric
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.TOUGH_SILK_FABRIC.get(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.TOUGH_SILK_FABRIC.get(), 3)
                 .define('A', ModItems.SILK_FABRIC.get())
                 .define('B', ModItems.MOTH_WING_THREAD.get())
                 .pattern("ABA")
@@ -251,6 +251,19 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("SSS")
                 .pattern("BFB")
                 .pattern("BIB")
+                .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                .unlockedBy(getHasName(ModItems.FAIRY_POWER_RECEPTOR.get()), has(ModItems.FAIRY_POWER_RECEPTOR.get()))
+                .save(consumer);
+
+        //Mixer
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.MIXER_BLOCK.get(), 1)
+                .define('C', Blocks.CAULDRON)
+                .define('S', Blocks.SMOOTH_STONE_SLAB)
+                .define('I', Items.IRON_INGOT)
+                .define('F', ModItems.FAIRY_POWER_RECEPTOR.get())
+                .pattern("SSS")
+                .pattern("ICI")
+                .pattern("IFI")
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .unlockedBy(getHasName(ModItems.FAIRY_POWER_RECEPTOR.get()), has(ModItems.FAIRY_POWER_RECEPTOR.get()))
                 .save(consumer);
@@ -524,6 +537,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('F', ModItems.SILK_FABRIC.get())
                 .define('P', Items.PINK_DYE)
                 .pattern("FPF")
+                .unlockedBy(getHasName(ModItems.SILK_FABRIC.get()), has(ModItems.SILK_FABRIC.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.GAS_MASK.get(), 1)
+                .define('F', ModItems.SILK_FABRIC.get())
+                .define('C', Items.COAL)
+                .define('R', ModItems.TOUGH_SILK_FABRIC.get())
+                .pattern(" F ")
+                .pattern("RFR")
+                .pattern("CFC")
                 .unlockedBy(getHasName(ModItems.SILK_FABRIC.get()), has(ModItems.SILK_FABRIC.get()))
                 .save(consumer);
     }

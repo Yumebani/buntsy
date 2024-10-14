@@ -10,7 +10,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
+import net.sophiebun.buntsy.item.custom.Essence;
 import net.sophiebun.buntsy.item.custom.FumeBottle;
+import net.sophiebun.buntsy.item.custom.Prism;
 
 public class CreativeModeTabs {
 
@@ -24,6 +26,29 @@ public class CreativeModeTabs {
 
                         pOutput.accept(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get());
                         pOutput.accept(ModBlocks.CHARMIL_SOIL.get());
+                        pOutput.accept(ModBlocks.SWEET_CORAL_SAND.get());
+
+                        pOutput.accept(ModBlocks.SWEET_CANDY_ROCK.get());
+                        pOutput.accept(ModBlocks.SOUR_CANDY_ROCK.get());
+                        pOutput.accept(ModBlocks.BITTER_CANDY_ROCK.get());
+
+                        pOutput.accept(ModBlocks.SWEET_CORAL.get());
+                        pOutput.accept(ModBlocks.SWEET_CORAL_BLOCK.get());
+                        pOutput.accept(ModBlocks.SWEET_CORAL_FAN.get());
+                        pOutput.accept(ModBlocks.DEAD_SWEET_CORAL.get());
+                        pOutput.accept(ModBlocks.DEAD_SWEET_CORAL_BLOCK.get());
+                        pOutput.accept(ModBlocks.DEAD_SWEET_CORAL_FAN.get());
+
+                        pOutput.accept(ModBlocks.BITTER_CORAL.get());
+                        pOutput.accept(ModBlocks.BITTER_CORAL_BLOCK.get());
+                        pOutput.accept(ModBlocks.BITTER_CORAL_FAN.get());
+                        pOutput.accept(ModBlocks.DEAD_BITTER_CORAL.get());
+                        pOutput.accept(ModBlocks.DEAD_BITTER_CORAL_BLOCK.get());
+                        pOutput.accept(ModBlocks.DEAD_BITTER_CORAL_FAN.get());
+
+                        pOutput.accept(ModBlocks.SWEETGRASS.get());
+                        pOutput.accept(ModBlocks.SWEET_PICKLE.get());
+                        pOutput.accept(ModBlocks.COTTON_VINE.get());
 
                         pOutput.accept(ModBlocks.PINK_CHARMIL_GRASS.get());
                         pOutput.accept(ModBlocks.BLUE_CHARMIL_GRASS.get());
@@ -161,8 +186,22 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.INFUSION_PEDESTAL.get());
                         pOutput.accept(ModBlocks.FAIRY_POWER_RELAY.get());
                         pOutput.accept(ModBlocks.INFUSION_ALTAR_BASIC.get());
+                        pOutput.accept(ModBlocks.INFUSION_ALTAR_ADVANCED.get());
+                        pOutput.accept(ModBlocks.MIXER_BLOCK.get());
                         pOutput.accept(ModBlocks.GIANT_COCOON.get());
                         pOutput.accept(ModBlocks.SYRUP_EXTRACTOR.get());
+
+                        pOutput.accept(ModBlocks.PRISMATIC_BEACON.get());
+                        pOutput.accept(ModBlocks.PRISMATIC_BEACON_BASE.get());
+                        pOutput.accept(ModBlocks.BEACON_WATER_BREATHING_MODIFIER.get());
+                        pOutput.accept(ModBlocks.BEACON_STRENGTH_MODIFIER.get());
+                        pOutput.accept(ModBlocks.BEACON_SPEED_MODIFIER.get());
+                        pOutput.accept(ModBlocks.BEACON_JUMP_BOOST_MODIFIER.get());
+                        pOutput.accept(ModBlocks.BEACON_RESISTANCE_MODIFIER.get());
+                        pOutput.accept(ModBlocks.BEACON_HEALTH_BOOST_MODIFIER.get());
+                        pOutput.accept(ModBlocks.BEACON_FIRE_RESISTANCE_MODIFIER.get());
+                        pOutput.accept(ModBlocks.BEACON_HASTE_MODIFIER.get());
+                        pOutput.accept(ModBlocks.BEACON_REGENERATION_MODIFIER.get());
 
                         pOutput.accept(ModItems.FAIRY_STAFF.get());
                         pOutput.accept(ModItems.BINDING_STAFF.get());
@@ -183,6 +222,11 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.SILKY_NUGGET.get());
                         pOutput.accept(ModItems.SILKY_INGOT.get());
                         pOutput.accept(ModItems.SILKY_CRYSTAL.get());
+                        pOutput.accept(ModItems.SPEED_BLEND.get());
+                        pOutput.accept(ModItems.EFFICIENCY_BLEND.get());
+                        pOutput.accept(ModItems.GROWTH_BLEND.get());
+                        pOutput.accept(ModItems.SLOTH_BLEND.get());
+                        pOutput.accept(ModItems.ROTTEN_BLEND.get());
 
                         pOutput.accept(ModItems.STRANGE_COCOON.get());
                         pOutput.accept(ModItems.COCOON_BAG.get());
@@ -203,6 +247,25 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.BUNNY_EARS.get());
                         pOutput.accept(ModItems.CAT_EARS.get());
                         pOutput.accept(ModItems.HEAD_BOW.get());
+                        pOutput.accept(ModItems.GAS_MASK.get());
+
+                        for (String essenceType : Essence.EssenceTypes){
+
+                            CompoundTag nbt = new CompoundTag();
+                            nbt.putString("buntsy.essenceType", essenceType);
+                            ItemStack stack = new ItemStack(ModItems.ESSENCE.get());
+                            stack.setTag(nbt);
+                            pOutput.accept(stack);
+                        }
+
+                        for (String prismType : Prism.PrismTypes){
+
+                            CompoundTag nbt = new CompoundTag();
+                            nbt.putString("buntsy.prismType", prismType);
+                            ItemStack stack = new ItemStack(ModItems.PRISM.get());
+                            stack.setTag(nbt);
+                            pOutput.accept(stack);
+                        }
 
                         for (FumeBottle.FumeType fumeType : FumeBottle.FumeType.values()){
 

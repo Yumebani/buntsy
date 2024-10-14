@@ -1,0 +1,82 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:fairy_dust"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:sea_grass"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:kelp"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:prismarine_shard"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:prismarine_shard"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:prismarine_crystals"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:prismarine_crystals"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:nautilus_shell"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:heart_of_the_sea"
+      },
+      "nbt": []
+    }
+  ],
+  "output":
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:essence"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.essenceType",
+          "value": "oceanic"
+        }
+      ]
+    },
+  "max_progress": 1000
+}

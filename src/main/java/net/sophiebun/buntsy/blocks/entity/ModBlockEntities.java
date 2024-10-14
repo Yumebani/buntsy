@@ -10,11 +10,10 @@ import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.advancedfairy.FumeDistilleryBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.advancedfairy.FumeSpreaderBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.advancedfairy.MagicCrystalizerBlockEntity;
+import net.sophiebun.buntsy.blocks.entity.advancedfairy.MixerBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.basicfairy.GrindingWheelBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.basicfairy.ThreadReelerBlockEntity;
-import net.sophiebun.buntsy.blocks.entity.custom.GiantCocoonBlockEntity;
-import net.sophiebun.buntsy.blocks.entity.custom.InfusionAltarBasicBlockEntity;
-import net.sophiebun.buntsy.blocks.entity.custom.InfusionPedestalBlockEntity;
+import net.sophiebun.buntsy.blocks.entity.custom.*;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyCollectionTrayBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyInfusionBenchBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyOfferingBenchBlockEntity;
@@ -69,10 +68,22 @@ public class ModBlockEntities {
             blockEntityRegister.register("infusion_altar_basic_entity",
                     () -> BlockEntityType.Builder.of(InfusionAltarBasicBlockEntity::new,
                             ModBlocks.INFUSION_ALTAR_BASIC.get()).build(null));
+    public static final RegistryObject<BlockEntityType<InfusionAltarAdvancedBlockEntity>> INFUSION_ALTAR_ADVANCED_BLOCK_ENTITY =
+            blockEntityRegister.register("infusion_altar_advanced_entity",
+                    () -> BlockEntityType.Builder.of(InfusionAltarAdvancedBlockEntity::new,
+                            ModBlocks.INFUSION_ALTAR_ADVANCED.get()).build(null));
     public static final RegistryObject<BlockEntityType<GiantCocoonBlockEntity>> GIANT_COCOON_BLOCK_ENTITY =
             blockEntityRegister.register("giant_cocoon_block_entity",
                     () -> BlockEntityType.Builder.of(GiantCocoonBlockEntity::new,
                             ModBlocks.GIANT_COCOON.get()).build(null));
+    public static final RegistryObject<BlockEntityType<PrismaticBeaconBlockEntity>> PRISMATIC_BEACON_BLOCK_ENTITY =
+            blockEntityRegister.register("prismatic_beacon_block_entity",
+                    () -> BlockEntityType.Builder.of(PrismaticBeaconBlockEntity::new,
+                            ModBlocks.PRISMATIC_BEACON.get()).build(null));
+    public static final RegistryObject<BlockEntityType<MixerBlockEntity>> MIXER_BLOCK_ENTITY =
+            blockEntityRegister.register("mixer_block_entity",
+                    () -> BlockEntityType.Builder.of(MixerBlockEntity::new,
+                            ModBlocks.MIXER_BLOCK.get()).build(null));
 
     public static void register(IEventBus eventBus){
 

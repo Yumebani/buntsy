@@ -1,0 +1,82 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:fairy_dust"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:oak_sapling"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:spruce_sapling"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:birch_sapling"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:jungle_sapling"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:acacia_sapling"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:dark_oak_sapling"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:cherry_sapling"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:gentlit_sapling"
+      },
+      "nbt": []
+    }
+  ],
+  "output":
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:essence"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.essenceType",
+          "value": "overworld_sapling"
+        }
+      ]
+    },
+  "max_progress": 1000
+}

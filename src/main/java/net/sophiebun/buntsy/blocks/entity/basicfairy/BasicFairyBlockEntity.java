@@ -230,6 +230,10 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     }
 
     public void outputItems(ItemStack primary, ItemStack secondary){
+        if (primary == null && secondary != null) {
+            primary = secondary;
+            secondary = null;
+        }
         int pSlot = getPrimaryAvailableSlot(primary);
         insertIntoSlot(pSlot, primary);
         if (secondary != null){

@@ -1,0 +1,82 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:fairy_dust"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:apple"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:baked_potato"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:bread"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:carrot"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:golden_apple"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:melon_slice"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:pumpkin_pie"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:sweet_berries"
+      },
+      "nbt": []
+    }
+  ],
+  "output":
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:essence"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.essenceType",
+          "value": "flora_sustenance"
+        }
+      ]
+    },
+  "max_progress": 1000
+}

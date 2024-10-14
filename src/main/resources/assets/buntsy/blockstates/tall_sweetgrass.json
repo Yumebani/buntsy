@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "buntsy:block/tall_sweetgrass_bottom"
+    },
+    "half=upper": {
+      "model": "buntsy:block/tall_sweetgrass_top"
+    }
+  }
+}

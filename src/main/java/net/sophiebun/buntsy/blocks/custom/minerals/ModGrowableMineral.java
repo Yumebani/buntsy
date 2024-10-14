@@ -83,7 +83,7 @@ public class ModGrowableMineral extends AmethystClusterBlock {
     @Override
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
 
-        if (this.stage != 3 && pLevel.random.nextInt(10) == 0){
+        if (this.stage != 3 && pLevel.random.nextInt(0,3) == 0){
             pLevel.setBlockAndUpdate(pPos, getStages().get(stage + 1).get().defaultBlockState()
                     .setValue(AmethystClusterBlock.FACING, pState.getValue(AmethystClusterBlock.FACING))
                     .setValue(AmethystClusterBlock.WATERLOGGED, pState.getFluidState().getType() == Fluids.WATER));

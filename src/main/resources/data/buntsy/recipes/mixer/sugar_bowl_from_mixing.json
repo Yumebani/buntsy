@@ -1,0 +1,27 @@
+{
+  "type": "buntsy:mixer",
+  "inputs": [
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:bowl"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 4,
+        "item":"minecraft:sugar"
+      },
+      "nbt": []
+    }
+  ],
+  "output":
+  {
+    "item": {
+      "count": 1,
+      "item":"buntsy:sugar_bowl"
+    },
+    "nbt": []
+  }
+}

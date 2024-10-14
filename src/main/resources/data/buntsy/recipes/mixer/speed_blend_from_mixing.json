@@ -1,0 +1,27 @@
+{
+  "type": "buntsy:mixer",
+  "inputs": [
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:redstone"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:sugar"
+      },
+      "nbt": []
+    }
+  ],
+  "output":
+  {
+    "item": {
+      "count": 2,
+      "item":"buntsy:speed_blend"
+    },
+    "nbt": []
+  }
+}

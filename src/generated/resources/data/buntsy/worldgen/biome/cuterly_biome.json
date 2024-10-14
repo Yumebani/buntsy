@@ -71,6 +71,7 @@
     ],
     [
       "minecraft:glow_lichen",
+      "minecraft:seagrass_simple",
       "buntsy:gentlit_placed",
       "buntsy:bravot_placed",
       "buntsy:grounded_gentlit_placed",
@@ -82,7 +83,11 @@
       "buntsy:pink_bloom_placed",
       "buntsy:blue_bloom_placed",
       "buntsy:loveshroom_placed",
-      "buntsy:glowshroom_placed"
+      "buntsy:glowshroom_placed",
+      "buntsy:mod_coral_placed_key",
+      "buntsy:sweetgrass_placed_key",
+      "buntsy:sweet_pickle_placed_key",
+      "buntsy:cotton_vine_placed_key"
     ]
   ],
   "has_precipitation": true,

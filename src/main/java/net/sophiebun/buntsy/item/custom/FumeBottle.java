@@ -21,7 +21,8 @@ public class FumeBottle extends Item {
         REJUVENATION,
         SIN,
         GLUTTONY,
-        SLOTH
+        SLOTH,
+        WRATH
     }
 
     public static ItemColor getTint(){
@@ -47,6 +48,8 @@ public class FumeBottle extends Item {
                 case GLUTTONY -> {return pTintIndex == 0 ? 0x00d6891e : 0xFFFFFFFF;
                 }
                 case SLOTH -> {return pTintIndex == 0 ? 0x001d28a1 : 0xFFFFFFFF;
+                }
+                case WRATH -> {return pTintIndex == 0 ? 0x00de2a1d : 0xFFFFFFFF;
                 }
             }
 
