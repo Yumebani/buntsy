@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_emerald_shard": {
+    "has_diamond_shard": {
       "conditions": {
         "items": [
           {
             "items": [
-              "buntsy:emerald_shard"
+              "buntsy:diamond_shard"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:emerald"
+        "recipe": "buntsy:diamond_shard_compacting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_emerald_shard",
+      "has_diamond_shard",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:emerald"
+      "buntsy:diamond_shard_compacting"
     ]
   },
   "sends_telemetry_event": false

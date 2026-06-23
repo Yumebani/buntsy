@@ -34,6 +34,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.AABB;
@@ -41,6 +42,7 @@ import net.minecraft.world.phys.Vec3;
 import net.sophiebun.buntsy.entity.ModEntities;
 import net.sophiebun.buntsy.entity.interfaces.IFumeAffectedEntity;
 import net.sophiebun.buntsy.item.ModItems;
+import net.sophiebun.buntsy.server.PersistantAmbientMobSavedData;
 import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -51,6 +53,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
 public class Silkbun extends Animal implements IFumeAffectedEntity {
 
@@ -96,7 +99,12 @@ public class Silkbun extends Animal implements IFumeAffectedEntity {
     }
 
     public static boolean canSpawn(EntityType<Silkbun> entityType, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random){
-        return level.getEntitiesOfClass(Silkbun.class, AABB.ofSize(pos.getCenter(), 20, 20, 20)).isEmpty() && level.getBlockState(pos.below()).is(ModTags.Blocks.CUTERLY_SPAWNER);
+        return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double pDistanceToClosestPlayer) {
+        return false;
     }
 
     protected void registerGoals() {

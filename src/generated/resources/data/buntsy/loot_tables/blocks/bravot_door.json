@@ -13,14 +13,14 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "block": "buntsy:bravot_slab",
+              "block": "buntsy:bravot_door",
               "condition": "minecraft:block_state_property",
               "properties": {
                 "half": "lower"
               }
             }
           ],
-          "name": "buntsy:bravot_slab"
+          "name": "buntsy:bravot_door"
         }
       ],
       "rolls": 1.0

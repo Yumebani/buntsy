@@ -42,6 +42,7 @@ public class ModBiomeModifiers {
                 GenerationStep.Decoration.VEGETAL_DECORATION
         ));
 
+        /*
         context.register(ADD_SILKBUN, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(ModTags.Biomes.SILK_BUN_SPAWN),
                 List.of(new MobSpawnSettings.SpawnerData(ModEntities.SILKBUN_ENTITY.get(), 4, 2, 4))));
@@ -49,6 +50,7 @@ public class ModBiomeModifiers {
         context.register(ADD_FAIRY, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(ModTags.Biomes.FAIRY_SPAWN),
                 List.of(new MobSpawnSettings.SpawnerData(ModEntities.FAIRY_ENTITY.get(), 3, 2, 4))));
+        */
 
     }
 

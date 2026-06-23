@@ -6,7 +6,6 @@
       "minecraft:canyon"
     ]
   },
-  "creature_spawn_probability": 10.0,
   "downfall": 0.8,
   "effects": {
     "fog_color": 12638463,
@@ -95,23 +94,36 @@
   "spawners": {
     "ambient": [
       {
+        "type": "minecraft:bat",
+        "maxCount": 10,
+        "minCount": 8,
+        "weight": 10
+      },
+      {
         "type": "buntsy:silkbun",
-        "maxCount": 3,
+        "maxCount": 4,
         "minCount": 2,
-        "weight": 1
+        "weight": 20
       },
       {
         "type": "buntsy:fairy",
         "maxCount": 3,
         "minCount": 2,
-        "weight": 1
+        "weight": 10
       }
     ],
     "axolotls": [],
     "creature": [],
     "misc": [],
     "monster": [],
-    "underground_water_creature": [],
+    "underground_water_creature": [
+      {
+        "type": "minecraft:glow_squid",
+        "maxCount": 6,
+        "minCount": 4,
+        "weight": 10
+      }
+    ],
     "water_ambient": [],
     "water_creature": []
   },

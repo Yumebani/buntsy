@@ -50,7 +50,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.GENTLIT_FENCE.get());
         this.dropSelf(ModBlocks.GENTLIT_FENCE_GATE.get());
         this.add(ModBlocks.GENTLIT_SLAB.get(), block -> createSlabItemTable(ModBlocks.GENTLIT_SLAB.get()));
-        this.add(ModBlocks.GENTLIT_DOOR.get(), block -> createDoorTable(ModBlocks.GENTLIT_SLAB.get()));
+        this.add(ModBlocks.GENTLIT_DOOR.get(), block -> createDoorTable(ModBlocks.GENTLIT_DOOR.get()));
 
         this.dropSelf(ModBlocks.BRAVOT_LOG.get());
         this.dropSelf(ModBlocks.STRIPPED_BRAVOT_LOG.get());
@@ -69,7 +69,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.BRAVOT_FENCE.get());
         this.dropSelf(ModBlocks.BRAVOT_FENCE_GATE.get());
         this.add(ModBlocks.BRAVOT_SLAB.get(), block -> createSlabItemTable(ModBlocks.BRAVOT_SLAB.get()));
-        this.add(ModBlocks.BRAVOT_DOOR.get(), block -> createDoorTable(ModBlocks.BRAVOT_SLAB.get()));
+        this.add(ModBlocks.BRAVOT_DOOR.get(), block -> createDoorTable(ModBlocks.BRAVOT_DOOR.get()));
 
         //Adding soil
         this.add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get(), block -> createSingleItemTableWithSilkTouch(block, ModBlocks.CHARMIL_SOIL.get()));

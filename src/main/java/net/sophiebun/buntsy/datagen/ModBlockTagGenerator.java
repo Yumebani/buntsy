@@ -165,11 +165,6 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.CHARMIL_SOIL.get())
                 .add(ModBlocks.SWEET_CORAL_SAND.get());
 
-        this.tag(BlockTags.VALID_SPAWN)
-                .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
-                .add(ModBlocks.SWEET_CORAL_SAND.get())
-                .add(ModBlocks.CHARMIL_SOIL.get());
-
         this.tag(ModTags.Blocks.FAIRY_INTERACTABLE_BLOCK_ENTITY)
                 .add(ModBlocks.FAIRY_OFFERING_BENCH.get())
                 .add(ModBlocks.GRINDING_WHEEL.get())

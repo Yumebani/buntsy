@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "buntsy:silky_ingot"
+        "recipe": "buntsy:silky_nugget_compacting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "buntsy:silky_ingot"
+      "buntsy:silky_nugget_compacting"
     ]
   },
   "sends_telemetry_event": false

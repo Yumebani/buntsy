@@ -13,14 +13,14 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "block": "buntsy:gentlit_slab",
+              "block": "buntsy:gentlit_door",
               "condition": "minecraft:block_state_property",
               "properties": {
                 "half": "lower"
               }
             }
           ],
-          "name": "buntsy:gentlit_slab"
+          "name": "buntsy:gentlit_door"
         }
       ],
       "rolls": 1.0

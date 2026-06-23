@@ -109,7 +109,7 @@ public class PrismaticBeaconBlockEntity extends BlockEntity {
     private int checkTick = 0;
     private UUID assignedPlayer;
     private int blockId = -1;
-    private boolean unloaded = false;
+    private boolean valid = false;
 
     public PrismaticBeaconBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.PRISMATIC_BEACON_BLOCK_ENTITY.get(), pPos, pBlockState);
@@ -131,7 +131,7 @@ public class PrismaticBeaconBlockEntity extends BlockEntity {
             pTag.putUUID("prismatic.assigned_player", assignedPlayer);
         }
         pTag.putInt("prismatic.block_id", blockId);
-        pTag.putBoolean("prismatic.unloaded", this.unloaded);
+        pTag.putBoolean("prismatic.valid", this.valid);
         super.saveAdditional(pTag);
     }
 
@@ -142,18 +142,8 @@ public class PrismaticBeaconBlockEntity extends BlockEntity {
             this.assignedPlayer = pTag.getUUID("prismatic.assigned_player");
         }
         this.blockId = pTag.getInt("prismatic.block_id");
-        this.unloaded = pTag.getBoolean("prismatic.unloaded");
+        this.valid = pTag.getBoolean("prismatic.valid");
 
-    }
-
-    @Override
-    public void onChunkUnloaded() {
-        if (!level.isClientSide()){
-            unloaded = true;
-            PrismaticBeaconSavedData data = PrismaticBeaconSavedData.computeIfAbsent(this.level.getServer());
-            data.unloadBeacon(blockId);
-        }
-        super.onChunkUnloaded();
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
@@ -161,12 +151,7 @@ public class PrismaticBeaconBlockEntity extends BlockEntity {
         if (blockId == -1){
             PrismaticBeaconSavedData data = PrismaticBeaconSavedData.computeIfAbsent(pLevel.getServer());
             blockId = data.generateId();
-        }
-
-        if (this.unloaded){
-            PrismaticBeaconSavedData data = PrismaticBeaconSavedData.computeIfAbsent(pLevel.getServer());
-            data.loadBeacon(blockId);
-            this.unloaded = false;
+            data.registerNewBeaconData(blockId);
         }
 
         if (assignedPlayer != null){
@@ -175,9 +160,15 @@ public class PrismaticBeaconBlockEntity extends BlockEntity {
                 checkTick++;
             }
             else{
+
+                PrismaticBeaconSavedData data = PrismaticBeaconSavedData.computeIfAbsent(pLevel.getServer());
                 if (beaconIsValid(pLevel, pPos)){
+                    data.updateBeaconValidity(blockId, true);
                     applyBeaconEffects(pLevel, pPos);
+                } else {
+                    data.updateBeaconValidity(blockId, false);
                 }
+
                 checkTick = 0;
             }
         }
@@ -211,7 +202,7 @@ public class PrismaticBeaconBlockEntity extends BlockEntity {
         }
 
         PrismaticBeaconSavedData data = PrismaticBeaconSavedData.computeIfAbsent(pLevel.getServer());
-        data.registerNewBeaconData(blockId, new Tuple<>(assignedPlayer, finalValues));
+        data.updateBeaconEffects(blockId, new Tuple<>(assignedPlayer, finalValues));
     }
 
     public void removeData(Level pLevel) {

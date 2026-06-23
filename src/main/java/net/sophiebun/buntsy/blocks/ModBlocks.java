@@ -10,6 +10,9 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -31,7 +34,7 @@ public class ModBlocks {
             DeferredRegister.create(ForgeRegistries.BLOCKS, BuntsyMod.MODID);
 
     public static final RegistryObject<Block> GENTLIT_LEAVES = registerBlock("gentlit_leaves",
-            () -> new ModLeaves(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
+            () -> new ModLeaves(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion().strength(0.2F).randomTicks().isSuffocating((state, level, pos) -> false).isViewBlocking((state, level, pos) -> false)));
     public static final RegistryObject<Block> GENTLIT_SAPLING = registerBlock("gentlit_sapling",
             () -> new SaplingBlock(new GentlitTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
     public static final RegistryObject<Block> POTTED_GENTLIT_SAPLING = BlocksRegister.register("potted_gentlit_sapling",
@@ -68,7 +71,7 @@ public class ModBlocks {
             () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion(), BlockSetType.OAK));
 
     public static final RegistryObject<Block> BRAVOT_LEAVES = registerBlock("bravot_leaves",
-            () -> new ModLeaves(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
+            () -> new ModLeaves(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion().strength(0.2F).randomTicks().isSuffocating((state, level, pos) -> false).isViewBlocking((state, level, pos) -> false)));
     public static final RegistryObject<Block> BRAVOT_SAPLING = registerBlock("bravot_sapling",
             () -> new SaplingBlock(new BravotTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
     public static final RegistryObject<Block> POTTED_BRAVOT_SAPLING = BlocksRegister.register("potted_bravot_sapling",
@@ -146,11 +149,11 @@ public class ModBlocks {
     public static final RegistryObject<Block> DEAD_SWEET_CORAL_BLOCK = registerBlock("dead_sweet_coral_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.DEAD_FIRE_CORAL_BLOCK)));
     public static final RegistryObject<Block> DEAD_SWEET_CORAL = registerBlock("dead_sweet_coral",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.DEAD_FIRE_CORAL).noOcclusion().noCollission()));
+            () -> new BaseCoralPlantBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().noCollission().instabreak()));
     public static final RegistryObject<Block> DEAD_SWEET_CORAL_FAN = registerBlock("dead_sweet_coral_fan",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.DEAD_FIRE_CORAL_FAN).noOcclusion().noCollission()));
+            () -> new BaseCoralFanBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().noCollission().instabreak()));
     public static final RegistryObject<Block> DEAD_SWEET_CORAL_WALL_FAN = registerBlock("dead_sweet_coral_wall_fan",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.DEAD_FIRE_CORAL_WALL_FAN).noOcclusion().noCollission()));
+            () -> new BaseCoralWallFanBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().noCollission().instabreak().dropsLike(DEAD_SWEET_CORAL_FAN.get())));
     public static final RegistryObject<Block> SWEET_CORAL_BLOCK = registerBlock("sweet_coral_block",
             () -> new CoralBlock(DEAD_SWEET_CORAL_BLOCK.get(), BlockBehaviour.Properties.copy(Blocks.FIRE_CORAL_BLOCK)));
     public static final RegistryObject<Block> SWEET_CORAL = registerBlock("sweet_coral",
@@ -158,16 +161,16 @@ public class ModBlocks {
     public static final RegistryObject<Block> SWEET_CORAL_FAN = registerBlock("sweet_coral_fan",
             () -> new CoralFanBlock(DEAD_SWEET_CORAL_FAN.get(), BlockBehaviour.Properties.copy(Blocks.FIRE_CORAL_FAN).noOcclusion().noCollission()));
     public static final RegistryObject<Block> SWEET_CORAL_WALL_FAN = registerBlock("sweet_coral_wall_fan",
-            () -> new CoralWallFanBlock(DEAD_SWEET_CORAL_WALL_FAN.get(), BlockBehaviour.Properties.copy(Blocks.FIRE_CORAL_WALL_FAN).noOcclusion().noCollission()));
+            () -> new CoralWallFanBlock(DEAD_SWEET_CORAL_WALL_FAN.get(), BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).noCollission().instabreak().sound(SoundType.WET_GRASS).dropsLike(SWEET_CORAL_FAN.get()).pushReaction(PushReaction.DESTROY)));
 
     public static final RegistryObject<Block> DEAD_BITTER_CORAL_BLOCK = registerBlock("dead_bitter_coral_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.DEAD_TUBE_CORAL_BLOCK)));
     public static final RegistryObject<Block> DEAD_BITTER_CORAL = registerBlock("dead_bitter_coral",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.DEAD_TUBE_CORAL).noOcclusion().noCollission()));
+            () -> new BaseCoralPlantBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().noCollission().instabreak()));
     public static final RegistryObject<Block> DEAD_BITTER_CORAL_FAN = registerBlock("dead_bitter_coral_fan",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.DEAD_TUBE_CORAL_FAN).noOcclusion().noCollission()));
+            () -> new BaseCoralFanBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().noCollission().instabreak()));
     public static final RegistryObject<Block> DEAD_BITTER_CORAL_WALL_FAN = registerBlock("dead_bitter_coral_wall_fan",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.DEAD_TUBE_CORAL_WALL_FAN).noOcclusion().noCollission()));
+            () -> new BaseCoralWallFanBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().noCollission().instabreak().dropsLike(DEAD_BITTER_CORAL_FAN.get())));
     public static final RegistryObject<Block> BITTER_CORAL_BLOCK = registerBlock("bitter_coral_block",
             () -> new CoralBlock(DEAD_BITTER_CORAL_BLOCK.get(), BlockBehaviour.Properties.copy(Blocks.TUBE_CORAL_BLOCK)));
     public static final RegistryObject<Block> BITTER_CORAL = registerBlock("bitter_coral",
@@ -175,7 +178,7 @@ public class ModBlocks {
     public static final RegistryObject<Block> BITTER_CORAL_FAN = registerBlock("bitter_coral_fan",
             () -> new CoralFanBlock(DEAD_BITTER_CORAL_FAN.get(), BlockBehaviour.Properties.copy(Blocks.TUBE_CORAL_FAN).noOcclusion().noCollission()));
     public static final RegistryObject<Block> BITTER_CORAL_WALL_FAN = registerBlock("bitter_coral_wall_fan",
-            () -> new CoralWallFanBlock(DEAD_BITTER_CORAL_WALL_FAN.get(), BlockBehaviour.Properties.copy(Blocks.TUBE_CORAL_WALL_FAN).noOcclusion().noCollission()));
+            () -> new CoralWallFanBlock(DEAD_BITTER_CORAL_WALL_FAN.get(), BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).noCollission().instabreak().sound(SoundType.WET_GRASS).dropsLike(BITTER_CORAL_FAN.get()).pushReaction(PushReaction.DESTROY)));
 
 
     public static final RegistryObject<Block> PINK_CHARMIL_GRASS = registerBlock("pink_charmil_grass",

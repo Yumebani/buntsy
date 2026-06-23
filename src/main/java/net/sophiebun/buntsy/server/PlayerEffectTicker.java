@@ -29,6 +29,8 @@ public class PlayerEffectTicker {
         }
         else{
             Map<Integer, Tuple<UUID, List<Tuple<MobEffect, Integer>>>> playerEffects = data.getPlayerEffects();
+            Map<Integer, Boolean> valid = data.getValid();
+            /*
             Map<Integer, Boolean> loaded = data.getLoaded();
             Map<Integer, Boolean> updated = data.getUpdated();
 
@@ -44,11 +46,17 @@ public class PlayerEffectTicker {
                 }
             }
 
-            for (int id : playerEffects.keySet()){
-                ServerPlayer player = server.getPlayerList().getPlayer(playerEffects.get(id).getA());
+             */
 
-                for (Tuple<MobEffect, Integer> effect : playerEffects.get(id).getB()){
-                    player.addEffect(new MobEffectInstance(effect.getA(), 100, effect.getB() - 1));
+            for (int id : playerEffects.keySet()){
+                if (valid.get(id)){
+                    ServerPlayer player = server.getPlayerList().getPlayer(playerEffects.get(id).getA());
+
+                    if (player != null) {
+                        for (Tuple<MobEffect, Integer> effect : playerEffects.get(id).getB()){
+                            player.addEffect(new MobEffectInstance(effect.getA(), 100, effect.getB() - 1));
+                        }
+                    }
                 }
             }
 

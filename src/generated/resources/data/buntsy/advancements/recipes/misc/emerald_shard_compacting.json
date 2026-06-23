@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_silk_fabric": {
+    "has_emerald_shard": {
       "conditions": {
         "items": [
           {
             "items": [
-              "buntsy:silk_fabric"
+              "buntsy:emerald_shard"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:white_wool"
+        "recipe": "buntsy:emerald_shard_compacting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_silk_fabric",
+      "has_emerald_shard",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:white_wool"
+      "buntsy:emerald_shard_compacting"
     ]
   },
   "sends_telemetry_event": false

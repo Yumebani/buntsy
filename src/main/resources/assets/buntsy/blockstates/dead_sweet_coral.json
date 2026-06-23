@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "minecraft:block/dead_fire_coral"
+      "model": "buntsy:block/dead_sweet_coral"
     }
   }
 }

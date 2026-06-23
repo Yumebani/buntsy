@@ -13,17 +13,8 @@ public class PrismaticBeaconSavedData extends SavedData {
 
     private int currentBeaconId = 0;
     private Map<Integer, Tuple<UUID, List<Tuple<MobEffect, Integer>>>> playerEffects = new HashMap<>();
-    private Map<Integer, Boolean> updated = new HashMap<>();
-    private Map<Integer, Boolean> loaded = new HashMap<>();
+    private Map<Integer, Boolean> validMap = new HashMap<>();
     private int lastTick = 0;
-
-    public void unloadBeacon(int blockId) {
-        loaded.put(blockId, false);
-    }
-
-    public void loadBeacon(int blockId) {
-        loaded.put(blockId, true);
-    }
 
     public int getLastTick(){
         return lastTick;
@@ -39,29 +30,33 @@ public class PrismaticBeaconSavedData extends SavedData {
         return currentBeaconId - 1;
     }
 
-    public Map<Integer, Boolean> getLoaded() {
-        return loaded;
-    }
-
-    public Map<Integer, Boolean> getUpdated() {
-        return updated;
+    public Map<Integer, Boolean> getValid() {
+        return validMap;
     }
 
     public Map<Integer, Tuple<UUID, List<Tuple<MobEffect, Integer>>>> getPlayerEffects() {
         return playerEffects;
     }
 
-    public void registerNewBeaconData(int id, Tuple<UUID, List<Tuple<MobEffect, Integer>>> effects){
+    public void updateBeaconEffects(int id, Tuple<UUID, List<Tuple<MobEffect, Integer>>> effects){
         playerEffects.put(id, effects);
-        updated.put(id, true);
-        loaded.put(id, true);
+        setDirty();
+    }
+
+    public void updateBeaconValidity(int id, boolean valid){
+        validMap.put(id, valid);
+        setDirty();
+    }
+
+    public void registerNewBeaconData(int id){
+        playerEffects.put(id, null);
+        validMap.put(id, false);
         setDirty();
     }
 
     public void unregisterBeaconData(int blockId) {
         playerEffects.remove(blockId);
-        updated.remove(blockId);
-        loaded.remove(blockId);
+        validMap.remove(blockId);
         setDirty();
     }
 
@@ -80,6 +75,7 @@ public class PrismaticBeaconSavedData extends SavedData {
         for (int i = 0; i < loopCount; i++){
             int beaconId = tag.getInt("beacon_id_" + i);
             UUID playerUUID = tag.getUUID("player_uuid_" + i);
+            boolean valid = tag.getBoolean("beacon_validity_" + i);
             List<Tuple<MobEffect, Integer>> finalValues = new ArrayList<>();
             int loopCount2 = tag.getInt("effects_count_" + i);
             for (int j = 0; j < loopCount2; j++){
@@ -87,7 +83,9 @@ public class PrismaticBeaconSavedData extends SavedData {
                 int effectStrength = tag.getInt("effect_strength_" + i + "_" + j);
                 finalValues.add(new Tuple<>(effect, effectStrength));
             }
-            data.registerNewBeaconData(beaconId, new Tuple<>(playerUUID, finalValues));
+            data.registerNewBeaconData(beaconId);
+            data.updateBeaconEffects(beaconId, new Tuple<>(playerUUID, finalValues));
+            data.updateBeaconValidity(beaconId, valid);
         }
         return data;
     }
@@ -101,6 +99,7 @@ public class PrismaticBeaconSavedData extends SavedData {
             Tuple<UUID, List<Tuple<MobEffect, Integer>>> vals = playerEffects.get(keys.get(i));
             pCompoundTag.putInt("beacon_id_" + i, keys.get(i));
             pCompoundTag.putUUID("player_uuid_" + i, vals.getA());
+            pCompoundTag.putBoolean("beacon_validity_" + i, validMap.get(keys.get(i)));
             pCompoundTag.putInt("effects_count_" + i, vals.getB().size());
             for (int j = 0; j < vals.getB().size(); j++){
                 pCompoundTag.putInt("potion_id_" + i + "_" + j, BuiltInRegistries.MOB_EFFECT.getId(vals.getB().get(j).getA()));

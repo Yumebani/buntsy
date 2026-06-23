@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "buntsy:block/dead_sweet_coral_block"
+  }
+}

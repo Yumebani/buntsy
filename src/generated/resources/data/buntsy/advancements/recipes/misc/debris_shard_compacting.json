@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:netherite_scrap"
+        "recipe": "buntsy:debris_shard_compacting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:netherite_scrap"
+      "buntsy:debris_shard_compacting"
     ]
   },
   "sends_telemetry_event": false

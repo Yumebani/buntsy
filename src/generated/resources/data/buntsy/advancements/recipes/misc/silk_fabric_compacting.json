@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_diamond_shard": {
+    "has_silk_fabric": {
       "conditions": {
         "items": [
           {
             "items": [
-              "buntsy:diamond_shard"
+              "buntsy:silk_fabric"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:diamond"
+        "recipe": "buntsy:silk_fabric_compacting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_diamond_shard",
+      "has_silk_fabric",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:diamond"
+      "buntsy:silk_fabric_compacting"
     ]
   },
   "sends_telemetry_event": false

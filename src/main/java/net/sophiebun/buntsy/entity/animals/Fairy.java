@@ -87,8 +87,14 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
     public AnimationState flyAnimationState = new AnimationState();
 
     public static boolean canSpawn(EntityType<Fairy> entityType, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random){
-        return level.getEntitiesOfClass(Fairy.class, AABB.ofSize(pos.getCenter(), 20, 20, 20)).isEmpty() && level.getBlockState(pos.below()).is(ModTags.Blocks.CUTERLY_SPAWNER);
+        return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);
     }
+
+    @Override
+    public boolean removeWhenFarAway(double pDistanceToClosestPlayer) {
+        return false;
+    }
+
     public Fairy(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.setPersistenceRequired();

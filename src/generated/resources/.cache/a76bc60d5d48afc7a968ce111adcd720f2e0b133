@@ -1,8 +1,8 @@
-// 1.20.1	2024-10-11T18:12:47.931377988	Tags for minecraft:block mod id buntsy
+// 1.20.1	2026-06-22T18:21:44.9811	Tags for minecraft:block mod id buntsy
 375b70dcc9fd9e50a722f028008e1c11e6e68dd9 data/buntsy/tags/blocks/bravot_logs.json
+46cf96fe06c7d28233ea393a8f605ff8de2a36b9 data/buntsy/tags/blocks/buntsy_corals.json
 08b7bc4ad190135cd45896e7ced0b7270f51817e data/buntsy/tags/blocks/buntsy_coral_blocks.json
 b487c23b152b73dee208170b223fa88a152574c8 data/buntsy/tags/blocks/buntsy_coral_plants.json
-46cf96fe06c7d28233ea393a8f605ff8de2a36b9 data/buntsy/tags/blocks/buntsy_corals.json
 d55f43d459c9dc10925f04c8c2915d805edc6cac data/buntsy/tags/blocks/buntsy_wall_corals.json
 095304ac24826104a05a345a575fa1a0f4a217bd data/buntsy/tags/blocks/cuterly_spawner.json
 b3d96bd84ab6316c778c2cb6433833cfb82bc3c1 data/buntsy/tags/blocks/fairy_harvestable.json
@@ -21,5 +21,5 @@ c37d633f1166fe521a77c56e1e527892142200d6 data/minecraft/tags/blocks/mineable/pic
 c058172b5f97b81fb11d6c75e8d5afd83ded8203 data/minecraft/tags/blocks/mineable/shovel.json
 dd9ca270b67ea414ea570307506c0a0c9290f1ed data/minecraft/tags/blocks/mushroom_grow_block.json
 3c0a37829999806003244d1c4350ae59c31ff6c3 data/minecraft/tags/blocks/planks.json
-094964187ef3cd9700a0c1db78dcddf2a38b5479 data/minecraft/tags/blocks/valid_spawn.json
+095304ac24826104a05a345a575fa1a0f4a217bd data/minecraft/tags/blocks/valid_spawn.json
 5b4f57f7350d7097161a79ce1a34e33489913aba data/minecraft/tags/blocks/wooden_fences.json

@@ -92,7 +92,7 @@
         "type": "buntsy:fairy",
         "maxCount": 3,
         "minCount": 2,
-        "weight": 1
+        "weight": 20
       }
     ],
     "axolotls": [],

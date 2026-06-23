@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_silky_ingot": {
+    "has_silk_spool": {
       "conditions": {
         "items": [
           {
             "items": [
-              "buntsy:silky_ingot"
+              "buntsy:silk_spool"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "buntsy:silky_nugget"
+        "recipe": "buntsy:silk_spool_compacting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_silky_ingot",
+      "has_silk_spool",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "buntsy:silky_nugget"
+      "buntsy:silk_spool_compacting"
     ]
   },
   "sends_telemetry_event": false

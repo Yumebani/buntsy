@@ -59,7 +59,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.NETHERITE_SCRAP, 1)
                 .requires(ModItems.DEBRIS_SHARD.get(), 3)
                 .unlockedBy(getHasName(ModItems.DEBRIS_SHARD.get()), has(ModItems.DEBRIS_SHARD.get()))
-                .save(consumer);
+                .save(consumer, "buntsy:debris_shard_compacting");
 
         //Smelting dust
         oreSmeltingRecipe(ModItems.IRON_DUST.get(), Items.IRON_INGOT, consumer);
@@ -602,7 +602,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("##")
                 .pattern("##")
                 .unlockedBy(getHasName(material), has(material))
-                .save(consumer);
+                .save(consumer, BuntsyMod.MODID + ":" + getItemName(material) + "_compacting");
     }
 
     private void compact3By3(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
@@ -612,14 +612,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("###")
                 .pattern("###")
                 .unlockedBy(getHasName(material), has(material))
-                .save(consumer);
+                .save(consumer, BuntsyMod.MODID + ":" + getItemName(material) + "_compacting");
     }
 
     private void uncompact(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, result, 9)
                 .requires(material, 1)
                 .unlockedBy(getHasName(material), has(material))
-                .save(consumer);
+                .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_uncompacting");
     }
 
     private void upgradeSmithing(ItemLike template, ItemLike upgradable, ItemLike material, Item result, Consumer<FinishedRecipe> consumer) {
