@@ -126,4 +126,8 @@ public class InfusionPedestalBlockEntity extends BlockEntity {
     public CompoundTag getUpdateTag() {
         return saveWithoutMetadata();
     }
+
+    public void animateParticles() {
+
+    }
 }

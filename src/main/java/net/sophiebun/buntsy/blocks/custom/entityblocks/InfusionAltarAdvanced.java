@@ -19,7 +19,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.custom.InfusionAltarAdvancedBlockEntity;
-import net.sophiebun.buntsy.blocks.entity.custom.InfusionAltarBasicBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class InfusionAltarAdvanced extends BaseEntityBlock {

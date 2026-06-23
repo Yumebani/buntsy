@@ -46,6 +46,8 @@ public class ModEventBusClientEvents {
                 InfusionPedestalRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.INFUSION_ALTAR_BASIC_BLOCK_ENTITY.get(),
                 InfusionAltarBasicRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.INFUSION_ALTAR_ADVANCED_BLOCK_ENTITY.get(),
+                InfusionAltarAdvancedRenderer::new);
     }
 
     @SubscribeEvent

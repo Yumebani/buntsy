@@ -5,16 +5,9 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkEvent;
-import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
-import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
-import net.sophiebun.buntsy.blocks.entity.custom.InfusionAltarBasicBlockEntity;
-import net.sophiebun.buntsy.blocks.entity.directfairy.FairyOfferingBenchBlockEntity;
+import net.sophiebun.buntsy.blocks.entity.custom.InfusionAltarBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyPowerRelayBlockEntity;
-import net.sophiebun.buntsy.entity.animals.Fairy;
-import net.sophiebun.buntsy.tag.ModTags;
 
 import java.util.function.Supplier;
 
@@ -49,12 +42,12 @@ public class ModBindingStaffPacket {
 
             if (level == null || (binding != null && !level.hasChunkAt(binding)) || (master != null && !level.hasChunkAt(master))) return;
 
-            if (level.getBlockEntity(master) instanceof InfusionAltarBasicBlockEntity &&
+            if (level.getBlockEntity(master) instanceof InfusionAltarBlockEntity &&
                     level.getBlockEntity(binding) instanceof FairyPowerRelayBlockEntity){
 
                 if (getDistanceToBlock(master, binding) < 6){
                     FairyPowerRelayBlockEntity fairyRelay = (FairyPowerRelayBlockEntity) level.getBlockEntity(binding);
-                    InfusionAltarBasicBlockEntity basicAltar = (InfusionAltarBasicBlockEntity) level.getBlockEntity(master);
+                    InfusionAltarBlockEntity basicAltar = (InfusionAltarBlockEntity) level.getBlockEntity(master);
 
                     if (fairyRelay.getLinked() != null) fairyRelay.removeLinked(level);
 

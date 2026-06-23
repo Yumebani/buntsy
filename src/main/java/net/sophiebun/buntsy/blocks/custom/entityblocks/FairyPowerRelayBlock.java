@@ -1,10 +1,6 @@
 package net.sophiebun.buntsy.blocks.custom.entityblocks;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -14,12 +10,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.network.NetworkHooks;
-import net.sophiebun.buntsy.blocks.entity.custom.InfusionAltarBasicBlockEntity;
-import net.sophiebun.buntsy.blocks.entity.directfairy.FairyCollectionTrayBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyPowerRelayBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
