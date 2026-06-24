@@ -18,6 +18,15 @@ public class ModItems {
     public static final DeferredRegister<Item> ItemsRegister =
             DeferredRegister.create(ForgeRegistries.ITEMS, BuntsyMod.MODID);
 
+    public static final RegistryObject<Item> CLOCKWORK_GEAR = ItemsRegister.register(
+            "clockwork_gear", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> CLOCKWORK_PROCESSOR = ItemsRegister.register(
+            "clockwork_processor", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> CLOCKWORK_SCRAP = ItemsRegister.register(
+            "clockwork_scrap", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> CLOCKWORK_BRASS = ItemsRegister.register(
+            "clockwork_brass", () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> HOOTCAT_FEATHER = ItemsRegister.register(
             "hootcat_feather", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> HOOTCAT_PLUME = ItemsRegister.register(
@@ -214,6 +223,8 @@ public class ModItems {
             "fairy_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.FAIRY_ENTITY, 0xfae54e, 0xfff4ac , new Item.Properties()));
     public static final RegistryObject<Item> HOOTCAT_SPAWN_EGG = ItemsRegister.register(
             "hootcat_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.HOOTCAT_ENTITY, 0x4d3f3f, 0x9e7f4b , new Item.Properties()));
+    public static final RegistryObject<Item> CLOCKWORK_MAIDEN_SPAWN_EGG = ItemsRegister.register(
+            "clockwork_maiden_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.CLOCKWORK_MAIDEN_ENTITY, 0x45393b, 0xcb9257 , new Item.Properties()));
 
     public static void register(IEventBus eventBus){
         ItemsRegister.register(eventBus);

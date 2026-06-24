@@ -1,4 +1,4 @@
-// 1.20.1	2026-06-22T17:07:33.0571731	Loot Tables
+// 1.20.1	2026-06-24T16:22:30.7370618	Loot Tables
 68a00ff1afe87276743f47f240a6b3ef5d50bf87 data/buntsy/loot_tables/blocks/beacon_fire_resistance_modifier.json
 f2851e5fd8eac554ecdbe4af07194b1ae6595294 data/buntsy/loot_tables/blocks/beacon_haste_modifier.json
 1f232216c5afa4698c3fc1de0f4cada4c08537be data/buntsy/loot_tables/blocks/beacon_health_boost_modifier.json
@@ -141,3 +141,4 @@ bbe7b8e53bb2c8d9372aeed388d9e066189576a4 data/buntsy/loot_tables/blocks/sweet_pi
 aef6dd58923f6cd7654a9b3d7f1e97184d3866a8 data/buntsy/loot_tables/blocks/thread_reeler.json
 00dc239e97d64941eac2907b78f02cc65b6bf95d data/buntsy/loot_tables/blocks/wild_hootnip.json
 738afdbdc4c61ae1af0ca5badb5e46ec21eb6906 data/buntsy/loot_tables/blocks/wild_strawberry.json
+253482d2383131a00de99418579df157643995b9 data/buntsy/loot_tables/entities/clockwork_maiden.json

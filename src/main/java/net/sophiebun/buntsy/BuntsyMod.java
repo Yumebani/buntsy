@@ -38,6 +38,7 @@ import net.sophiebun.buntsy.blocks.entity.client.ThreadReelerBlockRenderer;
 import net.sophiebun.buntsy.datagen.ModBlockTagGenerator;
 import net.sophiebun.buntsy.dispenser.DispenserBehaviourAditions;
 import net.sophiebun.buntsy.entity.ModEntities;
+import net.sophiebun.buntsy.entity.client.ClockworkMaidenRenderer;
 import net.sophiebun.buntsy.entity.client.FairyRenderer;
 import net.sophiebun.buntsy.entity.client.HootcatRenderer;
 import net.sophiebun.buntsy.entity.client.SilkbunRenderer;
@@ -146,6 +147,7 @@ public class BuntsyMod
             EntityRenderers.register(ModEntities.SILKBUN_ENTITY.get(), SilkbunRenderer::new);
             EntityRenderers.register(ModEntities.FAIRY_ENTITY.get(), FairyRenderer::new);
             EntityRenderers.register(ModEntities.HOOTCAT_ENTITY.get(), HootcatRenderer::new);
+            EntityRenderers.register(ModEntities.CLOCKWORK_MAIDEN_ENTITY.get(), ClockworkMaidenRenderer::new);
 
             BlockEntityRenderers.register(ModBlockEntities.THREAD_REELER_BLOCK_ENTITY.get(), ThreadReelerBlockRenderer::new);
             BlockEntityRenderers.register(ModBlockEntities.GRINDING_WHEEL_BLOCK_ENTITY.get(), GrindingWheelBlockRenderer::new);

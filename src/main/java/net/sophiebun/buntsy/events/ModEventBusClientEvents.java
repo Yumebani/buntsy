@@ -13,10 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.client.*;
-import net.sophiebun.buntsy.entity.client.FairyModel;
-import net.sophiebun.buntsy.entity.client.HootCatModel;
-import net.sophiebun.buntsy.entity.client.ModModelLayers;
-import net.sophiebun.buntsy.entity.client.SilkbunModel;
+import net.sophiebun.buntsy.entity.client.*;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.item.custom.CocoonBag;
 import net.sophiebun.buntsy.item.custom.Essence;
@@ -32,6 +29,7 @@ public class ModEventBusClientEvents {
         event.registerLayerDefinition(ModModelLayers.FAIRY_LAYER, FairyModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HOOTCAT_LAYER, HootCatModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HOOTCAT_COLLAR_LAYER, HootCatModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.CLOCKWORK_MAIDEN_LAYER, ClockworkMaidenModel::createBodyLayer);
     }
 
     @SubscribeEvent
