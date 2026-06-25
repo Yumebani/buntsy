@@ -23,11 +23,14 @@ import net.sophiebun.buntsy.worldgen.tree.gentlit.GentlitTrunkPlacer;
 import net.sophiebun.buntsy.worldgen.tree.gentlit.PieFoliagePlacer;
 import net.sophiebun.buntsy.worldgen.tree.grounded_trunk.GroundedTrunkPlacer;
 import net.sophiebun.buntsy.worldgen.tree.grounded_trunk.SphereFoliagePlacer;
+import net.sophiebun.buntsy.worldgen.tree.malvor.MalvorFoliagePlacer;
+import net.sophiebun.buntsy.worldgen.tree.malvor.MalvorTrunkPlacer;
 
 public class ModConfiguredFeatures {
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> GENTLIT_KEY = registerKey("gentlit");
     public static final ResourceKey<ConfiguredFeature<?, ?>> BRAVOT_KEY = registerKey("bravot");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MALVOR_KEY = registerKey("malvor");
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> GROUNDED_GENTLIT_KEY = registerKey("grounded_gentlit");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GROUNDED_BRAVOT_KEY = registerKey("grounded_bravot");
@@ -68,6 +71,13 @@ public class ModConfiguredFeatures {
                 new BravotTrunkPlacer(10, 0, 6),
                 BlockStateProvider.simple(ModBlocks.BRAVOT_LEAVES.get()),
                 new BravotFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0)),
+                new TwoLayersFeatureSize(1, 0,2)).build());
+
+        register(context, MALVOR_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(ModBlocks.MALVOR_LOG.get()),
+                new MalvorTrunkPlacer(16, 0, 4),
+                BlockStateProvider.simple(ModBlocks.MALVOR_LEAVES.get()),
+                new MalvorFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0)),
                 new TwoLayersFeatureSize(1, 0,2)).build());
 
 

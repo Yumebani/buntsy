@@ -47,6 +47,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         pressurePlateRecipe(ModBlocks.BRAVOT_PLANKS.get(), ModBlocks.BRAVOT_PRESSURE_PLATE.get(), consumer);
         buttonRecipe(ModBlocks.BRAVOT_PLANKS.get(), ModBlocks.BRAVOT_BUTTON.get(), consumer);
 
+        planksRecipe(ModTags.Items.MALVOR_LOGS, ModBlocks.MALVOR_PLANKS.get(), consumer);
+        stairsRecipe(ModBlocks.MALVOR_PLANKS.get(), ModBlocks.MALVOR_STAIRS.get(), consumer);
+        trapdoorRecipe(ModBlocks.MALVOR_PLANKS.get(), ModBlocks.MALVOR_TRAPDOOR.get(), consumer);
+        slabRecipe(ModBlocks.MALVOR_PLANKS.get(), ModBlocks.MALVOR_SLAB.get(), consumer);
+        doorRecipe(ModBlocks.MALVOR_PLANKS.get(), ModBlocks.MALVOR_DOOR.get(), consumer);
+        fenceRecipe(ModBlocks.MALVOR_PLANKS.get(), ModBlocks.MALVOR_FENCE.get(), consumer);
+        fencegateRecipe(ModBlocks.MALVOR_PLANKS.get(), ModBlocks.MALVOR_FENCE_GATE.get(), consumer);
+        pressurePlateRecipe(ModBlocks.MALVOR_PLANKS.get(), ModBlocks.MALVOR_PRESSURE_PLATE.get(), consumer);
+        buttonRecipe(ModBlocks.MALVOR_PLANKS.get(), ModBlocks.MALVOR_BUTTON.get(), consumer);
+
         //Silk fabric
         compact2By2(ModItems.SILK_SPOOL.get(), ModItems.SILK_FABRIC.get(), 2, consumer);
 

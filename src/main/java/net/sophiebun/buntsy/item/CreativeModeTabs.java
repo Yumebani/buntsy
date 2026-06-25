@@ -95,6 +95,24 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.BRAVOT_PRESSURE_PLATE.get());
                         pOutput.accept(ModBlocks.BRAVOT_BUTTON.get());
 
+                        pOutput.accept(ModBlocks.MALVOR_LOG.get());
+                        pOutput.accept(ModBlocks.STRIPPED_MALVOR_LOG.get());
+                        pOutput.accept(ModBlocks.MALVOR_WOOD.get());
+                        pOutput.accept(ModBlocks.STRIPPED_MALVOR_LOG.get());
+
+                        pOutput.accept(ModBlocks.MALVOR_LEAVES.get());
+                        pOutput.accept(ModBlocks.MALVOR_SAPLING.get());
+
+                        pOutput.accept(ModBlocks.MALVOR_PLANKS.get());
+                        pOutput.accept(ModBlocks.MALVOR_STAIRS.get());
+                        pOutput.accept(ModBlocks.MALVOR_SLAB.get());
+                        pOutput.accept(ModBlocks.MALVOR_TRAPDOOR.get());
+                        pOutput.accept(ModBlocks.MALVOR_DOOR.get());
+                        pOutput.accept(ModBlocks.MALVOR_FENCE.get());
+                        pOutput.accept(ModBlocks.MALVOR_FENCE_GATE.get());
+                        pOutput.accept(ModBlocks.MALVOR_PRESSURE_PLATE.get());
+                        pOutput.accept(ModBlocks.MALVOR_BUTTON.get());
+
                         pOutput.accept(ModItems.AMETHYST_DUST.get());
                         pOutput.accept(ModItems.PRISTINE_AMETHYST_GRAIN.get());
                         pOutput.accept(ModBlocks.GROWABLE_AMETHYST_CLUSTER.get());
@@ -222,6 +240,10 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.SILKY_NUGGET.get());
                         pOutput.accept(ModItems.SILKY_INGOT.get());
                         pOutput.accept(ModItems.SILKY_CRYSTAL.get());
+                        pOutput.accept(ModItems.CLOCKWORK_SCRAP.get());
+                        pOutput.accept(ModItems.CLOCKWORK_BRASS.get());
+                        pOutput.accept(ModItems.CLOCKWORK_GEAR.get());
+                        pOutput.accept(ModItems.CLOCKWORK_PROCESSOR.get());
                         pOutput.accept(ModItems.SPEED_BLEND.get());
                         pOutput.accept(ModItems.EFFICIENCY_BLEND.get());
                         pOutput.accept(ModItems.GROWTH_BLEND.get());
@@ -319,6 +341,7 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.SILKBUN_SPAWN_EGG.get());
                         pOutput.accept(ModItems.FAIRY_SPAWN_EGG.get());
                         pOutput.accept(ModItems.HOOTCAT_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.CLOCKWORK_MAIDEN_SPAWN_EGG.get());
 
                     })
                     .build());

@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "Block{buntsy:malvor_planks}": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buntsy:malvor_planks"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "buntsy:malvor_button"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "Block{buntsy:malvor_planks}",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "buntsy:malvor_button"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -9,6 +9,7 @@ import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.worldgen.tree.bravot.BravotTrunkPlacer;
 import net.sophiebun.buntsy.worldgen.tree.gentlit.GentlitTrunkPlacer;
 import net.sophiebun.buntsy.worldgen.tree.grounded_trunk.GroundedTrunkPlacer;
+import net.sophiebun.buntsy.worldgen.tree.malvor.MalvorTrunkPlacer;
 
 public class ModTrunkPlacerTypes {
 
@@ -21,6 +22,8 @@ public class ModTrunkPlacerTypes {
             trunkPlacerRegister.register("bravot_trunk_placer", () -> new TrunkPlacerType<>(BravotTrunkPlacer.CODEC));
     public static final RegistryObject<TrunkPlacerType<GroundedTrunkPlacer>> GROUNDED_TRUNK_PLACER =
             trunkPlacerRegister.register("grounded_trunk_placer", () -> new TrunkPlacerType<>(GroundedTrunkPlacer.CODEC));
+    public static final RegistryObject<TrunkPlacerType<MalvorTrunkPlacer>> MALVOR_TRUNK_PLACER =
+            trunkPlacerRegister.register("malvor_trunk_placer", () -> new TrunkPlacerType<>(MalvorTrunkPlacer.CODEC));
 
     public static void register(IEventBus eventBus){
         trunkPlacerRegister.register(eventBus);

@@ -71,6 +71,25 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlocks.BRAVOT_SLAB.get(), block -> createSlabItemTable(ModBlocks.BRAVOT_SLAB.get()));
         this.add(ModBlocks.BRAVOT_DOOR.get(), block -> createDoorTable(ModBlocks.BRAVOT_DOOR.get()));
 
+        this.dropSelf(ModBlocks.MALVOR_LOG.get());
+        this.dropSelf(ModBlocks.STRIPPED_MALVOR_LOG.get());
+        this.dropSelf(ModBlocks.MALVOR_WOOD.get());
+        this.dropSelf(ModBlocks.STRIPPED_MALVOR_WOOD.get());
+
+        this.add(ModBlocks.MALVOR_LEAVES.get(), block ->
+                createLeavesDrops(block, ModBlocks.MALVOR_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+        this.dropSelf(ModBlocks.MALVOR_SAPLING.get());
+
+        this.dropSelf(ModBlocks.MALVOR_PLANKS.get());
+        this.dropSelf(ModBlocks.MALVOR_STAIRS.get());
+        this.dropSelf(ModBlocks.MALVOR_BUTTON.get());
+        this.dropSelf(ModBlocks.MALVOR_PRESSURE_PLATE.get());
+        this.dropSelf(ModBlocks.MALVOR_TRAPDOOR.get());
+        this.dropSelf(ModBlocks.MALVOR_FENCE.get());
+        this.dropSelf(ModBlocks.MALVOR_FENCE_GATE.get());
+        this.add(ModBlocks.MALVOR_SLAB.get(), block -> createSlabItemTable(ModBlocks.MALVOR_SLAB.get()));
+        this.add(ModBlocks.MALVOR_DOOR.get(), block -> createDoorTable(ModBlocks.MALVOR_DOOR.get()));
+
         //Adding soil
         this.add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get(), block -> createSingleItemTableWithSilkTouch(block, ModBlocks.CHARMIL_SOIL.get()));
         this.dropSelf(ModBlocks.CHARMIL_SOIL.get());
@@ -153,6 +172,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlocks.POTTED_GLOWSHROOM.get(), createPotFlowerItemTable(ModBlocks.GLOWSHROOM.get()));
         this.add(ModBlocks.POTTED_GENTLIT_SAPLING.get(), createPotFlowerItemTable(ModBlocks.GENTLIT_SAPLING.get()));
         this.add(ModBlocks.POTTED_BRAVOT_SAPLING.get(), createPotFlowerItemTable(ModBlocks.BRAVOT_SAPLING.get()));
+        this.add(ModBlocks.POTTED_MALVOR_SAPLING.get(), createPotFlowerItemTable(ModBlocks.MALVOR_SAPLING.get()));
 
         //Adding mushroom blocks
         this.add(ModBlocks.LOVESHROOM_BLOCK.get(), block -> createMushroomBlockDrop(block, ModBlocks.LOVESHROOM.get()));

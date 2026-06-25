@@ -7,6 +7,10 @@
     "buntsy:bravot_log",
     "buntsy:bravot_wood",
     "buntsy:stripped_bravot_log",
-    "buntsy:stripped_bravot_wood"
+    "buntsy:stripped_bravot_wood",
+    "buntsy:malvor_log",
+    "buntsy:malvor_wood",
+    "buntsy:stripped_malvor_log",
+    "buntsy:stripped_malvor_wood"
   ]
 }

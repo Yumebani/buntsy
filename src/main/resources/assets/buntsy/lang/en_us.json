@@ -35,6 +35,24 @@
   "block.buntsy.bravot_pressure_plate": "Bravot Pressure Plate",
   "block.buntsy.bravot_button": "Bravot Button",
 
+  "block.buntsy.malvor_log": "Malvor Log",
+  "block.buntsy.stripped_malvor_log": "Stripped Malvor Log",
+  "block.buntsy.malvor_wood": "Malvor Wood",
+  "block.buntsy.stripped_malvor_wood": "Stripped Malvor Wood",
+
+  "block.buntsy.malvor_leaves": "Malvor Leaves",
+  "block.buntsy.malvor_sapling": "Malvor Sapling",
+
+  "block.buntsy.malvor_planks": "Malvor Planks",
+  "block.buntsy.malvor_stairs": "Malvor Stairs",
+  "block.buntsy.malvor_slab": "Malvor Slab",
+  "block.buntsy.malvor_trapdoor": "Malvor Trapdoor",
+  "block.buntsy.malvor_door": "Malvor Door",
+  "block.buntsy.malvor_fence": "Malvor Fence",
+  "block.buntsy.malvor_fence_gate": "Malvor Fence Gate",
+  "block.buntsy.malvor_pressure_plate": "Malvor Pressure Plate",
+  "block.buntsy.malvor_button": "Malvor Button",
+
   "block.buntsy.pink_fluf_charmil_soil": "Pink Fluf Charmil Soil",
   "block.buntsy.charmil_soil": "Charmil Soil",
   "block.buntsy.charmil_farmland": "Charmil Farmland",
@@ -226,6 +244,10 @@
   "item.buntsy.silky_ingot": "Silky Ingot",
   "item.buntsy.silky_nugget": "Silky Nugget",
   "item.buntsy.silky_crystal": "Silky Crystal",
+  "item.buntsy.clockwork_scrap": "Clockwork Scrap",
+  "item.buntsy.clockwork_brass": "Clockwork Brass",
+  "item.buntsy.clockwork_gear": "Clockwork Gear",
+  "item.buntsy.clockwork_processor": "Clockwork Processor",
   "item.buntsy.strawberry_seeds": "Strawberry Seeds",
   "item.buntsy.hootnip_seeds": "Hootnip Seeds",
 
@@ -300,10 +322,12 @@
   "item.buntsy.silkbun_spawn_egg": "Silkbun Spawn Egg",
   "item.buntsy.fairy_spawn_egg": "Fairy Spawn Egg",
   "item.buntsy.hootcat_spawn_egg": "Hootcat Spawn Egg",
+  "item.buntsy.clockwork_maiden_spawn_egg": "Clockwork Maiden Spawn Egg",
 
   "entity.buntsy.fairy": "Fairy",
   "entity.buntsy.silkbun": "Silkbun",
   "entity.buntsy.hootcat": "Hootcat",
+  "entity.buntsy.clockwork_maiden": "Clockwork Maiden",
 
   "creativetab.buntsy_tab": "Buntsy"
 }

@@ -134,6 +134,24 @@ public class ModItemModelProvider extends ItemModelProvider {
         evenSimplerBlockItem(ModBlocks.BRAVOT_PRESSURE_PLATE);
         evenSimplerBlockItem(ModBlocks.BRAVOT_FENCE_GATE);
 
+        evenSimplerBlockItem(ModBlocks.MALVOR_LOG);
+        evenSimplerBlockItem(ModBlocks.STRIPPED_MALVOR_LOG);
+        evenSimplerBlockItem(ModBlocks.MALVOR_WOOD);
+        evenSimplerBlockItem(ModBlocks.STRIPPED_MALVOR_WOOD);
+
+        evenSimplerBlockItem(ModBlocks.MALVOR_LEAVES);
+        simpleCrossBlockItem(ModBlocks.MALVOR_SAPLING);
+
+        evenSimplerBlockItem(ModBlocks.MALVOR_PLANKS);
+        fenceItem(ModBlocks.MALVOR_FENCE, ModBlocks.MALVOR_PLANKS);
+        buttonItem(ModBlocks.MALVOR_BUTTON, ModBlocks.MALVOR_PLANKS);
+        trapdoorItem(ModBlocks.MALVOR_TRAPDOOR);
+        simpleBlockItem(ModBlocks.MALVOR_DOOR);
+        evenSimplerBlockItem(ModBlocks.MALVOR_STAIRS);
+        evenSimplerBlockItem(ModBlocks.MALVOR_SLAB);
+        evenSimplerBlockItem(ModBlocks.MALVOR_PRESSURE_PLATE);
+        evenSimplerBlockItem(ModBlocks.MALVOR_FENCE_GATE);
+
         //Crops
         simpleCropBlockItem(ModBlocks.WILD_STRAWBERRY, "wild_strawberry");
         simpleCropBlockItem(ModBlocks.STRAWBERRY_CROP, "strawberry_crop_stage5");
@@ -194,6 +212,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         withExistingParent(ModItems.SILKBUN_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.FAIRY_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.HOOTCAT_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.CLOCKWORK_MAIDEN_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
         //Fume bottle
         fumeBottleItem(ModItems.FUME_BOTTLE);

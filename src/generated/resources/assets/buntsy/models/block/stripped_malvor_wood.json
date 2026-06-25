@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "buntsy:block/malvor_log",
+    "side": "buntsy:block/stripped_malvor_log"
+  }
+}

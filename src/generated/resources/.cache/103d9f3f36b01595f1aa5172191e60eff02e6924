@@ -1,4 +1,4 @@
-// 1.20.1	2026-06-23T14:45:12.2813262	Registries
+// 1.20.1	2026-06-25T11:36:28.9907603	Registries
 0774d67e15d344b0af4664acf0effbbe597253d0 data/buntsy/forge/biome_modifier/add_wild_hootnip.json
 7103105e7d4d3bc4223502756b53703d74766448 data/buntsy/forge/biome_modifier/add_wild_strawberry.json
 9416c4ffd8b05bb7df1d5ccff68c0f22472d5462 data/buntsy/worldgen/biome/candy_crags_biome.json
@@ -17,6 +17,7 @@ f231c965e02c0087432d57c3a599255b2f44a26c data/buntsy/worldgen/configured_feature
 15183452c6cf81c57c90bf19557ab85e855af019 data/buntsy/worldgen/configured_feature/grounded_bravot.json
 55d0a6d042a05a89c46654b1ff02c7f9882254bb data/buntsy/worldgen/configured_feature/grounded_gentlit.json
 ed744c0cd0497b4a8adafcd2d271b9782ccbf418 data/buntsy/worldgen/configured_feature/loveshroom.json
+e67763129ed6acc2938328f0991a84e5070d517b data/buntsy/worldgen/configured_feature/malvor.json
 39b5578dfac935726ab24edadb50fa4b898425e9 data/buntsy/worldgen/configured_feature/mod_coral_key.json
 b62f806d31ec74ca2a82ddbed225f96eaa301f70 data/buntsy/worldgen/configured_feature/pink_bloom.json
 754d2f1c8c3e75592a5434094233636d0a79e077 data/buntsy/worldgen/configured_feature/pink_charmil_grass.json

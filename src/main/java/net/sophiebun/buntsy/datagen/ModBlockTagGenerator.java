@@ -36,12 +36,26 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.GENTLIT_STAIRS.get())
                 .add(ModBlocks.GENTLIT_SLAB.get())
                 .add(ModBlocks.GENTLIT_DOOR.get())
+                .add(ModBlocks.BRAVOT_LOG.get())
+                .add(ModBlocks.STRIPPED_BRAVOT_LOG.get())
+                .add(ModBlocks.BRAVOT_WOOD.get())
+                .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get())
                 .add(ModBlocks.BRAVOT_PLANKS.get())
                 .add(ModBlocks.BRAVOT_TRAPDOOR.get())
                 .add(ModBlocks.BRAVOT_BUTTON.get())
                 .add(ModBlocks.BRAVOT_STAIRS.get())
                 .add(ModBlocks.BRAVOT_SLAB.get())
                 .add(ModBlocks.BRAVOT_DOOR.get())
+                .add(ModBlocks.MALVOR_LOG.get())
+                .add(ModBlocks.STRIPPED_MALVOR_LOG.get())
+                .add(ModBlocks.MALVOR_WOOD.get())
+                .add(ModBlocks.STRIPPED_MALVOR_WOOD.get())
+                .add(ModBlocks.MALVOR_PLANKS.get())
+                .add(ModBlocks.MALVOR_TRAPDOOR.get())
+                .add(ModBlocks.MALVOR_BUTTON.get())
+                .add(ModBlocks.MALVOR_STAIRS.get())
+                .add(ModBlocks.MALVOR_SLAB.get())
+                .add(ModBlocks.MALVOR_DOOR.get())
                 .add(ModBlocks.LOVESHROOM_BLOCK.get())
                 .add(ModBlocks.GLOWSHROOM_BLOCK.get())
                 .add(ModBlocks.FAIRY_OFFERING_BENCH.get())
@@ -105,17 +119,26 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.BRAVOT_WOOD.get())
                 .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get());
 
+        this.tag(ModTags.Blocks.MALVOR_LOGS)
+                .add(ModBlocks.MALVOR_LOG.get())
+                .add(ModBlocks.STRIPPED_MALVOR_LOG.get())
+                .add(ModBlocks.MALVOR_WOOD.get())
+                .add(ModBlocks.STRIPPED_MALVOR_WOOD.get());
+
         this.tag(BlockTags.WOODEN_FENCES)
                 .add(ModBlocks.GENTLIT_FENCE.get())
-                .add(ModBlocks.BRAVOT_FENCE.get());
+                .add(ModBlocks.BRAVOT_FENCE.get())
+                .add(ModBlocks.MALVOR_FENCE.get());
 
         this.tag(BlockTags.FENCE_GATES)
                 .add(ModBlocks.GENTLIT_FENCE_GATE.get())
-                .add(ModBlocks.BRAVOT_FENCE_GATE.get());
+                .add(ModBlocks.BRAVOT_FENCE_GATE.get())
+                .add(ModBlocks.MALVOR_FENCE_GATE.get());
 
         this.tag(BlockTags.LEAVES)
                 .add(ModBlocks.GENTLIT_LEAVES.get())
-                .add(ModBlocks.BRAVOT_LEAVES.get());
+                .add(ModBlocks.BRAVOT_LEAVES.get())
+                .add(ModBlocks.MALVOR_LEAVES.get());
 
         this.tag(BlockTags.LOGS_THAT_BURN)
                 .add(ModBlocks.GENTLIT_LOG.get())
@@ -125,7 +148,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.BRAVOT_LOG.get())
                 .add(ModBlocks.BRAVOT_WOOD.get())
                 .add(ModBlocks.STRIPPED_BRAVOT_LOG.get())
-                .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get());
+                .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get())
+                .add(ModBlocks.MALVOR_LOG.get())
+                .add(ModBlocks.MALVOR_WOOD.get())
+                .add(ModBlocks.STRIPPED_MALVOR_LOG.get())
+                .add(ModBlocks.STRIPPED_MALVOR_WOOD.get());
 
         this.tag(BlockTags.LOGS)
                 .add(ModBlocks.GENTLIT_LOG.get())
@@ -135,7 +162,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.BRAVOT_LOG.get())
                 .add(ModBlocks.BRAVOT_WOOD.get())
                 .add(ModBlocks.STRIPPED_BRAVOT_LOG.get())
-                .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get());
+                .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get())
+                .add(ModBlocks.MALVOR_LOG.get())
+                .add(ModBlocks.MALVOR_WOOD.get())
+                .add(ModBlocks.STRIPPED_MALVOR_LOG.get())
+                .add(ModBlocks.STRIPPED_MALVOR_WOOD.get());
 
         this.tag(BlockTags.MUSHROOM_GROW_BLOCK)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())

@@ -1,4 +1,4 @@
-// 1.20.1	2024-10-10T10:38:28.390479494	Item Models: buntsy
+// 1.20.1	2026-06-25T11:36:28.9937609	Item Models: buntsy
 eeb88518e910489d20bafae39dd12a926895cb2b assets/buntsy/models/item/amethyst_dust.json
 ed0711e135e428c5b179073706c6432f256f2731 assets/buntsy/models/item/binding_staff.json
 73f545fa0d002fdfc4b1282ad7b122c64576abfd assets/buntsy/models/item/blazing_hootnip.json
@@ -21,8 +21,9 @@ af5f90a07fbca34469854c02826e55a60d308f75 assets/buntsy/models/item/bravot_trapdo
 34ad6eb448650b93e64258eb508717b595dc81c3 assets/buntsy/models/item/bravot_wood.json
 1d36a1c2209ea5ef6aa37758af3b89664e675d65 assets/buntsy/models/item/bunny_ears.json
 9ad2e8ff378acad7040e951d354f65534b94207f assets/buntsy/models/item/caramel_strawberries.json
-2410babbbf992ac6b3cf957660950f370912ad8c assets/buntsy/models/item/cat_ears.json
 56fd30a5e7533d75208cfa5381a1bdc53bada29e assets/buntsy/models/item/catalyst.json
+2410babbbf992ac6b3cf957660950f370912ad8c assets/buntsy/models/item/cat_ears.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/buntsy/models/item/clockwork_maiden_spawn_egg.json
 98b8e0e29a81f4934ae81a714059565311b2937b assets/buntsy/models/item/cocoon.json
 573943a024215d703e40334dca36e886dc4f7305 assets/buntsy/models/item/cocoon_bag.json
 2585f3b0c8835120ac893cf2693e6262b8033d57 assets/buntsy/models/item/copper_crystal.json
@@ -63,10 +64,10 @@ a84b97762923c98b616bfb60464b1e194261e56d assets/buntsy/models/item/glowshroom.js
 48e7a740541c676250487cde94be81e201e957d8 assets/buntsy/models/item/glowshroom_block.json
 8e1f564a70ed465e5b6ac7c572aec09cba5e2e69 assets/buntsy/models/item/glowstone_crystal.json
 bd33947c39c686f78403ab25b8d5b861b28d2e0c assets/buntsy/models/item/glowstone_crystal_cluster.json
+f7d6b46004a9cd53f0057f8d028d36ff488b5189 assets/buntsy/models/item/golden_strawberry.json
 f90afd0fbebd3ef1a1c90be849e91654b6b4451d assets/buntsy/models/item/gold_crystal.json
 5e1cd53afe5c9d8dd3dd40cacb57dcdcd2792b26 assets/buntsy/models/item/gold_crystal_cluster.json
 fe92f9e44935c4f3c73104fde6fcb82d27fd5748 assets/buntsy/models/item/gold_dust.json
-f7d6b46004a9cd53f0057f8d028d36ff488b5189 assets/buntsy/models/item/golden_strawberry.json
 0344d182dddeb406b96b2db65317999f52d66ce8 assets/buntsy/models/item/ground_hootnip.json
 ceae3b7a072603dc9209de9a3319ba71de50719f assets/buntsy/models/item/growable_amethyst_cluster.json
 dee796e14ea4386225a3e43a380fbf6213098fec assets/buntsy/models/item/growth_blend.json
@@ -100,6 +101,19 @@ bd6f734b0bd9a6a6470b7f87602a25e81bb46542 assets/buntsy/models/item/large_lapis_c
 b70541afc41e06ada882b15f978aa54213fed257 assets/buntsy/models/item/large_redstone_crystal_cluster.json
 08f9e4cd2588b518484b1dbf627928c0813dfea0 assets/buntsy/models/item/loveshroom.json
 94ecea3eec47be4faecfd6345118b083dbd061f7 assets/buntsy/models/item/loveshroom_block.json
+267e42df0d99abe52ca25320363f40a4fdc9c89b assets/buntsy/models/item/malvor_button.json
+f374534d9eb83ab38f668d26b72bb7a1bbf0e266 assets/buntsy/models/item/malvor_door.json
+65ceb4a2b5eccda2f02df6e2e06983687043b96f assets/buntsy/models/item/malvor_fence.json
+53a9e8dab5b55632565f95342d6a67f2a787d8c2 assets/buntsy/models/item/malvor_fence_gate.json
+2fbb80f2a1a2d57edbeff7b922ab416aa66898a3 assets/buntsy/models/item/malvor_leaves.json
+0dc18647838c18d95644a85d097978907bf41150 assets/buntsy/models/item/malvor_log.json
+9fa4a79203b9fa4a12cd8beeaebe62896bfd0d98 assets/buntsy/models/item/malvor_planks.json
+fa4ccacbd53aa0d1c184423c053477604a75f977 assets/buntsy/models/item/malvor_pressure_plate.json
+cbfe5a77104bd2e4e13e5d2111bb229c23537a05 assets/buntsy/models/item/malvor_sapling.json
+30200d049b297f566cb1bfd8891b8f2b7822eaff assets/buntsy/models/item/malvor_slab.json
+389ee248cff1420ba8023ed0fb35c2ccde0c9184 assets/buntsy/models/item/malvor_stairs.json
+1d4100c0729ae555108cd5a0ff81a7ba7c5999b8 assets/buntsy/models/item/malvor_trapdoor.json
+177f3598d1592394fa0763bcb1ebd450fec067bd assets/buntsy/models/item/malvor_wood.json
 e192d96e5963df42648f7321bea82568eba31b9a assets/buntsy/models/item/medium_copper_crystal_cluster.json
 9441482e172ef4f6a8cbd58dcecf3457d7534e2b assets/buntsy/models/item/medium_debris_crystal_cluster.json
 e359a88a8df7d68275358693885a4ce19c8c2274 assets/buntsy/models/item/medium_diamond_crystal_cluster.json
@@ -134,8 +148,6 @@ c7a542196bfe9cc0190af409a72363623156b957 assets/buntsy/models/item/redstone_crys
 c8b2a7eab2781f84701c07b356f83fdd8b9302df assets/buntsy/models/item/redstone_crystal_cluster.json
 5c6555c19d351d81965b9a943d0f10b7976ded01 assets/buntsy/models/item/rotten_blend.json
 58aaedfb40f95afe5e2988cc34a04b893d4ede7f assets/buntsy/models/item/silk.json
-2d0a3b661b3ac05033a2ae15b3f572539a585378 assets/buntsy/models/item/silk_fabric.json
-b417f1d52aa902ced943940bdeda87bdb147e1bc assets/buntsy/models/item/silk_spool.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/buntsy/models/item/silkbun_spawn_egg.json
 6590a1147e1a96f55a82f1d39d183cbcb7192401 assets/buntsy/models/item/silky_axe.json
 c4fc07bcad054b802f9a14c79d69fe66dd86f490 assets/buntsy/models/item/silky_boots.json
@@ -149,6 +161,8 @@ f6d8a8a9ab7f6930d2107edd7654c6bc6130a798 assets/buntsy/models/item/silky_legging
 6009c7ce54c1c0c087e8222173f45fb3d2468c99 assets/buntsy/models/item/silky_pickaxe.json
 eac87e9feb0765b254d24a3547afffcbef6edcdf assets/buntsy/models/item/silky_shovel.json
 6310d66c2a43dd426e364d5541f21d0fc4d9e1fa assets/buntsy/models/item/silky_sword.json
+2d0a3b661b3ac05033a2ae15b3f572539a585378 assets/buntsy/models/item/silk_fabric.json
+b417f1d52aa902ced943940bdeda87bdb147e1bc assets/buntsy/models/item/silk_spool.json
 0846f87da45ad73d7245f176e21771485034e8f4 assets/buntsy/models/item/sloth_blend.json
 f9d68d44df16fba921e350c642e0e91b07af6e8c assets/buntsy/models/item/small_copper_crystal_cluster.json
 16316aa0a083fff41ba3ab57003527a452637579 assets/buntsy/models/item/small_debris_crystal_cluster.json
@@ -170,6 +184,8 @@ a1a4811b42bb75bb82ba6845f96de3e8427c8e02 assets/buntsy/models/item/strawberry_cr
 9679d32451ccd6f19bbf5faf5761fe1e7a64d790 assets/buntsy/models/item/stripped_bravot_wood.json
 64dfe13bf864e792268f29353f1329d0494a5f29 assets/buntsy/models/item/stripped_gentlit_log.json
 e50e349cd1d2fe2dbbf0b16b4042221b9745df02 assets/buntsy/models/item/stripped_gentlit_wood.json
+c12b3b4269bc03b81256103810c93dfb28b0bf37 assets/buntsy/models/item/stripped_malvor_log.json
+9c135ee4ec98d58b9b79e3e86d28b6b14fd984f3 assets/buntsy/models/item/stripped_malvor_wood.json
 c880cd3b83fca6d24ab1a6cdc0d1c071f6826164 assets/buntsy/models/item/sugar_bowl.json
 e05269f395e4b70ceddfa57d68f2b897d99135ad assets/buntsy/models/item/syrupy_mixture_bowl.json
 ae4e237c295d9faab22fdab6d5b8c9005fdffa6d assets/buntsy/models/item/tough_silk_fabric.json

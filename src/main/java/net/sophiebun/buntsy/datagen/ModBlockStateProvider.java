@@ -74,6 +74,28 @@ public class ModBlockStateProvider extends BlockStateProvider {
         doorBlockWithRenderType((DoorBlock) ModBlocks.BRAVOT_DOOR.get(), modLoc("block/bravot_door_bottom"), modLoc("block/bravot_door_top"), "cutout");
         trapdoorBlockWithRenderType((TrapDoorBlock) ModBlocks.BRAVOT_TRAPDOOR.get(), modLoc("block/bravot_trapdoor"), true, "cutout");
 
+        logBlock((RotatedPillarBlock) ModBlocks.MALVOR_LOG.get());
+        axisBlock((RotatedPillarBlock) ModBlocks.MALVOR_WOOD.get(), blockTexture(ModBlocks.MALVOR_LOG.get()), blockTexture(ModBlocks.MALVOR_LOG.get()));
+        axisBlock((RotatedPillarBlock) ModBlocks.STRIPPED_MALVOR_LOG.get(), blockTexture(ModBlocks.STRIPPED_MALVOR_LOG.get()),
+                new ResourceLocation(BuntsyMod.MODID, "block/stripped_malvor_log_top"));
+        axisBlock((RotatedPillarBlock) ModBlocks.STRIPPED_MALVOR_WOOD.get(), blockTexture(ModBlocks.STRIPPED_MALVOR_LOG.get()), blockTexture(ModBlocks.MALVOR_LOG.get()));
+
+        simpleBlock(ModBlocks.MALVOR_LEAVES.get(),
+                models().singleTexture(ForgeRegistries.BLOCKS.getKey(ModBlocks.MALVOR_LEAVES.get()).getPath(),
+                        new ResourceLocation("minecraft:block/leaves"), "all", blockTexture(ModBlocks.MALVOR_LEAVES.get())).renderType("cutout"));
+        simpleCrossBlock(ModBlocks.MALVOR_SAPLING);
+
+        blockWithItem(ModBlocks.MALVOR_PLANKS);
+        stairsBlock((StairBlock) ModBlocks.MALVOR_STAIRS.get(), blockTexture(ModBlocks.MALVOR_PLANKS.get()));
+        slabBlock((SlabBlock) ModBlocks.MALVOR_SLAB.get(), blockTexture(ModBlocks.MALVOR_PLANKS.get()), blockTexture(ModBlocks.MALVOR_PLANKS.get()));
+        buttonBlock((ButtonBlock) ModBlocks.MALVOR_BUTTON.get(), blockTexture(ModBlocks.MALVOR_PLANKS.get()));
+        pressurePlateBlock((PressurePlateBlock) ModBlocks.MALVOR_PRESSURE_PLATE.get(), blockTexture(ModBlocks.MALVOR_PLANKS.get()));
+        fenceBlock((FenceBlock) ModBlocks.MALVOR_FENCE.get(), blockTexture(ModBlocks.MALVOR_PLANKS.get()));
+        fenceGateBlock((FenceGateBlock) ModBlocks.MALVOR_FENCE_GATE.get(), blockTexture(ModBlocks.MALVOR_PLANKS.get()));
+        doorBlockWithRenderType((DoorBlock) ModBlocks.MALVOR_DOOR.get(), modLoc("block/malvor_door_bottom"), modLoc("block/malvor_door_top"), "cutout");
+        trapdoorBlockWithRenderType((TrapDoorBlock) ModBlocks.MALVOR_TRAPDOOR.get(), modLoc("block/malvor_trapdoor"), true, "cutout");
+
+
         //Adding soil models
         grassBlock(ModBlocks.PINK_FLUF_CHARMIL_SOIL, ModBlocks.CHARMIL_SOIL.getId().getPath());
         blockWithItem(ModBlocks.CHARMIL_SOIL);
@@ -104,6 +126,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         pottedPlant(ModBlocks.POTTED_BLUE_BLOOM, ModBlocks.BLUE_BLOOM);
         pottedPlant(ModBlocks.POTTED_GENTLIT_SAPLING, ModBlocks.GENTLIT_SAPLING);
         pottedPlant(ModBlocks.POTTED_BRAVOT_SAPLING, ModBlocks.BRAVOT_SAPLING);
+        pottedPlant(ModBlocks.POTTED_MALVOR_SAPLING, ModBlocks.MALVOR_SAPLING);
         pottedPlant(ModBlocks.POTTED_LOVESHROOM, ModBlocks.LOVESHROOM);
         pottedPlant(ModBlocks.POTTED_GLOWSHROOM, ModBlocks.GLOWSHROOM);
 

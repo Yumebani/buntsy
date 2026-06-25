@@ -23,8 +23,6 @@ public class ModBiomeModifiers {
 
     public static final ResourceKey<BiomeModifier> ADD_WILD_STRAWBERRY = registerKey("add_wild_strawberry");
     public static final ResourceKey<BiomeModifier> ADD_WILD_HOOTNIP = registerKey("add_wild_hootnip");
-    public static final ResourceKey<BiomeModifier> ADD_SILKBUN = registerKey("silkbun");
-    public static final ResourceKey<BiomeModifier> ADD_FAIRY = registerKey("fairy");
 
     public static void bootstrap(BootstapContext<BiomeModifier> context) {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);

@@ -39,7 +39,11 @@ public class ModItemTagGenerator extends ItemTagsProvider {
                 .add(ModBlocks.BRAVOT_LOG.get().asItem())
                 .add(ModBlocks.STRIPPED_BRAVOT_LOG.get().asItem())
                 .add(ModBlocks.BRAVOT_WOOD.get().asItem())
-                .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get().asItem());
+                .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get().asItem())
+                .add(ModBlocks.MALVOR_LOG.get().asItem())
+                .add(ModBlocks.STRIPPED_MALVOR_LOG.get().asItem())
+                .add(ModBlocks.MALVOR_WOOD.get().asItem())
+                .add(ModBlocks.STRIPPED_MALVOR_WOOD.get().asItem());
 
         this.tag(ModTags.Items.GENTLIT_LOGS)
                 .add(ModBlocks.GENTLIT_LOG.get().asItem())
@@ -53,9 +57,16 @@ public class ModItemTagGenerator extends ItemTagsProvider {
                 .add(ModBlocks.BRAVOT_WOOD.get().asItem())
                 .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get().asItem());
 
+        this.tag(ModTags.Items.MALVOR_LOGS)
+                .add(ModBlocks.MALVOR_LOG.get().asItem())
+                .add(ModBlocks.STRIPPED_MALVOR_LOG.get().asItem())
+                .add(ModBlocks.MALVOR_WOOD.get().asItem())
+                .add(ModBlocks.STRIPPED_MALVOR_WOOD.get().asItem());
+
         this.tag(ItemTags.PLANKS)
                 .add(ModBlocks.GENTLIT_PLANKS.get().asItem())
-                .add(ModBlocks.BRAVOT_PLANKS.get().asItem());
+                .add(ModBlocks.BRAVOT_PLANKS.get().asItem())
+                .add(ModBlocks.MALVOR_PLANKS.get().asItem());
 
         this.tag(ModTags.Items.FAIRY_FOOD)
                 .add(ModItems.GENTLIT_SYRUP.get().asItem())

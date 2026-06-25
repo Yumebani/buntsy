@@ -25,6 +25,7 @@ import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.worldgen.ModConfiguredFeatures;
 import net.sophiebun.buntsy.worldgen.tree.BravotTreeGrower;
 import net.sophiebun.buntsy.worldgen.tree.GentlitTreeGrower;
+import net.sophiebun.buntsy.worldgen.tree.MalvorTreeGrower;
 
 import java.util.function.Supplier;
 
@@ -32,6 +33,44 @@ public class ModBlocks {
 
     public static final DeferredRegister<Block> BlocksRegister =
             DeferredRegister.create(ForgeRegistries.BLOCKS, BuntsyMod.MODID);
+
+    public static final RegistryObject<Block> MALVOR_LEAVES = registerBlock("malvor_leaves",
+            () -> new ModThickLeaves(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion().strength(0.2F).randomTicks().isSuffocating((state, level, pos) -> false).isViewBlocking((state, level, pos) -> false)));
+    public static final RegistryObject<Block> MALVOR_SAPLING = registerBlock("malvor_sapling",
+            () -> new SaplingBlock(new MalvorTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+    public static final RegistryObject<Block> POTTED_MALVOR_SAPLING = BlocksRegister.register("potted_malvor_sapling",
+            () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, ModBlocks.MALVOR_SAPLING,
+                    BlockBehaviour.Properties.copy(Blocks.POTTED_PINK_TULIP).noOcclusion()));
+
+    public static final RegistryObject<Block> MALVOR_LOG = registerBlock("malvor_log",
+            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
+    public static final RegistryObject<Block> STRIPPED_MALVOR_LOG = registerBlock("stripped_malvor_log",
+            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistryObject<Block> MALVOR_WOOD = registerBlock("malvor_wood",
+            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)));
+    public static final RegistryObject<Block> STRIPPED_MALVOR_WOOD = registerBlock("stripped_malvor_wood",
+            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
+
+    public static final RegistryObject<Block> MALVOR_PLANKS = registerBlock("malvor_planks",
+            () -> new ModPlanks(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
+    public static final RegistryObject<Block> MALVOR_STAIRS = registerBlock("malvor_stairs",
+            () -> new ModWoodStairs(() -> ModBlocks.MALVOR_PLANKS.get().defaultBlockState(),BlockBehaviour.Properties.copy(Blocks.OAK_STAIRS)));
+    public static final RegistryObject<Block> MALVOR_SLAB = registerBlock("malvor_slab",
+            () -> new ModWoodSlab(BlockBehaviour.Properties.copy(Blocks.OAK_SLAB)));
+    public static final RegistryObject<Block> MALVOR_BUTTON = registerBlock("malvor_button",
+            () -> new ButtonBlock(BlockBehaviour.Properties.copy(Blocks.OAK_BUTTON), BlockSetType.OAK, 10, true));
+    public static final RegistryObject<Block> MALVOR_PRESSURE_PLATE = registerBlock("malvor_pressure_plate",
+            () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.OAK_PRESSURE_PLATE),
+                    BlockSetType.OAK));
+    public static final RegistryObject<Block> MALVOR_FENCE = registerBlock("malvor_fence",
+            () -> new ModWoodFence(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE)));
+    public static final RegistryObject<Block> MALVOR_FENCE_GATE = registerBlock("malvor_fence_gate",
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE).noOcclusion(), SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
+    public static final RegistryObject<Block> MALVOR_DOOR = registerBlock("malvor_door",
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion(), BlockSetType.OAK));
+    public static final RegistryObject<Block> MALVOR_TRAPDOOR = registerBlock("malvor_trapdoor",
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion(), BlockSetType.OAK));
+
 
     public static final RegistryObject<Block> GENTLIT_LEAVES = registerBlock("gentlit_leaves",
             () -> new ModLeaves(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion().strength(0.2F).randomTicks().isSuffocating((state, level, pos) -> false).isViewBlocking((state, level, pos) -> false)));

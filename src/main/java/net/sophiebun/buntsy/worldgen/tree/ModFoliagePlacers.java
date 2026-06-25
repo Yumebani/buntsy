@@ -9,6 +9,7 @@ import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.worldgen.tree.bravot.BravotFoliagePlacer;
 import net.sophiebun.buntsy.worldgen.tree.gentlit.PieFoliagePlacer;
 import net.sophiebun.buntsy.worldgen.tree.grounded_trunk.SphereFoliagePlacer;
+import net.sophiebun.buntsy.worldgen.tree.malvor.MalvorFoliagePlacer;
 
 public class ModFoliagePlacers {
 
@@ -21,6 +22,8 @@ public class ModFoliagePlacers {
             foliagePlacerRegister.register("bravot_foliage_placer", () -> new FoliagePlacerType<>(BravotFoliagePlacer.CODEC));
     public static final RegistryObject<FoliagePlacerType<SphereFoliagePlacer>> SPHERE_FOLIAGE_PLACER =
             foliagePlacerRegister.register("sphere_foliage_placer", () -> new FoliagePlacerType<>(SphereFoliagePlacer.CODEC));
+    public static final RegistryObject<FoliagePlacerType<MalvorFoliagePlacer>> MALVOR_FOLIAGE_PLACER =
+            foliagePlacerRegister.register("malvor_foliage_placer", () -> new FoliagePlacerType<>(MalvorFoliagePlacer.CODEC));
 
     public static void register(IEventBus eventBus){
         foliagePlacerRegister.register(eventBus);
