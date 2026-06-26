@@ -17,6 +17,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.custom.HootnipCrop;
+import net.sophiebun.buntsy.blocks.custom.RotatedTallFlowerBlock;
 import net.sophiebun.buntsy.blocks.custom.StrawberryCrop;
 import net.sophiebun.buntsy.blocks.custom.SyrupExtractorBlock;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
@@ -95,15 +96,27 @@ public class ModBlockStateProvider extends BlockStateProvider {
         doorBlockWithRenderType((DoorBlock) ModBlocks.MALVOR_DOOR.get(), modLoc("block/malvor_door_bottom"), modLoc("block/malvor_door_top"), "cutout");
         trapdoorBlockWithRenderType((TrapDoorBlock) ModBlocks.MALVOR_TRAPDOOR.get(), modLoc("block/malvor_trapdoor"), true, "cutout");
 
+        logBlock((RotatedPillarBlock) ModBlocks.CRYSTALLIZED_LOG.get());
+        simpleBlock(ModBlocks.CRYSTALLIZED_LEAVES.get(),
+                models().singleTexture(ForgeRegistries.BLOCKS.getKey(ModBlocks.CRYSTALLIZED_LEAVES.get()).getPath(),
+                        new ResourceLocation("minecraft:block/leaves"), "all", blockTexture(ModBlocks.CRYSTALLIZED_LEAVES.get())).renderType("cutout"));
+
 
         //Adding soil models
         grassBlock(ModBlocks.PINK_FLUF_CHARMIL_SOIL, ModBlocks.CHARMIL_SOIL.getId().getPath());
         blockWithItem(ModBlocks.CHARMIL_SOIL);
+        farmlandBlock(ModBlocks.CHARMIL_FARMLAND, ModBlocks.CHARMIL_SOIL);
+
+        grassBlock(ModBlocks.GRAY_MOSS_ODIATE_SOIL, ModBlocks.ODIATE_SOIL.getId().getPath());
+        blockWithItem(ModBlocks.ODIATE_SOIL);
+        blockWithItem(ModBlocks.ODIATE_MUD);
+        farmlandBlock(ModBlocks.ODIATE_FARMLAND, ModBlocks.ODIATE_SOIL);
+
         blockWithItem(ModBlocks.SWEET_CORAL_SAND);
+        blockWithItem(ModBlocks.FROZEN_CORAL_SAND);
         blockWithItem(ModBlocks.SWEET_CANDY_ROCK);
         blockWithItem(ModBlocks.BITTER_CANDY_ROCK);
         blockWithItem(ModBlocks.SOUR_CANDY_ROCK);
-        farmlandBlock(ModBlocks.CHARMIL_FARMLAND, ModBlocks.CHARMIL_SOIL);
 
 
         //Crops
@@ -114,25 +127,32 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
 
         //Adding plants
-        variedGrass(ModBlocks.PINK_CHARMIL_GRASS); //Item added in item model gen
-        variedGrass(ModBlocks.BLUE_CHARMIL_GRASS); //Item added in item model gen
-        simpleCrossBlock(ModBlocks.PINK_BLOOM); //Item added in item model gen
-        simpleCrossBlock(ModBlocks.BLUE_BLOOM); //Item added in item model gen
-        simpleCrossBlock(ModBlocks.LOVESHROOM); //Item added in item model gen
-        simpleCrossBlock(ModBlocks.GLOWSHROOM); //Item added in item model gen
+        variedGrass(ModBlocks.PINK_CHARMIL_GRASS);
+        variedGrass(ModBlocks.BLUE_CHARMIL_GRASS);
+        variedGrass(ModBlocks.PALEGRASS);
+        simpleCrossBlock(ModBlocks.PINK_BLOOM);
+        simpleCrossBlock(ModBlocks.BLUE_BLOOM);
+        simpleCrossBlock(ModBlocks.ABYSSAL_BLOOM);
+        simpleCrossBlock(ModBlocks.LOVESHROOM);
+        simpleCrossBlock(ModBlocks.GLOWSHROOM);
+        simpleCrossBlock(ModBlocks.PALESHROOM);
+        luminum(ModBlocks.LUMINUM);
 
         //Adding potted plants
         pottedPlant(ModBlocks.POTTED_PINK_BLOOM, ModBlocks.PINK_BLOOM);
         pottedPlant(ModBlocks.POTTED_BLUE_BLOOM, ModBlocks.BLUE_BLOOM);
+        pottedPlant(ModBlocks.POTTED_ABYSSAL_BLOOM, ModBlocks.ABYSSAL_BLOOM);
         pottedPlant(ModBlocks.POTTED_GENTLIT_SAPLING, ModBlocks.GENTLIT_SAPLING);
         pottedPlant(ModBlocks.POTTED_BRAVOT_SAPLING, ModBlocks.BRAVOT_SAPLING);
         pottedPlant(ModBlocks.POTTED_MALVOR_SAPLING, ModBlocks.MALVOR_SAPLING);
         pottedPlant(ModBlocks.POTTED_LOVESHROOM, ModBlocks.LOVESHROOM);
         pottedPlant(ModBlocks.POTTED_GLOWSHROOM, ModBlocks.GLOWSHROOM);
+        pottedPlant(ModBlocks.POTTED_PALESHROOM, ModBlocks.PALESHROOM);
 
         //MushroomBlocks
-        mushroomBlock(ModBlocks.LOVESHROOM_BLOCK); //Item added in item model gen
-        mushroomBlock(ModBlocks.GLOWSHROOM_BLOCK); //Item added in item model gen
+        mushroomBlock(ModBlocks.LOVESHROOM_BLOCK);
+        mushroomBlock(ModBlocks.GLOWSHROOM_BLOCK);
+        mushroomBlock(ModBlocks.PALESHROOM_BLOCK);
 
         //Minerals
         for (List<RegistryObject<Block>> minerals : ModGrowableMineral.GROWABLE_MINERAL_STAGES){
@@ -302,6 +322,35 @@ public class ModBlockStateProvider extends BlockStateProvider {
                     .build());
     }
 
+    private void luminum(RegistryObject<Block> registryObject){
+        BlockModelBuilder bottom = getTwoCrossModel(registryObject, "_bottom");
+        BlockModelBuilder top1 = getCrossModel(registryObject, "_top_1");
+        BlockModelBuilder top2 = getCrossModel(registryObject, "_top_2");
+        BlockModelBuilder top3 = getCrossModel(registryObject, "_top_3");
+
+        getVariantBuilder(registryObject.get()).forAllStates(blockState -> {
+
+            int rotation;
+            switch (blockState.getValue(RotatedTallFlowerBlock.FACING)){
+                case NORTH -> rotation = 0;
+                case EAST -> rotation = 90;
+                case SOUTH -> rotation = 180;
+                default -> rotation = 270;
+            }
+
+            if (blockState.getValue(RotatedTallFlowerBlock.HALF) == DoubleBlockHalf.LOWER){
+                return ConfiguredModel.builder()
+                        .modelFile(bottom).rotationY(rotation).build();
+            }
+            else {
+                return ConfiguredModel.builder()
+                        .modelFile(top1).rotationY(rotation).weight(2).nextModel()
+                        .modelFile(top2).rotationY(rotation).weight(1).nextModel()
+                        .modelFile(top3).rotationY(rotation).weight(1).build();
+            }
+        });
+    }
+
     private void crystalBlock(RegistryObject<Block> registryObject){
         BlockModelBuilder base = getCrossModel(registryObject, "");
 
@@ -318,6 +367,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 .modelForState().modelFile(base).addModel().partialState()
                 .with(ModGrowableMineral.FACING, Direction.WEST)
                 .modelForState().modelFile(base).rotationX(90).rotationY(270).addModel().partialState();
+    }
+
+    private BlockModelBuilder getTwoCrossModel(RegistryObject<Block> registryObject, String var){
+        return models().withExistingParent(ForgeRegistries.BLOCKS.getKey(registryObject.get()).getPath() + var,
+                new ResourceLocation(BuntsyMod.MODID, "two_cross"))
+                .texture("xtex", new ResourceLocation(BuntsyMod.MODID,"block/" + registryObject.getId().getPath() + "_x" + var))
+                .texture("ytex", new ResourceLocation(BuntsyMod.MODID,"block/" + registryObject.getId().getPath() + "_y" + var))
+                .renderType("cutout");
     }
 
     private BlockModelBuilder getCrossModel(RegistryObject<Block> registryObject, String var){

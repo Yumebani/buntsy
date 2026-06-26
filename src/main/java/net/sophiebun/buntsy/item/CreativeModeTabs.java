@@ -26,7 +26,13 @@ public class CreativeModeTabs {
 
                         pOutput.accept(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get());
                         pOutput.accept(ModBlocks.CHARMIL_SOIL.get());
+
+                        pOutput.accept(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get());
+                        pOutput.accept(ModBlocks.ODIATE_SOIL.get());
+                        pOutput.accept(ModBlocks.ODIATE_MUD.get());
+
                         pOutput.accept(ModBlocks.SWEET_CORAL_SAND.get());
+                        pOutput.accept(ModBlocks.FROZEN_CORAL_SAND.get());
 
                         pOutput.accept(ModBlocks.SWEET_CANDY_ROCK.get());
                         pOutput.accept(ModBlocks.SOUR_CANDY_ROCK.get());
@@ -52,12 +58,17 @@ public class CreativeModeTabs {
 
                         pOutput.accept(ModBlocks.PINK_CHARMIL_GRASS.get());
                         pOutput.accept(ModBlocks.BLUE_CHARMIL_GRASS.get());
+                        pOutput.accept(ModBlocks.PALEGRASS.get());
+                        pOutput.accept(ModBlocks.LUMINUM.get());
                         pOutput.accept(ModBlocks.PINK_BLOOM.get());
                         pOutput.accept(ModBlocks.BLUE_BLOOM.get());
+                        pOutput.accept(ModBlocks.ABYSSAL_BLOOM.get());
                         pOutput.accept(ModBlocks.LOVESHROOM.get());
                         pOutput.accept(ModBlocks.LOVESHROOM_BLOCK.get());
                         pOutput.accept(ModBlocks.GLOWSHROOM.get());
                         pOutput.accept(ModBlocks.GLOWSHROOM_BLOCK.get());
+                        pOutput.accept(ModBlocks.PALESHROOM.get());
+                        pOutput.accept(ModBlocks.PALESHROOM_BLOCK.get());
 
                         pOutput.accept(ModBlocks.GENTLIT_LOG.get());
                         pOutput.accept(ModBlocks.STRIPPED_GENTLIT_LOG.get());
@@ -112,6 +123,9 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.MALVOR_FENCE_GATE.get());
                         pOutput.accept(ModBlocks.MALVOR_PRESSURE_PLATE.get());
                         pOutput.accept(ModBlocks.MALVOR_BUTTON.get());
+
+                        pOutput.accept(ModBlocks.CRYSTALLIZED_LOG.get());
+                        pOutput.accept(ModBlocks.CRYSTALLIZED_LEAVES.get());
 
                         pOutput.accept(ModItems.AMETHYST_DUST.get());
                         pOutput.accept(ModItems.PRISTINE_AMETHYST_GRAIN.get());
@@ -244,6 +258,7 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.CLOCKWORK_BRASS.get());
                         pOutput.accept(ModItems.CLOCKWORK_GEAR.get());
                         pOutput.accept(ModItems.CLOCKWORK_PROCESSOR.get());
+                        pOutput.accept(ModItems.SWICE_SHARDS.get());
                         pOutput.accept(ModItems.SPEED_BLEND.get());
                         pOutput.accept(ModItems.EFFICIENCY_BLEND.get());
                         pOutput.accept(ModItems.GROWTH_BLEND.get());

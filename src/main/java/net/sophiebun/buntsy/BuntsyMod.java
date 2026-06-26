@@ -109,11 +109,13 @@ public class BuntsyMod
 
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.PINK_BLOOM.getId(), ModBlocks.POTTED_PINK_BLOOM);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.BLUE_BLOOM.getId(), ModBlocks.POTTED_BLUE_BLOOM);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.ABYSSAL_BLOOM.getId(), ModBlocks.POTTED_ABYSSAL_BLOOM);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.GENTLIT_SAPLING.getId(), ModBlocks.POTTED_GENTLIT_SAPLING);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.BRAVOT_SAPLING.getId(), ModBlocks.POTTED_BRAVOT_SAPLING);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.MALVOR_SAPLING.getId(), ModBlocks.POTTED_MALVOR_SAPLING);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.LOVESHROOM.getId(), ModBlocks.POTTED_LOVESHROOM);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.GLOWSHROOM.getId(), ModBlocks.POTTED_GLOWSHROOM);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.PALESHROOM.getId(), ModBlocks.POTTED_PALESHROOM);
 
             SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MODID, ModSurfaceRules.makeRules());
         });

@@ -14,20 +14,21 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.GrassBlock;
-import net.minecraft.world.level.block.SnowLayerBlock;
-import net.minecraft.world.level.block.SpreadingSnowyDirtBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.lighting.LightEngine;
 import net.minecraft.world.phys.BlockHitResult;
-import net.sophiebun.buntsy.blocks.ModBlocks;
 
-public class TillableCharmilGrass extends GrassBlock {
+public class TillableModGrass extends GrassBlock {
 
-    public TillableCharmilGrass(Properties pProperties) {
+    private final Block DIRT_BLOCK;
+    private final Block FARMLAND;
+
+    public TillableModGrass(Properties pProperties, Block dirtBlock, Block farmland) {
         super(pProperties);
+        this.DIRT_BLOCK = dirtBlock;
+        this.FARMLAND = farmland;
     }
 
     @Override
@@ -38,8 +39,8 @@ public class TillableCharmilGrass extends GrassBlock {
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (pPlayer.getItemInHand(pHand).is(ItemTags.HOES) && !pLevel.isClientSide()){
-            pLevel.setBlock(pPos, ModBlocks.CHARMIL_FARMLAND.get().defaultBlockState(), 11);
-            pLevel.gameEvent(GameEvent.BLOCK_CHANGE, pPos, GameEvent.Context.of(pPlayer, ModBlocks.CHARMIL_FARMLAND.get().defaultBlockState()));
+            pLevel.setBlock(pPos, FARMLAND.defaultBlockState(), 11);
+            pLevel.gameEvent(GameEvent.BLOCK_CHANGE, pPos, GameEvent.Context.of(pPlayer, FARMLAND.defaultBlockState()));
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;
@@ -66,7 +67,7 @@ public class TillableCharmilGrass extends GrassBlock {
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         if (!canBeGrass(pState, pLevel, pPos)) {
             if (!pLevel.isAreaLoaded(pPos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
-            pLevel.setBlockAndUpdate(pPos, ModBlocks.CHARMIL_SOIL.get().defaultBlockState());
+            pLevel.setBlockAndUpdate(pPos, DIRT_BLOCK.defaultBlockState());
         } else {
             if (!pLevel.isAreaLoaded(pPos, 3)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
             if (pLevel.getMaxLocalRawBrightness(pPos.above()) >= 9) {
@@ -74,7 +75,7 @@ public class TillableCharmilGrass extends GrassBlock {
 
                 for(int i = 0; i < 4; ++i) {
                     BlockPos blockpos = pPos.offset(pRandom.nextInt(3) - 1, pRandom.nextInt(5) - 3, pRandom.nextInt(3) - 1);
-                    if (pLevel.getBlockState(blockpos).is(ModBlocks.CHARMIL_SOIL.get()) && canPropagate(blockstate, pLevel, blockpos)) {
+                    if (pLevel.getBlockState(blockpos).is(DIRT_BLOCK) && canPropagate(blockstate, pLevel, blockpos)) {
                         pLevel.setBlockAndUpdate(blockpos, blockstate.setValue(SNOWY, Boolean.valueOf(pLevel.getBlockState(blockpos.above()).is(Blocks.SNOW))));
                     }
                 }

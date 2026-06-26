@@ -37,13 +37,17 @@ public class ModBiomes {
             new ResourceLocation(BuntsyMod.MODID,"cuterly_biome"));
     public static final ResourceKey<Biome> CANDY_CRAGS_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
             new ResourceLocation(BuntsyMod.MODID,"candy_crags_biome"));
+    public static final ResourceKey<Biome> POWDERY_TUNDRA_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
+            new ResourceLocation(BuntsyMod.MODID,"powdery_tundra_biome"));
+    public static final ResourceKey<Biome> CLOCKWORK_CANOPY_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
+            new ResourceLocation(BuntsyMod.MODID,"clockwork_canopy_biome"));
 
     public static void bootstrap(BootstapContext<Biome> context){
         context.register(CUTERLY_BIOME, cutelyBiome(context));
         context.register(CANDY_CRAGS_BIOME, candyCragsBiome(context));
     }
 
-    public static void cuterlyGeneration(BiomeGenerationSettings.Builder builder) {
+    public static void standardGeneration(BiomeGenerationSettings.Builder builder) {
         BiomeDefaultFeatures.addDefaultCarversAndLakes(builder);
         BiomeDefaultFeatures.addDefaultCrystalFormations(builder);
         BiomeDefaultFeatures.addDefaultMonsterRoom(builder);
@@ -65,7 +69,7 @@ public class ModBiomes {
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
 
-        cuterlyGeneration(biomeBuilder);
+        standardGeneration(biomeBuilder);
         BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
 
         //Trees
@@ -111,6 +115,7 @@ public class ModBiomes {
 
         return biome;
     }
+
     private static Biome candyCragsBiome(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
@@ -119,7 +124,7 @@ public class ModBiomes {
 
         spawnBuilder.addSpawn(MobCategory.AMBIENT, new MobSpawnSettings.SpawnerData(ModEntities.FAIRY_ENTITY.get(), 20, 2, 3));
 
-        cuterlyGeneration(biomeBuilder);
+        standardGeneration(biomeBuilder);
         BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
 
         //Candy crag
@@ -152,6 +157,79 @@ public class ModBiomes {
                         .skyColor(0x6eb1ff)
                         .grassColorOverride(0xffb7b2) //b6db61 green - ffd7d4 pink - f0abe1 purple - ffe27c yellow
                         .foliageColorOverride(0x71a74d)
+                        .fogColor(0xc0d8ff)
+                        .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                        .build())
+                .build();
+
+        return biome;
+    }
+
+    private static Biome powderyTundra(BootstapContext<Biome> context) {
+
+        MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
+
+        BiomeGenerationSettings.Builder biomeBuilder =
+                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+
+        spawnBuilder.addSpawn(MobCategory.AMBIENT, new MobSpawnSettings.SpawnerData(ModEntities.FAIRY_ENTITY.get(), 20, 2, 3));
+
+        standardGeneration(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
+
+        biomeBuilder.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.CRYSTALIZED_TREE_PLACED_KEY);
+
+
+        Biome biome = new Biome.BiomeBuilder()
+                .hasPrecipitation(true)
+                .downfall(0.8f)
+                .temperature(-0.2f)
+                .generationSettings(biomeBuilder.build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .specialEffects((new BiomeSpecialEffects.Builder())
+                        .waterColor(0x45adf2)
+                        .waterFogColor(0x041633)
+                        .skyColor(0x94B9EB)
+                        .grassColorOverride(0xB2E5FF)
+                        .foliageColorOverride(0x4D98A7)
+                        .fogColor(0xc0d8ff)
+                        .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                        .build())
+                .build();
+
+        return biome;
+    }
+
+    private static Biome clockworkCanopy(BootstapContext<Biome> context) {
+
+        MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
+
+        BiomeGenerationSettings.Builder biomeBuilder =
+                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+
+        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(ModEntities.CLOCKWORK_MAIDEN_ENTITY.get(), 20, 2, 4));
+        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.SPIDER, 40, 2, 4));
+
+        standardGeneration(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
+
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.MALVOR_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.GROUNDED_MALVOR_PLACED_KEY);
+
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.GROUNDED_MALVOR_PLACED_KEY);
+
+        Biome biome = new Biome.BiomeBuilder()
+                .hasPrecipitation(true)
+                .downfall(0.8f)
+                .temperature(-0.2f)
+                .generationSettings(biomeBuilder.build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .specialEffects((new BiomeSpecialEffects.Builder())
+                        .waterColor(0x45adf2)
+                        .waterFogColor(0x041633)
+                        .skyColor(0x94B9EB)
+                        .grassColorOverride(0xB2E5FF)
+                        .foliageColorOverride(0x4D98A7)
                         .fogColor(0xc0d8ff)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
                         .build())

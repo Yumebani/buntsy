@@ -31,9 +31,11 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> GENTLIT_KEY = registerKey("gentlit");
     public static final ResourceKey<ConfiguredFeature<?, ?>> BRAVOT_KEY = registerKey("bravot");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MALVOR_KEY = registerKey("malvor");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CRYSTALIZED_TREE_KEY = registerKey("crystalized_tree");
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> GROUNDED_GENTLIT_KEY = registerKey("grounded_gentlit");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GROUNDED_BRAVOT_KEY = registerKey("grounded_bravot");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> GROUNDED_MALVOR_KEY = registerKey("grounded_malvor");
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> GIANT_LOVESHROOM_KEY = registerKey("giant_loveshroom");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GIANT_GLOWSHROOM_KEY = registerKey("giant_glowshroom");
@@ -80,6 +82,12 @@ public class ModConfiguredFeatures {
                 new MalvorFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0)),
                 new TwoLayersFeatureSize(1, 0,2)).build());
 
+        register(context, CRYSTALIZED_TREE_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(ModBlocks.CRYSTALLIZED_LOG.get()),
+                new BravotTrunkPlacer(10, 0, 6),
+                BlockStateProvider.simple(ModBlocks.CRYSTALLIZED_LEAVES.get()),
+                new BravotFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0)),
+                new TwoLayersFeatureSize(1, 0,2)).build());
 
         //Grounded logs
         register(context, GROUNDED_GENTLIT_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
@@ -93,6 +101,13 @@ public class ModConfiguredFeatures {
                 BlockStateProvider.simple(ModBlocks.BRAVOT_LOG.get()),
                 new GroundedTrunkPlacer(1, 0, 2),
                 BlockStateProvider.simple(ModBlocks.BRAVOT_LEAVES.get()),
+                new SphereFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0)),
+                new TwoLayersFeatureSize(1, 0,2)).build());
+
+        register(context, GROUNDED_MALVOR_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(ModBlocks.MALVOR_LOG.get()),
+                new GroundedTrunkPlacer(1, 0, 2),
+                BlockStateProvider.simple(ModBlocks.MALVOR_LEAVES.get()),
                 new SphereFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0)),
                 new TwoLayersFeatureSize(1, 0,2)).build());
 

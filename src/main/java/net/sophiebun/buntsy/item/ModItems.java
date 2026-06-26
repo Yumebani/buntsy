@@ -69,6 +69,8 @@ public class ModItems {
             "ground_hootnip", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> HOOTNIP_CEREAL = ItemsRegister.register(
             "hootnip_cereal", () -> new Item(new Item.Properties().stacksTo(16)));
+    public static final RegistryObject<Item> SWICE_SHARDS = ItemsRegister.register(
+            "swice_shards", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> FUME_BOTTLE = ItemsRegister.register(
             "fume_bottle", () -> new FumeBottle(new Item.Properties()));

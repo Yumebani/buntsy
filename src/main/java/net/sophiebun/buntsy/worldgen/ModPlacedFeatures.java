@@ -23,20 +23,35 @@ public class ModPlacedFeatures {
 
     public static ResourceKey<PlacedFeature> GENTLIT_PLACED_KEY = registerKey("gentlit_placed");
     public static ResourceKey<PlacedFeature> BRAVOT_PLACED_KEY = registerKey("bravot_placed");
+    public static ResourceKey<PlacedFeature> MALVOR_PLACED_KEY = registerKey("malvor_placed");
+    public static ResourceKey<PlacedFeature> CRYSTALIZED_TREE_PLACED_KEY = registerKey("crystalized_tree_placed");
 
     public static ResourceKey<PlacedFeature> GROUNDED_GENTLIT_PLACED_KEY = registerKey("grounded_gentlit_placed");
     public static ResourceKey<PlacedFeature> GROUNDED_BRAVOT_PLACED_KEY = registerKey("grounded_bravot_placed");
+    public static ResourceKey<PlacedFeature> GROUNDED_MALVOR_PLACED_KEY = registerKey("grounded_malvor_placed");
 
     public static final ResourceKey<PlacedFeature> GIANT_LOVESHROOM_PLACED_KEY = registerKey("giant_loveshroom_placed");
     public static final ResourceKey<PlacedFeature> GIANT_GLOWSHROOM_PLACED_KEY = registerKey("giant_glowshroom_placed");
+    public static final ResourceKey<PlacedFeature> GIANT_PALESHROOM_PLACED_KEY = registerKey("giant_paleshroom_placed");
+
+    public static final ResourceKey<PlacedFeature> CHARMING_LOTUS_PLACED_KEY = registerKey("charming_lotus_placed_key");
+    public static final ResourceKey<PlacedFeature> BRAVE_LOTUS_PLACED_KEY = registerKey("brave_lotus_placed_key");
+    public static final ResourceKey<PlacedFeature> MALIUM_LOTUS_PLACED_KEY = registerKey("malium_lotus_placed_key");
 
     public static final ResourceKey<PlacedFeature> SWEETGRASS_PLACED_KEY = registerKey("sweetgrass_placed_key");
     public static final ResourceKey<PlacedFeature> SWEET_PICKLE_PLACED_KEY = registerKey("sweet_pickle_placed_key");
     public static final ResourceKey<PlacedFeature> COTTON_VINE_PLACED_KEY = registerKey("cotton_vine_placed_key");
     public static final ResourceKey<PlacedFeature> MOD_CORAL_PLACED_KEY = registerKey("mod_coral_placed_key");
     public static final ResourceKey<PlacedFeature> CORAL_SAND_NEAR_WATER_PLACED_KEY = registerKey("coral_sand_near_water_placed_key");
+
     public static final ResourceKey<PlacedFeature> CANDY_CRAG_PILE_PLACED_KEY = registerKey("candy_crag_pile_placed_key");
     public static final ResourceKey<PlacedFeature> CANDY_BOULDER_PLACED_KEY = registerKey("candy_boulder_placed_key");
+
+    public static final ResourceKey<PlacedFeature> SWICE_SPIKE_PLACED_KEY = registerKey("swice_spike_placed_key");
+
+    public static final ResourceKey<PlacedFeature> MUD_PATCH_PLACED_KEY = registerKey("mud_patch_placed_key");
+    public static final ResourceKey<PlacedFeature> HANGING_CLOCKWORK_PLACED_KEY = registerKey("hanging_clockwork_placed_key");
+    public static final ResourceKey<PlacedFeature> HANGING_LUMINUM_PLACED_KEY = registerKey("hanging_luminum_placed_key");
 
     public static final ResourceKey<PlacedFeature> WILD_STRAWBERRY_PLACED_KEY = registerKey("wild_strawberry_placed");
     public static final ResourceKey<PlacedFeature> WILD_HOOTNIP_PLACED_KEY = registerKey("wild_hootnip_placed");
@@ -46,6 +61,10 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> BLUE_BLOOM_PLACED_KEY = registerKey("blue_bloom_placed");
     public static final ResourceKey<PlacedFeature> LOVESHROOM_PLACED_KEY = registerKey("loveshroom_placed");
     public static final ResourceKey<PlacedFeature> GLOWSHROOM_PLACED_KEY = registerKey("glowshroom_placed");
+    public static final ResourceKey<PlacedFeature> PALESHROOM_PLACED_KEY = registerKey("paleshroom_placed");
+    public static final ResourceKey<PlacedFeature> ABYSSAL_BLOOM_PLACED_KEY = registerKey("abyssal_bloom_placed");
+    public static final ResourceKey<PlacedFeature> PALEGRASS_PLACED_KEY = registerKey("palegrass_placed");
+    public static final ResourceKey<PlacedFeature> LUMINUM_PLACED_KEY = registerKey("luminum_placed");
 
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -57,6 +76,12 @@ public class ModPlacedFeatures {
         register(context, BRAVOT_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.BRAVOT_KEY),
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(10, 0.1f, 2),
                         ModBlocks.BRAVOT_SAPLING.get()));
+        register(context, MALVOR_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.MALVOR_KEY),
+                VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.5f, 1),
+                        ModBlocks.MALVOR_SAPLING.get()));
+        register(context, CRYSTALIZED_TREE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CRYSTALIZED_TREE_KEY),
+                List.of(CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+
 
         //Grounded logs
         register(context, GROUNDED_GENTLIT_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.GROUNDED_GENTLIT_KEY),
@@ -65,6 +90,9 @@ public class ModPlacedFeatures {
         register(context, GROUNDED_BRAVOT_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.GROUNDED_BRAVOT_KEY),
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.5f, 2),
                         ModBlocks.BRAVOT_SAPLING.get()));
+        register(context, GROUNDED_MALVOR_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.GROUNDED_MALVOR_KEY),
+                VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.5f, 2),
+                        ModBlocks.MALVOR_SAPLING.get()));
 
         //Mushroom trees
         register(context, GIANT_LOVESHROOM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.GIANT_LOVESHROOM_KEY),

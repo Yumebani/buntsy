@@ -17,6 +17,7 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.custom.HootnipCrop;
@@ -90,14 +91,24 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlocks.MALVOR_SLAB.get(), block -> createSlabItemTable(ModBlocks.MALVOR_SLAB.get()));
         this.add(ModBlocks.MALVOR_DOOR.get(), block -> createDoorTable(ModBlocks.MALVOR_DOOR.get()));
 
+        this.add(ModBlocks.CRYSTALLIZED_LOG.get(), block -> createSwiceDrops(block));
+        this.add(ModBlocks.CRYSTALLIZED_LEAVES.get(), block -> createSwiceDrops(block));
+
         //Adding soil
         this.add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get(), block -> createSingleItemTableWithSilkTouch(block, ModBlocks.CHARMIL_SOIL.get()));
         this.dropSelf(ModBlocks.CHARMIL_SOIL.get());
+        this.add(ModBlocks.CHARMIL_FARMLAND.get(), block -> createSingleItemTable(ModBlocks.CHARMIL_SOIL.get()));
+
+        this.add(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get(), block -> createSingleItemTableWithSilkTouch(block, ModBlocks.ODIATE_SOIL.get()));
+        this.dropSelf(ModBlocks.ODIATE_SOIL.get());
+        this.dropSelf(ModBlocks.ODIATE_MUD.get());
+        this.add(ModBlocks.ODIATE_FARMLAND.get(), block -> createSingleItemTable(ModBlocks.ODIATE_SOIL.get()));
+
         this.dropSelf(ModBlocks.SWEET_CORAL_SAND.get());
+        this.dropSelf(ModBlocks.FROZEN_CORAL_SAND.get());
         this.dropSelf(ModBlocks.SWEET_CANDY_ROCK.get());
         this.dropSelf(ModBlocks.BITTER_CANDY_ROCK.get());
         this.dropSelf(ModBlocks.SOUR_CANDY_ROCK.get());
-        this.add(ModBlocks.CHARMIL_FARMLAND.get(), block -> createSingleItemTable(ModBlocks.CHARMIL_SOIL.get()));
 
         //Adding crops
         this.add(ModBlocks.WILD_STRAWBERRY.get(), block -> createSingleItemTableWithSilkTouch(block, ModItems.STRAWBERRY.get()));
@@ -160,16 +171,22 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
         this.add(ModBlocks.PINK_CHARMIL_GRASS.get(), block -> createShearsOnlyDrop(block));
         this.add(ModBlocks.BLUE_CHARMIL_GRASS.get(), block -> createShearsOnlyDrop(block));
+        this.add(ModBlocks.PALEGRASS.get(), block -> createShearsOnlyDrop(block));
+        this.dropSelf(ModBlocks.LUMINUM.get());
         this.dropSelf(ModBlocks.PINK_BLOOM.get());
         this.dropSelf(ModBlocks.BLUE_BLOOM.get());
+        this.dropSelf(ModBlocks.ABYSSAL_BLOOM.get());
         this.dropSelf(ModBlocks.LOVESHROOM.get());
         this.dropSelf(ModBlocks.GLOWSHROOM.get());
+        this.dropSelf(ModBlocks.PALESHROOM.get());
 
         //Adding potted plants
         this.add(ModBlocks.POTTED_PINK_BLOOM.get(), createPotFlowerItemTable(ModBlocks.PINK_BLOOM.get()));
         this.add(ModBlocks.POTTED_BLUE_BLOOM.get(), createPotFlowerItemTable(ModBlocks.BLUE_BLOOM.get()));
+        this.add(ModBlocks.POTTED_ABYSSAL_BLOOM.get(), createPotFlowerItemTable(ModBlocks.ABYSSAL_BLOOM.get()));
         this.add(ModBlocks.POTTED_LOVESHROOM.get(), createPotFlowerItemTable(ModBlocks.LOVESHROOM.get()));
         this.add(ModBlocks.POTTED_GLOWSHROOM.get(), createPotFlowerItemTable(ModBlocks.GLOWSHROOM.get()));
+        this.add(ModBlocks.POTTED_PALESHROOM.get(), createPotFlowerItemTable(ModBlocks.PALESHROOM.get()));
         this.add(ModBlocks.POTTED_GENTLIT_SAPLING.get(), createPotFlowerItemTable(ModBlocks.GENTLIT_SAPLING.get()));
         this.add(ModBlocks.POTTED_BRAVOT_SAPLING.get(), createPotFlowerItemTable(ModBlocks.BRAVOT_SAPLING.get()));
         this.add(ModBlocks.POTTED_MALVOR_SAPLING.get(), createPotFlowerItemTable(ModBlocks.MALVOR_SAPLING.get()));
@@ -177,6 +194,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         //Adding mushroom blocks
         this.add(ModBlocks.LOVESHROOM_BLOCK.get(), block -> createMushroomBlockDrop(block, ModBlocks.LOVESHROOM.get()));
         this.add(ModBlocks.GLOWSHROOM_BLOCK.get(), block -> createMushroomBlockDrop(block, ModBlocks.GLOWSHROOM.get()));
+        this.add(ModBlocks.PALESHROOM_BLOCK.get(), block -> createMushroomBlockDrop(block, ModBlocks.PALESHROOM.get()));
 
         //Adding minerals
         this.add(ModBlocks.GROWABLE_AMETHYST_CLUSTER.get(), block -> createOreDrop(block, Items.AMETHYST_SHARD));
@@ -255,6 +273,10 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
         //Others
         this.dropSelf(ModBlocks.SYRUP_EXTRACTOR.get());
+    }
+
+    protected LootTable.Builder createSwiceDrops(Block pBlock) {
+        return createSilkTouchDispatchTable(pBlock, this.applyExplosionDecay(pBlock, LootItem.lootTableItem(ModItems.SWICE_SHARDS.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 5.0F))).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
     }
 
     @Override

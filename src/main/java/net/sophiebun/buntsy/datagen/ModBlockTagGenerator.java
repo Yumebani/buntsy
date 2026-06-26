@@ -58,6 +58,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.MALVOR_DOOR.get())
                 .add(ModBlocks.LOVESHROOM_BLOCK.get())
                 .add(ModBlocks.GLOWSHROOM_BLOCK.get())
+                .add(ModBlocks.PALESHROOM_BLOCK.get())
                 .add(ModBlocks.FAIRY_OFFERING_BENCH.get())
                 .add(ModBlocks.FAIRY_COLLECTION_TRAY.get())
                 .add(ModBlocks.FAIRY_INFUSION_BENCH.get())
@@ -65,12 +66,18 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.THREAD_REELER.get());
 
         this.tag(BlockTags.MINEABLE_WITH_SHOVEL)
+                .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
                 .add(ModBlocks.CHARMIL_SOIL.get())
                 .add(ModBlocks.CHARMIL_FARMLAND.get())
+                .add(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_MUD.get())
+                .add(ModBlocks.ODIATE_FARMLAND.get())
                 .add(ModBlocks.SWEET_CORAL_SAND.get())
-                .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get());
+                .add(ModBlocks.FROZEN_CORAL_SAND.get());
 
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(ModBlocks.CRYSTALLIZED_LOG.get())
                 .add(ModBlocks.MAGIC_CRYSTALIZER.get())
                 .add(ModBlocks.FUME_DISTILLERY.get())
                 .add(ModBlocks.FUME_SPREADER.get())
@@ -155,6 +162,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.STRIPPED_MALVOR_WOOD.get());
 
         this.tag(BlockTags.LOGS)
+                .add(ModBlocks.CRYSTALLIZED_LOG.get())
                 .add(ModBlocks.GENTLIT_LOG.get())
                 .add(ModBlocks.GENTLIT_WOOD.get())
                 .add(ModBlocks.STRIPPED_GENTLIT_LOG.get())
@@ -170,31 +178,37 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
         this.tag(BlockTags.MUSHROOM_GROW_BLOCK)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
-                .add(ModBlocks.CHARMIL_SOIL.get());
+                .add(ModBlocks.CHARMIL_SOIL.get())
+                .add(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_MUD.get());
 
         this.tag(BlockTags.DIRT)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
-                .add(ModBlocks.CHARMIL_SOIL.get());
+                .add(ModBlocks.CHARMIL_SOIL.get())
+                .add(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_SOIL.get());
 
         this.tag(BlockTags.ANIMALS_SPAWNABLE_ON)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
-                .add(ModBlocks.SWEET_CORAL_SAND.get())
-                .add(ModBlocks.CHARMIL_SOIL.get());
+                .add(ModBlocks.CHARMIL_SOIL.get())
+                .add(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_MUD.get())
+                .add(ModBlocks.SWEET_CORAL_SAND.get());
 
         this.tag(BlockTags.VALID_SPAWN)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
-                .add(ModBlocks.SWEET_CORAL_SAND.get())
-                .add(ModBlocks.CHARMIL_SOIL.get());
+                .add(ModBlocks.CHARMIL_SOIL.get())
+                .add(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_MUD.get())
+                .add(ModBlocks.SWEET_CORAL_SAND.get());
 
         this.tag(ModTags.Blocks.CUTERLY_SPAWNER)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
                 .add(ModBlocks.SWEET_CORAL_SAND.get())
                 .add(ModBlocks.CHARMIL_SOIL.get());
-
-        this.tag(BlockTags.MUSHROOM_GROW_BLOCK)
-                .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
-                .add(ModBlocks.CHARMIL_SOIL.get())
-                .add(ModBlocks.SWEET_CORAL_SAND.get());
 
         this.tag(ModTags.Blocks.FAIRY_INTERACTABLE_BLOCK_ENTITY)
                 .add(ModBlocks.FAIRY_OFFERING_BENCH.get())

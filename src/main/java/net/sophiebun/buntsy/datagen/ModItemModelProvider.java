@@ -56,6 +56,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.BLAZING_HOOTNIP);
         simpleItem(ModItems.GROUND_HOOTNIP);
         simpleItem(ModItems.HOOTNIP_CEREAL);
+        simpleItem(ModItems.SWICE_SHARDS);
         simpleItem(ModItems.STRAWBERRY_SEEDS);
         simpleItem(ModItems.HOOTNIP_SEEDS);
         simpleItem(ModItems.SPEED_BLEND);
@@ -152,6 +153,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         evenSimplerBlockItem(ModBlocks.MALVOR_PRESSURE_PLATE);
         evenSimplerBlockItem(ModBlocks.MALVOR_FENCE_GATE);
 
+        evenSimplerBlockItem(ModBlocks.CRYSTALLIZED_LOG);
+        evenSimplerBlockItem(ModBlocks.CRYSTALLIZED_LEAVES);
+
         //Crops
         simpleCropBlockItem(ModBlocks.WILD_STRAWBERRY, "wild_strawberry");
         simpleCropBlockItem(ModBlocks.STRAWBERRY_CROP, "strawberry_crop_stage5");
@@ -161,14 +165,19 @@ public class ModItemModelProvider extends ItemModelProvider {
         //Adding plants
         specificCrossBlockItem(ModBlocks.PINK_CHARMIL_GRASS, "_3");
         specificCrossBlockItem(ModBlocks.BLUE_CHARMIL_GRASS, "_3");
+        specificCrossBlockItem(ModBlocks.PALEGRASS, "_3");
+        specificCrossBlockItem(ModBlocks.LUMINUM, "_y_top_1");
         simpleCrossBlockItem(ModBlocks.PINK_BLOOM);
         simpleCrossBlockItem(ModBlocks.BLUE_BLOOM);
+        simpleCrossBlockItem(ModBlocks.ABYSSAL_BLOOM);
         simpleCrossBlockItem(ModBlocks.LOVESHROOM);
         simpleCrossBlockItem(ModBlocks.GLOWSHROOM);
+        simpleCrossBlockItem(ModBlocks.PALESHROOM);
 
         //Adding mushroom blocks
         blockItemNonBlockDependent(ModBlocks.LOVESHROOM_BLOCK);
         blockItemNonBlockDependent(ModBlocks.GLOWSHROOM_BLOCK);
+        blockItemNonBlockDependent(ModBlocks.PALESHROOM_BLOCK);
 
         //Adding mineral blocks
         for (List<RegistryObject<Block>> minerals : ModGrowableMineral.GROWABLE_MINERAL_STAGES){

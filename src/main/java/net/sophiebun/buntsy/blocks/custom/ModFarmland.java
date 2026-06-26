@@ -8,7 +8,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -17,8 +16,9 @@ import net.sophiebun.buntsy.blocks.ModBlocks;
 
 import javax.annotation.Nullable;
 
-public class CharmilFarmland extends FarmBlock {
-    public CharmilFarmland(Properties pProperties) {
+public class ModFarmland extends FarmBlock {
+
+    public ModFarmland(Properties pProperties) {
         super(pProperties);
     }
 
@@ -58,11 +58,8 @@ public class CharmilFarmland extends FarmBlock {
 
         pEntity.causeFallDamage(pFallDistance, 1.0F, pEntity.damageSources().fall());
     }
-    public static void turnToDirt(@Nullable Entity pEntity, BlockState pState, Level pLevel, BlockPos pPos) {
-        BlockState blockstate = pushEntitiesUp(pState, ModBlocks.CHARMIL_SOIL.get().defaultBlockState(), pLevel, pPos);
-        pLevel.setBlockAndUpdate(pPos, blockstate);
-        pLevel.gameEvent(GameEvent.BLOCK_CHANGE, pPos, GameEvent.Context.of(pEntity, blockstate));
-    }
+
+    public static void turnToDirt(@Nullable Entity pEntity, BlockState pState, Level pLevel, BlockPos pPos){}
 
     private static boolean shouldMaintainFarmland(BlockGetter pLevel, BlockPos pPos) {
         BlockState plant = pLevel.getBlockState(pPos.above());
