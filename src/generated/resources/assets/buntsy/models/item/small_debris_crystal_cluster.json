@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "buntsy:block/small_debris_crystal_cluster"
-  }
-}

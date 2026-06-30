@@ -1,19 +1,25 @@
 package net.sophiebun.buntsy.worldgen;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HugeMushroomBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
+import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.worldgen.feature.ModFeatures;
@@ -39,14 +45,27 @@ public class ModConfiguredFeatures {
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> GIANT_LOVESHROOM_KEY = registerKey("giant_loveshroom");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GIANT_GLOWSHROOM_KEY = registerKey("giant_glowshroom");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> GIANT_PALESHROOM_KEY = registerKey("giant_paleshroom");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CHARMING_LOTUS_KEY = registerKey("charming_lotus_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BRAVE_LOTUS_KEY = registerKey("brave_lotus_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MALIUM_LOTUS_KEY = registerKey("malium_lotus_key");
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> SWEETGRASS_KEY = registerKey("sweetgrass");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SWEET_PICKLE_KEY = registerKey("sweet_pickle");
     public static final ResourceKey<ConfiguredFeature<?, ?>> COTTON_VINE_KEY = registerKey("cotton_vine");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MOD_CORAL_KEY = registerKey("mod_coral_key");
     public static final ResourceKey<ConfiguredFeature<?, ?>> CORAL_SAND_NEAR_WATER_KEY = registerKey("coral_sand_near_water_key");
+
     public static final ResourceKey<ConfiguredFeature<?, ?>> CANDY_CRAG_PILE_KEY = registerKey("candy_crag_pile_key");
     public static final ResourceKey<ConfiguredFeature<?, ?>> CANDY_BOULDER_KEY = registerKey("candy_boulder_key");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SWICE_SPIKE_KEY = registerKey("swice_spike_key");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MUD_PATCH_KEY = registerKey("mud_patch_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> HANGING_STRING_KEY = registerKey("hanging_string_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> HANGING_CLOCKWORK_KEY = registerKey("hanging_clockwork_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> HANGING_LUMINUM_KEY = registerKey("hanging_luminum_key");
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> WILD_STRAWBERRY_KEY = registerKey("wild_strawberry");
     public static final ResourceKey<ConfiguredFeature<?, ?>> WILD_HOOTNIP_KEY = registerKey("wild_hootnip");
@@ -56,6 +75,13 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> BLUE_BLOOM_KEY = registerKey("blue_bloom");
     public static final ResourceKey<ConfiguredFeature<?, ?>> LOVESHROOM_KEY = registerKey("loveshroom");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GLOWSHROOM_KEY = registerKey("glowshroom");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> PALESHROOM_KEY = registerKey("paleshroom");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ABYSSAL_BLOOM_KEY = registerKey("abyssal_bloom");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> PALEGRASS_KEY = registerKey("palegrass");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> LUMINUM_KEY = registerKey("luminum");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CHARMIL_BONEMEAL_KEY = registerKey("charmil_bonemeal_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ODIATE_BONEMEAL_KEY = registerKey("odiate_bonemeal_key");
 
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context){
 
@@ -122,6 +148,23 @@ public class ModConfiguredFeatures {
                 BlockStateProvider.simple(Blocks.MUSHROOM_STEM.defaultBlockState().setValue(HugeMushroomBlock.UP, false)
                         .setValue(HugeMushroomBlock.DOWN, false)), 0));
 
+        register(context, GIANT_PALESHROOM_KEY, ModFeatures.GIANT_GLOWSHROOM_FEATURE.get(), new HugeMushroomFeatureConfiguration(
+                BlockStateProvider.simple(ModBlocks.PALESHROOM_BLOCK.get()),
+                BlockStateProvider.simple(Blocks.MUSHROOM_STEM.defaultBlockState().setValue(HugeMushroomBlock.UP, false)
+                        .setValue(HugeMushroomBlock.DOWN, false)), 0));
+
+        //Lotus
+        register(context, CHARMING_LOTUS_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
+                5, 8, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.CHARMING_LOTUS.get())))));
+
+        register(context, BRAVE_LOTUS_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
+                5, 8, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.BRAVE_LOTUS.get())))));
+
+        register(context, MALIUM_LOTUS_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
+                8, 8, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.MALIUM_LOTUS.get())))));
 
         //Sea Stuff Patches
         register(context, SWEETGRASS_KEY, ModFeatures.SWEETGRASS_FEATURE.get(), new ProbabilityFeatureConfiguration(0.4F));
@@ -137,39 +180,85 @@ public class ModConfiguredFeatures {
         register(context, CANDY_CRAG_PILE_KEY, ModFeatures.CANDY_CRAG_PILE.get(), new NoneFeatureConfiguration());
         register(context, CANDY_BOULDER_KEY, ModFeatures.CANDY_BOULDER.get(), new NoneFeatureConfiguration());
 
+        //Other
+        register(context, MUD_PATCH_KEY, ModFeatures.MUD_PATCH_FEATURE.get(), new NoneFeatureConfiguration());
+        register(context, SWICE_SPIKE_KEY, ModFeatures.SWICE_SPIKE_FEATURE.get(), new NoneFeatureConfiguration());
+
+        //Hanging string
+        register(context, HANGING_STRING_KEY, ModFeatures.HANGING_STRING_FEATURE.get(), new NoneFeatureConfiguration());
+        register(context, HANGING_CLOCKWORK_KEY, ModFeatures.HANGING_CLOCKWORK_FEATURE.get(), new NoneFeatureConfiguration());
+        register(context, HANGING_LUMINUM_KEY, ModFeatures.HANGING_LUMINUM_FEATURE.get(), new NoneFeatureConfiguration());
+
+        //Bonemeal Patches
+        register(context, CHARMIL_BONEMEAL_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
+                20, 4, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(new WeightedStateProvider(
+                        SimpleWeightedRandomList.<BlockState>builder()
+                                .add(ModBlocks.PINK_CHARMIL_GRASS.get().defaultBlockState(), 20)
+                                .add(ModBlocks.BLUE_CHARMIL_GRASS.get().defaultBlockState(), 20)
+                                .add(ModBlocks.PINK_BLOOM.get().defaultBlockState(), 5)
+                                .add(ModBlocks.BLUE_BLOOM.get().defaultBlockState(), 5)
+                                .add(ModBlocks.LOVESHROOM.get().defaultBlockState(), 3)
+                                .add(ModBlocks.GLOWSHROOM.get().defaultBlockState(), 3)
+                                .build())))));
+
+        register(context, ODIATE_BONEMEAL_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
+                20, 4, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(new WeightedStateProvider(
+                        SimpleWeightedRandomList.<BlockState>builder()
+                                .add(ModBlocks.PALEGRASS.get().defaultBlockState(), 20)
+                                .add(ModBlocks.ABYSSAL_BLOOM.get().defaultBlockState(), 5)
+                                .add(ModBlocks.PALESHROOM.get().defaultBlockState(), 3)
+                                .build())))));
 
         //Plant Patches
-        register(context, WILD_STRAWBERRY_KEY, Feature.FLOWER, new RandomPatchConfiguration(
+        register(context, WILD_STRAWBERRY_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
                 16, 8, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.WILD_STRAWBERRY.get())))));
 
-        register(context, WILD_HOOTNIP_KEY, Feature.FLOWER, new RandomPatchConfiguration(
+        register(context, WILD_HOOTNIP_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
                 16, 8, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.WILD_HOOTNIP.get())))));
 
         register(context, PINK_CHARMIL_GRASS_KEY, Feature.FLOWER, new RandomPatchConfiguration(
-                128, 10, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                48, 10, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.PINK_CHARMIL_GRASS.get())))));
 
         register(context, BLUE_CHARMIL_GRASS_KEY, Feature.FLOWER, new RandomPatchConfiguration(
-                128, 10, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                48, 10, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.BLUE_CHARMIL_GRASS.get())))));
 
-        register(context, PINK_BLOOM_KEY, Feature.FLOWER, new RandomPatchConfiguration(
+        register(context, PALEGRASS_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
+                64, 10, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.PALEGRASS.get())))));
+
+        register(context, LUMINUM_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
+                16, 8, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.LUMINUM.get())))));
+
+        register(context, PINK_BLOOM_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
                 32, 5, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.PINK_BLOOM.get())))));
 
-        register(context, BLUE_BLOOM_KEY, Feature.FLOWER, new RandomPatchConfiguration(
+        register(context, BLUE_BLOOM_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
                 32, 5, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.BLUE_BLOOM.get())))));
 
-        register(context, LOVESHROOM_KEY, Feature.FLOWER, new RandomPatchConfiguration(
+        register(context, ABYSSAL_BLOOM_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
+                32, 5, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.ABYSSAL_BLOOM.get())))));
+
+        register(context, LOVESHROOM_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
                 16, 4, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.LOVESHROOM.get())))));
 
-        register(context, GLOWSHROOM_KEY, Feature.FLOWER, new RandomPatchConfiguration(
+        register(context, GLOWSHROOM_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
                 16, 4, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.GLOWSHROOM.get())))));
+
+        register(context, PALESHROOM_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
+                16, 4, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.PALESHROOM.get())))));
 
     }
 

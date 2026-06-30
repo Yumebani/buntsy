@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "buntsy:block/small_quartz_crystal_cluster"
-  }
-}

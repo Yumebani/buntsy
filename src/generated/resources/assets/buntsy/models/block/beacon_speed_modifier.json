@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "buntsy:block/beacon_speed_modifier"
-  }
-}

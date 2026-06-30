@@ -2,6 +2,10 @@ package net.sophiebun.buntsy.blocks.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.placement.VegetationPlacements;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
@@ -17,18 +21,23 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.lighting.LightEngine;
 import net.minecraft.world.phys.BlockHitResult;
+
+import java.util.Optional;
 
 public class TillableModGrass extends GrassBlock {
 
     private final Block DIRT_BLOCK;
     private final Block FARMLAND;
+    ResourceKey<PlacedFeature> BONEMEAL;
 
-    public TillableModGrass(Properties pProperties, Block dirtBlock, Block farmland) {
+    public TillableModGrass(Properties pProperties, Block dirtBlock, Block farmland, ResourceKey<PlacedFeature> bonemeal) {
         super(pProperties);
         this.DIRT_BLOCK = dirtBlock;
         this.FARMLAND = farmland;
+        this.BONEMEAL = bonemeal;
     }
 
     @Override
@@ -82,5 +91,12 @@ public class TillableModGrass extends GrassBlock {
             }
 
         }
+    }
+
+    @Override
+    public void performBonemeal(ServerLevel serverLevel, RandomSource randomSource, BlockPos blockPos, BlockState blockState) {
+        BlockPos blockpos = blockPos.above();
+        Holder.Reference<PlacedFeature> feature = serverLevel.registryAccess().registryOrThrow(Registries.PLACED_FEATURE).getHolder(BONEMEAL).get();
+        feature.value().place(serverLevel, serverLevel.getChunkSource().getGenerator(), randomSource, blockpos);
     }
 }

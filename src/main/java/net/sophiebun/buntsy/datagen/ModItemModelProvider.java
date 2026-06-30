@@ -1,19 +1,12 @@
 package net.sophiebun.buntsy.datagen;
 
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.PackType;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.armortrim.TrimMaterial;
-import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
@@ -21,7 +14,6 @@ import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
 import net.sophiebun.buntsy.item.ModItems;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 public class ModItemModelProvider extends ItemModelProvider {
@@ -32,6 +24,9 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
 
+        simpleItem(ModItems.FAIRY_TALE_BOOK);
+
+        simpleItem(ModItems.SILK_SPOOL);
         simpleItem(ModItems.EMPTY_CATALYST);
         simpleItem(ModItems.FAIRY_POWER_RECEPTOR);
         simpleItem(ModItems.FAIRY_POWER_EMITTER);
@@ -48,6 +43,15 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.SILKY_INGOT);
         simpleItem(ModItems.SILKY_NUGGET);
         simpleItem(ModItems.SILKY_CRYSTAL);
+        simpleItem(ModItems.CLOCKWORK_SCRAP);
+        simpleItem(ModItems.CLOCKWORK_SCRAP_CLUMP);
+        simpleItem(ModItems.CLOCKWORK_BRASS);
+        simpleItem(ModItems.CLOCKWORK_GEAR);
+        simpleItem(ModItems.CLOCKWORK_PROCESSOR);
+        simpleItem(ModItems.CLOCKWORK_MODIFICATION);
+        simpleItem(ModItems.SIMPLE_CLOCKWORK_UNIT);
+        simpleItem(ModItems.INTRICATE_CLOCKWORK_UNIT);
+        simpleItem(ModItems.COMPLEX_CLOCKWORK_UNIT);
         simpleItem(ModItems.FAIRY_DUST);
         simpleItem(ModItems.GENTLIT_SYRUP);
         simpleItem(ModItems.SUGAR_BOWL);
@@ -57,6 +61,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.GROUND_HOOTNIP);
         simpleItem(ModItems.HOOTNIP_CEREAL);
         simpleItem(ModItems.SWICE_SHARDS);
+        simpleItem(ModItems.COLD_POWDERED_SUGAR);
         simpleItem(ModItems.STRAWBERRY_SEEDS);
         simpleItem(ModItems.HOOTNIP_SEEDS);
         simpleItem(ModItems.SPEED_BLEND);

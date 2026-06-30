@@ -21,6 +21,7 @@ build
 eclipse
 run
 run-data
+generated
 
 # Files from Forge MDK
 forge*changelog.txt

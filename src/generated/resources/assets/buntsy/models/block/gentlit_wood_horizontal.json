@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column_horizontal",
-  "textures": {
-    "end": "buntsy:block/gentlit_log",
-    "side": "buntsy:block/gentlit_log"
-  }
-}
