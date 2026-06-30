@@ -74,6 +74,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.ODIATE_MUD.get())
                 .add(ModBlocks.ODIATE_FARMLAND.get())
                 .add(ModBlocks.SWEET_CORAL_SAND.get())
+                .add(ModBlocks.FROZEN_POWDER_BLOCK.get())
+                .add(ModBlocks.FROZEN_POWDER_LAYER.get())
                 .add(ModBlocks.FROZEN_CORAL_SAND.get());
 
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
@@ -89,6 +91,9 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.SWEET_CORAL_BLOCK.get())
                 .add(ModBlocks.BITTER_CORAL_BLOCK.get())
                 .add(ModBlocks.DEAD_BITTER_CORAL_BLOCK.get())
+                .add(ModBlocks.SWICE.get())
+                .add(ModBlocks.CRYSTALLIZED_LEAVES.get())
+                .add(ModBlocks.CRYSTALLIZED_LOG.get())
                 .add(ModBlocks.GRINDING_WHEEL.get());
 
         for (List<RegistryObject<Block>> blocks : ModGrowableMineral.GROWABLE_MINERAL_STAGES){
@@ -113,6 +118,14 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .addTag(ModTags.Blocks.BUNTSY_CORAL_PLANTS)
                 .add(ModBlocks.SWEET_CORAL_FAN.get())
                 .add(ModBlocks.BITTER_CORAL_FAN.get());
+
+        this.tag(ModTags.Blocks.ODIATE_SOIL)
+                .add(ModBlocks.ODIATE_SOIL.get())
+                .add(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get());
+
+        this.tag(ModTags.Blocks.FREEZWEET_BLOCKS)
+                .add(ModBlocks.FROZEN_POWDER_BLOCK.get())
+                .add(ModBlocks.FROZEN_POWDER_LAYER.get());
 
         this.tag(ModTags.Blocks.GENTLIT_LOGS)
                 .add(ModBlocks.GENTLIT_LOG.get())
@@ -187,7 +200,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
                 .add(ModBlocks.CHARMIL_SOIL.get())
                 .add(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get())
-                .add(ModBlocks.ODIATE_SOIL.get());
+                .add(ModBlocks.ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_MUD.get());
 
         this.tag(BlockTags.ANIMALS_SPAWNABLE_ON)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())

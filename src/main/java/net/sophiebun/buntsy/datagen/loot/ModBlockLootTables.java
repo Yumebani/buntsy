@@ -2,12 +2,11 @@ package net.sophiebun.buntsy.datagen.loot;
 
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SeaPickleBlock;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -16,9 +15,11 @@ import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.providers.number.BinomialDistributionGenerator;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.RegistryObject;
+import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.custom.HootnipCrop;
 import net.sophiebun.buntsy.blocks.custom.StrawberryCrop;
@@ -93,6 +94,12 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
         this.add(ModBlocks.CRYSTALLIZED_LOG.get(), block -> createSwiceDrops(block));
         this.add(ModBlocks.CRYSTALLIZED_LEAVES.get(), block -> createSwiceDrops(block));
+        this.add(ModBlocks.SWICE.get(), block -> createSwiceDrops(block));
+        this.add(ModBlocks.FROZEN_POWDER_BLOCK.get(), LootTable.lootTable().withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(ModItems.COLD_POWDERED_SUGAR.get())
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(4f))))));
+        this.add(ModBlocks.FROZEN_POWDER_LAYER.get(), LootTable.lootTable().setRandomSequence(new ResourceLocation(BuntsyMod.MODID, "blocks" + ModBlocks.FROZEN_POWDER_LAYER.getId().getPath() + "_loot")));
 
         //Adding soil
         this.add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get(), block -> createSingleItemTableWithSilkTouch(block, ModBlocks.CHARMIL_SOIL.get()));
@@ -109,6 +116,36 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.SWEET_CANDY_ROCK.get());
         this.dropSelf(ModBlocks.BITTER_CANDY_ROCK.get());
         this.dropSelf(ModBlocks.SOUR_CANDY_ROCK.get());
+
+        //Hanging blocks
+        this.dropOther(ModBlocks.HANGING_STRING.get(), Items.STRING);
+        this.add(ModBlocks.HANGING_LUMINUM.get(), LootTable.lootTable().withPool(LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F))
+                .add(LootItem.lootTableItem(Items.STRING)
+                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1f)))))
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1f))
+                .add(LootItem.lootTableItem(ModBlocks.LUMINUM.get()))
+                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1f)))));
+        this.add(ModBlocks.HANGING_CLOCKWORK.get(), LootTable.lootTable().withPool(LootPool.lootPool()
+                    .setRolls(ConstantValue.exactly(1.0F))
+                    .add(LootItem.lootTableItem(Items.STRING)
+                            .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1f)))))
+                        .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1f))
+                    .add(LootItem.lootTableItem(ModItems.CLOCKWORK_SCRAP.get()))
+                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 2f))))
+                .withPool(LootPool.lootPool()
+                        .setRolls(BinomialDistributionGenerator.binomial(1, 0.2f))
+                        .add(LootItem.lootTableItem(ModItems.CLOCKWORK_BRASS.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))))
+                .withPool(LootPool.lootPool()
+                        .setRolls(BinomialDistributionGenerator.binomial(1, 0.1f))
+                        .add(LootItem.lootTableItem(ModItems.CLOCKWORK_GEAR.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))))
+                .withPool(LootPool.lootPool()
+                        .setRolls(BinomialDistributionGenerator.binomial(1, 0.05f))
+                        .add(LootItem.lootTableItem(ModItems.CLOCKWORK_PROCESSOR.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F))))));
+
 
         //Adding crops
         this.add(ModBlocks.WILD_STRAWBERRY.get(), block -> createSingleItemTableWithSilkTouch(block, ModItems.STRAWBERRY.get()));
@@ -136,6 +173,10 @@ public class ModBlockLootTables extends BlockLootSubProvider {
                         .apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 3)))));
 
         //Adding plants
+        this.dropSelf(ModBlocks.CHARMING_LOTUS.get());
+        this.dropSelf(ModBlocks.BRAVE_LOTUS.get());
+        this.dropSelf(ModBlocks.MALIUM_LOTUS.get());
+
         this.add(ModBlocks.SWEETGRASS.get(), block -> createShearsOnlyDrop(block));
         this.add(ModBlocks.TALL_SWEETGRASS.get(), block -> createDoublePlantShearsDrop(ModBlocks.SWEETGRASS.get()));
         this.dropSelf(ModBlocks.COTTON_VINE.get());

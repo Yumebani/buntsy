@@ -15,6 +15,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.minecraft.world.phys.Vec3;
+import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.worldgen.tree.ModTrunkPlacerTypes;
 import org.joml.Vector3f;
 
@@ -40,7 +41,7 @@ public class MalvorTrunkPlacer extends TrunkPlacer {
     }
 
     protected static void setDirtAt(LevelSimulatedReader pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter, RandomSource pRandom, BlockPos pPos, TreeConfiguration pConfig) {
-        pBlockSetter.accept(pPos, Blocks.DIRT.defaultBlockState());
+        pBlockSetter.accept(pPos, ModBlocks.ODIATE_SOIL.get().defaultBlockState());
     }
 
     @Override
@@ -81,7 +82,7 @@ public class MalvorTrunkPlacer extends TrunkPlacer {
         for (int i = 0; i < largeBranchCount; i++){
 
             branchRoot = randomSource.nextInt(Math.round(randomHeight * 0.75f), Math.round(randomHeight * 0.95f));
-            branchDistance = randomSource.nextInt(Math.round(baseHeight * 0.35f), Math.round(baseHeight * 0.45f));
+            branchDistance = randomSource.nextInt(Math.round(baseHeight * 0.4f), Math.round(baseHeight * 0.55f));
             branchHeight = branchRoot + randomSource.nextInt(Math.round(baseHeight * 0.25f), Math.round(baseHeight * 0.35f));
             branchAngle = angles.removeFirst();
 

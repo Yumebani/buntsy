@@ -20,6 +20,9 @@ public class ModTags {
         public static final TagKey<Block> BUNTSY_CORAL_PLANTS = tag("buntsy_coral_plants");
         public static final TagKey<Block> BUNTSY_CORALS = tag("buntsy_corals");
 
+        public static final TagKey<Block> ODIATE_SOIL = tag("odiate_soil");
+        public static final TagKey<Block> FREEZWEET_BLOCKS = tag("freezweet_blocks");
+
         public static final TagKey<Block> GENTLIT_LOGS = tag("gentlit_logs");
         public static final TagKey<Block> BRAVOT_LOGS = tag("bravot_logs");
         public static final TagKey<Block> MALVOR_LOGS = tag("malvor_logs");

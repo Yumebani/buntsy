@@ -1,0 +1,20 @@
+{
+  "type": "buntsy:grinding_wheel",
+  "ingredients": [
+    {
+      "item": "buntsy:swice"
+    }
+  ],
+  "output": [
+    {
+      "count": 6,
+      "chance": 1.0,
+      "item": "buntsy:cold_powdered_sugar"
+    },
+    {
+      "count": 2,
+      "chance": 0.5,
+      "item": "buntsy:cold_powdered_sugar"
+    }
+  ]
+}

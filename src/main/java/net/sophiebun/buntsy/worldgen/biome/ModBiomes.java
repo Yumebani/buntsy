@@ -41,10 +41,21 @@ public class ModBiomes {
             new ResourceLocation(BuntsyMod.MODID,"powdery_tundra_biome"));
     public static final ResourceKey<Biome> CLOCKWORK_CANOPY_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
             new ResourceLocation(BuntsyMod.MODID,"clockwork_canopy_biome"));
+    public static final ResourceKey<Biome> SWEET_OCEAN_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
+            new ResourceLocation(BuntsyMod.MODID,"sweet_ocean_biome"));
+    public static final ResourceKey<Biome> WARM_SWEET_OCEAN_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
+            new ResourceLocation(BuntsyMod.MODID,"warm_sweet_ocean_biome"));
+    public static final ResourceKey<Biome> COLD_SWEET_OCEAN_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
+            new ResourceLocation(BuntsyMod.MODID,"cold_sweet_ocean_biome"));
 
     public static void bootstrap(BootstapContext<Biome> context){
         context.register(CUTERLY_BIOME, cutelyBiome(context));
         context.register(CANDY_CRAGS_BIOME, candyCragsBiome(context));
+        context.register(POWDERY_TUNDRA_BIOME, powderyTundra(context));
+        context.register(CLOCKWORK_CANOPY_BIOME, clockworkCanopy(context));
+        context.register(SWEET_OCEAN_BIOME, sweetOcean(context));
+        context.register(WARM_SWEET_OCEAN_BIOME, warmSweetOcean(context));
+        context.register(COLD_SWEET_OCEAN_BIOME, coldSweetOcean(context));
     }
 
     public static void standardGeneration(BiomeGenerationSettings.Builder builder) {
@@ -75,20 +86,24 @@ public class ModBiomes {
         //Trees
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.GENTLIT_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.BRAVOT_PLACED_KEY);
-        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.GROUNDED_GENTLIT_PLACED_KEY);
-        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.GROUNDED_BRAVOT_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.GIANT_LOVESHROOM_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.GIANT_GLOWSHROOM_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.GROUNDED_GENTLIT_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.GROUNDED_BRAVOT_PLACED_KEY);
 
         //Plants
-        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.PINK_CHARMIL_GRASS_PLACED_KEY);
-        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.BLUE_CHARMIL_GRASS_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.PINK_BLOOM_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.BLUE_BLOOM_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.LOVESHROOM_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.GLOWSHROOM_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.WILD_STRAWBERRY_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.WILD_HOOTNIP_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.PINK_CHARMIL_GRASS_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.BLUE_CHARMIL_GRASS_PLACED_KEY);
 
         //Ocean Stuff
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.CHARMING_LOTUS_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.BRAVE_LOTUS_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.MOD_CORAL_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.SWEETGRASS_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.SWEET_PICKLE_PLACED_KEY);
@@ -100,9 +115,9 @@ public class ModBiomes {
                 .downfall(0.8f)
                 .specialEffects((new BiomeSpecialEffects.Builder())
                         .waterColor(0x45adf2)
-                        .waterFogColor(0x041633)
+                        .waterFogColor(0x08263D)
                         .skyColor(0x6eb1ff)
-                        .grassColorOverride(0xffb7b2) //b6db61 green - ffd7d4 pink - f0abe1 purple - ffe27c yellow
+                        .grassColorOverride(0xffb7b2)
                         .foliageColorOverride(0x71a74d)
                         .fogColor(0xc0d8ff)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
@@ -110,8 +125,6 @@ public class ModBiomes {
                 .mobSpawnSettings(spawnBuilder.build())
                 .generationSettings(biomeBuilder.build())
                 .build();
-
-        //biomeRegister.register("cuterly_biome", () -> biome);
 
         return biome;
     }
@@ -153,9 +166,9 @@ public class ModBiomes {
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects((new BiomeSpecialEffects.Builder())
                         .waterColor(0x45adf2)
-                        .waterFogColor(0x041633)
+                        .waterFogColor(0x08263D)
                         .skyColor(0x6eb1ff)
-                        .grassColorOverride(0xffb7b2) //b6db61 green - ffd7d4 pink - f0abe1 purple - ffe27c yellow
+                        .grassColorOverride(0xffb7b2)
                         .foliageColorOverride(0x71a74d)
                         .fogColor(0xc0d8ff)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
@@ -172,11 +185,10 @@ public class ModBiomes {
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
 
-        spawnBuilder.addSpawn(MobCategory.AMBIENT, new MobSpawnSettings.SpawnerData(ModEntities.FAIRY_ENTITY.get(), 20, 2, 3));
-
         standardGeneration(biomeBuilder);
         BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
 
+        biomeBuilder.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.SWICE_SPIKE_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.CRYSTALIZED_TREE_PLACED_KEY);
 
 
@@ -187,8 +199,8 @@ public class ModBiomes {
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects((new BiomeSpecialEffects.Builder())
-                        .waterColor(0x45adf2)
-                        .waterFogColor(0x041633)
+                        .waterColor(0x7DEBFA)
+                        .waterFogColor(0x196069)
                         .skyColor(0x94B9EB)
                         .grassColorOverride(0xB2E5FF)
                         .foliageColorOverride(0x4D98A7)
@@ -213,10 +225,26 @@ public class ModBiomes {
         standardGeneration(biomeBuilder);
         BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
 
+        //Ground
+        biomeBuilder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, ModPlacedFeatures.MUD_PATCH_PLACED_KEY);
+
+        //Plants
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.MALVOR_PLACED_KEY);
-        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.GROUNDED_MALVOR_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.GIANT_PALESHROOM_PLACED_KEY);
 
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.GROUNDED_MALVOR_PLACED_KEY);
+
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.LUMINUM_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.PALESHROOM_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.PALEGRASS_PLACED_KEY);
+
+        //Ocean Stuff
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.MALIUM_LOTUS_PLACED_KEY);
+
+        //Finalizing
+        biomeBuilder.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, ModPlacedFeatures.HANGING_CLOCKWORK_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, ModPlacedFeatures.HANGING_LUMINUM_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, ModPlacedFeatures.HANGING_STRING_PLACED_KEY);
 
         Biome biome = new Biome.BiomeBuilder()
                 .hasPrecipitation(true)
@@ -225,8 +253,118 @@ public class ModBiomes {
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects((new BiomeSpecialEffects.Builder())
+                        .waterColor(0x79A9C9)
+                        .waterFogColor(0x243145)
+                        .skyColor(0x94B9EB)
+                        .grassColorOverride(0xA39CB5)
+                        .foliageColorOverride(0x8CADA2)
+                        .fogColor(0xc0d8ff)
+                        .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                        .build())
+                .build();
+
+        return biome;
+    }
+
+    private static Biome sweetOcean(BootstapContext<Biome> context) {
+
+        MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
+
+        BiomeGenerationSettings.Builder biomeBuilder =
+                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+
+        BiomeDefaultFeatures.oceanSpawns(spawnBuilder, 10, 3, 15);
+
+        standardGeneration(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
+
+        //Ocean Stuff
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.SWEETGRASS_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.COTTON_VINE_PLACED_KEY);
+
+
+        Biome biome = new Biome.BiomeBuilder()
+                .hasPrecipitation(true)
+                .downfall(0.8f)
+                .temperature(0.2f)
+                .generationSettings(biomeBuilder.build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .specialEffects((new BiomeSpecialEffects.Builder())
                         .waterColor(0x45adf2)
-                        .waterFogColor(0x041633)
+                        .waterFogColor(0x08263D)
+                        .skyColor(0x6eb1ff)
+                        .grassColorOverride(0xffb7b2)
+                        .foliageColorOverride(0x71a74d)
+                        .fogColor(0xc0d8ff)
+                        .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                        .build())
+                .build();
+
+        return biome;
+    }
+
+    private static Biome warmSweetOcean(BootstapContext<Biome> context) {
+
+        MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
+
+        BiomeGenerationSettings.Builder biomeBuilder =
+                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+
+        spawnBuilder.addSpawn(MobCategory.WATER_AMBIENT, new MobSpawnSettings.SpawnerData(EntityType.TROPICAL_FISH, 25, 8, 8));
+        spawnBuilder.addSpawn(MobCategory.WATER_CREATURE, new MobSpawnSettings.SpawnerData(EntityType.SQUID, 5, 2, 4));
+        spawnBuilder.addSpawn(MobCategory.WATER_CREATURE, new MobSpawnSettings.SpawnerData(EntityType.DOLPHIN, 2, 1, 2));
+
+        standardGeneration(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
+
+        //Ocean Stuff
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.MOD_CORAL_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.SWEETGRASS_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.SWEET_PICKLE_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.COTTON_VINE_PLACED_KEY);
+
+
+        Biome biome = new Biome.BiomeBuilder()
+                .hasPrecipitation(true)
+                .downfall(0.8f)
+                .temperature(0.8f)
+                .generationSettings(biomeBuilder.build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .specialEffects((new BiomeSpecialEffects.Builder())
+                        .waterColor(0x59ECF7)
+                        .waterFogColor(0x0A3E4D)
+                        .skyColor(0x6eb1ff)
+                        .grassColorOverride(0xffb7b2)
+                        .foliageColorOverride(0x71a74d)
+                        .fogColor(0xc0d8ff)
+                        .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                        .build())
+                .build();
+
+        return biome;
+    }
+
+    private static Biome coldSweetOcean(BootstapContext<Biome> context) {
+
+        MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
+
+        BiomeGenerationSettings.Builder biomeBuilder =
+                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+
+        BiomeDefaultFeatures.oceanSpawns(spawnBuilder, 10, 3, 15);
+
+        standardGeneration(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
+
+        Biome biome = new Biome.BiomeBuilder()
+                .hasPrecipitation(true)
+                .downfall(0.8f)
+                .temperature(0.8f)
+                .generationSettings(biomeBuilder.build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .specialEffects((new BiomeSpecialEffects.Builder())
+                        .waterColor(0x7DEBFA)
+                        .waterFogColor(0x196069)
                         .skyColor(0x94B9EB)
                         .grassColorOverride(0xB2E5FF)
                         .foliageColorOverride(0x4D98A7)

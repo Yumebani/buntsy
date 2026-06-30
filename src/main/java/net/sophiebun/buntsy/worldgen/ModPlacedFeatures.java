@@ -52,6 +52,7 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> MUD_PATCH_PLACED_KEY = registerKey("mud_patch_placed_key");
     public static final ResourceKey<PlacedFeature> HANGING_CLOCKWORK_PLACED_KEY = registerKey("hanging_clockwork_placed_key");
     public static final ResourceKey<PlacedFeature> HANGING_LUMINUM_PLACED_KEY = registerKey("hanging_luminum_placed_key");
+    public static final ResourceKey<PlacedFeature> HANGING_STRING_PLACED_KEY = registerKey("hanging_string_placed_key");
 
     public static final ResourceKey<PlacedFeature> WILD_STRAWBERRY_PLACED_KEY = registerKey("wild_strawberry_placed");
     public static final ResourceKey<PlacedFeature> WILD_HOOTNIP_PLACED_KEY = registerKey("wild_hootnip_placed");
@@ -66,6 +67,9 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> PALEGRASS_PLACED_KEY = registerKey("palegrass_placed");
     public static final ResourceKey<PlacedFeature> LUMINUM_PLACED_KEY = registerKey("luminum_placed");
 
+    public static final ResourceKey<PlacedFeature> CHARMIL_BONEMEAL_PLACED_KEY = registerKey("charmil_bonemeal_placed");
+    public static final ResourceKey<PlacedFeature> ODIATE_BONEMEAL_PLACED_KEY = registerKey("odiate_bonemeal_placed");
+
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
@@ -77,10 +81,10 @@ public class ModPlacedFeatures {
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(10, 0.1f, 2),
                         ModBlocks.BRAVOT_SAPLING.get()));
         register(context, MALVOR_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.MALVOR_KEY),
-                VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.5f, 1),
+                VegetationPlacements.treePlacement(PlacementUtils.countExtra(3, 0.5f, 1),
                         ModBlocks.MALVOR_SAPLING.get()));
         register(context, CRYSTALIZED_TREE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CRYSTALIZED_TREE_KEY),
-                List.of(CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+                List.of(PlacementUtils.countExtra(0, 0.2f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
 
 
         //Grounded logs
@@ -101,8 +105,18 @@ public class ModPlacedFeatures {
         register(context, GIANT_GLOWSHROOM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.GIANT_GLOWSHROOM_KEY),
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.5f, 2),
                         ModBlocks.GLOWSHROOM.get()));
+        register(context, GIANT_PALESHROOM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.GIANT_PALESHROOM_KEY),
+                VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.5f, 2),
+                        ModBlocks.PALEGRASS.get()));
 
         //Sea plants
+        register(context, CHARMING_LOTUS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CHARMING_LOTUS_KEY),
+                List.of(CountPlacement.of(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+        register(context, BRAVE_LOTUS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.BRAVE_LOTUS_KEY),
+                List.of(CountPlacement.of(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+        register(context, MALIUM_LOTUS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.MALIUM_LOTUS_KEY),
+                List.of(CountPlacement.of(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+
         register(context, SWEETGRASS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SWEETGRASS_KEY),
             List.of(InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, CountPlacement.of(60), BiomeFilter.biome()));
         register(context, SWEET_PICKLE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SWEET_PICKLE_KEY),
@@ -120,25 +134,53 @@ public class ModPlacedFeatures {
        register(context, CANDY_BOULDER_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CANDY_BOULDER_KEY),
                 List.of(CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
 
+       //Clockwork canopy
+        register(context, MUD_PATCH_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.MUD_PATCH_KEY),
+                List.of(PlacementUtils.countExtra(1, 0.5f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+        register(context, HANGING_STRING_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.HANGING_STRING_KEY),
+                List.of(PlacementUtils.countExtra(6, 0.25f, 3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+        register(context, HANGING_CLOCKWORK_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.HANGING_CLOCKWORK_KEY),
+                List.of(PlacementUtils.countExtra(8, 0.25f, 4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+        register(context, HANGING_LUMINUM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.HANGING_LUMINUM_KEY),
+                List.of(PlacementUtils.countExtra(4, 0.25f, 2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+
+        //Powder tundra
+        register(context, SWICE_SPIKE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SWICE_SPIKE_KEY),
+                List.of(PlacementUtils.countExtra(0, 0.2f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+
+        //Bonemeal
+        register(context, CHARMIL_BONEMEAL_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CHARMIL_BONEMEAL_KEY),
+                List.of(CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+        register(context, ODIATE_BONEMEAL_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.ODIATE_BONEMEAL_KEY),
+                List.of(CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+
         //Plants
         register(context, WILD_STRAWBERRY_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.WILD_STRAWBERRY_KEY),
-                List.of(PlacementUtils.countExtra(0, 0.025f, 6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+                List.of(PlacementUtils.countExtra(0, 0.010f, 6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
         register(context, WILD_HOOTNIP_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.WILD_HOOTNIP_KEY),
-                List.of(PlacementUtils.countExtra(0, 0.025f, 6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+                List.of(PlacementUtils.countExtra(0, 0.010f, 6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
 
         register(context, PINK_CHARMIL_GRASS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.PINK_CHARMIL_GRASS_KEY),
-                List.of(CountPlacement.of(6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+                List.of(CountPlacement.of(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
         register(context, BLUE_CHARMIL_GRASS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.BLUE_CHARMIL_GRASS_KEY),
-                List.of(CountPlacement.of(6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+                List.of(CountPlacement.of(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+        register(context, PALEGRASS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.PALEGRASS_KEY),
+                List.of(CountPlacement.of(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+        register(context, LUMINUM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.LUMINUM_KEY),
+                List.of(PlacementUtils.countExtra(1, 0.5f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
 
         register(context, PINK_BLOOM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.PINK_BLOOM_KEY),
-                List.of(CountPlacement.of(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+                List.of(CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
         register(context, BLUE_BLOOM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.BLUE_BLOOM_KEY),
-                List.of(CountPlacement.of(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+                List.of(CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+        register(context, ABYSSAL_BLOOM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.ABYSSAL_BLOOM_KEY),
+                List.of(CountPlacement.of(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
 
         register(context, LOVESHROOM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.LOVESHROOM_KEY),
                 List.of(CountPlacement.of(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
         register(context, GLOWSHROOM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.GLOWSHROOM_KEY),
+                List.of(CountPlacement.of(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+        register(context, PALESHROOM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.PALESHROOM_KEY),
                 List.of(CountPlacement.of(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
     }
 

@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "buntsy:block/large_lapis_crystal_cluster"
-  }
-}

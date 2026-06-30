@@ -1,8 +1,6 @@
 package net.sophiebun.buntsy.worldgen.biome.surface;
 
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.PowderSnowBlock;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.worldgen.biome.ModBiomes;
@@ -12,7 +10,8 @@ public class ModSurfaceRules {
     private static final SurfaceRules.RuleSource CHARMIL_SOIL = makeStateRule(ModBlocks.CHARMIL_SOIL.get());
     private static final SurfaceRules.RuleSource SWEET_CORAL_SAND = makeStateRule(ModBlocks.SWEET_CORAL_SAND.get());
     private static final SurfaceRules.RuleSource CHARMIL_SOIL_PINK_FLUF = makeStateRule(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get());
-    private static final SurfaceRules.RuleSource FREEZWEET_BLOCK = makeStateRule(ModBlocks.FREEZWEET_BLOCK.get());
+    private static final SurfaceRules.RuleSource FREEZWEET_LAYER = makeStateRule(ModBlocks.FROZEN_POWDER_LAYER.get());
+    private static final SurfaceRules.RuleSource FREEZWEET_BLOCK = makeStateRule(ModBlocks.FROZEN_POWDER_BLOCK.get());
     private static final SurfaceRules.RuleSource FROZEN_CORAL_SAND = makeStateRule(ModBlocks.FROZEN_CORAL_SAND.get());
     private static final SurfaceRules.RuleSource GRAY_MOSS_ODIATE_SOIL = makeStateRule(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get());
     private static final SurfaceRules.RuleSource ODIATE_SOIL = makeStateRule(ModBlocks.ODIATE_SOIL.get());
@@ -44,7 +43,6 @@ public class ModSurfaceRules {
                                         SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SWEET_CORAL_SAND),
                                         SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, SWEET_CORAL_SAND)))));
 
-
         SurfaceRules.RuleSource powderyTundraSurface = SurfaceRules.sequence(
                 SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.POWDERY_TUNDRA_BIOME),
                         SurfaceRules.ifTrue(isAboveGround,
@@ -73,7 +71,29 @@ public class ModSurfaceRules {
                                         SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, ODIATE_MUD),
                                         SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, ODIATE_MUD)))));
 
-        return SurfaceRules.sequence(pinkGrassSurface, candyCragsSand, powderyTundraSurface, clockworkCanopySurface);
+        SurfaceRules.RuleSource sweetOceanSand = SurfaceRules.sequence(
+                SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.SWEET_OCEAN_BIOME),
+                        SurfaceRules.ifTrue(isAboveGround,
+                                SurfaceRules.sequence(
+                                        SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SWEET_CORAL_SAND),
+                                        SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, SWEET_CORAL_SAND)))));
+
+        SurfaceRules.RuleSource warmSweetOceanSand = SurfaceRules.sequence(
+                SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.WARM_SWEET_OCEAN_BIOME),
+                        SurfaceRules.ifTrue(isAboveGround,
+                                SurfaceRules.sequence(
+                                        SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SWEET_CORAL_SAND),
+                                        SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, SWEET_CORAL_SAND)))));
+
+        SurfaceRules.RuleSource coldSweetOceanSand = SurfaceRules.sequence(
+                SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.COLD_SWEET_OCEAN_BIOME),
+                        SurfaceRules.ifTrue(isAboveGround,
+                                SurfaceRules.sequence(
+                                        SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, FROZEN_CORAL_SAND),
+                                        SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, FROZEN_CORAL_SAND)))));
+
+        return SurfaceRules.sequence(pinkGrassSurface, candyCragsSand, powderyTundraSurface, clockworkCanopySurface,
+                sweetOceanSand, warmSweetOceanSand, coldSweetOceanSand);
     }
 
     private static SurfaceRules.RuleSource makeStateRule(Block block)

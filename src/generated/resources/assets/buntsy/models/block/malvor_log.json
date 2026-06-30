@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "buntsy:block/malvor_log_top",
-    "side": "buntsy:block/malvor_log"
-  }
-}

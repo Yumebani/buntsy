@@ -1,17 +1,13 @@
 package net.sophiebun.buntsy.datagen;
 
-import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraftforge.client.model.IModelBuilder;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
@@ -20,10 +16,11 @@ import net.sophiebun.buntsy.blocks.custom.HootnipCrop;
 import net.sophiebun.buntsy.blocks.custom.RotatedTallFlowerBlock;
 import net.sophiebun.buntsy.blocks.custom.StrawberryCrop;
 import net.sophiebun.buntsy.blocks.custom.SyrupExtractorBlock;
+import net.sophiebun.buntsy.blocks.custom.hanging_block.HangingStringBlock;
+import net.sophiebun.buntsy.blocks.custom.hanging_block.HangingStringEnding;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
 
 import java.util.List;
-import java.util.Properties;
 
 public class ModBlockStateProvider extends BlockStateProvider {
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -118,6 +115,13 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.BITTER_CANDY_ROCK);
         blockWithItem(ModBlocks.SOUR_CANDY_ROCK);
 
+        blockWithItem(ModBlocks.FROZEN_POWDER_BLOCK);
+        translucentBlockWithItem(ModBlocks.SWICE);
+
+        //Hanging blocks
+        hangingString(ModBlocks.HANGING_STRING);
+        variedCross(ModBlocks.HANGING_LUMINUM);
+        variedCross(ModBlocks.HANGING_CLOCKWORK);
 
         //Crops
         simpleCrossBlock(ModBlocks.WILD_STRAWBERRY);
@@ -127,9 +131,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
 
         //Adding plants
-        variedGrass(ModBlocks.PINK_CHARMIL_GRASS);
-        variedGrass(ModBlocks.BLUE_CHARMIL_GRASS);
-        variedGrass(ModBlocks.PALEGRASS);
+        variedCross(ModBlocks.PINK_CHARMIL_GRASS);
+        variedCross(ModBlocks.BLUE_CHARMIL_GRASS);
+        variedCross(ModBlocks.PALEGRASS);
         simpleCrossBlock(ModBlocks.PINK_BLOOM);
         simpleCrossBlock(ModBlocks.BLUE_BLOOM);
         simpleCrossBlock(ModBlocks.ABYSSAL_BLOOM);
@@ -309,7 +313,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
                         blockTexture(plant.get())).renderType("cutout"));
     }
 
-    private void variedGrass(RegistryObject<Block> registryObject){
+    private void variedCross(RegistryObject<Block> registryObject){
         BlockModelBuilder var1 = getCrossModel(registryObject, "_1");
         BlockModelBuilder var2 = getCrossModel(registryObject, "_2");
         BlockModelBuilder var3 = getCrossModel(registryObject, "_3");
@@ -324,9 +328,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     private void luminum(RegistryObject<Block> registryObject){
         BlockModelBuilder bottom = getTwoCrossModel(registryObject, "_bottom");
-        BlockModelBuilder top1 = getCrossModel(registryObject, "_top_1");
-        BlockModelBuilder top2 = getCrossModel(registryObject, "_top_2");
-        BlockModelBuilder top3 = getCrossModel(registryObject, "_top_3");
+        BlockModelBuilder top1 = getTwoCrossModel(registryObject, "_top_1");
+        BlockModelBuilder top2 = getTwoCrossModel(registryObject, "_top_2");
+        BlockModelBuilder top3 = getTwoCrossModel(registryObject, "_top_3");
 
         getVariantBuilder(registryObject.get()).forAllStates(blockState -> {
 
@@ -349,6 +353,29 @@ public class ModBlockStateProvider extends BlockStateProvider {
                         .modelFile(top3).rotationY(rotation).weight(1).build();
             }
         });
+    }
+
+    private void hangingString(RegistryObject<Block> registryObject){
+        BlockModelBuilder top = getCrossModel(registryObject, "_top");
+        BlockModelBuilder topEnding = getCrossModel(registryObject, "_top_ending");
+        BlockModelBuilder topGrab = getCrossModel(registryObject, "_top_grab");
+        BlockModelBuilder middle = getCrossModel(registryObject, "_middle");
+        BlockModelBuilder middleGrabbing = getCrossModel(registryObject, "_middle_ending");
+        BlockModelBuilder grab = getCrossModel(registryObject, "_grab");
+
+        getVariantBuilder(registryObject.get()).partialState()
+                .with(HangingStringBlock.TYPE, HangingStringEnding.TOP)
+                .modelForState().modelFile(top).addModel().partialState()
+                .with(HangingStringBlock.TYPE, HangingStringEnding.TOP_ENDING)
+                .modelForState().modelFile(topEnding).addModel().partialState()
+                .with(HangingStringBlock.TYPE, HangingStringEnding.TOP_GRAB)
+                .modelForState().modelFile(topGrab).addModel().partialState()
+                .with(HangingStringBlock.TYPE, HangingStringEnding.MIDDLE)
+                .modelForState().modelFile(middle).addModel().partialState()
+                .with(HangingStringBlock.TYPE, HangingStringEnding.MIDDLE_ENDING)
+                .modelForState().modelFile(middleGrabbing).addModel().partialState()
+                .with(HangingStringBlock.TYPE, HangingStringEnding.GRAB)
+                .modelForState().modelFile(grab).addModel().partialState();
     }
 
     private void crystalBlock(RegistryObject<Block> registryObject){
@@ -419,6 +446,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     private void blockWithItem(RegistryObject<Block> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
+    }
+
+    private void translucentBlockWithItem(RegistryObject<Block> blockRegistryObject) {
+        simpleBlockWithItem(blockRegistryObject.get(),
+                models().singleTexture(ForgeRegistries.BLOCKS.getKey(ModBlocks.SWICE.get()).getPath(),
+                        new ResourceLocation("minecraft:block/cube_all"), "all", blockTexture(ModBlocks.SWICE.get())).renderType("translucent"));
     }
 
     private void simpleCrossBlock(RegistryObject<Block> blockRegistry){

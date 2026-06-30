@@ -1,7 +1,9 @@
 package net.sophiebun.buntsy.blocks;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -22,9 +24,12 @@ import net.sophiebun.buntsy.blocks.custom.*;
 import net.sophiebun.buntsy.blocks.custom.entityblocks.*;
 import net.sophiebun.buntsy.blocks.custom.farmland.CharmilFarmland;
 import net.sophiebun.buntsy.blocks.custom.farmland.OdiateFarmland;
+import net.sophiebun.buntsy.blocks.custom.hanging_block.HangingObjectBlock;
+import net.sophiebun.buntsy.blocks.custom.hanging_block.HangingStringBlock;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.worldgen.ModConfiguredFeatures;
+import net.sophiebun.buntsy.worldgen.ModPlacedFeatures;
 import net.sophiebun.buntsy.worldgen.tree.BravotTreeGrower;
 import net.sophiebun.buntsy.worldgen.tree.GentlitTreeGrower;
 import net.sophiebun.buntsy.worldgen.tree.MalvorTreeGrower;
@@ -149,7 +154,7 @@ public class ModBlocks {
             () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion(), BlockSetType.OAK));
 
     public static final RegistryObject<Block> CRYSTALLIZED_LOG = registerBlock("crystallized_log",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.BLUE_ICE)));
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.BLUE_ICE).noOcclusion()));
     public static final RegistryObject<Block> CRYSTALLIZED_LEAVES = registerBlock("crystallized_leaves",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.BLUE_ICE).noOcclusion()));
 
@@ -159,25 +164,32 @@ public class ModBlocks {
     public static final RegistryObject<Block> CHARMIL_SOIL = registerBlock("charmil_soil",
             () -> new TillableModSoil(BlockBehaviour.Properties.copy(Blocks.DIRT).sound(SoundType.MOSS), ModBlocks.CHARMIL_FARMLAND.get()));
     public static final RegistryObject<Block> PINK_FLUF_CHARMIL_SOIL = registerBlock("pink_fluf_charmil_soil",
-            () -> new TillableModGrass(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK).sound(SoundType.MOSS), ModBlocks.CHARMIL_SOIL.get(), ModBlocks.CHARMIL_FARMLAND.get()));
+            () -> new TillableModGrass(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK).sound(SoundType.MOSS),
+                    ModBlocks.CHARMIL_SOIL.get(), ModBlocks.CHARMIL_FARMLAND.get(),
+                    ModPlacedFeatures.CHARMIL_BONEMEAL_PLACED_KEY));
 
     public static final RegistryObject<Block> ODIATE_FARMLAND = registerBlock("odiate_farmland",
             () -> new OdiateFarmland(BlockBehaviour.Properties.copy(Blocks.FARMLAND).sound(SoundType.MOSS)));
     public static final RegistryObject<Block> ODIATE_SOIL = registerBlock("odiate_soil",
             () -> new TillableModSoil(BlockBehaviour.Properties.copy(Blocks.DIRT).sound(SoundType.MOSS), ModBlocks.ODIATE_FARMLAND.get()));
-    public static final RegistryObject<Block> GRAY_MOSS_ODIATE_SOIL = registerBlock("gray_moss_charmil_soil",
-            () -> new TillableModGrass(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK).sound(SoundType.MOSS), ModBlocks.ODIATE_SOIL.get(), ModBlocks.ODIATE_FARMLAND.get()));
+    public static final RegistryObject<Block> GRAY_MOSS_ODIATE_SOIL = registerBlock("gray_moss_odiate_soil",
+            () -> new TillableModGrass(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK).sound(SoundType.MOSS),
+                    ModBlocks.ODIATE_SOIL.get(), ModBlocks.ODIATE_FARMLAND.get(),
+                    ModPlacedFeatures.ODIATE_BONEMEAL_PLACED_KEY));
     public static final RegistryObject<Block> ODIATE_MUD = registerBlock("odiate_mud",
             () -> new MudBlock(BlockBehaviour.Properties.copy(Blocks.MUD).sound(SoundType.MUD)));
 
-    public static final RegistryObject<Block> FREEZWEET_BLOCK = registerBlock("freezweet_block",
+    public static final RegistryObject<Block> FROZEN_POWDER_BLOCK = registerBlock("frozen_powder_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SNOW_BLOCK).sound(SoundType.SNOW)));
-    public static final RegistryObject<Block> FREEZWEET_LAYER = registerBlock("freezweet_block",
-            () -> new SnowLayerBlock(BlockBehaviour.Properties.copy(Blocks.SNOW_BLOCK).sound(SoundType.SNOW)));
-    public static final RegistryObject<Block> FROZEN_CORAL_SAND = registerBlock("sweet_coral_sand",
+    public static final RegistryObject<Block> FROZEN_POWDER_LAYER = registerBlock("frozen_powder_layer",
+            () -> new SnowLayerBlock(BlockBehaviour.Properties.copy(Blocks.SNOW_BLOCK).sound(SoundType.SNOW)){
+                @Override
+                public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {}
+            });
+    public static final RegistryObject<Block> FROZEN_CORAL_SAND = registerBlock("frozen_coral_sand",
             () -> new SandBlock(0xA3C8DA, BlockBehaviour.Properties.copy(Blocks.SAND)));
     public static final RegistryObject<Block> SWICE = registerBlock("swice",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SNOW_BLOCK).sound(SoundType.SNOW).noOcclusion()));
+            () -> new HalfTransparentBlock(BlockBehaviour.Properties.copy(Blocks.ICE).noOcclusion()));
 
     public static final RegistryObject<Block> SWEET_CORAL_SAND = registerBlock("sweet_coral_sand",
             () -> new SandBlock(0xdaa3b0, BlockBehaviour.Properties.copy(Blocks.SAND)));
@@ -202,18 +214,24 @@ public class ModBlocks {
     public static final RegistryObject<Block> HANGING_STRING = registerBlock("hanging_string",
             () -> new HangingStringBlock(BlockBehaviour.Properties.copy(Blocks.TRIPWIRE).noOcclusion().noCollission()));
     public static final RegistryObject<Block> HANGING_CLOCKWORK = registerBlock("hanging_clockwork",
-            () -> new HangingStringBlock(BlockBehaviour.Properties.copy(Blocks.TRIPWIRE).noOcclusion().noCollission()));
+            () -> new HangingObjectBlock(BlockBehaviour.Properties.copy(Blocks.TRIPWIRE).noOcclusion().noCollission()));
     public static final RegistryObject<Block> HANGING_LUMINUM = registerBlock("hanging_luminum",
-            () -> new HangingStringBlock(BlockBehaviour.Properties.copy(Blocks.TRIPWIRE).noOcclusion().noCollission()));
+            () -> new HangingObjectBlock(BlockBehaviour.Properties.copy(Blocks.TRIPWIRE).noOcclusion().noCollission()){
+
+                @Override
+                public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+                    return 8;
+                }
+            });
 
     //Biome plants
     //Ocean
     public static final RegistryObject<Block> CHARMING_LOTUS = registerBlock("charming_lotus",
-            () -> new WaterlilyBlock(BlockBehaviour.Properties.copy(Blocks.LILY_PAD).noOcclusion().noCollission()));
+            () -> new LotusBlock(BlockBehaviour.Properties.copy(Blocks.LILY_PAD).noOcclusion()));
     public static final RegistryObject<Block> BRAVE_LOTUS = registerBlock("brave_lotus",
-            () -> new WaterlilyBlock(BlockBehaviour.Properties.copy(Blocks.LILY_PAD).noOcclusion().noCollission()));
+            () -> new LotusBlock(BlockBehaviour.Properties.copy(Blocks.LILY_PAD).noOcclusion()));
     public static final RegistryObject<Block> MALIUM_LOTUS = registerBlock("malium_lotus",
-            () -> new WaterlilyBlock(BlockBehaviour.Properties.copy(Blocks.LILY_PAD).noOcclusion().noCollission()));
+            () -> new LotusBlock(BlockBehaviour.Properties.copy(Blocks.LILY_PAD).noOcclusion()));
 
     public static final RegistryObject<Block> SWEETGRASS = registerBlock("sweetgrass",
             () -> new SweetgrassBlock(BlockBehaviour.Properties.copy(Blocks.SEAGRASS).noOcclusion().noCollission()));

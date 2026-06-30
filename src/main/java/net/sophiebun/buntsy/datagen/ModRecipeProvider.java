@@ -26,6 +26,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     @Override
     protected void buildRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
 
+        //Book
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.FAIRY_TALE_BOOK.get(), 1)
+                .requires(ModItems.FAIRY_DUST.get(), 1)
+                .requires(Items.BOOK, 1)
+                .unlockedBy(getHasName(ModItems.FAIRY_DUST.get()), has(ModItems.FAIRY_DUST.get()))
+                .unlockedBy(getHasName(Items.BOOK), has(Items.BOOK))
+                .save(consumer, "buntsy:fairy_tale_book_crafting");
+
         //Wood recipes
         planksRecipe(ModTags.Items.GENTLIT_LOGS, ModBlocks.GENTLIT_PLANKS.get(), consumer);
         stairsRecipe(ModBlocks.GENTLIT_PLANKS.get(), ModBlocks.GENTLIT_STAIRS.get(), consumer);
@@ -63,6 +71,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         //Wool
         compact2By2(ModItems.SILK_FABRIC.get(), Items.WHITE_WOOL, 2, consumer);
 
+        //Icy
+        compact2By2(ModItems.COLD_POWDERED_SUGAR.get(), ModBlocks.FROZEN_POWDER_BLOCK.get(), 1, consumer);
+        compact2By2(ModItems.SWICE_SHARDS.get(), ModBlocks.SWICE.get(), 1, consumer);
+
+        //Clockwork
+        compact2By2(ModItems.CLOCKWORK_SCRAP.get(), ModItems.CLOCKWORK_SCRAP_CLUMP.get(), 1, consumer);
+        smeltingRecipe(ModItems.CLOCKWORK_SCRAP_CLUMP.get(), ModItems.CLOCKWORK_BRASS.get(), 0.5f, consumer);
+
         //Mineral shards
         compact2By2(ModItems.DIAMOND_SHARD.get(), Items.DIAMOND, 1, consumer);
         compact2By2(ModItems.EMERALD_SHARD.get(), Items.EMERALD, 1, consumer);
@@ -86,6 +102,75 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         //Foods
         cookingFoodRecipe(ModItems.SUGAR_BOWL.get(), ModItems.BOWL_OF_CARAMEL.get(), consumer);
         cookingFoodRecipe(ModItems.SYRUPY_MIXTURE_BOWL.get(), ModItems.BOWL_OF_ROCKCANDY.get(), consumer);
+
+        //Clockwork gear
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CLOCKWORK_GEAR.get(), 2)
+                .define('A', ModItems.CLOCKWORK_BRASS.get())
+                .pattern(" A ")
+                .pattern("A A")
+                .pattern(" A ")
+                .unlockedBy(getHasName(ModItems.CLOCKWORK_BRASS.get()), has(ModItems.CLOCKWORK_BRASS.get()))
+                .save(consumer);
+
+        //Clockwork processor
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CLOCKWORK_PROCESSOR.get(), 1)
+                .define('A', ModItems.CLOCKWORK_GEAR.get())
+                .define('B', ModItems.CLOCKWORK_BRASS.get())
+                .define('C', Items.DIAMOND)
+                .define('D', Items.REDSTONE)
+                .pattern("ABD")
+                .pattern("BCB")
+                .pattern("DBA")
+                .unlockedBy(getHasName(ModItems.CLOCKWORK_BRASS.get()), has(ModItems.CLOCKWORK_BRASS.get()))
+                .save(consumer);
+
+        //Clockwork modification
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CLOCKWORK_MODIFICATION.get(), 1)
+                .define('A', ModItems.CLOCKWORK_GEAR.get())
+                .define('B', ModItems.CLOCKWORK_BRASS.get())
+                .define('D', Items.REDSTONE)
+                .pattern("BDB")
+                .pattern("BAB")
+                .pattern("BDB")
+                .unlockedBy(getHasName(ModItems.CLOCKWORK_BRASS.get()), has(ModItems.CLOCKWORK_BRASS.get()))
+                .save(consumer);
+
+        //Clockwork units
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SIMPLE_CLOCKWORK_UNIT.get(), 1)
+                .define('A', ModItems.CLOCKWORK_GEAR.get())
+                .define('B', ModItems.CLOCKWORK_BRASS.get())
+                .define('C', ModItems.CLOCKWORK_PROCESSOR.get())
+                .define('D', ModItems.IRON_CRYSTAL.get())
+                .define('E', Items.IRON_INGOT)
+                .pattern("ABD")
+                .pattern("BCB")
+                .pattern("EBA")
+                .unlockedBy(getHasName(ModItems.CLOCKWORK_PROCESSOR.get()), has(ModItems.CLOCKWORK_PROCESSOR.get()))
+                .save(consumer);
+
+        //Clockwork units
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.INTRICATE_CLOCKWORK_UNIT.get(), 1)
+                .define('A', ModItems.SIMPLE_CLOCKWORK_UNIT.get())
+                .define('B', ModItems.CLOCKWORK_BRASS.get())
+                .define('D', ModItems.DIAMOND_SHARD.get())
+                .define('E', Items.DIAMOND)
+                .pattern("BEB")
+                .pattern("ADA")
+                .pattern("BEB")
+                .unlockedBy(getHasName(ModItems.CLOCKWORK_PROCESSOR.get()), has(ModItems.CLOCKWORK_PROCESSOR.get()))
+                .save(consumer);
+
+        //Clockwork units
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.COMPLEX_CLOCKWORK_UNIT.get(), 1)
+                .define('A', ModItems.INTRICATE_CLOCKWORK_UNIT.get())
+                .define('B', ModItems.CLOCKWORK_BRASS.get())
+                .define('D', ModItems.DEBRIS_SHARD.get())
+                .define('E', Items.NETHERITE_SCRAP)
+                .pattern("BEB")
+                .pattern("ADA")
+                .pattern("BEB")
+                .unlockedBy(getHasName(ModItems.CLOCKWORK_PROCESSOR.get()), has(ModItems.CLOCKWORK_PROCESSOR.get()))
+                .save(consumer);
 
         //Silk spool
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SILK_SPOOL.get(), 1)

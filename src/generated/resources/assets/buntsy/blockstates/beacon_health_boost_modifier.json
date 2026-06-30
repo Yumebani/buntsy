@@ -1,7 +1,0 @@
-{
-  "variants": {
-    "": {
-      "model": "buntsy:block/beacon_health_boost_modifier"
-    }
-  }
-}

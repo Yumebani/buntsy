@@ -24,6 +24,8 @@ public class CreativeModeTabs {
                     .title(Component.translatable("creativetab.buntsy_tab"))
                     .displayItems((pParameters, pOutput) -> {
 
+                        pOutput.accept(ModItems.FAIRY_TALE_BOOK.get());
+
                         pOutput.accept(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get());
                         pOutput.accept(ModBlocks.CHARMIL_SOIL.get());
 
@@ -33,6 +35,10 @@ public class CreativeModeTabs {
 
                         pOutput.accept(ModBlocks.SWEET_CORAL_SAND.get());
                         pOutput.accept(ModBlocks.FROZEN_CORAL_SAND.get());
+
+                        pOutput.accept(ModBlocks.FROZEN_POWDER_BLOCK.get());
+                        pOutput.accept(ModBlocks.FROZEN_POWDER_LAYER.get());
+                        pOutput.accept(ModBlocks.SWICE.get());
 
                         pOutput.accept(ModBlocks.SWEET_CANDY_ROCK.get());
                         pOutput.accept(ModBlocks.SOUR_CANDY_ROCK.get());
@@ -55,6 +61,10 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.SWEETGRASS.get());
                         pOutput.accept(ModBlocks.SWEET_PICKLE.get());
                         pOutput.accept(ModBlocks.COTTON_VINE.get());
+
+                        pOutput.accept(ModBlocks.CHARMING_LOTUS.get());
+                        pOutput.accept(ModBlocks.BRAVE_LOTUS.get());
+                        pOutput.accept(ModBlocks.MALIUM_LOTUS.get());
 
                         pOutput.accept(ModBlocks.PINK_CHARMIL_GRASS.get());
                         pOutput.accept(ModBlocks.BLUE_CHARMIL_GRASS.get());
@@ -255,10 +265,16 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.SILKY_INGOT.get());
                         pOutput.accept(ModItems.SILKY_CRYSTAL.get());
                         pOutput.accept(ModItems.CLOCKWORK_SCRAP.get());
+                        pOutput.accept(ModItems.CLOCKWORK_SCRAP_CLUMP.get());
                         pOutput.accept(ModItems.CLOCKWORK_BRASS.get());
                         pOutput.accept(ModItems.CLOCKWORK_GEAR.get());
                         pOutput.accept(ModItems.CLOCKWORK_PROCESSOR.get());
+                        pOutput.accept(ModItems.CLOCKWORK_MODIFICATION.get());
+                        pOutput.accept(ModItems.SIMPLE_CLOCKWORK_UNIT.get());
+                        pOutput.accept(ModItems.INTRICATE_CLOCKWORK_UNIT.get());
+                        pOutput.accept(ModItems.COMPLEX_CLOCKWORK_UNIT.get());
                         pOutput.accept(ModItems.SWICE_SHARDS.get());
+                        pOutput.accept(ModItems.COLD_POWDERED_SUGAR.get());
                         pOutput.accept(ModItems.SPEED_BLEND.get());
                         pOutput.accept(ModItems.EFFICIENCY_BLEND.get());
                         pOutput.accept(ModItems.GROWTH_BLEND.get());
