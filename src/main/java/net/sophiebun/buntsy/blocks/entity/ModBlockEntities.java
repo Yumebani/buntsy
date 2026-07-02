@@ -85,6 +85,11 @@ public class ModBlockEntities {
                     () -> BlockEntityType.Builder.of(MixerBlockEntity::new,
                             ModBlocks.MIXER_BLOCK.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<ChocolateGeyserBlockEntity>> CHOCOLATE_GEYSER_ENTITY =
+            blockEntityRegister.register("chocolate_geyser_entity",
+                    () -> BlockEntityType.Builder.of(ChocolateGeyserBlockEntity::new,
+                            ModBlocks.CHOCOLATE_GEYSER.get()).build(null));
+
     public static void register(IEventBus eventBus){
 
         blockEntityRegister.register(eventBus);

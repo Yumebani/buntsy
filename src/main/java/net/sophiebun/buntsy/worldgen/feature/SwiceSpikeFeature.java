@@ -27,6 +27,10 @@ public class SwiceSpikeFeature extends Feature<NoneFeatureConfiguration> {
         int baseSize = size - 1;
         int height = randomsource.nextInt(2, 6);
 
+        if (!worldgenlevel.getBlockState(blockpos).getFluidState().isEmpty()){
+            return false;
+        }
+
         for (int x = -baseSize; x <= baseSize; x++){
             for (int z = -baseSize; z <= baseSize; z++){
                 for (int y = -2; y <= height; y++) {

@@ -37,6 +37,7 @@ import net.sophiebun.buntsy.blocks.custom.SyrupExtractorBlock;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.client.GrindingWheelBlockRenderer;
 import net.sophiebun.buntsy.blocks.entity.client.ThreadReelerBlockRenderer;
+import net.sophiebun.buntsy.client.particle.ModParticleTypes;
 import net.sophiebun.buntsy.datagen.ModBlockTagGenerator;
 import net.sophiebun.buntsy.dispenser.DispenserBehaviourAditions;
 import net.sophiebun.buntsy.entity.ModEntities;
@@ -44,6 +45,8 @@ import net.sophiebun.buntsy.entity.client.ClockworkMaidenRenderer;
 import net.sophiebun.buntsy.entity.client.FairyRenderer;
 import net.sophiebun.buntsy.entity.client.HootcatRenderer;
 import net.sophiebun.buntsy.entity.client.SilkbunRenderer;
+import net.sophiebun.buntsy.fluids.ModFluidTypes;
+import net.sophiebun.buntsy.fluids.ModFluids;
 import net.sophiebun.buntsy.item.CreativeModeTabs;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.recipe.ModRecipes;
@@ -79,12 +82,17 @@ public class BuntsyMod
 
         ModPacketHandler.register();
 
+        ModParticleTypes.register(modEventBus);
+
         CreativeModeTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
 
         ModBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
+
+        ModFluidTypes.register(modEventBus);
+        ModFluids.register(modEventBus);
 
         ModMenuTypes.register(modEventBus);
 
@@ -112,6 +120,8 @@ public class BuntsyMod
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.PINK_BLOOM.getId(), ModBlocks.POTTED_PINK_BLOOM);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.BLUE_BLOOM.getId(), ModBlocks.POTTED_BLUE_BLOOM);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.ABYSSAL_BLOOM.getId(), ModBlocks.POTTED_ABYSSAL_BLOOM);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.FROZEN_BLOOM.getId(), ModBlocks.POTTED_FROZEN_BLOOM);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.ORIGAMI_FERN.getId(), ModBlocks.POTTED_ORIGAMI_FERN);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.GENTLIT_SAPLING.getId(), ModBlocks.POTTED_GENTLIT_SAPLING);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.BRAVOT_SAPLING.getId(), ModBlocks.POTTED_BRAVOT_SAPLING);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.MALVOR_SAPLING.getId(), ModBlocks.POTTED_MALVOR_SAPLING);

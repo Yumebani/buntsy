@@ -39,6 +39,8 @@ public class ModBiomes {
             new ResourceLocation(BuntsyMod.MODID,"candy_crags_biome"));
     public static final ResourceKey<Biome> POWDERY_TUNDRA_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
             new ResourceLocation(BuntsyMod.MODID,"powdery_tundra_biome"));
+    public static final ResourceKey<Biome> CHOCOLATE_SPRINGS_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
+            new ResourceLocation(BuntsyMod.MODID,"chocolate_springs_biome"));
     public static final ResourceKey<Biome> CLOCKWORK_CANOPY_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
             new ResourceLocation(BuntsyMod.MODID,"clockwork_canopy_biome"));
     public static final ResourceKey<Biome> SWEET_OCEAN_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
@@ -47,15 +49,25 @@ public class ModBiomes {
             new ResourceLocation(BuntsyMod.MODID,"warm_sweet_ocean_biome"));
     public static final ResourceKey<Biome> COLD_SWEET_OCEAN_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
             new ResourceLocation(BuntsyMod.MODID,"cold_sweet_ocean_biome"));
+    public static final ResourceKey<Biome> ORIGAMI_BEACH_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
+            new ResourceLocation(BuntsyMod.MODID,"origami_beach_biome"));
+    public static final ResourceKey<Biome> WARM_ORIGAMI_BEACH_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
+            new ResourceLocation(BuntsyMod.MODID,"warm_origami_beach_biome"));
+    public static final ResourceKey<Biome> COLD_ORIGAMI_BEACH_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
+            new ResourceLocation(BuntsyMod.MODID,"cold_origami_beach_biome"));
 
     public static void bootstrap(BootstapContext<Biome> context){
         context.register(CUTERLY_BIOME, cutelyBiome(context));
         context.register(CANDY_CRAGS_BIOME, candyCragsBiome(context));
         context.register(POWDERY_TUNDRA_BIOME, powderyTundra(context));
+        context.register(CHOCOLATE_SPRINGS_BIOME, chocolateSprings(context));
         context.register(CLOCKWORK_CANOPY_BIOME, clockworkCanopy(context));
         context.register(SWEET_OCEAN_BIOME, sweetOcean(context));
         context.register(WARM_SWEET_OCEAN_BIOME, warmSweetOcean(context));
         context.register(COLD_SWEET_OCEAN_BIOME, coldSweetOcean(context));
+        context.register(ORIGAMI_BEACH_BIOME, origamiBeach(context));
+        context.register(WARM_ORIGAMI_BEACH_BIOME, warmOrigamiBeach(context));
+        context.register(COLD_ORIGAMI_BEACH_BIOME, coldOrigamiBeach(context));
     }
 
     public static void standardGeneration(BiomeGenerationSettings.Builder builder) {
@@ -188,9 +200,50 @@ public class ModBiomes {
         standardGeneration(biomeBuilder);
         BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
 
+        //Plants
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.FROZEN_BLOOM_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.FROZEN_GRASS_PLACED_KEY);
+
         biomeBuilder.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.SWICE_SPIKE_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.CRYSTALIZED_TREE_PLACED_KEY);
 
+
+        Biome biome = new Biome.BiomeBuilder()
+                .hasPrecipitation(true)
+                .downfall(0.8f)
+                .temperature(-0.2f)
+                .generationSettings(biomeBuilder.build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .specialEffects((new BiomeSpecialEffects.Builder())
+                        .waterColor(0x7DEBFA)
+                        .waterFogColor(0x196069)
+                        .skyColor(0x94B9EB)
+                        .grassColorOverride(0xB2E5FF)
+                        .foliageColorOverride(0x4D98A7)
+                        .fogColor(0xc0d8ff)
+                        .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                        .build())
+                .build();
+
+        return biome;
+    }
+
+    private static Biome chocolateSprings(BootstapContext<Biome> context) {
+
+        MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
+
+        BiomeGenerationSettings.Builder biomeBuilder =
+                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+
+        standardGeneration(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
+
+        biomeBuilder.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.CHOCOLATE_SPRING_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.CHOCOLATE_GEYSER_PLACED_KEY);
+
+        //Plants
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.FROZEN_BLOOM_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.FROZEN_GRASS_PLACED_KEY);
 
         Biome biome = new Biome.BiomeBuilder()
                 .hasPrecipitation(true)
@@ -236,6 +289,7 @@ public class ModBiomes {
 
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.LUMINUM_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.PALESHROOM_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.ABYSSAL_BLOOM_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.PALEGRASS_PLACED_KEY);
 
         //Ocean Stuff
@@ -355,6 +409,137 @@ public class ModBiomes {
 
         standardGeneration(biomeBuilder);
         BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
+
+        Biome biome = new Biome.BiomeBuilder()
+                .hasPrecipitation(true)
+                .downfall(0.8f)
+                .temperature(0.8f)
+                .generationSettings(biomeBuilder.build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .specialEffects((new BiomeSpecialEffects.Builder())
+                        .waterColor(0x7DEBFA)
+                        .waterFogColor(0x196069)
+                        .skyColor(0x94B9EB)
+                        .grassColorOverride(0xB2E5FF)
+                        .foliageColorOverride(0x4D98A7)
+                        .fogColor(0xc0d8ff)
+                        .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                        .build())
+                .build();
+
+        return biome;
+    }
+
+    private static Biome origamiBeach(BootstapContext<Biome> context) {
+
+        MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
+
+        BiomeGenerationSettings.Builder biomeBuilder =
+                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+
+        BiomeDefaultFeatures.oceanSpawns(spawnBuilder, 10, 3, 15);
+
+        standardGeneration(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
+
+        //Rocks
+        biomeBuilder.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.SWEET_LIMESTONE_PLACED_KEY);
+
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.ORIGAMI_PALM_PLACED_KEY);
+
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.SEASHELLS_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.ORIGAMI_FERN_PLACED_KEY);
+
+        //Ocean Stuff
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.SWEETGRASS_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.COTTON_VINE_PLACED_KEY);
+
+
+        Biome biome = new Biome.BiomeBuilder()
+                .hasPrecipitation(true)
+                .downfall(0.8f)
+                .temperature(0.2f)
+                .generationSettings(biomeBuilder.build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .specialEffects((new BiomeSpecialEffects.Builder())
+                        .waterColor(0x45adf2)
+                        .waterFogColor(0x08263D)
+                        .skyColor(0x6eb1ff)
+                        .grassColorOverride(0xffb7b2)
+                        .foliageColorOverride(0x71a74d)
+                        .fogColor(0xc0d8ff)
+                        .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                        .build())
+                .build();
+
+        return biome;
+    }
+
+    private static Biome warmOrigamiBeach(BootstapContext<Biome> context) {
+
+        MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
+
+        BiomeGenerationSettings.Builder biomeBuilder =
+                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+
+        spawnBuilder.addSpawn(MobCategory.WATER_AMBIENT, new MobSpawnSettings.SpawnerData(EntityType.TROPICAL_FISH, 25, 8, 8));
+        spawnBuilder.addSpawn(MobCategory.WATER_CREATURE, new MobSpawnSettings.SpawnerData(EntityType.SQUID, 5, 2, 4));
+        spawnBuilder.addSpawn(MobCategory.WATER_CREATURE, new MobSpawnSettings.SpawnerData(EntityType.DOLPHIN, 2, 1, 2));
+
+        standardGeneration(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
+
+        //Rocks
+        biomeBuilder.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.SUNNY_LIMESTONE_PLACED_KEY);
+
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.ORIGAMI_PALM_PLACED_KEY);
+
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.SEASHELLS_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.ORIGAMI_FERN_PLACED_KEY);
+
+        //Ocean Stuff
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.MOD_CORAL_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.SWEETGRASS_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.SWEET_PICKLE_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.COTTON_VINE_PLACED_KEY);
+
+
+        Biome biome = new Biome.BiomeBuilder()
+                .hasPrecipitation(true)
+                .downfall(0.8f)
+                .temperature(0.8f)
+                .generationSettings(biomeBuilder.build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .specialEffects((new BiomeSpecialEffects.Builder())
+                        .waterColor(0x59ECF7)
+                        .waterFogColor(0x0A3E4D)
+                        .skyColor(0x6eb1ff)
+                        .grassColorOverride(0xffb7b2)
+                        .foliageColorOverride(0x71a74d)
+                        .fogColor(0xc0d8ff)
+                        .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                        .build())
+                .build();
+
+        return biome;
+    }
+
+    private static Biome coldOrigamiBeach(BootstapContext<Biome> context) {
+
+        MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
+
+        BiomeGenerationSettings.Builder biomeBuilder =
+                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+
+        BiomeDefaultFeatures.oceanSpawns(spawnBuilder, 10, 3, 15);
+
+        standardGeneration(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
+
+        //Rocks
+        biomeBuilder.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.FROZEN_LIMESTONE_PLACED_KEY);
+
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.SEASHELLS_PLACED_KEY);
 
         Biome biome = new Biome.BiomeBuilder()
                 .hasPrecipitation(true)

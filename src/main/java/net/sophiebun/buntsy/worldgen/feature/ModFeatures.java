@@ -47,6 +47,14 @@ public class ModFeatures {
             featureRegister.register("swice_spike_feature", () -> new SwiceSpikeFeature(NoneFeatureConfiguration.CODEC));
     public static final RegistryObject<Feature<RandomPatchConfiguration>> PATCH_FEATURE =
             featureRegister.register("patch_feature", () -> new ModRandomPatchFeature(RandomPatchConfiguration.CODEC));
+       public static final RegistryObject<Feature<BlockStateConfiguration>> BLOCK_PATCH_FEATURE =
+            featureRegister.register("block_patch_feature", () -> new BlockPatchFeature(BlockStateConfiguration.CODEC));
+    public static final RegistryObject<Feature<BlockStateConfiguration>> LIMESTONE_FEATURE =
+            featureRegister.register("limestone_feature", () -> new BeachLimstoneFeature(BlockStateConfiguration.CODEC));
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> CHOCOLATE_GEYSER_FEATURE =
+            featureRegister.register("chocolate_geyser_feature", () -> new ChocolateGeyserFeature(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> CHOCOLATE_SPRING_FEATURE =
+            featureRegister.register("chocolate_spring_feature", () -> new ChocolateSpringFeature(NoneFeatureConfiguration.CODEC));
 
 
     public static void register(IEventBus eventBus){

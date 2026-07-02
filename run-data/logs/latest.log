@@ -1,44 +1,44 @@
-[30Jun2026 18:51:18.816] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\sophi\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.2.19, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, buntsy, --all, --output, C:\Users\sophi\Documents\AS-S Game\buntsy\src\generated\resources, --existing, C:\Users\sophi\Documents\AS-S Game\buntsy\src\main\resources]
-[30Jun2026 18:51:18.826] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.13 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
-[30Jun2026 18:51:19.061] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
-[30Jun2026 18:51:19.169] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/sophi/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
-[30Jun2026 18:51:19.641] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sophi\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.2.19\99f54fe7798c97a9a6e7c962ef94f7d30610122d\javafmllanguage-1.20.1-47.2.19.jar is missing mods.toml file
-[30Jun2026 18:51:19.648] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sophi\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.2.19\1b32b3f27357ab558a098c1c20e1494558a71b31\lowcodelanguage-1.20.1-47.2.19.jar is missing mods.toml file
-[30Jun2026 18:51:19.656] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sophi\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.2.19\2eb26ae9afdd5709b9ee9bdf90b9486212a676af\mclanguage-1.20.1-47.2.19.jar is missing mods.toml file
-[30Jun2026 18:51:19.664] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sophi\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.2.19\7cd28cc091d07bbe6a4f51bf9728ccbc27bfc4fc\fmlcore-1.20.1-47.2.19.jar is missing mods.toml file
-[30Jun2026 18:51:19.892] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
-[30Jun2026 18:51:22.431] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
-[30Jun2026 18:51:22.446] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\sophi\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, buntsy, --all, --output, C:\Users\sophi\Documents\AS-S Game\buntsy\src\generated\resources, --existing, C:\Users\sophi\Documents\AS-S Game\buntsy\src\main\resources]
-[30Jun2026 18:51:23.217] [main/INFO] [mixin/]: Remapping refMap terrablender.refmap.json using C:\Users\sophi\Documents\AS-S Game\buntsy\build\createSrgToMcp\output.srg
-[30Jun2026 18:51:23.229] [main/INFO] [mixin/]: Remapping refMap terrablender.refmap.json using C:\Users\sophi\Documents\AS-S Game\buntsy\build\createSrgToMcp\output.srg
-[30Jun2026 18:51:23.250] [main/INFO] [mixin/]: Remapping refMap geckolib.refmap.json using C:\Users\sophi\Documents\AS-S Game\buntsy\build\createSrgToMcp\output.srg
-[30Jun2026 18:51:24.163] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [buntsy]
-[30Jun2026 18:51:31.823] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.2.19, for MC 1.20.1 with MCP 20230612.114412
-[30Jun2026 18:51:31.833] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.2.19 Initialized
-[30Jun2026 18:51:31.980] [modloading-worker-0/WARN] [software.bernie.geckolib.GeckoLib/]: Minecraft.getInstance() was null, could not register reload listeners
-[30Jun2026 18:51:32.393] [modloading-worker-0/INFO] [mezz.jei.library.load.PluginCaller/]: Sending ConfigManager...
-[30Jun2026 18:51:32.404] [modloading-worker-0/INFO] [mezz.jei.library.load.PluginCaller/]: Sending ConfigManager took 7.287 ms
-[30Jun2026 18:51:33.921] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.sophiebun.buntsy.entity.animals.Silkbun from class net.sophiebun.buntsy.entity.animals.Hootcat
-[30Jun2026 18:51:33.922] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.sophiebun.buntsy.entity.animals.Silkbun from class net.sophiebun.buntsy.entity.animals.Hootcat
-[30Jun2026 18:51:33.922] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.sophiebun.buntsy.entity.animals.Silkbun from class net.sophiebun.buntsy.entity.animals.Hootcat
-[30Jun2026 18:51:33.922] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.sophiebun.buntsy.entity.animals.Silkbun from class net.sophiebun.buntsy.entity.animals.Hootcat
-[30Jun2026 18:51:34.076] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/sophi/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.2.19_mapped_parchment_2023.09.03-1.20.1/forge-1.20.1-47.2.19_mapped_parchment_2023.09.03-1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
-[30Jun2026 18:51:34.076] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/sophi/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.2.19_mapped_parchment_2023.09.03-1.20.1/forge-1.20.1-47.2.19_mapped_parchment_2023.09.03-1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
-[30Jun2026 18:51:34.495] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Registries
-[30Jun2026 18:51:35.015] [main/INFO] [net.minecraft.data.DataGenerator/]: Registries finished after 519 ms
-[30Jun2026 18:51:35.016] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
-[30Jun2026 18:51:35.121] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 105 ms
-[30Jun2026 18:51:35.121] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
-[30Jun2026 18:51:35.312] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 190 ms
-[30Jun2026 18:51:35.312] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: buntsy
-[30Jun2026 18:51:35.691] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: buntsy finished after 379 ms
-[30Jun2026 18:51:35.691] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: buntsy
-[30Jun2026 18:51:35.780] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: buntsy finished after 89 ms
-[30Jun2026 18:51:35.780] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id buntsy
-[30Jun2026 18:51:35.808] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id buntsy finished after 27 ms
-[30Jun2026 18:51:35.809] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id buntsy
-[30Jun2026 18:51:35.811] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id buntsy finished after 2 ms
-[30Jun2026 18:51:35.811] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:worldgen/biome mod id buntsy
-[30Jun2026 18:51:35.812] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:worldgen/biome mod id buntsy finished after 1 ms
-[30Jun2026 18:51:35.812] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 1318 ms
-[30Jun2026 18:51:35.904] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 1191, old count: 1187, new count: 1186, removed stale: 6, written: 19
+[03Jul2026 00:02:04.883] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\sophi\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.2.19, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, buntsy, --all, --output, C:\Users\sophi\Documents\AS-S Game\buntsy\src\generated\resources, --existing, C:\Users\sophi\Documents\AS-S Game\buntsy\src\main\resources]
+[03Jul2026 00:02:04.915] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.13 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
+[03Jul2026 00:02:05.058] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
+[03Jul2026 00:02:05.103] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/sophi/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
+[03Jul2026 00:02:05.446] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sophi\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.2.19\99f54fe7798c97a9a6e7c962ef94f7d30610122d\javafmllanguage-1.20.1-47.2.19.jar is missing mods.toml file
+[03Jul2026 00:02:05.448] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sophi\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.2.19\1b32b3f27357ab558a098c1c20e1494558a71b31\lowcodelanguage-1.20.1-47.2.19.jar is missing mods.toml file
+[03Jul2026 00:02:05.451] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sophi\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.2.19\2eb26ae9afdd5709b9ee9bdf90b9486212a676af\mclanguage-1.20.1-47.2.19.jar is missing mods.toml file
+[03Jul2026 00:02:05.451] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sophi\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.2.19\7cd28cc091d07bbe6a4f51bf9728ccbc27bfc4fc\fmlcore-1.20.1-47.2.19.jar is missing mods.toml file
+[03Jul2026 00:02:05.631] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
+[03Jul2026 00:02:07.674] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
+[03Jul2026 00:02:07.686] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\sophi\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, buntsy, --all, --output, C:\Users\sophi\Documents\AS-S Game\buntsy\src\generated\resources, --existing, C:\Users\sophi\Documents\AS-S Game\buntsy\src\main\resources]
+[03Jul2026 00:02:08.157] [main/INFO] [mixin/]: Remapping refMap terrablender.refmap.json using C:\Users\sophi\Documents\AS-S Game\buntsy\build\createSrgToMcp\output.srg
+[03Jul2026 00:02:08.157] [main/INFO] [mixin/]: Remapping refMap terrablender.refmap.json using C:\Users\sophi\Documents\AS-S Game\buntsy\build\createSrgToMcp\output.srg
+[03Jul2026 00:02:08.171] [main/INFO] [mixin/]: Remapping refMap geckolib.refmap.json using C:\Users\sophi\Documents\AS-S Game\buntsy\build\createSrgToMcp\output.srg
+[03Jul2026 00:02:08.724] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [buntsy]
+[03Jul2026 00:02:14.515] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.2.19, for MC 1.20.1 with MCP 20230612.114412
+[03Jul2026 00:02:14.523] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.2.19 Initialized
+[03Jul2026 00:02:14.546] [modloading-worker-0/WARN] [software.bernie.geckolib.GeckoLib/]: Minecraft.getInstance() was null, could not register reload listeners
+[03Jul2026 00:02:14.824] [modloading-worker-0/INFO] [mezz.jei.library.load.PluginCaller/]: Sending ConfigManager...
+[03Jul2026 00:02:14.832] [modloading-worker-0/INFO] [mezz.jei.library.load.PluginCaller/]: Sending ConfigManager took 3.509 ms
+[03Jul2026 00:02:15.243] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.sophiebun.buntsy.entity.animals.Silkbun from class net.sophiebun.buntsy.entity.animals.Hootcat
+[03Jul2026 00:02:15.243] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.sophiebun.buntsy.entity.animals.Silkbun from class net.sophiebun.buntsy.entity.animals.Hootcat
+[03Jul2026 00:02:15.243] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.sophiebun.buntsy.entity.animals.Silkbun from class net.sophiebun.buntsy.entity.animals.Hootcat
+[03Jul2026 00:02:15.243] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.sophiebun.buntsy.entity.animals.Silkbun from class net.sophiebun.buntsy.entity.animals.Hootcat
+[03Jul2026 00:02:15.311] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/sophi/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.2.19_mapped_parchment_2023.09.03-1.20.1/forge-1.20.1-47.2.19_mapped_parchment_2023.09.03-1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
+[03Jul2026 00:02:15.311] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/sophi/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.2.19_mapped_parchment_2023.09.03-1.20.1/forge-1.20.1-47.2.19_mapped_parchment_2023.09.03-1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
+[03Jul2026 00:02:15.525] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Registries
+[03Jul2026 00:02:15.690] [main/INFO] [net.minecraft.data.DataGenerator/]: Registries finished after 164 ms
+[03Jul2026 00:02:15.690] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
+[03Jul2026 00:02:15.741] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 50 ms
+[03Jul2026 00:02:15.741] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
+[03Jul2026 00:02:15.902] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 160 ms
+[03Jul2026 00:02:15.902] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: buntsy
+[03Jul2026 00:02:16.210] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: buntsy finished after 308 ms
+[03Jul2026 00:02:16.210] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: buntsy
+[03Jul2026 00:02:16.244] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: buntsy finished after 32 ms
+[03Jul2026 00:02:16.244] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id buntsy
+[03Jul2026 00:02:16.264] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id buntsy finished after 19 ms
+[03Jul2026 00:02:16.264] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id buntsy
+[03Jul2026 00:02:16.264] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id buntsy finished after 1 ms
+[03Jul2026 00:02:16.264] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:worldgen/biome mod id buntsy
+[03Jul2026 00:02:16.267] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:worldgen/biome mod id buntsy finished after 1 ms
+[03Jul2026 00:02:16.267] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 741 ms
+[03Jul2026 00:02:16.317] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 1390, old count: 1394, new count: 1391, removed stale: 0, written: 1

@@ -31,12 +31,15 @@ import net.sophiebun.buntsy.worldgen.tree.grounded_trunk.GroundedTrunkPlacer;
 import net.sophiebun.buntsy.worldgen.tree.grounded_trunk.SphereFoliagePlacer;
 import net.sophiebun.buntsy.worldgen.tree.malvor.MalvorFoliagePlacer;
 import net.sophiebun.buntsy.worldgen.tree.malvor.MalvorTrunkPlacer;
+import net.sophiebun.buntsy.worldgen.tree.origami_palm.OrigamiPalmFoliagePlacer;
+import net.sophiebun.buntsy.worldgen.tree.origami_palm.OrigamiPalmTrunkPlacer;
 
 public class ModConfiguredFeatures {
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> GENTLIT_KEY = registerKey("gentlit");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> BRAVOT_KEY = registerKey("bravot");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> MALVOR_KEY = registerKey("malvor");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> GENTLIT_KEY = registerKey("gentlit_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BRAVOT_KEY = registerKey("bravot_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MALVOR_KEY = registerKey("malvor_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ORIGAMI_PALM_KEY = registerKey("origami_palm_key");
     public static final ResourceKey<ConfiguredFeature<?, ?>> CRYSTALIZED_TREE_KEY = registerKey("crystalized_tree");
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> GROUNDED_GENTLIT_KEY = registerKey("grounded_gentlit");
@@ -67,6 +70,10 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> HANGING_CLOCKWORK_KEY = registerKey("hanging_clockwork_key");
     public static final ResourceKey<ConfiguredFeature<?, ?>> HANGING_LUMINUM_KEY = registerKey("hanging_luminum_key");
 
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SWEET_LIMESTONE_KEY = registerKey("sweet_limestone_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SUNNY_LIMESTONE_KEY = registerKey("sunny_limestone_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FROZEN_LIMESTONE_KEY = registerKey("frozen_limestone_key");
+
     public static final ResourceKey<ConfiguredFeature<?, ?>> WILD_STRAWBERRY_KEY = registerKey("wild_strawberry");
     public static final ResourceKey<ConfiguredFeature<?, ?>> WILD_HOOTNIP_KEY = registerKey("wild_hootnip");
     public static final ResourceKey<ConfiguredFeature<?, ?>> PINK_CHARMIL_GRASS_KEY = registerKey("pink_charmil_grass");
@@ -75,10 +82,20 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> BLUE_BLOOM_KEY = registerKey("blue_bloom");
     public static final ResourceKey<ConfiguredFeature<?, ?>> LOVESHROOM_KEY = registerKey("loveshroom");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GLOWSHROOM_KEY = registerKey("glowshroom");
+
     public static final ResourceKey<ConfiguredFeature<?, ?>> PALESHROOM_KEY = registerKey("paleshroom");
     public static final ResourceKey<ConfiguredFeature<?, ?>> ABYSSAL_BLOOM_KEY = registerKey("abyssal_bloom");
     public static final ResourceKey<ConfiguredFeature<?, ?>> PALEGRASS_KEY = registerKey("palegrass");
     public static final ResourceKey<ConfiguredFeature<?, ?>> LUMINUM_KEY = registerKey("luminum");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FROZEN_GRASS_KEY = registerKey("frozen_grass_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FROZEN_BLOOM_KEY = registerKey("frozen_bloom_key");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ORIGAMI_FERN_KEY = registerKey("origami_fern_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SEASHELLS_KEY = registerKey("seashells_key");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CHOCOLATE_GEYSER_KEY = registerKey("chocolate_geyser_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CHOCOLATE_SPRING_KEY = registerKey("chocolate_spring_key");
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> CHARMIL_BONEMEAL_KEY = registerKey("charmil_bonemeal_key");
     public static final ResourceKey<ConfiguredFeature<?, ?>> ODIATE_BONEMEAL_KEY = registerKey("odiate_bonemeal_key");
@@ -106,6 +123,13 @@ public class ModConfiguredFeatures {
                 new MalvorTrunkPlacer(16, 0, 4),
                 BlockStateProvider.simple(ModBlocks.MALVOR_LEAVES.get()),
                 new MalvorFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0)),
+                new TwoLayersFeatureSize(1, 0,2)).build());
+
+        register(context, ORIGAMI_PALM_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(ModBlocks.ORIGAMI_PALM_LOG.get()),
+                new OrigamiPalmTrunkPlacer(6, 0, 4),
+                BlockStateProvider.simple(ModBlocks.ORIGAMI_PALM_LEAVES.get()),
+                new OrigamiPalmFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0)),
                 new TwoLayersFeatureSize(1, 0,2)).build());
 
         register(context, CRYSTALIZED_TREE_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
@@ -184,10 +208,21 @@ public class ModConfiguredFeatures {
         register(context, MUD_PATCH_KEY, ModFeatures.MUD_PATCH_FEATURE.get(), new NoneFeatureConfiguration());
         register(context, SWICE_SPIKE_KEY, ModFeatures.SWICE_SPIKE_FEATURE.get(), new NoneFeatureConfiguration());
 
+        register(context, CHOCOLATE_GEYSER_KEY, ModFeatures.CHOCOLATE_GEYSER_FEATURE.get(), new NoneFeatureConfiguration());
+        register(context, CHOCOLATE_SPRING_KEY, ModFeatures.CHOCOLATE_SPRING_FEATURE.get(), new NoneFeatureConfiguration());
+
         //Hanging string
         register(context, HANGING_STRING_KEY, ModFeatures.HANGING_STRING_FEATURE.get(), new NoneFeatureConfiguration());
         register(context, HANGING_CLOCKWORK_KEY, ModFeatures.HANGING_CLOCKWORK_FEATURE.get(), new NoneFeatureConfiguration());
         register(context, HANGING_LUMINUM_KEY, ModFeatures.HANGING_LUMINUM_FEATURE.get(), new NoneFeatureConfiguration());
+
+        //Limestone
+        register(context, SUNNY_LIMESTONE_KEY, ModFeatures.LIMESTONE_FEATURE.get(), new BlockStateConfiguration(
+                ModBlocks.SUNNY_LIMESTONE.get().defaultBlockState()));
+        register(context, SWEET_LIMESTONE_KEY, ModFeatures.LIMESTONE_FEATURE.get(), new BlockStateConfiguration(
+                ModBlocks.SWEET_LIMESTONE.get().defaultBlockState()));
+        register(context, FROZEN_LIMESTONE_KEY, ModFeatures.LIMESTONE_FEATURE.get(), new BlockStateConfiguration(
+                ModBlocks.FROZEN_LIMSTONE.get().defaultBlockState()));
 
         //Bonemeal Patches
         register(context, CHARMIL_BONEMEAL_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
@@ -229,24 +264,39 @@ public class ModConfiguredFeatures {
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.BLUE_CHARMIL_GRASS.get())))));
 
         register(context, PALEGRASS_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
-                64, 10, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                128, 10, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.PALEGRASS.get())))));
+
+        register(context, FROZEN_GRASS_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
+                128, 10, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.FROZEN_GRASS.get())))));
 
         register(context, LUMINUM_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
                 16, 8, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.LUMINUM.get())))));
 
         register(context, PINK_BLOOM_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
-                32, 5, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                32, 7, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.PINK_BLOOM.get())))));
 
         register(context, BLUE_BLOOM_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
-                32, 5, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                32, 7, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.BLUE_BLOOM.get())))));
 
         register(context, ABYSSAL_BLOOM_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
-                32, 5, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                32, 7, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.ABYSSAL_BLOOM.get())))));
+
+        register(context, FROZEN_BLOOM_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
+                16, 7, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.FROZEN_BLOOM.get())))));
+
+        register(context, ORIGAMI_FERN_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
+                16, 7, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.ORIGAMI_FERN.get())))));
+
+        register(context, SEASHELLS_KEY, ModFeatures.BLOCK_PATCH_FEATURE.get(), new BlockStateConfiguration(
+                ModBlocks.SEA_SHELLS.get().defaultBlockState()));
 
         register(context, LOVESHROOM_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
                 16, 4, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,

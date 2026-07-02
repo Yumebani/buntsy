@@ -1,5 +1,6 @@
 package net.sophiebun.buntsy.tag;
 
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -34,6 +35,7 @@ public class ModTags {
 
         public static final TagKey<Block> CUTERLY_SPAWNER = tag("cuterly_spawner");
         public static final TagKey<Block> PRISMATIC_BEACON_EFFECT_BLOCK = tag("prismatic_beacon_effect_block");
+        public static final TagKey<Block> LIMESTONE = tag("limestone");
 
         private static TagKey<Block> tag(String name) {
             return BlockTags.create(new ResourceLocation(BuntsyMod.MODID, name));
@@ -46,6 +48,7 @@ public class ModTags {
         public static final TagKey<Item> GENTLIT_LOGS = tag("gentlit_logs");
         public static final TagKey<Item> BRAVOT_LOGS = tag("bravot_logs");
         public static final TagKey<Item> MALVOR_LOGS = tag("malvor_logs");
+        public static final TagKey<Item> ORIGAMI_PALM_LOGS = tag("origami_palm_logs");
 
         public static final TagKey<Item> FAIRY_FOOD = tag("fairy_food");
         public static final TagKey<Item> BOTTLED_ITEM = tag("bottled_item");

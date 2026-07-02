@@ -8,15 +8,11 @@ import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.valueproviders.ClampedInt;
-import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
-import net.sophiebun.buntsy.blocks.custom.CottonvineBlock;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ModPlacedFeatures {
@@ -24,6 +20,7 @@ public class ModPlacedFeatures {
     public static ResourceKey<PlacedFeature> GENTLIT_PLACED_KEY = registerKey("gentlit_placed");
     public static ResourceKey<PlacedFeature> BRAVOT_PLACED_KEY = registerKey("bravot_placed");
     public static ResourceKey<PlacedFeature> MALVOR_PLACED_KEY = registerKey("malvor_placed");
+    public static ResourceKey<PlacedFeature> ORIGAMI_PALM_PLACED_KEY = registerKey("origami_palm_placed");
     public static ResourceKey<PlacedFeature> CRYSTALIZED_TREE_PLACED_KEY = registerKey("crystalized_tree_placed");
 
     public static ResourceKey<PlacedFeature> GROUNDED_GENTLIT_PLACED_KEY = registerKey("grounded_gentlit_placed");
@@ -54,6 +51,10 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> HANGING_LUMINUM_PLACED_KEY = registerKey("hanging_luminum_placed_key");
     public static final ResourceKey<PlacedFeature> HANGING_STRING_PLACED_KEY = registerKey("hanging_string_placed_key");
 
+    public static final ResourceKey<PlacedFeature> SUNNY_LIMESTONE_PLACED_KEY = registerKey("sunny_limestone_placed_key");
+    public static final ResourceKey<PlacedFeature> SWEET_LIMESTONE_PLACED_KEY = registerKey("sweet_limestone_placed_key");
+    public static final ResourceKey<PlacedFeature> FROZEN_LIMESTONE_PLACED_KEY = registerKey("frozen_limestone_placed_key");
+
     public static final ResourceKey<PlacedFeature> WILD_STRAWBERRY_PLACED_KEY = registerKey("wild_strawberry_placed");
     public static final ResourceKey<PlacedFeature> WILD_HOOTNIP_PLACED_KEY = registerKey("wild_hootnip_placed");
     public static final ResourceKey<PlacedFeature> PINK_CHARMIL_GRASS_PLACED_KEY = registerKey("pink_charmil_grass_placed");
@@ -62,10 +63,20 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> BLUE_BLOOM_PLACED_KEY = registerKey("blue_bloom_placed");
     public static final ResourceKey<PlacedFeature> LOVESHROOM_PLACED_KEY = registerKey("loveshroom_placed");
     public static final ResourceKey<PlacedFeature> GLOWSHROOM_PLACED_KEY = registerKey("glowshroom_placed");
+
     public static final ResourceKey<PlacedFeature> PALESHROOM_PLACED_KEY = registerKey("paleshroom_placed");
     public static final ResourceKey<PlacedFeature> ABYSSAL_BLOOM_PLACED_KEY = registerKey("abyssal_bloom_placed");
     public static final ResourceKey<PlacedFeature> PALEGRASS_PLACED_KEY = registerKey("palegrass_placed");
     public static final ResourceKey<PlacedFeature> LUMINUM_PLACED_KEY = registerKey("luminum_placed");
+
+    public static final ResourceKey<PlacedFeature> FROZEN_GRASS_PLACED_KEY = registerKey("frozen_grass_placed");
+    public static final ResourceKey<PlacedFeature> FROZEN_BLOOM_PLACED_KEY = registerKey("frozen_bloom_placed");
+
+    public static final ResourceKey<PlacedFeature> ORIGAMI_FERN_PLACED_KEY = registerKey("origami_fern_placed");
+    public static final ResourceKey<PlacedFeature> SEASHELLS_PLACED_KEY = registerKey("seashells_placed");
+
+    public static final ResourceKey<PlacedFeature> CHOCOLATE_GEYSER_PLACED_KEY = registerKey("chocolate_geyser_placed");
+    public static final ResourceKey<PlacedFeature> CHOCOLATE_SPRING_PLACED_KEY = registerKey("chocolate_spring_placed");
 
     public static final ResourceKey<PlacedFeature> CHARMIL_BONEMEAL_PLACED_KEY = registerKey("charmil_bonemeal_placed");
     public static final ResourceKey<PlacedFeature> ODIATE_BONEMEAL_PLACED_KEY = registerKey("odiate_bonemeal_placed");
@@ -83,9 +94,12 @@ public class ModPlacedFeatures {
         register(context, MALVOR_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.MALVOR_KEY),
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(3, 0.5f, 1),
                         ModBlocks.MALVOR_SAPLING.get()));
+        register(context, ORIGAMI_PALM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.ORIGAMI_PALM_KEY),
+                VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.5f, 1),
+                        ModBlocks.ORIGAMI_PALM_SAPLING.get()));
         register(context, CRYSTALIZED_TREE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CRYSTALIZED_TREE_KEY),
-                List.of(PlacementUtils.countExtra(0, 0.2f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
-
+                VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.2f, 1),
+                        ModBlocks.FROZEN_GRASS.get()));
 
         //Grounded logs
         register(context, GROUNDED_GENTLIT_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.GROUNDED_GENTLIT_KEY),
@@ -107,7 +121,7 @@ public class ModPlacedFeatures {
                         ModBlocks.GLOWSHROOM.get()));
         register(context, GIANT_PALESHROOM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.GIANT_PALESHROOM_KEY),
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.5f, 2),
-                        ModBlocks.PALEGRASS.get()));
+                        ModBlocks.PALESHROOM.get()));
 
         //Sea plants
         register(context, CHARMING_LOTUS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CHARMING_LOTUS_KEY),
@@ -130,7 +144,7 @@ public class ModPlacedFeatures {
 
         //Candy crag
         register(context, CANDY_CRAG_PILE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CANDY_CRAG_PILE_KEY),
-                List.of(PlacementUtils.countExtra(0, 0.25f, 3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+                List.of(PlacementUtils.countExtra(0, 0.25f, 2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
        register(context, CANDY_BOULDER_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CANDY_BOULDER_KEY),
                 List.of(CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
 
@@ -144,9 +158,22 @@ public class ModPlacedFeatures {
         register(context, HANGING_LUMINUM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.HANGING_LUMINUM_KEY),
                 List.of(PlacementUtils.countExtra(4, 0.25f, 2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
 
+        register(context, CHOCOLATE_GEYSER_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CHOCOLATE_GEYSER_KEY),
+                List.of(PlacementUtils.countExtra(0, 0.5f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+        register(context, CHOCOLATE_SPRING_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CHOCOLATE_SPRING_KEY),
+                List.of(PlacementUtils.countExtra(0, 0.5f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+
+        //Beach
+        register(context, SUNNY_LIMESTONE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SUNNY_LIMESTONE_KEY),
+                List.of(PlacementUtils.countExtra(0, 0.5f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+        register(context, SWEET_LIMESTONE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SWEET_LIMESTONE_KEY),
+                List.of(PlacementUtils.countExtra(0, 0.5f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+        register(context, FROZEN_LIMESTONE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.FROZEN_LIMESTONE_KEY),
+                List.of(PlacementUtils.countExtra(0, 0.5f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+
         //Powder tundra
         register(context, SWICE_SPIKE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SWICE_SPIKE_KEY),
-                List.of(PlacementUtils.countExtra(0, 0.2f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+                List.of(PlacementUtils.countExtra(0, 0.5f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
 
         //Bonemeal
         register(context, CHARMIL_BONEMEAL_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CHARMIL_BONEMEAL_KEY),
@@ -166,6 +193,8 @@ public class ModPlacedFeatures {
                 List.of(CountPlacement.of(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
         register(context, PALEGRASS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.PALEGRASS_KEY),
                 List.of(CountPlacement.of(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+        register(context, FROZEN_GRASS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.FROZEN_GRASS_KEY),
+                List.of(CountPlacement.of(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
         register(context, LUMINUM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.LUMINUM_KEY),
                 List.of(PlacementUtils.countExtra(1, 0.5f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
 
@@ -175,6 +204,12 @@ public class ModPlacedFeatures {
                 List.of(CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
         register(context, ABYSSAL_BLOOM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.ABYSSAL_BLOOM_KEY),
                 List.of(CountPlacement.of(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+        register(context, FROZEN_BLOOM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.FROZEN_BLOOM_KEY),
+                List.of(CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+        register(context, ORIGAMI_FERN_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.ORIGAMI_FERN_KEY),
+                List.of(PlacementUtils.countExtra(1, 0.5f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+        register(context, SEASHELLS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SEASHELLS_KEY),
+                List.of(PlacementUtils.countExtra(1, 0.5f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
 
         register(context, LOVESHROOM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.LOVESHROOM_KEY),
                 List.of(CountPlacement.of(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));

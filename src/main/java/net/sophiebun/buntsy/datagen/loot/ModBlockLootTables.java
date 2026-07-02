@@ -7,6 +7,7 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SeaPickleBlock;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -21,8 +22,8 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
-import net.sophiebun.buntsy.blocks.custom.HootnipCrop;
-import net.sophiebun.buntsy.blocks.custom.StrawberryCrop;
+import net.sophiebun.buntsy.blocks.custom.plants.HootnipCrop;
+import net.sophiebun.buntsy.blocks.custom.plants.StrawberryCrop;
 import net.sophiebun.buntsy.item.ModItems;
 
 import java.util.List;
@@ -92,6 +93,25 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlocks.MALVOR_SLAB.get(), block -> createSlabItemTable(ModBlocks.MALVOR_SLAB.get()));
         this.add(ModBlocks.MALVOR_DOOR.get(), block -> createDoorTable(ModBlocks.MALVOR_DOOR.get()));
 
+        this.dropSelf(ModBlocks.ORIGAMI_PALM_LOG.get());
+        this.dropSelf(ModBlocks.STRIPPED_ORIGAMI_PALM_LOG.get());
+        this.dropSelf(ModBlocks.ORIGAMI_PALM_WOOD.get());
+        this.dropSelf(ModBlocks.STRIPPED_ORIGAMI_PALM_WOOD.get());
+
+        this.add(ModBlocks.ORIGAMI_PALM_LEAVES.get(), block ->
+                createLeavesDrops(block, ModBlocks.ORIGAMI_PALM_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+        this.dropSelf(ModBlocks.ORIGAMI_PALM_SAPLING.get());
+
+        this.dropSelf(ModBlocks.ORIGAMI_PALM_PLANKS.get());
+        this.dropSelf(ModBlocks.ORIGAMI_PALM_STAIRS.get());
+        this.dropSelf(ModBlocks.ORIGAMI_PALM_BUTTON.get());
+        this.dropSelf(ModBlocks.ORIGAMI_PALM_PRESSURE_PLATE.get());
+        this.dropSelf(ModBlocks.ORIGAMI_PALM_TRAPDOOR.get());
+        this.dropSelf(ModBlocks.ORIGAMI_PALM_FENCE.get());
+        this.dropSelf(ModBlocks.ORIGAMI_PALM_FENCE_GATE.get());
+        this.add(ModBlocks.ORIGAMI_PALM_SLAB.get(), block -> createSlabItemTable(ModBlocks.ORIGAMI_PALM_SLAB.get()));
+        this.add(ModBlocks.ORIGAMI_PALM_DOOR.get(), block -> createDoorTable(ModBlocks.ORIGAMI_PALM_DOOR.get()));
+
         this.add(ModBlocks.CRYSTALLIZED_LOG.get(), block -> createSwiceDrops(block));
         this.add(ModBlocks.CRYSTALLIZED_LEAVES.get(), block -> createSwiceDrops(block));
         this.add(ModBlocks.SWICE.get(), block -> createSwiceDrops(block));
@@ -113,9 +133,24 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
         this.dropSelf(ModBlocks.SWEET_CORAL_SAND.get());
         this.dropSelf(ModBlocks.FROZEN_CORAL_SAND.get());
+        this.dropSelf(ModBlocks.SUNNY_CORAL_SAND.get());
         this.dropSelf(ModBlocks.SWEET_CANDY_ROCK.get());
         this.dropSelf(ModBlocks.BITTER_CANDY_ROCK.get());
         this.dropSelf(ModBlocks.SOUR_CANDY_ROCK.get());
+
+        this.dropSelf(ModBlocks.SWEET_LIMESTONE.get());
+        this.dropSelf(ModBlocks.SUNNY_LIMESTONE.get());
+        this.dropSelf(ModBlocks.FROZEN_LIMSTONE.get());
+
+        this.dropSelf(ModBlocks.CHOCOLATE_BLOCK.get());
+        this.add(ModBlocks.PETRIFIED_CHOCOLATE.get(), (block) -> {
+            return this.createSingleItemTableWithSilkTouch(block, ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get());
+
+        });
+        this.dropSelf(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get());
+        this.dropOther(ModBlocks.CHOCOLATE_GEYSER.get(), ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get());
+
+        this.dropSelf(ModBlocks.SEA_SHELLS.get());
 
         //Hanging blocks
         this.dropOther(ModBlocks.HANGING_STRING.get(), Items.STRING);
@@ -213,10 +248,13 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlocks.PINK_CHARMIL_GRASS.get(), block -> createShearsOnlyDrop(block));
         this.add(ModBlocks.BLUE_CHARMIL_GRASS.get(), block -> createShearsOnlyDrop(block));
         this.add(ModBlocks.PALEGRASS.get(), block -> createShearsOnlyDrop(block));
+        this.add(ModBlocks.FROZEN_GRASS.get(), block -> createShearsOnlyDrop(block));
         this.dropSelf(ModBlocks.LUMINUM.get());
         this.dropSelf(ModBlocks.PINK_BLOOM.get());
         this.dropSelf(ModBlocks.BLUE_BLOOM.get());
         this.dropSelf(ModBlocks.ABYSSAL_BLOOM.get());
+        this.dropSelf(ModBlocks.FROZEN_BLOOM.get());
+        this.dropSelf(ModBlocks.ORIGAMI_FERN.get());
         this.dropSelf(ModBlocks.LOVESHROOM.get());
         this.dropSelf(ModBlocks.GLOWSHROOM.get());
         this.dropSelf(ModBlocks.PALESHROOM.get());
@@ -225,12 +263,15 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlocks.POTTED_PINK_BLOOM.get(), createPotFlowerItemTable(ModBlocks.PINK_BLOOM.get()));
         this.add(ModBlocks.POTTED_BLUE_BLOOM.get(), createPotFlowerItemTable(ModBlocks.BLUE_BLOOM.get()));
         this.add(ModBlocks.POTTED_ABYSSAL_BLOOM.get(), createPotFlowerItemTable(ModBlocks.ABYSSAL_BLOOM.get()));
+        this.add(ModBlocks.POTTED_FROZEN_BLOOM.get(), createPotFlowerItemTable(ModBlocks.FROZEN_BLOOM.get()));
+        this.add(ModBlocks.POTTED_ORIGAMI_FERN.get(), createPotFlowerItemTable(ModBlocks.ORIGAMI_FERN.get()));
         this.add(ModBlocks.POTTED_LOVESHROOM.get(), createPotFlowerItemTable(ModBlocks.LOVESHROOM.get()));
         this.add(ModBlocks.POTTED_GLOWSHROOM.get(), createPotFlowerItemTable(ModBlocks.GLOWSHROOM.get()));
         this.add(ModBlocks.POTTED_PALESHROOM.get(), createPotFlowerItemTable(ModBlocks.PALESHROOM.get()));
         this.add(ModBlocks.POTTED_GENTLIT_SAPLING.get(), createPotFlowerItemTable(ModBlocks.GENTLIT_SAPLING.get()));
         this.add(ModBlocks.POTTED_BRAVOT_SAPLING.get(), createPotFlowerItemTable(ModBlocks.BRAVOT_SAPLING.get()));
         this.add(ModBlocks.POTTED_MALVOR_SAPLING.get(), createPotFlowerItemTable(ModBlocks.MALVOR_SAPLING.get()));
+        this.add(ModBlocks.POTTED_ORIGAMI_PALM_SAPLING.get(), createPotFlowerItemTable(ModBlocks.ORIGAMI_PALM_SAPLING.get()));
 
         //Adding mushroom blocks
         this.add(ModBlocks.LOVESHROOM_BLOCK.get(), block -> createMushroomBlockDrop(block, ModBlocks.LOVESHROOM.get()));

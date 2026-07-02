@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
-import net.sophiebun.buntsy.blocks.custom.ModLeaves;
+import net.sophiebun.buntsy.blocks.custom.plants.ModLeaves;
 
 public class ModRandomPatchFeature extends Feature<RandomPatchConfiguration> {
 

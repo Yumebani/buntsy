@@ -5,6 +5,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
@@ -56,6 +57,16 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.MALVOR_STAIRS.get())
                 .add(ModBlocks.MALVOR_SLAB.get())
                 .add(ModBlocks.MALVOR_DOOR.get())
+                .add(ModBlocks.ORIGAMI_PALM_LOG.get())
+                .add(ModBlocks.STRIPPED_ORIGAMI_PALM_LOG.get())
+                .add(ModBlocks.ORIGAMI_PALM_WOOD.get())
+                .add(ModBlocks.STRIPPED_ORIGAMI_PALM_WOOD.get())
+                .add(ModBlocks.ORIGAMI_PALM_PLANKS.get())
+                .add(ModBlocks.ORIGAMI_PALM_TRAPDOOR.get())
+                .add(ModBlocks.ORIGAMI_PALM_BUTTON.get())
+                .add(ModBlocks.ORIGAMI_PALM_STAIRS.get())
+                .add(ModBlocks.ORIGAMI_PALM_SLAB.get())
+                .add(ModBlocks.ORIGAMI_PALM_DOOR.get())
                 .add(ModBlocks.LOVESHROOM_BLOCK.get())
                 .add(ModBlocks.GLOWSHROOM_BLOCK.get())
                 .add(ModBlocks.PALESHROOM_BLOCK.get())
@@ -76,6 +87,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.SWEET_CORAL_SAND.get())
                 .add(ModBlocks.FROZEN_POWDER_BLOCK.get())
                 .add(ModBlocks.FROZEN_POWDER_LAYER.get())
+                .add(ModBlocks.SUNNY_CORAL_SAND.get())
                 .add(ModBlocks.FROZEN_CORAL_SAND.get());
 
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
@@ -92,6 +104,13 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.BITTER_CORAL_BLOCK.get())
                 .add(ModBlocks.DEAD_BITTER_CORAL_BLOCK.get())
                 .add(ModBlocks.SWICE.get())
+                .add(ModBlocks.SWEET_LIMESTONE.get())
+                .add(ModBlocks.SUNNY_LIMESTONE.get())
+                .add(ModBlocks.FROZEN_LIMSTONE.get())
+                .add(ModBlocks.CHOCOLATE_BLOCK.get())
+                .add(ModBlocks.PETRIFIED_CHOCOLATE.get())
+                .add(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get())
+                .add(ModBlocks.CHOCOLATE_GEYSER.get())
                 .add(ModBlocks.CRYSTALLIZED_LEAVES.get())
                 .add(ModBlocks.CRYSTALLIZED_LOG.get())
                 .add(ModBlocks.GRINDING_WHEEL.get());
@@ -101,6 +120,21 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block.get());
             }
         }
+
+        this.tag(Tags.Blocks.SAND)
+                .add(ModBlocks.SWEET_CORAL_SAND.get())
+                .add(ModBlocks.FROZEN_CORAL_SAND.get())
+                .add(ModBlocks.SUNNY_CORAL_SAND.get());
+
+        this.tag(Tags.Blocks.STONE)
+                .add(ModBlocks.SWEET_LIMESTONE.get())
+                .add(ModBlocks.SUNNY_LIMESTONE.get())
+                .add(ModBlocks.FROZEN_LIMSTONE.get());
+
+        this.tag(ModTags.Blocks.LIMESTONE)
+                .add(ModBlocks.SWEET_LIMESTONE.get())
+                .add(ModBlocks.FROZEN_LIMSTONE.get())
+                .add(ModBlocks.SUNNY_LIMESTONE.get());
 
         this.tag(ModTags.Blocks.BUNTSY_CORAL_PLANTS)
                 .add(ModBlocks.SWEET_CORAL.get())
@@ -148,17 +182,20 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
         this.tag(BlockTags.WOODEN_FENCES)
                 .add(ModBlocks.GENTLIT_FENCE.get())
                 .add(ModBlocks.BRAVOT_FENCE.get())
+                .add(ModBlocks.ORIGAMI_PALM_FENCE.get())
                 .add(ModBlocks.MALVOR_FENCE.get());
 
         this.tag(BlockTags.FENCE_GATES)
                 .add(ModBlocks.GENTLIT_FENCE_GATE.get())
                 .add(ModBlocks.BRAVOT_FENCE_GATE.get())
-                .add(ModBlocks.MALVOR_FENCE_GATE.get());
+                .add(ModBlocks.MALVOR_FENCE_GATE.get())
+                .add(ModBlocks.ORIGAMI_PALM_FENCE_GATE.get());
 
         this.tag(BlockTags.LEAVES)
                 .add(ModBlocks.GENTLIT_LEAVES.get())
                 .add(ModBlocks.BRAVOT_LEAVES.get())
-                .add(ModBlocks.MALVOR_LEAVES.get());
+                .add(ModBlocks.MALVOR_LEAVES.get())
+                .add(ModBlocks.ORIGAMI_PALM_LEAVES.get());
 
         this.tag(BlockTags.LOGS_THAT_BURN)
                 .add(ModBlocks.GENTLIT_LOG.get())
@@ -172,7 +209,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.MALVOR_LOG.get())
                 .add(ModBlocks.MALVOR_WOOD.get())
                 .add(ModBlocks.STRIPPED_MALVOR_LOG.get())
-                .add(ModBlocks.STRIPPED_MALVOR_WOOD.get());
+                .add(ModBlocks.STRIPPED_MALVOR_WOOD.get())
+                .add(ModBlocks.ORIGAMI_PALM_LOG.get())
+                .add(ModBlocks.ORIGAMI_PALM_WOOD.get())
+                .add(ModBlocks.STRIPPED_ORIGAMI_PALM_LOG.get())
+                .add(ModBlocks.STRIPPED_ORIGAMI_PALM_WOOD.get());
 
         this.tag(BlockTags.LOGS)
                 .add(ModBlocks.CRYSTALLIZED_LOG.get())
@@ -187,7 +228,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.MALVOR_LOG.get())
                 .add(ModBlocks.MALVOR_WOOD.get())
                 .add(ModBlocks.STRIPPED_MALVOR_LOG.get())
-                .add(ModBlocks.STRIPPED_MALVOR_WOOD.get());
+                .add(ModBlocks.STRIPPED_MALVOR_WOOD.get())
+                .add(ModBlocks.ORIGAMI_PALM_LOG.get())
+                .add(ModBlocks.ORIGAMI_PALM_WOOD.get())
+                .add(ModBlocks.STRIPPED_ORIGAMI_PALM_LOG.get())
+                .add(ModBlocks.STRIPPED_ORIGAMI_PALM_WOOD.get());
 
         this.tag(BlockTags.MUSHROOM_GROW_BLOCK)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
@@ -217,6 +262,9 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get())
                 .add(ModBlocks.ODIATE_SOIL.get())
                 .add(ModBlocks.ODIATE_MUD.get())
+                .add(ModBlocks.FROZEN_POWDER_BLOCK.get())
+                .add(ModBlocks.FROZEN_CORAL_SAND.get())
+                .add(ModBlocks.SUNNY_CORAL_SAND.get())
                 .add(ModBlocks.SWEET_CORAL_SAND.get());
 
         this.tag(ModTags.Blocks.CUTERLY_SPAWNER)

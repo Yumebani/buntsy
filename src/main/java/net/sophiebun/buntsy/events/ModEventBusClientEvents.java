@@ -1,27 +1,29 @@
 package net.sophiebun.buntsy.events;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.client.*;
+import net.sophiebun.buntsy.client.particle.ChocolateDustParticle;
+import net.sophiebun.buntsy.client.particle.ModParticleTypes;
 import net.sophiebun.buntsy.entity.client.*;
 import net.sophiebun.buntsy.item.ModItems;
-import net.sophiebun.buntsy.item.custom.CocoonBag;
 import net.sophiebun.buntsy.item.custom.Essence;
 import net.sophiebun.buntsy.item.custom.FumeBottle;
 import net.sophiebun.buntsy.item.custom.Prism;
 
 @Mod.EventBusSubscriber(modid = BuntsyMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModEventBusClientEvents {
+
+    @SubscribeEvent
+    public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
+        event.registerSpriteSet(ModParticleTypes.CHOCOLATE_DUST_PARTICLE.get(), ChocolateDustParticle.Provider::new);
+    }
 
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event){

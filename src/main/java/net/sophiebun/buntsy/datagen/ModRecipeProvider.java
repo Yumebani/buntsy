@@ -65,11 +65,29 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         pressurePlateRecipe(ModBlocks.MALVOR_PLANKS.get(), ModBlocks.MALVOR_PRESSURE_PLATE.get(), consumer);
         buttonRecipe(ModBlocks.MALVOR_PLANKS.get(), ModBlocks.MALVOR_BUTTON.get(), consumer);
 
+        planksRecipe(ModTags.Items.ORIGAMI_PALM_LOGS, ModBlocks.ORIGAMI_PALM_PLANKS.get(), consumer);
+        stairsRecipe(ModBlocks.ORIGAMI_PALM_PLANKS.get(), ModBlocks.ORIGAMI_PALM_STAIRS.get(), consumer);
+        trapdoorRecipe(ModBlocks.ORIGAMI_PALM_PLANKS.get(), ModBlocks.ORIGAMI_PALM_TRAPDOOR.get(), consumer);
+        slabRecipe(ModBlocks.ORIGAMI_PALM_PLANKS.get(), ModBlocks.ORIGAMI_PALM_SLAB.get(), consumer);
+        doorRecipe(ModBlocks.ORIGAMI_PALM_PLANKS.get(), ModBlocks.ORIGAMI_PALM_DOOR.get(), consumer);
+        fenceRecipe(ModBlocks.ORIGAMI_PALM_PLANKS.get(), ModBlocks.ORIGAMI_PALM_FENCE.get(), consumer);
+        fencegateRecipe(ModBlocks.ORIGAMI_PALM_PLANKS.get(), ModBlocks.ORIGAMI_PALM_FENCE_GATE.get(), consumer);
+        pressurePlateRecipe(ModBlocks.ORIGAMI_PALM_PLANKS.get(), ModBlocks.ORIGAMI_PALM_PRESSURE_PLATE.get(), consumer);
+        buttonRecipe(ModBlocks.ORIGAMI_PALM_PLANKS.get(), ModBlocks.ORIGAMI_PALM_BUTTON.get(), consumer);
+
         //Silk fabric
         compact2By2(ModItems.SILK_SPOOL.get(), ModItems.SILK_FABRIC.get(), 2, consumer);
 
         //Wool
         compact2By2(ModItems.SILK_FABRIC.get(), Items.WHITE_WOOL, 2, consumer);
+
+        //Sand
+        smeltingRecipe(ModBlocks.SWEET_CORAL_SAND.get(), Blocks.GLASS, 0.5f, consumer);
+        smeltingRecipe(ModBlocks.FROZEN_CORAL_SAND.get(), Blocks.GLASS, 0.5f, consumer);
+        smeltingRecipe(ModBlocks.SUNNY_CORAL_SAND.get(), Blocks.GLASS, 0.5f, consumer);
+
+
+        smeltingRecipe(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get(), ModBlocks.PETRIFIED_CHOCOLATE.get(), 0.5f, consumer);
 
         //Icy
         compact2By2(ModItems.COLD_POWDERED_SUGAR.get(), ModBlocks.FROZEN_POWDER_BLOCK.get(), 1, consumer);
@@ -677,7 +695,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         SimpleCookingRecipeBuilder.generic(Ingredient.of(material),
                         RecipeCategory.MISC, result, experience, 200, RecipeSerializer.SMELTING_RECIPE)
                 .unlockedBy(getHasName(material), has(material))
-                .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_from_smelting");
+                .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_from_smelting_" + getItemName(material));
     }
 
     private void oreSmeltingRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {

@@ -38,7 +38,7 @@ public class BuntsyDimension {
 
     public static void bootstrapType(BootstapContext<DimensionType> context) {
         context.register(BUNTSY_DIM_TYPE, new DimensionType(
-                OptionalLong.of(12000), // fixedTime
+                OptionalLong.empty(), // fixedTime
                 true, // hasSkylight
                 false, // hasCeiling
                 false, // ultraWarm
@@ -85,10 +85,19 @@ public class BuntsyDimension {
                                                 Climate.Parameter.span(-1f, -0.2f),
                                                 Climate.Parameter.span(-1f, 1f),
                                                 Climate.Parameter.span(-0.2f, 1f),
-                                                Climate.Parameter.span(-1.0f, 1.0f),
+                                                Climate.Parameter.span(-1.0f, 0.1f),
                                                 Climate.Parameter.point(0f),
-                                                Climate.Parameter.span(-1f, 0.2f),
+                                                Climate.Parameter.span(-1f, 1f),
                                                 0f), biomeRegistry.getOrThrow(ModBiomes.POWDERY_TUNDRA_BIOME)),
+                                Pair.of(
+                                        Climate.parameters(
+                                                Climate.Parameter.span(-1f, -0.2f),
+                                                Climate.Parameter.span(-1f, 1f),
+                                                Climate.Parameter.span(0.2f, 1f),
+                                                Climate.Parameter.span(0.1f, 1.0f),
+                                                Climate.Parameter.point(0f),
+                                                Climate.Parameter.span(-1f, 1f),
+                                                0f), biomeRegistry.getOrThrow(ModBiomes.CHOCOLATE_SPRINGS_BIOME)),
                                 Pair.of(
                                         Climate.parameters(
                                                 Climate.Parameter.span(0.2f, 0.8f),
@@ -100,31 +109,58 @@ public class BuntsyDimension {
                                                 0f), biomeRegistry.getOrThrow(ModBiomes.CLOCKWORK_CANOPY_BIOME)),
                                 Pair.of(
                                         Climate.parameters(
-                                                Climate.Parameter.span(-0.5f, 0.5f),
+                                                Climate.Parameter.span(-0.1f, 0.1f),
                                                 Climate.Parameter.span(-1f, 1f),
-                                                Climate.Parameter.span(-1f, -0.3f),
+                                                Climate.Parameter.span(-1f, -0.4f),
                                                 Climate.Parameter.span(-1.0f, 1.0f),
                                                 Climate.Parameter.point(0f),
                                                 Climate.Parameter.span(-1f, 1f),
                                                 0f), biomeRegistry.getOrThrow(ModBiomes.SWEET_OCEAN_BIOME)),
                                 Pair.of(
                                         Climate.parameters(
-                                                Climate.Parameter.span(0.5f, 1f),
+                                                Climate.Parameter.span(0.1f, 1f),
                                                 Climate.Parameter.span(-1f, 1f),
-                                                Climate.Parameter.span(-1f, -0.3f),
+                                                Climate.Parameter.span(-1f, -0.4f),
                                                 Climate.Parameter.span(-1.0f, 1.0f),
                                                 Climate.Parameter.point(0f),
                                                 Climate.Parameter.span(-1f, 1f),
                                                 0f), biomeRegistry.getOrThrow(ModBiomes.WARM_SWEET_OCEAN_BIOME)),
                                 Pair.of(
                                         Climate.parameters(
-                                                Climate.Parameter.span(-1f, -0.5f),
+                                                Climate.Parameter.span(-1f, -0.1f),
                                                 Climate.Parameter.span(-1f, 1f),
-                                                Climate.Parameter.span(-1f, -0.3f),
+                                                Climate.Parameter.span(-1f, -0.4f),
                                                 Climate.Parameter.span(-1.0f, 1.0f),
                                                 Climate.Parameter.point(0f),
                                                 Climate.Parameter.span(-1f, 1f),
-                                                0f), biomeRegistry.getOrThrow(ModBiomes.COLD_SWEET_OCEAN_BIOME))
+                                                0f), biomeRegistry.getOrThrow(ModBiomes.COLD_SWEET_OCEAN_BIOME)),
+                                Pair.of(
+                                        Climate.parameters(
+                                                Climate.Parameter.span(-0.1f, 0.1f),
+                                                Climate.Parameter.span(-1f, 1f),
+                                                Climate.Parameter.span(-0.4f, -0.2f),
+                                                Climate.Parameter.span(-1.0f, 1.0f),
+                                                Climate.Parameter.point(0f),
+                                                Climate.Parameter.span(-1f, 1f),
+                                                0f), biomeRegistry.getOrThrow(ModBiomes.ORIGAMI_BEACH_BIOME)),
+                                Pair.of(
+                                        Climate.parameters(
+                                                Climate.Parameter.span(0.1f, 1f),
+                                                Climate.Parameter.span(-1f, 1f),
+                                                Climate.Parameter.span(-0.4f, -0.2f),
+                                                Climate.Parameter.span(-1.0f, 1.0f),
+                                                Climate.Parameter.point(0f),
+                                                Climate.Parameter.span(-1f, 1f),
+                                                0f), biomeRegistry.getOrThrow(ModBiomes.WARM_ORIGAMI_BEACH_BIOME)),
+                                Pair.of(
+                                        Climate.parameters(
+                                                Climate.Parameter.span(-1f, -0.1f),
+                                                Climate.Parameter.span(-1f, 1f),
+                                                Climate.Parameter.span(-0.4f, -0.2f),
+                                                Climate.Parameter.span(-1.0f, 1.0f),
+                                                Climate.Parameter.point(0f),
+                                                Climate.Parameter.span(-1f, 1f),
+                                                0f), biomeRegistry.getOrThrow(ModBiomes.COLD_ORIGAMI_BEACH_BIOME))
                                 ))),
                 noiseGenSettings);
 

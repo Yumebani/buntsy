@@ -10,6 +10,7 @@ import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.ModFoods;
 import net.sophiebun.buntsy.entity.ModEntities;
+import net.sophiebun.buntsy.fluids.ModFluids;
 import net.sophiebun.buntsy.item.custom.*;
 
 public class ModItems {
@@ -231,6 +232,9 @@ public class ModItems {
             "fairy_staff", () -> new FairyStaff(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> BINDING_STAFF = ItemsRegister.register(
             "binding_staff", () -> new BindingStaff(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> HOT_CHOCOLATE_BUCKET = ItemsRegister.register(
+            "hot_chocolate_bucket", () -> new BucketItem(ModFluids.SOURCE_HOT_CHOCOLATE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
     public static final RegistryObject<Item> SILKBUN_SPAWN_EGG = ItemsRegister.register(
             "silkbun_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.SILKBUN_ENTITY, 0xfdf4f7, 0x673f4e , new Item.Properties()));

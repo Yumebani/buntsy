@@ -35,10 +35,21 @@ public class CreativeModeTabs {
 
                         pOutput.accept(ModBlocks.SWEET_CORAL_SAND.get());
                         pOutput.accept(ModBlocks.FROZEN_CORAL_SAND.get());
+                        pOutput.accept(ModBlocks.SUNNY_CORAL_SAND.get());
+
+                        pOutput.accept(ModBlocks.SWEET_LIMESTONE.get());
+                        pOutput.accept(ModBlocks.FROZEN_LIMSTONE.get());
+                        pOutput.accept(ModBlocks.SUNNY_LIMESTONE.get());
+                        pOutput.accept(ModBlocks.SEA_SHELLS.get());
 
                         pOutput.accept(ModBlocks.FROZEN_POWDER_BLOCK.get());
                         pOutput.accept(ModBlocks.FROZEN_POWDER_LAYER.get());
                         pOutput.accept(ModBlocks.SWICE.get());
+
+                        pOutput.accept(ModBlocks.PETRIFIED_CHOCOLATE.get());
+                        pOutput.accept(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get());
+                        pOutput.accept(ModBlocks.CHOCOLATE_BLOCK.get());
+                        pOutput.accept(ModBlocks.CHOCOLATE_GEYSER.get());
 
                         pOutput.accept(ModBlocks.SWEET_CANDY_ROCK.get());
                         pOutput.accept(ModBlocks.SOUR_CANDY_ROCK.get());
@@ -69,10 +80,13 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.PINK_CHARMIL_GRASS.get());
                         pOutput.accept(ModBlocks.BLUE_CHARMIL_GRASS.get());
                         pOutput.accept(ModBlocks.PALEGRASS.get());
+                        pOutput.accept(ModBlocks.FROZEN_GRASS.get());
                         pOutput.accept(ModBlocks.LUMINUM.get());
                         pOutput.accept(ModBlocks.PINK_BLOOM.get());
                         pOutput.accept(ModBlocks.BLUE_BLOOM.get());
                         pOutput.accept(ModBlocks.ABYSSAL_BLOOM.get());
+                        pOutput.accept(ModBlocks.FROZEN_BLOOM.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_FERN.get());
                         pOutput.accept(ModBlocks.LOVESHROOM.get());
                         pOutput.accept(ModBlocks.LOVESHROOM_BLOCK.get());
                         pOutput.accept(ModBlocks.GLOWSHROOM.get());
@@ -133,6 +147,24 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.MALVOR_FENCE_GATE.get());
                         pOutput.accept(ModBlocks.MALVOR_PRESSURE_PLATE.get());
                         pOutput.accept(ModBlocks.MALVOR_BUTTON.get());
+
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_LOG.get());
+                        pOutput.accept(ModBlocks.STRIPPED_ORIGAMI_PALM_LOG.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_WOOD.get());
+                        pOutput.accept(ModBlocks.STRIPPED_ORIGAMI_PALM_LOG.get());
+
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_LEAVES.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_SAPLING.get());
+
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_PLANKS.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_STAIRS.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_SLAB.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_TRAPDOOR.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_DOOR.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_FENCE.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_FENCE_GATE.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_PRESSURE_PLATE.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_BUTTON.get());
 
                         pOutput.accept(ModBlocks.CRYSTALLIZED_LOG.get());
                         pOutput.accept(ModBlocks.CRYSTALLIZED_LEAVES.get());
@@ -244,6 +276,8 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.BEACON_FIRE_RESISTANCE_MODIFIER.get());
                         pOutput.accept(ModBlocks.BEACON_HASTE_MODIFIER.get());
                         pOutput.accept(ModBlocks.BEACON_REGENERATION_MODIFIER.get());
+
+                        pOutput.accept(ModItems.HOT_CHOCOLATE_BUCKET.get());
 
                         pOutput.accept(ModItems.FAIRY_STAFF.get());
                         pOutput.accept(ModItems.BINDING_STAFF.get());

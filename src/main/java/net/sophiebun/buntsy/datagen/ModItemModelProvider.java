@@ -158,6 +158,24 @@ public class ModItemModelProvider extends ItemModelProvider {
         evenSimplerBlockItem(ModBlocks.MALVOR_PRESSURE_PLATE);
         evenSimplerBlockItem(ModBlocks.MALVOR_FENCE_GATE);
 
+        evenSimplerBlockItem(ModBlocks.ORIGAMI_PALM_LOG);
+        evenSimplerBlockItem(ModBlocks.STRIPPED_ORIGAMI_PALM_LOG);
+        evenSimplerBlockItem(ModBlocks.ORIGAMI_PALM_WOOD);
+        evenSimplerBlockItem(ModBlocks.STRIPPED_ORIGAMI_PALM_WOOD);
+
+        evenSimplerBlockItem(ModBlocks.ORIGAMI_PALM_LEAVES);
+        simpleCrossBlockItem(ModBlocks.ORIGAMI_PALM_SAPLING);
+
+        evenSimplerBlockItem(ModBlocks.ORIGAMI_PALM_PLANKS);
+        fenceItem(ModBlocks.ORIGAMI_PALM_FENCE, ModBlocks.ORIGAMI_PALM_PLANKS);
+        buttonItem(ModBlocks.ORIGAMI_PALM_BUTTON, ModBlocks.ORIGAMI_PALM_PLANKS);
+        trapdoorItem(ModBlocks.ORIGAMI_PALM_TRAPDOOR);
+        simpleBlockItem(ModBlocks.ORIGAMI_PALM_DOOR);
+        evenSimplerBlockItem(ModBlocks.ORIGAMI_PALM_STAIRS);
+        evenSimplerBlockItem(ModBlocks.ORIGAMI_PALM_SLAB);
+        evenSimplerBlockItem(ModBlocks.ORIGAMI_PALM_PRESSURE_PLATE);
+        evenSimplerBlockItem(ModBlocks.ORIGAMI_PALM_FENCE_GATE);
+
         evenSimplerBlockItem(ModBlocks.CRYSTALLIZED_LOG);
         evenSimplerBlockItem(ModBlocks.CRYSTALLIZED_LEAVES);
 
@@ -171,10 +189,14 @@ public class ModItemModelProvider extends ItemModelProvider {
         specificCrossBlockItem(ModBlocks.PINK_CHARMIL_GRASS, "_3");
         specificCrossBlockItem(ModBlocks.BLUE_CHARMIL_GRASS, "_3");
         specificCrossBlockItem(ModBlocks.PALEGRASS, "_3");
+        specificCrossBlockItem(ModBlocks.SEA_SHELLS, "_1");
+        specificCrossBlockItem(ModBlocks.FROZEN_GRASS, "_3");
         specificCrossBlockItem(ModBlocks.LUMINUM, "_y_top_1");
         simpleCrossBlockItem(ModBlocks.PINK_BLOOM);
         simpleCrossBlockItem(ModBlocks.BLUE_BLOOM);
         simpleCrossBlockItem(ModBlocks.ABYSSAL_BLOOM);
+        simpleCrossBlockItem(ModBlocks.FROZEN_BLOOM);
+        simpleCrossBlockItem(ModBlocks.ORIGAMI_FERN);
         simpleCrossBlockItem(ModBlocks.LOVESHROOM);
         simpleCrossBlockItem(ModBlocks.GLOWSHROOM);
         simpleCrossBlockItem(ModBlocks.PALESHROOM);
@@ -195,6 +217,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.FAIRY_IN_A_BOTTLE);
         simpleItem(ModItems.FAIRY_STAFF);
         simpleItem(ModItems.BINDING_STAFF);
+
+
+        simpleItem(ModItems.HOT_CHOCOLATE_BUCKET);
 
         //Cocoon and stuff
         simpleItem(ModItems.URO);
