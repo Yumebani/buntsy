@@ -262,6 +262,11 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.INFUSION_ALTAR_BASIC.get());
                         pOutput.accept(ModBlocks.INFUSION_ALTAR_ADVANCED.get());
                         pOutput.accept(ModBlocks.MIXER_BLOCK.get());
+                        pOutput.accept(ModBlocks.CLOCKWORK_SYRUP_EXTRACTOR.get());
+                        pOutput.accept(ModBlocks.CLOCKWORK_GEYSER_COLLECTOR.get());
+                        pOutput.accept(ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get());
+                        pOutput.accept(ModBlocks.CLOCKWORK_CRAFTER.get());
+                        pOutput.accept(ModBlocks.CLOCKWORK_FAIRY_TERMINAL.get());
                         pOutput.accept(ModBlocks.GIANT_COCOON.get());
                         pOutput.accept(ModBlocks.SYRUP_EXTRACTOR.get());
 
@@ -281,6 +286,8 @@ public class CreativeModeTabs {
 
                         pOutput.accept(ModItems.FAIRY_STAFF.get());
                         pOutput.accept(ModItems.BINDING_STAFF.get());
+
+                        pOutput.accept(ModItems.EMPTY_CLOCKWORK_FAIRY_TERMINAL.get());
 
                         pOutput.accept(ModItems.FAIRY_POWER_RECEPTOR.get());
                         pOutput.accept(ModItems.FAIRY_POWER_EMITTER.get());
@@ -309,6 +316,7 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.COMPLEX_CLOCKWORK_UNIT.get());
                         pOutput.accept(ModItems.SWICE_SHARDS.get());
                         pOutput.accept(ModItems.COLD_POWDERED_SUGAR.get());
+                        pOutput.accept(ModItems.CHOCOLATE_FLAKES.get());
                         pOutput.accept(ModItems.SPEED_BLEND.get());
                         pOutput.accept(ModItems.EFFICIENCY_BLEND.get());
                         pOutput.accept(ModItems.GROWTH_BLEND.get());

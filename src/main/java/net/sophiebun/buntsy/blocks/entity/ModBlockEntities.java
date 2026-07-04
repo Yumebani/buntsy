@@ -13,6 +13,7 @@ import net.sophiebun.buntsy.blocks.entity.advancedfairy.MagicCrystalizerBlockEnt
 import net.sophiebun.buntsy.blocks.entity.advancedfairy.MixerBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.basicfairy.GrindingWheelBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.basicfairy.ThreadReelerBlockEntity;
+import net.sophiebun.buntsy.blocks.entity.clockwork.*;
 import net.sophiebun.buntsy.blocks.entity.custom.*;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyCollectionTrayBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyInfusionBenchBlockEntity;
@@ -89,6 +90,27 @@ public class ModBlockEntities {
             blockEntityRegister.register("chocolate_geyser_entity",
                     () -> BlockEntityType.Builder.of(ChocolateGeyserBlockEntity::new,
                             ModBlocks.CHOCOLATE_GEYSER.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<ClockworkSyrupExtractorEntity>> CLOCKWORK_SYRUP_EXTRACTOR_ENTITY =
+            blockEntityRegister.register("clockwork_syrup_extractor_entity",
+                    () -> BlockEntityType.Builder.of(ClockworkSyrupExtractorEntity::new,
+                            ModBlocks.CLOCKWORK_SYRUP_EXTRACTOR.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ClockworkGeyserCollectorEntity>> CLOCKWORK_GEYSER_COLLECTOR_ENTITY =
+            blockEntityRegister.register("clockwork_geyser_collector_entity",
+                    () -> BlockEntityType.Builder.of(ClockworkGeyserCollectorEntity::new,
+                            ModBlocks.CLOCKWORK_GEYSER_COLLECTOR.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ClockworkPowderedSugarCollectorEntity>> CLOCKWORK_POWDERED_SUGAR_COLLECTOR_ENTITY =
+            blockEntityRegister.register("clockwork_powdered_sugar_collector_entity",
+                    () -> BlockEntityType.Builder.of(ClockworkPowderedSugarCollectorEntity::new,
+                            ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ClockworkCrafterEntity>> CLOCKWORK_CRAFTER_ENTITY =
+            blockEntityRegister.register("clockwork_crafter_entity",
+                    () -> BlockEntityType.Builder.of(ClockworkCrafterEntity::new,
+                            ModBlocks.CLOCKWORK_CRAFTER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ClockworkFairyTerminalEntity>> CLOCKWORK_FAIRY_TERMINAL_ENTITY =
+            blockEntityRegister.register("clockwork_fairy_terminal_entity",
+                    () -> BlockEntityType.Builder.of(ClockworkFairyTerminalEntity::new,
+                            ModBlocks.CLOCKWORK_FAIRY_TERMINAL.get()).build(null));
 
     public static void register(IEventBus eventBus){
 

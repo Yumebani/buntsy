@@ -68,6 +68,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
 
     private final Map<BlockPos, Integer> registeredUtilBlockEntityPos = new HashMap<BlockPos, Integer>();
     private int currentWeight;
+    private boolean hasTitular;
     private boolean hungry;
     private boolean updateBlocksFlag;
     private ItemStack carriedItem;
@@ -172,7 +173,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
     }
 
     public int getMaxFairyWeight() {
-        return MAX_UTIL_BLOCK_POOL * (fumes.containsKey(1) ? fumes.get(1).get(0) + 1 : 1);
+        return MAX_UTIL_BLOCK_POOL + (fumes.containsKey(1) ? fumes.get(1).get(0) : 0);
     }
 
     @Override
@@ -351,8 +352,14 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
         return isInRangeOfOfferingBench(entity.getBlockPos());
     }
 
-    public boolean canRegisterNewBlock(BlockEntity blockEntity){
-        return ((FairyInteractBlockEntity) blockEntity).getFairyWeight() + this.currentWeight <= this.getMaxFairyWeight();
+    public int canRegisterNewBlock(BlockEntity blockEntity){
+        if (((FairyInteractBlockEntity) blockEntity).isTitular() && hasTitular){
+            return -2;
+        } else if (((FairyInteractBlockEntity) blockEntity).getFairyWeight() + this.currentWeight <= this.getMaxFairyWeight()){
+            return 0;
+        } else {
+            return -1;
+        }
     }
 
     public boolean isBlockRegistered(BlockEntity blockEntity){
@@ -367,6 +374,9 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
     public void registerNewBlock(BlockEntity blockEntity){
         FairyInteractBlockEntity entity = (FairyInteractBlockEntity) blockEntity;
         entity.setWatched(true);
+        if (entity.isTitular()){
+            this.hasTitular = true;
+        }
         int fairyWeight = entity.getFairyWeight();
         this.currentWeight += fairyWeight;
         this.registeredUtilBlockEntityPos.put(blockEntity.getBlockPos(), fairyWeight);
@@ -376,8 +386,12 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
     public void unregisterBlock(BlockEntity blockEntity){
         for (BlockPos pos : getRegisteredBlockPosArray()){
             if (pos != null && pos.equals(blockEntity.getBlockPos())){
-                ((FairyInteractBlockEntity) level().getBlockEntity(pos)).setWatched(false);
-                ((FairyInteractBlockEntity) level().getBlockEntity(pos)).setEnchanted(false);
+                FairyInteractBlockEntity entity = (FairyInteractBlockEntity) level().getBlockEntity(pos);
+                entity.setWatched(false);
+                entity.setEnchanted(false);
+                if (entity.isTitular()){
+                    this.hasTitular = false;
+                }
                 this.currentWeight -= this.registeredUtilBlockEntityPos.get(pos);
                 this.registeredUtilBlockEntityPos.remove(pos);
                 this.setUpdateBlocksFlag(true);
@@ -396,6 +410,8 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
         if (this.getOwnerUUID() != null) {
             pCompound.putUUID("Owner", this.getOwnerUUID());
         }
+        pCompound.putBoolean("fairy.has_titular", this.hasTitular);
+
         pCompound.putInt("fairy.current_weight", this.currentWeight);
         pCompound.putInt("fairy.food", this.food);
         pCompound.putFloat("fairy.food_modifier", this.foodModifier);
@@ -444,6 +460,8 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
                 this.setTame(false);
             }
         }
+
+        this.hasTitular = pCompound.getBoolean("fairy.has_titular");
 
         this.currentWeight = pCompound.getInt("fairy.current_weight");
         this.food = pCompound.getInt("fairy.food");

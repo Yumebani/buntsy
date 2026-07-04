@@ -31,24 +31,26 @@ public class ChocolateGeyserBlockEntity extends BlockEntity {
     public void clientTick(Level pLevel, BlockPos pPos, BlockState pState) {
 
         clientTicker++;
-        if (clientTicker % 10 == 0 && pState.getValue(ChocolateGeyserBlock.STAGE) == 1) {
-            RandomSource random = pLevel.getRandom();
-            pLevel.addParticle(ModParticleTypes.CHOCOLATE_DUST_PARTICLE.get(),
-                    pPos.getX() + 0.5f + random.nextInt(-1, 2) / 2f,
-                    pPos.getY() + 1f + random.nextInt(0, 2) / 2f,
-                    pPos.getZ() + 0.5f + random.nextInt(-1, 2) / 2f,
-                    random.nextInt(-6, 7) / 100f,
-                    random.nextInt(-6, 7) / 100f,
-                    random.nextInt(-6, 7) / 100f);
-        } else if (pState.getValue(ChocolateGeyserBlock.STAGE) == 2){
-            RandomSource random = pLevel.getRandom();
-            if (clientTicker % 3 == 0) pLevel.playLocalSound(pPos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.7f, 0.6f, false);
-            for (int x = 0; x < 5; x++){
+        if (pLevel.getBlockState(pPos.above()).isAir()){
+            if (clientTicker % 10 == 0 && pState.getValue(ChocolateGeyserBlock.STAGE) == 1) {
+                RandomSource random = pLevel.getRandom();
                 pLevel.addParticle(ModParticleTypes.CHOCOLATE_DUST_PARTICLE.get(),
-                        pPos.getX() + 0.5f, pPos.getY() + 1f, pPos.getZ() + 0.5f,
-                        random.nextInt(-2, 3) / 100f,
-                        random.nextInt(35, 50) /  100f,
-                        random.nextInt(-2, 3) / 100f);
+                        pPos.getX() + 0.5f + random.nextInt(-1, 2) / 2f,
+                        pPos.getY() + 1f + random.nextInt(0, 2) / 2f,
+                        pPos.getZ() + 0.5f + random.nextInt(-1, 2) / 2f,
+                        random.nextInt(-6, 7) / 100f,
+                        random.nextInt(-6, 7) / 100f,
+                        random.nextInt(-6, 7) / 100f);
+            } else if (pState.getValue(ChocolateGeyserBlock.STAGE) == 2){
+                RandomSource random = pLevel.getRandom();
+                if (clientTicker % 3 == 0) pLevel.playLocalSound(pPos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.7f, 0.6f, false);
+                for (int x = 0; x < 5; x++){
+                    pLevel.addParticle(ModParticleTypes.CHOCOLATE_DUST_PARTICLE.get(),
+                            pPos.getX() + 0.5f, pPos.getY() + 1f, pPos.getZ() + 0.5f,
+                            random.nextInt(-2, 3) / 100f,
+                            random.nextInt(35, 50) /  100f,
+                            random.nextInt(-2, 3) / 100f);
+                }
             }
         }
 

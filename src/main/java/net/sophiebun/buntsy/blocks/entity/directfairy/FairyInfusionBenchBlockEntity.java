@@ -87,6 +87,11 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
     }
 
     @Override
+    public boolean isTitular() {
+        return true;
+    }
+
+    @Override
     public int getFairyWeight() {
         return 2;
     }

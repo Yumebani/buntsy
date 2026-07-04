@@ -29,6 +29,7 @@ import net.sophiebun.buntsy.blocks.custom.hanging_block.HangingStringBlock;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
 import net.sophiebun.buntsy.blocks.custom.plants.*;
 import net.sophiebun.buntsy.blocks.custom.wood.*;
+import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkFairyTerminalEntity;
 import net.sophiebun.buntsy.fluids.ModFluids;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.worldgen.ModConfiguredFeatures;
@@ -577,6 +578,17 @@ public class ModBlocks {
             () -> new GiantCocoonBlock(BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL).noOcclusion()));
     public static final RegistryObject<Block> MIXER_BLOCK = registerBlock("mixer_block",
             () -> new MixerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+
+    public static final RegistryObject<Block> CLOCKWORK_SYRUP_EXTRACTOR = registerBlock("clockwork_syrup_extractor",
+            () -> new ClockworkSyrupExtractorBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> CLOCKWORK_GEYSER_COLLECTOR = registerBlock("clockwork_geyser_collector",
+            () -> new ClockworkGeyserCollectorBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> CLOCKWORK_POWDERED_SUGAR_COLLECTOR = registerBlock("clockwork_powdered_sugar_collector",
+            () -> new ClockworkPowderedSugarCollectorBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> CLOCKWORK_CRAFTER = registerBlock("clockwork_crafter",
+            () -> new ClockworkCrafterBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> CLOCKWORK_FAIRY_TERMINAL = registerBlock("clockwork_fairy_terminal",
+            () -> new ClockworkFairyTerminalBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
 
     //Beacon
     public static final RegistryObject<Block> PRISMATIC_BEACON = registerBlock("prismatic_beacon",

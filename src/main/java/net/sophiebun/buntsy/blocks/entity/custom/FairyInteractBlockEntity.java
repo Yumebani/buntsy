@@ -51,6 +51,10 @@ public class FairyInteractBlockEntity extends BlockEntity {
         return isWatched;
     }
 
+    public boolean isTitular() {
+        return false;
+    }
+
     public void setWatched(boolean watched) {
         isWatched = watched;
     }

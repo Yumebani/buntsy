@@ -159,6 +159,12 @@ public class BuntsyMod
             MenuScreens.register(ModMenuTypes.COCOON_BAG_MENU.get(), CocoonBagScreen::new);
             MenuScreens.register(ModMenuTypes.MIXER_MENU.get(), MixerScreen::new);
 
+            MenuScreens.register(ModMenuTypes.CLOCKWORK_SYRUP_EXTRACTOR_MENU.get(), ClockworkSyrupExtractorScreen::new);
+            MenuScreens.register(ModMenuTypes.CLOCKWORK_GEYSER_COLLECTOR_MENU.get(), ClockworkGeyserCollectorScreen::new);
+            MenuScreens.register(ModMenuTypes.CLOCKWORK_POWDERED_SUGAR_COLLECTOR_MENU.get(), ClockworkPowderedSugarCollectorScreen::new);
+            MenuScreens.register(ModMenuTypes.CLOCKWORK_CRAFTER_MENU.get(), ClockworkCrafterScreen::new);
+            MenuScreens.register(ModMenuTypes.CLOCKWORK_FAIRY_TERMINAL_MENU.get(), ClockworkFairyTerminalScreen::new);
+
             EntityRenderers.register(ModEntities.SILKBUN_ENTITY.get(), SilkbunRenderer::new);
             EntityRenderers.register(ModEntities.FAIRY_ENTITY.get(), FairyRenderer::new);
             EntityRenderers.register(ModEntities.HOOTCAT_ENTITY.get(), HootcatRenderer::new);

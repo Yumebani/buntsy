@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -34,9 +35,12 @@ public class ModRandomPatchFeature extends Feature<RandomPatchConfiguration> {
         int k = randompatchconfiguration.ySpread() + 1;
 
         for(int l = 0; l < randompatchconfiguration.tries(); ++l) {
-            if (randompatchconfiguration.feature().value().place(worldgenlevel, config.chunkGenerator(), randomsource,
-                    blockpos.offset(randomsource.nextInt(j) - randomsource.nextInt(j), y + randomsource.nextInt(k) - randomsource.nextInt(k), randomsource.nextInt(j) - randomsource.nextInt(j)))) {
-                ++i;
+            BlockPos pos = blockpos.offset(randomsource.nextInt(j) - randomsource.nextInt(j), y + randomsource.nextInt(k) - randomsource.nextInt(k), randomsource.nextInt(j) - randomsource.nextInt(j));
+
+            if (worldgenlevel.getBlockState(pos).isSolidRender(worldgenlevel, pos)){
+                if (randompatchconfiguration.feature().value().place(worldgenlevel, config.chunkGenerator(), randomsource, pos)) {
+                    ++i;
+                }
             }
         }
 

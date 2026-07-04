@@ -246,8 +246,13 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     }
 
     public void insertIntoSlot(int slot, ItemStack item){
-        ItemStack inserted = new ItemStack(item.getItem(),
-                this.outputItemHandler.getStackInSlot(slot).getCount() + item.getCount());
+        ItemStack inserted;
+        if (this.outputItemHandler.getStackInSlot(slot).isEmpty()){
+            inserted = item;
+        } else {
+            inserted = new ItemStack(item.getItem(),
+                    this.outputItemHandler.getStackInSlot(slot).getCount() + item.getCount());
+        }
         if (item.hasTag()) inserted.setTag(item.getTag());
         this.outputItemHandler.setStackInSlot(slot, inserted);
     }

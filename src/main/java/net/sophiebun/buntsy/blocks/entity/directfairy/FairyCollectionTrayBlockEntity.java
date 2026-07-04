@@ -67,6 +67,11 @@ public class FairyCollectionTrayBlockEntity extends FairyInteractBlockEntity imp
     }
 
     @Override
+    public boolean isTitular() {
+        return true;
+    }
+
+    @Override
     public int getFairyWeight() {
         return 4;
     }

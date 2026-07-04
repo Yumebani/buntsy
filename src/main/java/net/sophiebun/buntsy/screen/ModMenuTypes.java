@@ -38,6 +38,17 @@ public class ModMenuTypes {
     public static final RegistryObject<MenuType<MixerMenu>> MIXER_MENU =
             registerMenuType("mixer_menu", MixerMenu::new);
 
+    public static final RegistryObject<MenuType<ClockworkSyrupExtractorMenu>> CLOCKWORK_SYRUP_EXTRACTOR_MENU =
+            registerMenuType("clockwork_syrup_extractor_menu", ClockworkSyrupExtractorMenu::new);
+    public static final RegistryObject<MenuType<ClockworkGeyserCollectorMenu>> CLOCKWORK_GEYSER_COLLECTOR_MENU =
+            registerMenuType("clockwork_geyser_collector_menu", ClockworkGeyserCollectorMenu::new);
+    public static final RegistryObject<MenuType<ClockworkPowderedSugarCollectorMenu>> CLOCKWORK_POWDERED_SUGAR_COLLECTOR_MENU =
+            registerMenuType("clockwork_powdered_sugar_collector_menu", ClockworkPowderedSugarCollectorMenu::new);
+    public static final RegistryObject<MenuType<ClockworkCrafterMenu>> CLOCKWORK_CRAFTER_MENU =
+            registerMenuType("clockwork_crafter_menu", ClockworkCrafterMenu::new);
+    public static final RegistryObject<MenuType<ClockworkFairyTerminalMenu>> CLOCKWORK_FAIRY_TERMINAL_MENU =
+            registerMenuType("clockwork_fairy_terminal_menu", ClockworkFairyTerminalMenu::new);
+
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory){
         return MenusRegister.register(name, () -> IForgeMenuType.create(factory));
     }

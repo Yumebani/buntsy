@@ -33,11 +33,11 @@ public class ModItems {
     public static final RegistryObject<Item> CLOCKWORK_MODIFICATION = ItemsRegister.register(
             "clockwork_modification", () -> new Item(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> SIMPLE_CLOCKWORK_UNIT = ItemsRegister.register(
-            "simple_clockwork_unit", () -> new Item(new Item.Properties()));
+            "simple_clockwork_unit", () -> new ClockworkUpgradeItem(ClockworkTier.SIMPLE, new Item.Properties()));
     public static final RegistryObject<Item> INTRICATE_CLOCKWORK_UNIT = ItemsRegister.register(
-            "intricate_clockwork_unit", () -> new Item(new Item.Properties()));
+            "intricate_clockwork_unit", () -> new ClockworkUpgradeItem(ClockworkTier.INTRICATE, new Item.Properties()));
     public static final RegistryObject<Item> COMPLEX_CLOCKWORK_UNIT = ItemsRegister.register(
-            "complex_clockwork_unit", () -> new Item(new Item.Properties()));
+            "complex_clockwork_unit", () -> new ClockworkUpgradeItem(ClockworkTier.COMPLEX, new Item.Properties()));
 
     public static final RegistryObject<Item> HOOTCAT_FEATHER = ItemsRegister.register(
             "hootcat_feather", () -> new Item(new Item.Properties()));
@@ -85,6 +85,8 @@ public class ModItems {
             "swice_shards", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> COLD_POWDERED_SUGAR = ItemsRegister.register(
             "cold_powdered_sugar", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> CHOCOLATE_FLAKES = ItemsRegister.register(
+            "chocolate_flakes", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> FUME_BOTTLE = ItemsRegister.register(
             "fume_bottle", () -> new FumeBottle(new Item.Properties()));
@@ -235,6 +237,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> HOT_CHOCOLATE_BUCKET = ItemsRegister.register(
             "hot_chocolate_bucket", () -> new BucketItem(ModFluids.SOURCE_HOT_CHOCOLATE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+
+    public static final RegistryObject<Item> EMPTY_CLOCKWORK_FAIRY_TERMINAL = ItemsRegister.register(
+            "empty_clockwork_fairy_terminal", () -> new EmptyClockworkFairyTerminal(new Item.Properties()));
 
     public static final RegistryObject<Item> SILKBUN_SPAWN_EGG = ItemsRegister.register(
             "silkbun_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.SILKBUN_ENTITY, 0xfdf4f7, 0x673f4e , new Item.Properties()));
