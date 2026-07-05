@@ -4,6 +4,9 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -19,6 +22,8 @@ import java.util.List;
 
 public class MaidenTask {
 
+    private final int id;
+
     private final BlockPos terminalLoc;
 
     private final MaidenInteractionConfig extractBlock;
@@ -27,7 +32,8 @@ public class MaidenTask {
 
     private int roundRobinSelector = 0;
 
-    MaidenTask(BlockPos terminalLoc, MaidenInteractionConfig extractBlock, List<MaidenInteractionConfig> insertBlocks, MaidenSelectionRegime selectionRegime){
+    MaidenTask(int id, BlockPos terminalLoc, MaidenInteractionConfig extractBlock, List<MaidenInteractionConfig> insertBlocks, MaidenSelectionRegime selectionRegime){
+        this.id = id;
         this.terminalLoc = terminalLoc;
         this.extractBlock = extractBlock;
         this.insertBlocks = insertBlocks.stream().sorted(selectionRegime == MaidenSelectionRegime.PRIORITY ?
@@ -35,6 +41,18 @@ public class MaidenTask {
                 Comparator.comparingInt(config -> Math.toIntExact(Math.round(config.pos().getCenter().distanceTo(terminalLoc.getCenter()))))).toList();
         this.selectionRegime = selectionRegime;
     }
+
+    private MaidenTask(int id, BlockPos terminalLoc, MaidenInteractionConfig extractBlock, List<MaidenInteractionConfig> insertBlocks, MaidenSelectionRegime selectionRegime, int roundRobinSelector){
+        this.id = id;
+        this.terminalLoc = terminalLoc;
+        this.extractBlock = extractBlock;
+        this.insertBlocks = insertBlocks.stream().sorted(selectionRegime == MaidenSelectionRegime.PRIORITY ?
+                Comparator.comparingInt(MaidenInteractionConfig::priority) :
+                Comparator.comparingInt(config -> Math.toIntExact(Math.round(config.pos().getCenter().distanceTo(terminalLoc.getCenter()))))).toList();
+        this.selectionRegime = selectionRegime;
+        this.roundRobinSelector = roundRobinSelector;
+    }
+
 
     public Pair<BlockPos, Integer> getNextBlock(Level level, ItemStack stackToMove){
 
@@ -121,5 +139,45 @@ public class MaidenTask {
             }
         }
         return itemStack.getCount() - total;
+    }
+
+    public CompoundTag getCompound() {
+        CompoundTag tag = new CompoundTag();
+
+        tag.putInt("maiden_task.id", this.id);
+        tag.put("maiden_task.terminal_loc", NbtUtils.writeBlockPos(this.terminalLoc));
+        tag.put("maiden_task.extract_config", this.extractBlock.getCompound());
+        tag.putInt("maiden_task.insert_config_count", this.insertBlocks.size());
+        for (int i = 0; i < this.insertBlocks.size(); i++){
+            tag.put("maiden_task.insert_config_" + i, this.insertBlocks.get(i).getCompound());
+        }
+        tag.putInt("maiden_task.selection_regime", this.selectionRegime.ordinal());
+        tag.putInt("maiden_task.round_robin", this.roundRobinSelector);
+
+        return tag;
+    }
+
+    public static MaidenTask parseCompound(CompoundTag tag) {
+
+        int id = tag.getInt("maiden_task.id");
+        BlockPos terminalLoc = NbtUtils.readBlockPos(tag.getCompound("maiden_task.terminal_loc"));
+        MaidenInteractionConfig extractBlock = MaidenInteractionConfig.parseCompound(tag.getCompound("maiden_task.terminal_loc"));
+        List<MaidenInteractionConfig> insertBlocks = new ArrayList<>();
+        int configCount = tag.getInt("maiden_task.insert_config_count");
+        for (int i = 0; i < configCount; i++){
+            insertBlocks.add(MaidenInteractionConfig.parseCompound(tag.getCompound("maiden_task.insert_config_" + i)));
+        }
+        MaidenSelectionRegime selectionRegime = MaidenSelectionRegime.values()[tag.getInt("maiden_task.selection_regime")];
+        int roundRobinSelector = tag.getInt("maiden_task.round_robin");
+
+        return new MaidenTask(id, terminalLoc, extractBlock, insertBlocks, selectionRegime, roundRobinSelector);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof MaidenTask){
+            return this.id == ((MaidenTask) obj).id;
+        }
+        return super.equals(obj);
     }
 }
