@@ -41,6 +41,18 @@ public class CMTParticipantData {
         this.changed = new HashMap<>();
     }
 
+    public void setConfig(boolean inserting, int channel, MaidenInteractionConfig config){
+        if (inserting){
+            insertConfigs.put(channel, config.copy());
+        } else {
+            insertConfigs.put(channel, config.copy());
+        }
+    }
+
+    public Map<Integer, boolean[]> getChanged(){
+        return this.changed;
+    }
+
     public MaidenInteractionConfig getConfig(boolean inserting, int channel){
         return (inserting ? insertConfigs : extractConfigs).get(channel);
     }
@@ -64,7 +76,7 @@ public class CMTParticipantData {
     public void checkOrMakeChannel(boolean inserting, int channel, BlockPos pos) {
         Map<Integer, MaidenInteractionConfig> configs = inserting ? insertConfigs : extractConfigs;
         if (!configs.containsKey(channel)){
-            configs.put(channel, new MaidenInteractionConfig(pos, Direction.NORTH, 0, false, false));
+            configs.put(channel, MaidenInteractionConfig.makeNewConfig(inserting, pos));
         }
     }
 

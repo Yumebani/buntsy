@@ -2,6 +2,7 @@ package net.sophiebun.buntsy.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -15,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.entity.clockwork_maiden.CMTParticipantData;
 import net.sophiebun.buntsy.entity.clockwork_maiden.MaidenInteractionConfig;
+import org.jline.reader.Widget;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -31,12 +33,14 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
     private boolean editingInsert = true;
     private Button insertExtractPanel;
 
-    private final List<Button> sideConfigButtons = new ArrayList<>();
+    private final List<AbstractWidget> sideConfigButtons = new ArrayList<>();
 
     private Button enableDisableButton;
 
     private Button priorityPanel;
-    private final List<Button> priorityConfigButtons = new ArrayList<>();
+    private final List<AbstractWidget> priorityConfigButtons = new ArrayList<>();
+
+    private Button fillRegimeButton;
 
     private Button whiteListButton;
     private Button setExactButton;
@@ -50,7 +54,7 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
     private static final ResourceLocation TEXTURE =
             new ResourceLocation(BuntsyMod.MODID, "textures/gui/clockwork_crafter_gui.png");
 
-    public ClockworkMaidenTerminalParticipantScreen(ClockworkCrafterMenu pMenu, Inventory pPlayerInventory, Component pTitle, BlockPos pos, CMTParticipantData data) {
+    public ClockworkMaidenTerminalParticipantScreen(CMTParticipantMenu pMenu, Inventory pPlayerInventory, Component pTitle, BlockPos pos, CMTParticipantData data) {
         super(pMenu, pPlayerInventory, pTitle);
         this.imageHeight = 205;
 
@@ -66,10 +70,15 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
 
         addChannelPanel();
         addInsertExtractEdit();
-        addPriorityButtons();
-        addSideConfigButtons();
         addToggleButton();
+        addSideConfigButtons();
         addWhiteListButtons();
+
+        addPriorityButtons();
+        addFillRegimeButton();
+
+        addStackSizeButton();
+        addSortRegimeButton();
     }
 
     private void changeChannel(int amount){
@@ -90,12 +99,12 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
                         Component.literal("◀"), pButton -> {
                             changeChannel(-1);
                         })
-                .bounds(6, 13, 6, 13)
+                .bounds(8, 13, 8, 13)
                 .build());
 
         this.channelPanel = Button.builder(
                         Component.literal("Channel 1"), pButton -> {})
-                .bounds(14, 13, 40, 13)
+                .bounds(19, 13, 55, 13)
                 .build();
 
         this.channelPanel.active = false;
@@ -105,7 +114,7 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
                         Component.literal("▶"), pButton -> {
                             changeChannel(1);
                         })
-                .bounds(56, 13, 6, 13)
+                .bounds(77, 13, 8, 13)
                 .build());
     }
 
@@ -150,28 +159,15 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
     }
 
     private void addInsertExtractEdit(){
-        this.addRenderableWidget(Button.builder(
-                        Component.literal("◀"), pButton -> {
-                            changeInsertExtractEdit();
-                        })
-                .bounds(72, 13, 6, 13)
-                .build());
-
         this.insertExtractPanel = Button.builder(
                         Component.literal("Insert"), pButton -> {
+                            changeInsertExtractEdit();
                         })
-                .bounds(80, 13, 40, 13)
+                .bounds(90, 13, 45, 13)
                 .build();
 
         this.insertExtractPanel.active = false;
         this.addRenderableWidget(this.insertExtractPanel);
-
-        this.addRenderableWidget(Button.builder(
-                        Component.literal("▶"), pButton -> {
-                            changeInsertExtractEdit();
-                        })
-                .bounds(122, 13, 6, 13)
-                .build());
     }
 
     private void updateInsertExtractPanel(){
@@ -197,46 +193,46 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
                         Component.literal(""), pButton -> {
                             setSide( Direction.DOWN);
                         })
-                .bounds(6, 92, 20, 20)
+                .bounds(8, 93, 20, 20)
                 .build());
 
         this.sideConfigButtons.add(Button.builder(
                         Component.literal(""), pButton -> {
                             setSide( Direction.UP);
                         })
-                .bounds(52, 46, 20, 20)
+                .bounds(54, 47, 20, 20)
                 .build());
 
         this.sideConfigButtons.add(Button.builder(
                         Component.literal(""), pButton -> {
                             setSide( Direction.NORTH);
                         })
-                .bounds(29, 46, 20, 20)
+                .bounds(31, 47, 20, 20)
                 .build());
 
         this.sideConfigButtons.add(Button.builder(
                         Component.literal(""), pButton -> {
                             setSide( Direction.SOUTH);
                         })
-                .bounds(29, 92, 20, 20)
+                .bounds(31, 93, 20, 20)
                 .build());
 
         this.sideConfigButtons.add(Button.builder(
                         Component.literal(""), pButton -> {
                             setSide( Direction.WEST);
                         })
-                .bounds(6, 69, 20, 20)
+                .bounds(8, 70, 20, 20)
                 .build());
 
         this.sideConfigButtons.add(Button.builder(
                         Component.literal(""), pButton -> {
                             setSide( Direction.EAST);
                         })
-                .bounds(52, 69, 20, 20)
+                .bounds(54, 70, 20, 20)
                 .build());
 
-        for (Button button : this.sideConfigButtons){
-            this.addRenderableWidget(button);
+        for (AbstractWidget widget : this.sideConfigButtons){
+            this.addRenderableWidget(widget);
         }
     }
 
@@ -252,20 +248,20 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
                 }
             }
         } else {
-            for (Button button : this.sideConfigButtons){
-                button.visible = false;
+            for (AbstractWidget widget : this.sideConfigButtons){
+                widget.visible = false;
             }
         }
     }
 
     private void renderSideConfigButtonsIcons(GuiGraphics guiGraphics){
         if (this.data.isEnabled(editingInsert, channelEdit)){
-            guiGraphics.blit(TEXTURE, 6, 92, 176, 0, 20, 20);
-            guiGraphics.blit(TEXTURE, 52, 46, 176, 20, 20, 20);
-            guiGraphics.blit(TEXTURE, 29, 46, 176, 40, 20, 20);
-            guiGraphics.blit(TEXTURE, 29, 92, 176, 60, 20, 20);
-            guiGraphics.blit(TEXTURE, 6, 69, 176, 80, 20, 20);
-            guiGraphics.blit(TEXTURE, 52, 69, 176, 100, 20, 20);
+            guiGraphics.blit(TEXTURE, 8, 93, 176, 0, 20, 20);
+            guiGraphics.blit(TEXTURE, 54, 47, 176, 20, 20, 20);
+            guiGraphics.blit(TEXTURE, 31, 47, 176, 40, 20, 20);
+            guiGraphics.blit(TEXTURE, 31, 93, 176, 60, 20, 20);
+            guiGraphics.blit(TEXTURE, 8, 70, 176, 80, 20, 20);
+            guiGraphics.blit(TEXTURE, 54, 70, 176, 100, 20, 20);
         }
     }
 
@@ -286,18 +282,52 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
         setChanged();
     }
 
+    private void cycleFillRegime(){
+        MaidenInteractionConfig config = data.getConfig(editingInsert, channelEdit);
+        config.cycleFillRegime();
+        setChanged();
+    }
+
+    private void addFillRegimeButton(){
+
+        this.fillRegimeButton = Button.builder(
+                        Component.literal("One stack"), pButton -> {
+                            cycleFillRegime();
+                        })
+                .bounds(117, 30, 45, 13)
+                .tooltip(Tooltip.create(Component.literal("Change fill regime")))
+                .build();
+
+        this.addRenderableWidget(fillRegimeButton);
+    }
+
+    private void updateFillRegimeButton(){
+        if (editingInsert && this.data.isEnabled(editingInsert, channelEdit)){
+            this.fillRegimeButton.visible = true;
+            this.priorityPanel.setMessage(Component.literal(
+                    switch (this.data.getConfig(editingInsert, channelEdit).getFillRegime()){
+                        case ONE -> "One item";
+                        case STACK -> "One stack";
+                        case FILL -> "Fill";
+                    }
+            ));
+        } else {
+            this.fillRegimeButton.visible = false;
+        }
+    }
+
     private void addPriorityButtons(){
 
         this.priorityConfigButtons.add(Button.builder(
                         Component.literal("◀"), pButton -> {
                             changePriority(-modifier);
                         })
-                .bounds(6, 30, 6, 13)
+                .bounds(61, 30, 8, 13)
                 .build());
 
         this.priorityPanel = Button.builder(
                         Component.literal("0"), pButton -> {})
-                .bounds(14, 30, 40, 13)
+                .bounds(72, 30, 23, 13)
                 .build();
 
         this.priorityPanel.active = false;
@@ -307,23 +337,23 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
                         Component.literal("▶"), pButton -> {
                             changePriority(modifier);
                         })
-                .bounds(56, 30, 6, 13)
+                .bounds(98, 30, 8, 13)
                 .build());
 
-        for (Button button : this.priorityConfigButtons){
-            this.addRenderableWidget(button);
+        for (AbstractWidget widget : this.priorityConfigButtons){
+            this.addRenderableWidget(widget);
         }
     }
 
     private void updatePriorityButtons(){
-        if (this.data.isEnabled(editingInsert, channelEdit)){
+        if (editingInsert && this.data.isEnabled(editingInsert, channelEdit)){
             for (int i = 0; i < 6 ; i++){
                 this.priorityConfigButtons.get(i).visible = true;
             }
-            this.priorityPanel.setMessage(Component.literal( "" + data.getConfig(editingInsert, channelEdit).getPriority()));
+            this.priorityPanel.setMessage(Component.literal( "Priority: " + data.getConfig(editingInsert, channelEdit).getPriority()));
         } else {
-            for (Button button : this.priorityConfigButtons){
-                button.visible = false;
+            for (AbstractWidget widget : this.priorityConfigButtons){
+                widget.visible = false;
             }
         }
     }
@@ -346,7 +376,7 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
                         Component.literal(""), pButton -> {
                             toggleWhiteList();
                         })
-                .bounds(152, 59, 18, 18)
+                .bounds(167, 59, 18, 18)
                 .tooltip(Tooltip.create(Component.literal("Set whitelist")))
                 .build();
 
@@ -356,7 +386,7 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
                         Component.literal(""), pButton -> {
                             toggleExact();
                         })
-                .bounds(152, 85, 18, 18)
+                .bounds(167, 85, 18, 18)
                 .tooltip(Tooltip.create(Component.literal("Set exact")))
                 .build();
 
@@ -386,10 +416,14 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
                         Component.literal("Enable"), pButton -> {
                             toggle();
                         })
-                .bounds(91, 30, 65, 13)
+                .bounds(140, 13, 45, 13)
                 .build();
 
         this.addRenderableWidget(this.enableDisableButton);
+    }
+
+    private void updateSlots(){
+
     }
 
     @Override
@@ -412,8 +446,10 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
         updateInsertExtractPanel();
         updateSideConfigButtons();
         updateToggleButton();
-        updatePriorityButtons();
         updateWhiteListButtons();
+
+        updateFillRegimeButton();
+        updatePriorityButtons();
 
         renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, delta);

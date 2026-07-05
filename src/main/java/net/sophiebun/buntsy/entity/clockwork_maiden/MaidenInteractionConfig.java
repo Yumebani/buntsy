@@ -20,16 +20,21 @@ public class MaidenInteractionConfig {
     private boolean whiteList;
     private boolean exact;
 
-    public MaidenInteractionConfig(BlockPos pos, Direction side, int priority, List<ItemStack> filter, boolean whiteList, boolean exact){
+    private MaidenFillRegime fillRegime = null;
+    private int extractSize = -1;
+
+    public MaidenInteractionConfig(BlockPos pos, Direction side, int priority, List<ItemStack> filter, boolean whiteList, boolean exact, MaidenFillRegime fillRegime){
         this.pos = pos;
         this.side = side;
         this.priority = priority;
         this.filter = filter;
         this.whiteList = whiteList;
         this.exact = exact;
+
+        this.fillRegime = fillRegime;
     }
 
-    public MaidenInteractionConfig(BlockPos pos, Direction side, int priority, boolean whiteList, boolean exact){
+    public MaidenInteractionConfig(BlockPos pos, Direction side, int priority, boolean whiteList, boolean exact, MaidenFillRegime fillRegime){
         this.pos = pos;
         this.side = side;
         this.priority = priority;
@@ -40,6 +45,40 @@ public class MaidenInteractionConfig {
         for (int i = 0; i < 12; i++){
             this.filter.add(ItemStack.EMPTY);
         }
+
+        this.fillRegime = fillRegime;
+    }
+
+    public MaidenInteractionConfig(BlockPos pos, Direction side, int priority, List<ItemStack> filter, boolean whiteList, boolean exact, int extractSize){
+        this.pos = pos;
+        this.side = side;
+        this.priority = priority;
+        this.filter = filter;
+        this.whiteList = whiteList;
+        this.exact = exact;
+
+        this.extractSize = extractSize;
+    }
+
+    public MaidenInteractionConfig(BlockPos pos, Direction side, int priority, boolean whiteList, boolean exact, int extractSize){
+        this.pos = pos;
+        this.side = side;
+        this.priority = priority;
+        this.whiteList = whiteList;
+        this.exact = exact;
+
+        this.filter = new ArrayList<>();
+        for (int i = 0; i < 12; i++){
+            this.filter.add(ItemStack.EMPTY);
+        }
+
+        this.extractSize = extractSize;
+    }
+
+    public static MaidenInteractionConfig makeNewConfig(boolean inserting, BlockPos pos){
+        return inserting ?
+                new MaidenInteractionConfig(pos, Direction.NORTH, 0, false, false, MaidenFillRegime.STACK):
+                new MaidenInteractionConfig(pos, Direction.NORTH, 0, false, false, 64);
     }
 
     public void setWhiteList(boolean whiteList) {
@@ -106,6 +145,16 @@ public class MaidenInteractionConfig {
         tag.putBoolean("maiden_config.whitelist", whiteList);
         tag.putBoolean("maiden_config.exact", exact);
 
+        tag.putBoolean("maiden_config.has_fill_regime", this.fillRegime != null);
+        if (this.fillRegime != null){
+            tag.putInt("maiden_config.fill_regime", this.fillRegime);
+        }
+
+        tag.putBoolean("maiden_config.has_extract_size", this.extractSize > -1);
+        if (this.fillRegime != null){
+            tag.putInt("maiden_config.extract_size", this.extractSize);
+        }
+
         return tag;
     }
 
@@ -123,6 +172,27 @@ public class MaidenInteractionConfig {
         boolean whiteList = tag.getBoolean("maiden_config.whitelist");
         boolean exact = tag.getBoolean("maiden_config.exact");
 
+        MaidenFillRegime regime = null;
+        if (tag.getBoolean("maiden_config.has_fill_regime")){
+            regime = t
+        }
+
         return new MaidenInteractionConfig(pos, side, priority, filter, whiteList, exact);
+    }
+
+    public MaidenInteractionConfig copy() {
+        return new MaidenInteractionConfig(pos, side, priority, filter.stream().toList(), whiteList, exact);
+    }
+
+    public void cycleFillRegime() {
+        int regime = this.fillRegime.ordinal();
+        if (++regime >= MaidenFillRegime.values().length){
+            regime = 0;
+        }
+        this.fillRegime = MaidenFillRegime.values()[regime];
+    }
+
+    public MaidenFillRegime getFillRegime() {
+        return fillRegime;
     }
 }

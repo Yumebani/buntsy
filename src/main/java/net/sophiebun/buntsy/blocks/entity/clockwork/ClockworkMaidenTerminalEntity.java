@@ -22,19 +22,22 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.sophiebun.buntsy.entity.clockwork_maiden.CMTParticipantData;
 import net.sophiebun.buntsy.entity.clockwork_maiden.MaidenInteractionConfig;
 import net.sophiebun.buntsy.entity.clockwork_maiden.MaidenTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
 
     protected final ContainerData data;
 
-    private final List<BlockPos> registeredBlocks = new ArrayList<>();
+    private final Map<BlockPos, CMTParticipantData> registeredConfigs = new HashMap<>();
     private final List<MaidenTask> maidenTasks = new ArrayList<>();
 
     private int tasksRoundRobin = 0;
@@ -135,11 +138,11 @@ public abstract class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity
     }
 
     public void addNewBlock(BlockEntity block){
-        this.registeredBlocks.add(block.getBlockPos());
+        this.registeredConfigs.put(block.getBlockPos(), new CMTParticipantData());
     }
 
     public void removeBlock(BlockEntity block){
-        this.registeredBlocks.remove(block.getBlockPos());
+        this.registeredConfigs.remove(block.getBlockPos());
     }
 
     public boolean hasTask(){
@@ -156,5 +159,32 @@ public abstract class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
 
+    }
+
+    public CMTParticipantData getData(BlockPos target) {
+        return this.registeredConfigs.get(target);
+    }
+
+
+    public void updateData(CMTParticipantData data, BlockPos target) {
+
+        boolean recompileTasks = false;
+        for (Integer channel : data.getChanged().keySet()){
+            boolean[] changes = data.getChanged().get(channel);
+
+            if (changes[0]){
+                this.registeredConfigs.get(target).setEnabled(true, channel, data.isEnabled(true, channel));
+                this.registeredConfigs.get(target).setConfig(true, channel, data.getConfig(true, channel));
+                recompileTasks = true;
+            }
+
+            if (changes[1]){
+                this.registeredConfigs.get(target).setEnabled(false, channel, data.isEnabled(false, channel));
+                this.registeredConfigs.get(target).setConfig(false, channel, data.getConfig(false, channel));
+                recompileTasks = true;
+            }
+        }
+
+        if (recompileTasks) this.recompileTasks();
     }
 }
