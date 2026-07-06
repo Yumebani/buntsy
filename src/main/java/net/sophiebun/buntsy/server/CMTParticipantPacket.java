@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.PacketDistributor;
@@ -94,7 +95,7 @@ public class CMTParticipantPacket {
     private void handlePacketClient(NetworkEvent.Context ctx) {
         Minecraft.getInstance().setScreen(
                 new CMTParticipantScreen(new CMTParticipantMenu(0, Minecraft.getInstance().player),
-                        Minecraft.getInstance().player.getInventory(),
+                        Minecraft.getInstance().player.getInventory(), Component.translatable("screen.cmt_participant")).loadData(
                         target,
                         terminal,
                         data,

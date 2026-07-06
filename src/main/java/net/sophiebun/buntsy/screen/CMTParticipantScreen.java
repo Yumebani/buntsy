@@ -27,7 +27,7 @@ import java.util.List;
 public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipantMenu> {
 
     public static final int MAX_CHANNELS = 16;
-    private int channelEdit = 1;
+    private int channelEdit = 0;
     private Button channelPanel;
 
     private boolean editingInsert = true;
@@ -50,27 +50,42 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
 
     private int modifier = 1;
 
-    private final List<Direction> availableSides;
+    private  List<Direction> availableSides;
 
-    private final BlockPos pos;
-    private final BlockPos terminal;
+    private  BlockPos pos;
+    private  BlockPos terminal;
 
-    private final CMTParticipantData data;
+    private  CMTParticipantData data;
+
+    private int xGlobal;
+    private int yGlobal;
 
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(BuntsyMod.MODID, "textures/gui/clockwork_crafter_gui.png");
+            new ResourceLocation(BuntsyMod.MODID, "textures/gui/clockwork_maiden_terminal_gui.png");
 
     public CMTParticipantScreen(CMTParticipantMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
+        this.imageHeight = 207;
+        this.imageWidth = 192;
+
         this.pos = null;
         this.terminal = null;
         this.data = null;
         this.availableSides = null;
     }
 
-    public CMTParticipantScreen(CMTParticipantMenu pMenu, Inventory pPlayerInventory, BlockPos pos, BlockPos terminal, CMTParticipantData data, List<Direction> availableSides) {
+    public CMTParticipantScreen loadData(BlockPos pos, BlockPos terminal, CMTParticipantData data, List<Direction> availableSides){
+        this.pos = pos;
+        this.terminal = terminal;
+        this.data = data;
+        this.availableSides = availableSides;
+        return this;
+    }
+
+    private CMTParticipantScreen(CMTParticipantMenu pMenu, Inventory pPlayerInventory, BlockPos pos, BlockPos terminal, CMTParticipantData data, List<Direction> availableSides) {
         super(pMenu, pPlayerInventory, Component.translatable("screen.cmt_participant"));
         this.imageHeight = 205;
+        this.imageWidth = 192;
 
         this.pos = pos;
         this.terminal = terminal;
@@ -89,7 +104,11 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
     protected void init() {
         super.init();
         this.titleLabelX = 37;
-        this.inventoryLabelY = 116;
+        this.titleLabelY = 2;
+        this.inventoryLabelY = 117;
+
+        xGlobal = (width - imageWidth) / 2;
+        yGlobal = (height - imageHeight) / 2;
 
         addChannelPanel();
         addInsertExtractEdit();
@@ -108,10 +127,10 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
 
         saveCurrentWhiteList();
         channelEdit += amount;
-        if (channelEdit < 1){
-            channelEdit = MAX_CHANNELS;
-        } else if (channelEdit > MAX_CHANNELS){
-            channelEdit = 1;
+        if (channelEdit < 0){
+            channelEdit = MAX_CHANNELS - 1;
+        } else if (channelEdit >= MAX_CHANNELS){
+            channelEdit = 0;
         }
         loadWhiteList();
     }
@@ -122,12 +141,12 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal("◀"), pButton -> {
                             changeChannel(-1);
                         })
-                .bounds(8, 13, 8, 13)
+                .bounds(xGlobal + 8, yGlobal + 13, 8, 13)
                 .build());
 
         this.channelPanel = Button.builder(
                         Component.literal("Channel 1"), pButton -> {})
-                .bounds(19, 13, 55, 13)
+                .bounds(xGlobal + 19, yGlobal + 13, 55, 13)
                 .build();
 
         this.channelPanel.active = false;
@@ -137,12 +156,12 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal("▶"), pButton -> {
                             changeChannel(1);
                         })
-                .bounds(77, 13, 8, 13)
+                .bounds(xGlobal + 77, yGlobal + 13, 8, 13)
                 .build());
     }
 
     private void updateChannelPanel(){
-        this.channelPanel.setMessage(Component.literal("Channel " + this.channelEdit));
+        this.channelPanel.setMessage(Component.literal("Channel " + (this.channelEdit + 1)));
     }
 
     private void changeInsertExtractEdit(){
@@ -186,15 +205,14 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal("Insert"), pButton -> {
                             changeInsertExtractEdit();
                         })
-                .bounds(90, 13, 45, 13)
+                .bounds(xGlobal + 90, yGlobal + 13, 45, 13)
                 .build();
 
-        this.insertExtractPanel.active = false;
         this.addRenderableWidget(this.insertExtractPanel);
     }
 
     private void updateInsertExtractPanel(){
-        this.channelPanel.setMessage(Component.literal(this.editingInsert ? "Insert" : "Extract"));
+        this.insertExtractPanel.setMessage(Component.literal(this.editingInsert ? "Insert" : "Extract"));
     }
 
     private void setSide(Direction side){
@@ -218,7 +236,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal(""), pButton -> {
                             setSide( Direction.DOWN);
                         })
-                .bounds(8, 93, 20, 20)
+                .bounds(xGlobal + 8, yGlobal + 93, 20, 20)
                 .build();
 
         button.active = availableSides.contains(Direction.DOWN);
@@ -228,7 +246,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal(""), pButton -> {
                             setSide( Direction.UP);
                         })
-                .bounds(54, 47, 20, 20)
+                .bounds(xGlobal + 54, yGlobal + 47, 20, 20)
                 .build();
 
         button.active = availableSides.contains(Direction.UP);
@@ -238,7 +256,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal(""), pButton -> {
                             setSide( Direction.NORTH);
                         })
-                .bounds(31, 47, 20, 20)
+                .bounds(xGlobal + 31, yGlobal + 47, 20, 20)
                 .build();
 
         button.active = availableSides.contains(Direction.NORTH);
@@ -248,7 +266,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal(""), pButton -> {
                             setSide( Direction.SOUTH);
                         })
-                .bounds(31, 93, 20, 20)
+                .bounds(xGlobal + 31, yGlobal + 93, 20, 20)
                 .build();
 
         button.active = availableSides.contains(Direction.SOUTH);
@@ -258,7 +276,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal(""), pButton -> {
                             setSide( Direction.WEST);
                         })
-                .bounds(8, 70, 20, 20)
+                .bounds(xGlobal + 8, yGlobal + 70, 20, 20)
                 .build();
 
         button.active = availableSides.contains(Direction.WEST);
@@ -268,7 +286,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal(""), pButton -> {
                             setSide( Direction.EAST);
                         })
-                .bounds(54, 70, 20, 20)
+                .bounds(xGlobal + 54, yGlobal + 70, 20, 20)
                 .build();
 
         button.active = availableSides.contains(Direction.EAST);
@@ -299,12 +317,12 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
 
     private void renderSideConfigButtonsIcons(GuiGraphics guiGraphics){
         if (this.data.isEnabled(editingInsert, channelEdit)){
-            guiGraphics.blit(TEXTURE, 8, 93, 176, 0, 20, 20);
-            guiGraphics.blit(TEXTURE, 54, 47, 176, 20, 20, 20);
-            guiGraphics.blit(TEXTURE, 31, 47, 176, 40, 20, 20);
-            guiGraphics.blit(TEXTURE, 31, 93, 176, 60, 20, 20);
-            guiGraphics.blit(TEXTURE, 8, 70, 176, 80, 20, 20);
-            guiGraphics.blit(TEXTURE, 54, 70, 176, 100, 20, 20);
+            guiGraphics.blit(TEXTURE, xGlobal + 8, yGlobal + 93, 193, 0, 20, 20);
+            guiGraphics.blit(TEXTURE, xGlobal + 54, yGlobal + 47, 193, 20, 20, 20);
+            guiGraphics.blit(TEXTURE, xGlobal + 31, yGlobal + 47, 193, 40, 20, 20);
+            guiGraphics.blit(TEXTURE, xGlobal + 31, yGlobal + 93, 193, 60, 20, 20);
+            guiGraphics.blit(TEXTURE, xGlobal + 8, yGlobal + 70, 193, 80, 20, 20);
+            guiGraphics.blit(TEXTURE, xGlobal + 54, yGlobal + 70, 193, 100, 20, 20);
         }
     }
 
@@ -337,7 +355,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal("One stack"), pButton -> {
                             cycleFillRegime();
                         })
-                .bounds(117, 30, 45, 13)
+                .bounds(xGlobal + 117, yGlobal + 30, 45, 13)
                 .tooltip(Tooltip.create(Component.literal("Change fill regime")))
                 .build();
 
@@ -365,12 +383,12 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal("◀"), pButton -> {
                             changePriority(-modifier);
                         })
-                .bounds(61, 30, 8, 13)
+                .bounds(xGlobal + 61, yGlobal + 30, 8, 13)
                 .build());
 
         this.priorityPanel = Button.builder(
                         Component.literal("0"), pButton -> {})
-                .bounds(72, 30, 23, 13)
+                .bounds(xGlobal + 72, yGlobal + 30, 23, 13)
                 .build();
 
         this.priorityPanel.active = false;
@@ -380,7 +398,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal("▶"), pButton -> {
                             changePriority(modifier);
                         })
-                .bounds(98, 30, 8, 13)
+                .bounds(xGlobal + 98, yGlobal + 30, 8, 13)
                 .build());
 
         for (AbstractWidget widget : this.priorityConfigButtons){
@@ -390,7 +408,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
 
     private void updatePriorityButtons(){
         if (editingInsert && this.data.isEnabled(editingInsert, channelEdit)){
-            for (int i = 0; i < 6 ; i++){
+            for (int i = 0; i < 3 ; i++){
                 this.priorityConfigButtons.get(i).visible = true;
             }
             this.priorityPanel.setMessage(Component.literal( "" + data.getConfig(editingInsert, channelEdit).getPriority()));
@@ -419,7 +437,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal("Nearest"), pButton -> {
                             cycleSelectionRegime();
                         })
-                .bounds(117, 30, 45, 13)
+                .bounds(xGlobal + 117, yGlobal + 30, 45, 13)
                 .tooltip(Tooltip.create(Component.literal("Change distribution regime")))
                 .build();
 
@@ -427,7 +445,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
     }
 
     private void updateSelectionRegimeButton(){
-        if (editingInsert && this.data.isEnabled(editingInsert, channelEdit)){
+        if (!editingInsert && this.data.isEnabled(editingInsert, channelEdit)){
             this.selectionRegimeButton.visible = true;
             this.selectionRegimeButton.setMessage(Component.literal(
                     switch (this.data.getConfig(editingInsert, channelEdit).getSelectionRegime()){
@@ -447,12 +465,12 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal("◀"), pButton -> {
                             changeStackSize(modifier < 10 ? 1 : modifier < 100 ? 4 : 16);
                         })
-                .bounds(61, 30, 8, 13)
+                .bounds(xGlobal + 61, yGlobal + 30, 8, 13)
                 .build());
 
         this.extractCountPanel = Button.builder(
                         Component.literal("0"), pButton -> {})
-                .bounds(72, 30, 23, 13)
+                .bounds(xGlobal + 72, yGlobal + 30, 23, 13)
                 .build();
 
         this.extractCountPanel.active = false;
@@ -462,7 +480,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal("▶"), pButton -> {
                             changeStackSize(modifier < 10 ? -1 : modifier < 100 ? -4 : -16);
                         })
-                .bounds(98, 30, 8, 13)
+                .bounds(xGlobal + 98, yGlobal + 30, 8, 13)
                 .build());
 
         for (AbstractWidget widget : this.priorityConfigButtons){
@@ -472,7 +490,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
 
     private void updateStackSizeButtons(){
         if (!editingInsert && this.data.isEnabled(editingInsert, channelEdit)){
-            for (int i = 0; i < 6 ; i++){
+            for (int i = 0; i < 3 ; i++){
                 this.extractCountConfigButtons.get(i).visible = true;
             }
             this.extractCountPanel.setMessage(Component.literal("" + data.getConfig(editingInsert, channelEdit).getExtractCount()));
@@ -501,7 +519,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal(""), pButton -> {
                             toggleWhiteList();
                         })
-                .bounds(167, 59, 18, 18)
+                .bounds(xGlobal + 167, yGlobal + 59, 18, 18)
                 .tooltip(Tooltip.create(Component.literal("Set whitelist")))
                 .build();
 
@@ -511,7 +529,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal(""), pButton -> {
                             toggleExact();
                         })
-                .bounds(167, 85, 18, 18)
+                .bounds(xGlobal + 167, yGlobal + 85, 18, 18)
                 .tooltip(Tooltip.create(Component.literal("Set exact")))
                 .build();
 
@@ -541,7 +559,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal("Enable"), pButton -> {
                             toggle();
                         })
-                .bounds(140, 13, 45, 13)
+                .bounds(xGlobal + 140, yGlobal + 13, 45, 13)
                 .build();
 
         this.addRenderableWidget(this.enableDisableButton);
@@ -549,31 +567,31 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
 
     private void renderPriorityText(GuiGraphics guiGraphics){
         if (editingInsert && this.data.isEnabled(editingInsert, channelEdit)){
-            guiGraphics.drawString(this.font, Component.literal("Priority"), 24, 31, 0xFFFFFFFF, true);
+            guiGraphics.drawString(this.font, Component.literal("Priority"), xGlobal + 24, yGlobal + 31, 0xFFFFFFFF, true);
         }
     }
 
     private void renderStacksizeText(GuiGraphics guiGraphics){
         if (!editingInsert && this.data.isEnabled(editingInsert, channelEdit)){
-            guiGraphics.drawString(this.font, Component.literal("Extract size"), 24, 31, 0xFFFFFFFF, true);
+            guiGraphics.drawString(this.font, Component.literal("Extract size"), xGlobal + 24, yGlobal + 31, 0xFFFFFFFF, true);
         }
     }
 
     private void renderFilterIcons(GuiGraphics guiGraphics){
         if (this.data.isEnabled(editingInsert, channelEdit)){
             if (this.data.getConfig(editingInsert, channelEdit).getWhiteList()){
-                guiGraphics.blit(TEXTURE, 167, 59, 176, 120, 18, 18);
+                guiGraphics.blit(TEXTURE, xGlobal + 193, yGlobal + 59, 176, 138, 18, 18);
             } else {
-                guiGraphics.blit(TEXTURE, 167, 59, 176, 138, 18, 18);
+                guiGraphics.blit(TEXTURE, xGlobal + 193, yGlobal + 59, 176, 120, 18, 18);
             }
 
-            guiGraphics.blit(TEXTURE, 167, 85, 176, 156, 18, 18);
+            guiGraphics.blit(TEXTURE, xGlobal + 193, yGlobal + 85, 176, 156, 18, 18);
         }
     }
 
     private void renderFilterGrid(GuiGraphics guiGraphics){
         if (this.data.isEnabled(editingInsert, channelEdit)){
-            guiGraphics.blit(TEXTURE, 85, 54, 15, 125, 18 * 4, 18 * 3);
+            guiGraphics.blit(TEXTURE, xGlobal + 85, yGlobal + 54, 15, 125, 18 * 4, 18 * 3);
         }
     }
 
@@ -624,6 +642,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
         renderPriorityText(guiGraphics);
         renderStacksizeText(guiGraphics);
         renderFilterIcons(guiGraphics);
+        renderFilterGrid(guiGraphics);
 
         renderTooltip(guiGraphics, mouseX, mouseY);
     }

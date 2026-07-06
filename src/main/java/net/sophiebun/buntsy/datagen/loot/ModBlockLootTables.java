@@ -344,6 +344,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get());
         this.dropSelf(ModBlocks.CLOCKWORK_CRAFTER.get());
         this.dropSelf(ModBlocks.CLOCKWORK_FAIRY_TERMINAL.get());
+        this.dropSelf(ModBlocks.CLOCKWORK_MAIDEN_TERMINAL.get());
 
         this.dropSelf(ModBlocks.PRISMATIC_BEACON.get());
         this.dropSelf(ModBlocks.PRISMATIC_BEACON_BASE.get());

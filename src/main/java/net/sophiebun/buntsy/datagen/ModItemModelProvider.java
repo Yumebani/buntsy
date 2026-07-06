@@ -252,7 +252,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         withExistingParent(ModItems.SILKBUN_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.FAIRY_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.HOOTCAT_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
-        withExistingParent(ModItems.CLOCKWORK_MAIDEN_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.MARIONETTE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
         //Fume bottle
         fumeBottleItem(ModItems.FUME_BOTTLE);

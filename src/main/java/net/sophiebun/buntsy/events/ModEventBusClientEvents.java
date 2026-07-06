@@ -31,6 +31,7 @@ public class ModEventBusClientEvents {
         event.registerLayerDefinition(ModModelLayers.FAIRY_LAYER, FairyModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HOOTCAT_LAYER, HootCatModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HOOTCAT_COLLAR_LAYER, HootCatModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.MARIONETTE_LAYER, MarionetteModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.CLOCKWORK_MAIDEN_LAYER, ClockworkMaidenModel::createBodyLayer);
     }
 

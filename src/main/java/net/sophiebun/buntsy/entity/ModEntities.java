@@ -10,6 +10,7 @@ import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.entity.animals.Fairy;
 import net.sophiebun.buntsy.entity.animals.Hootcat;
 import net.sophiebun.buntsy.entity.animals.Silkbun;
+import net.sophiebun.buntsy.entity.clockwork_maiden.ClockworkMaiden;
 import net.sophiebun.buntsy.entity.monsters.Marionette;
 
 public class ModEntities {

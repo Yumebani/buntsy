@@ -46,5 +46,15 @@ public class ModPacketHandler {
                 ModCocoonBagServerPacket::write,
                 ModCocoonBagServerPacket::read,
                 ModCocoonBagServerPacket::handle);
+
+        INSTANCE.registerMessage(6, ClockworkCardPuncherPacket.class,
+                ClockworkCardPuncherPacket::write,
+                ClockworkCardPuncherPacket::read,
+                ClockworkCardPuncherPacket::handle);
+
+        INSTANCE.registerMessage(7, CMTParticipantPacket.class,
+                CMTParticipantPacket::write,
+                CMTParticipantPacket::read,
+                CMTParticipantPacket::handle);
     }
 }

@@ -190,6 +190,70 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(ModItems.CLOCKWORK_PROCESSOR.get()), has(ModItems.CLOCKWORK_PROCESSOR.get()))
                 .save(consumer);
 
+        //Maiden
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CLOCKWORK_MAIDEN.get(), 1)
+                .define('B', ModItems.CLOCKWORK_BRASS.get())
+                .define('D', ModItems.CLOCKWORK_PROCESSOR.get())
+                .define('E', ModItems.CLOCKWORK_GEAR.get())
+                .pattern("EDE")
+                .pattern("BDB")
+                .pattern("BEB")
+                .unlockedBy(getHasName(ModItems.CLOCKWORK_PROCESSOR.get()), has(ModItems.CLOCKWORK_PROCESSOR.get()))
+                .save(consumer);
+
+        //Fairy terminal
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.EMPTY_CLOCKWORK_FAIRY_TERMINAL.get(), 1)
+                .define('A', ModItems.SIMPLE_CLOCKWORK_UNIT.get())
+                .define('B', ModItems.CLOCKWORK_BRASS.get())
+                .define('C', ModBlocks.FAIRY_OFFERING_BENCH.get())
+                .define('D', ModItems.CLOCKWORK_PROCESSOR.get())
+                .define('E', ModItems.CLOCKWORK_GEAR.get())
+                .pattern("BDB")
+                .pattern("EAE")
+                .pattern("BCB")
+                .unlockedBy(getHasName(ModItems.CLOCKWORK_PROCESSOR.get()), has(ModItems.CLOCKWORK_PROCESSOR.get()))
+                .save(consumer);
+
+        //Clockwork crafter
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CLOCKWORK_CRAFTER.get(), 1)
+                .define('A', Items.CRAFTING_TABLE)
+                .define('B', ModItems.CLOCKWORK_BRASS.get())
+                .define('E', ModItems.CLOCKWORK_GEAR.get())
+                .pattern("BE")
+                .pattern("BA")
+                .unlockedBy(getHasName(ModItems.CLOCKWORK_PROCESSOR.get()), has(ModItems.CLOCKWORK_PROCESSOR.get()))
+                .save(consumer);
+
+        //Clockwork geyser
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CLOCKWORK_GEYSER_COLLECTOR.get(), 1)
+                .define('A', ModItems.SILK_FABRIC.get())
+                .define('B', ModItems.CLOCKWORK_BRASS.get())
+                .define('E', ModItems.CLOCKWORK_GEAR.get())
+                .pattern("BEB")
+                .pattern("AAA")
+                .unlockedBy(getHasName(ModItems.CLOCKWORK_PROCESSOR.get()), has(ModItems.CLOCKWORK_PROCESSOR.get()))
+                .save(consumer);
+
+        //Clockwork powder
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get(), 1)
+                .define('A', ModItems.SILK_FABRIC.get())
+                .define('B', ModItems.CLOCKWORK_BRASS.get())
+                .define('E', ModItems.CLOCKWORK_GEAR.get())
+                .pattern("AAA")
+                .pattern("BEB")
+                .unlockedBy(getHasName(ModItems.CLOCKWORK_PROCESSOR.get()), has(ModItems.CLOCKWORK_PROCESSOR.get()))
+                .save(consumer);
+
+        //Clockwork syrup extractor
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CLOCKWORK_SYRUP_EXTRACTOR.get(), 1)
+                .define('A', ModBlocks.SYRUP_EXTRACTOR.get())
+                .define('B', ModItems.CLOCKWORK_BRASS.get())
+                .define('E', ModItems.CLOCKWORK_GEAR.get())
+                .pattern("EBE")
+                .pattern("AEA")
+                .unlockedBy(getHasName(ModItems.CLOCKWORK_PROCESSOR.get()), has(ModItems.CLOCKWORK_PROCESSOR.get()))
+                .save(consumer);
+
         //Silk spool
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SILK_SPOOL.get(), 1)
                 .define('A', ModItems.SILK.get())
@@ -487,6 +551,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern(" GF")
                 .pattern(" SG")
                 .pattern("S  ")
+                .unlockedBy(getHasName(ModItems.FAIRY_DUST.get()), has(ModItems.FAIRY_DUST.get()))
+                .save(consumer);
+
+        //Binding staff
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CLOCKWORK_CARD_PUNCHER.get(), 1)
+                .define('S', Items.PAPER)
+                .define('E', ModItems.CLOCKWORK_PROCESSOR.get())
+                .define('G', ModItems.CLOCKWORK_GEAR.get())
+                .define('F', ModItems.CLOCKWORK_GEAR.get())
+                .pattern("GEG")
+                .pattern("FSF")
                 .unlockedBy(getHasName(ModItems.FAIRY_DUST.get()), has(ModItems.FAIRY_DUST.get()))
                 .save(consumer);
 

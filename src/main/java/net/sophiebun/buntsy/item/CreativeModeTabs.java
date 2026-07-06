@@ -267,6 +267,7 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get());
                         pOutput.accept(ModBlocks.CLOCKWORK_CRAFTER.get());
                         pOutput.accept(ModBlocks.CLOCKWORK_FAIRY_TERMINAL.get());
+                        pOutput.accept(ModBlocks.CLOCKWORK_MAIDEN_TERMINAL.get());
                         pOutput.accept(ModBlocks.GIANT_COCOON.get());
                         pOutput.accept(ModBlocks.SYRUP_EXTRACTOR.get());
 
@@ -286,6 +287,7 @@ public class CreativeModeTabs {
 
                         pOutput.accept(ModItems.FAIRY_STAFF.get());
                         pOutput.accept(ModItems.BINDING_STAFF.get());
+                        pOutput.accept(ModItems.CLOCKWORK_CARD_PUNCHER.get());
 
                         pOutput.accept(ModItems.EMPTY_CLOCKWORK_FAIRY_TERMINAL.get());
 
@@ -414,7 +416,8 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.SILKBUN_SPAWN_EGG.get());
                         pOutput.accept(ModItems.FAIRY_SPAWN_EGG.get());
                         pOutput.accept(ModItems.HOOTCAT_SPAWN_EGG.get());
-                        pOutput.accept(ModItems.CLOCKWORK_MAIDEN_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.MARIONETTE_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.CLOCKWORK_MAIDEN.get());
 
                     })
                     .build());

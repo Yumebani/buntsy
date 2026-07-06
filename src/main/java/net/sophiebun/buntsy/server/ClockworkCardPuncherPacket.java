@@ -18,6 +18,7 @@ import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkMaidenTerminalEntit
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyOfferingBenchBlockEntity;
 import net.sophiebun.buntsy.entity.animals.Fairy;
+import net.sophiebun.buntsy.entity.clockwork_maiden.ClockworkMaiden;
 import net.sophiebun.buntsy.tag.ModTags;
 
 import java.util.ArrayList;
@@ -139,7 +140,7 @@ public class ClockworkCardPuncherPacket {
         if (maiden == null || !maiden.isAlive()) return;
 
         if (operationType == FairyStaffOperationType.CLEAR_DATA){
-            maiden.clearBlockEntityData();
+            maiden.clearBlockEntityData(level);
             finishSuccess(player, "Cleared maiden data");
         }
         else if (operationType == FairyStaffOperationType.SET_BLOCK){
@@ -148,11 +149,11 @@ public class ClockworkCardPuncherPacket {
             if (blockEntity != null && (blockEntity instanceof  ClockworkMaidenTerminalEntity)) {
                 
                 if (maiden.containsTerminal((ClockworkMaidenTerminalEntity) blockEntity)){
-                    maiden.clearBlockEntityData();
+                    maiden.clearBlockEntityData(level);
                     finishSuccess(player, "Removed terminal");
                 }
                 else{
-                    maiden.registerTerminal((ClockworkMaidenTerminalEntity) blockEntity);
+                    maiden.registerTerminal((ClockworkMaidenTerminalEntity) blockEntity, level);
                     finishSuccess(player, "New terminal registered");
                 }
                 

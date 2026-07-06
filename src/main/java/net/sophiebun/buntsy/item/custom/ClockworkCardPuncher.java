@@ -43,7 +43,7 @@ public class ClockworkCardPuncher extends Item {
             } else if (this.selectedMaidenTerminal != null && !(pContext.getLevel().getBlockState(pContext.getClickedPos()).getBlock() instanceof ClockworkMaidenTerminalBlock)){
                 ModPacketHandler.INSTANCE.sendToServer(new ClockworkCardPuncherPacket(this.selectedMaidenTerminal, pContext.getClickedPos(), FairyStaffOperationType.SET_BLOCK));
                 return InteractionResult.SUCCESS;
-            } else if (pContext.getLevel().getBlockState(pContext.getClickedPos()).getBlock() instanceof ClockworkFairyTerminalBlock) {
+            } else if (pContext.getLevel().getBlockState(pContext.getClickedPos()).getBlock() instanceof ClockworkMaidenTerminalBlock) {
                 this.selectedMaidenTerminal = pContext.getClickedPos();
                 pContext.getPlayer().displayClientMessage(Component.literal("§aSelected maiden terminal"), true);
             } else if (this.selectedMaidenTerminal != null){

@@ -9,12 +9,21 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Containers;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.entity.clockwork_maiden.CMTParticipantData;
 import net.sophiebun.buntsy.entity.clockwork_maiden.MaidenInteractionConfig;
@@ -34,7 +43,6 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
     private final List<MaidenTask> maidenTasks = new ArrayList<>();
 
     private int tasksRoundRobin = 0;
-    private int maidenEntityId = -1;
 
     private final int BASE_BLOCK_COUNT = 12;
     private final int BASE_RANGE_COUNT = 8;
@@ -64,7 +72,7 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
         pTag.putInt("clockwork_maiden_terminal.data_count", registeredConfigs.size());
         for (int i = 0; i < registeredConfigs.size(); i++){
             pTag.put("clockwork_maiden_terminal.data_pos_" + i, NbtUtils.writeBlockPos(((BlockPos) registeredConfigs.keySet().toArray()[i])));
-            pTag.put("clockwork_maiden_terminal.data_" + i, registeredConfigs.get(i).getCompound());
+            pTag.put("clockwork_maiden_terminal.data_" + i, registeredConfigs.get(registeredConfigs.keySet().toArray()[i]).getCompound());
         }
 
         pTag.putInt("clockwork_maiden_terminal.task_count", maidenTasks.size());
@@ -73,7 +81,6 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
         }
 
         pTag.putInt("clockwork_maiden_terminal.task_round_robin", tasksRoundRobin);
-        pTag.putInt("clockwork_maiden_terminal.maiden_id", maidenEntityId);
 
         super.saveAdditional(pTag);
     }
@@ -95,7 +102,6 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
         }
 
         this.tasksRoundRobin = pTag.getInt("clockwork_maiden_terminal.task_round_robin");
-        this.maidenEntityId = pTag.getInt("clockwork_maiden_terminal.maiden_id");
     }
 
     @Nullable
@@ -114,36 +120,10 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
         super.onDataPacket(net, pkt);
     }
 
-    public void addMaiden(int maidenEntityId){
-        this.maidenEntityId = maidenEntityId;
-    }
-
-    public boolean hasMaiden(){
-        return this.maidenEntityId != -1;
-    }
-
-    public void clearMaiden(){
-        this.maidenEntityId = -1;
-    }
-
-    public void addMaidenTask(MaidenTask task){
-        this.maidenTasks.add(task);
-    }
-
-    public void removeMaidenTask(MaidenTask task){
-        this.maidenTasks.remove(task);
-    }
-
     public void addNewBlock(BlockEntity block){
         this.registeredConfigs.put(block.getBlockPos(), new CMTParticipantData());
-    }
-
-    public void removeBlock(BlockEntity block){
-        this.registeredConfigs.remove(block.getBlockPos());
-    }
-
-    public boolean hasTask(){
-        return !maidenTasks.isEmpty();
+        setChanged();
+        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
     }
 
     public MaidenTask getTask(){
@@ -212,11 +192,16 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
         }
 
         if (recompileTasks) this.recompileTasks();
+
+        setChanged();
+        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
     }
 
     public void clearData(ServerLevel level) {
         this.maidenTasks.clear();
         this.registeredConfigs.clear();
+        setChanged();
+        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
     }
 
     public boolean hasBlock(BlockPos blockPos) {

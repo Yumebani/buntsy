@@ -234,6 +234,8 @@ public class ModItems {
             "fairy_staff", () -> new FairyStaff(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> BINDING_STAFF = ItemsRegister.register(
             "binding_staff", () -> new BindingStaff(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> CLOCKWORK_CARD_PUNCHER = ItemsRegister.register(
+            "clockwork_card_puncher", () -> new ClockworkCardPuncher(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> HOT_CHOCOLATE_BUCKET = ItemsRegister.register(
             "hot_chocolate_bucket", () -> new BucketItem(ModFluids.SOURCE_HOT_CHOCOLATE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));

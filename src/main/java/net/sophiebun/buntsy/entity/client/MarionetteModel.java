@@ -10,12 +10,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.BowItem;
-import net.sophiebun.buntsy.entity.animations.ClockworkMaidenAnimationDefinition;
 import net.sophiebun.buntsy.entity.animations.MarionetteAnimationDefinition;
-import net.sophiebun.buntsy.entity.clockwork_maiden.ClockworkMaiden;
 import net.sophiebun.buntsy.entity.monsters.Marionette;
 
-public class ClockworkMaidenModel<T extends Entity> extends HierarchicalModel<T> {
+public class MarionetteModel<T extends Entity> extends HierarchicalModel<T> {
 
 	private final ModelPart Root;
 	private final ModelPart BodyB;
@@ -31,7 +29,7 @@ public class ClockworkMaidenModel<T extends Entity> extends HierarchicalModel<T>
 	private final ModelPart ArmLB;
 	private final ModelPart ArmRB;
 
-	public ClockworkMaidenModel(ModelPart root) {
+	public MarionetteModel(ModelPart root) {
 		this.Root = root.getChild("Root");
 		this.BodyB = this.Root.getChild("BodyB");
 		this.ClothesB = this.Root.getChild("ClothesB");
@@ -106,7 +104,7 @@ public class ClockworkMaidenModel<T extends Entity> extends HierarchicalModel<T>
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 
-		ClockworkMaiden maiden = ((ClockworkMaiden) entity);
+		Marionette maiden = ((Marionette) entity);
 
 		this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
 
@@ -117,8 +115,9 @@ public class ClockworkMaidenModel<T extends Entity> extends HierarchicalModel<T>
 		}
 
 		this.animate(maiden.windUpAnimationState, MarionetteAnimationDefinition.windupSpin, ageInTicks, 1f);
+		this.animate(maiden.bowStanceAnimationState, MarionetteAnimationDefinition.bowStance, ageInTicks, 2f);
 		this.animate(maiden.idleAnimationState, MarionetteAnimationDefinition.idleArms, ageInTicks, 1.5f);
-		this.animate(maiden.ItemCarryStanceAnimationState, ClockworkMaidenAnimationDefinition.itemHold, ageInTicks, 0.5f);
+		this.animate(maiden.swingAnimationState, MarionetteAnimationDefinition.attack, ageInTicks, 0.5f);
 	}
 
 	private void applyHeadRotation(float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {
