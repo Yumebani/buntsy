@@ -23,6 +23,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkFairyTerminalEntity;
+import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkMaidenTerminalEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class ClockworkMaidenTerminalBlock extends ClockworkBlock {
@@ -39,43 +40,13 @@ public class ClockworkMaidenTerminalBlock extends ClockworkBlock {
     }
 
     @Override
-    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-        if (pState.getBlock() != pNewState.getBlock()) {
-            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof ClockworkMaidenTerminalEntity) {
-                ((ClockworkMaidenTerminalEntity) blockEntity).drops(pLevel);
-            }
-        }
-
-        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
-    }
-
-    @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide() && !pPlayer.isCrouching()) {
-            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof ClockworkMaidenTerminalEntity) {
-                NetworkHooks.openScreen((ServerPlayer) pPlayer,(ClockworkMaidenTerminalEntity) blockEntity, pPos);
-                return InteractionResult.SUCCESS;
-            }
-            else {
-                throw new IllegalStateException("No container provider.");
-            }
+            return InteractionResult.PASS;
         }
 
         super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
-        return InteractionResult.SUCCESS;
-    }
-
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        if (pLevel.isClientSide()) {
-            return null;
-        }
-
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.CLOCKWORK_MAIDEN_TERMINAL_ENTITY.get(),
-                (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
+        return InteractionResult.PASS;
     }
 
     @Override

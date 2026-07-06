@@ -14,17 +14,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.sophiebun.buntsy.BuntsyMod;
+import net.sophiebun.buntsy.blocks.inventory.FilterSlot;
 import net.sophiebun.buntsy.entity.clockwork_maiden.CMTParticipantData;
 import net.sophiebun.buntsy.entity.clockwork_maiden.MaidenInteractionConfig;
-import org.jline.reader.Widget;
+import net.sophiebun.buntsy.server.CMTParticipantPacket;
+import net.sophiebun.buntsy.server.ModPacketHandler;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerScreen<ClockworkCrafterMenu> {
+public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipantMenu> {
 
     public static final int MAX_CHANNELS = 16;
     private int channelEdit = 1;
@@ -39,27 +39,50 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
 
     private Button priorityPanel;
     private final List<AbstractWidget> priorityConfigButtons = new ArrayList<>();
-
     private Button fillRegimeButton;
+
+    private Button extractCountPanel;
+    private final List<AbstractWidget> extractCountConfigButtons = new ArrayList<>();
+    private AbstractWidget selectionRegimeButton;
 
     private Button whiteListButton;
     private Button setExactButton;
 
     private int modifier = 1;
 
+    private final List<Direction> availableSides;
+
     private final BlockPos pos;
+    private final BlockPos terminal;
 
     private final CMTParticipantData data;
 
     private static final ResourceLocation TEXTURE =
             new ResourceLocation(BuntsyMod.MODID, "textures/gui/clockwork_crafter_gui.png");
 
-    public ClockworkMaidenTerminalParticipantScreen(CMTParticipantMenu pMenu, Inventory pPlayerInventory, Component pTitle, BlockPos pos, CMTParticipantData data) {
+    public CMTParticipantScreen(CMTParticipantMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
+        this.pos = null;
+        this.terminal = null;
+        this.data = null;
+        this.availableSides = null;
+    }
+
+    public CMTParticipantScreen(CMTParticipantMenu pMenu, Inventory pPlayerInventory, BlockPos pos, BlockPos terminal, CMTParticipantData data, List<Direction> availableSides) {
+        super(pMenu, pPlayerInventory, Component.translatable("screen.cmt_participant"));
         this.imageHeight = 205;
 
         this.pos = pos;
+        this.terminal = terminal;
         this.data = data;
+        this.availableSides = availableSides;
+    }
+
+    @Override
+    public void onClose() {
+        saveCurrentWhiteList();
+        ModPacketHandler.INSTANCE.sendToServer(new CMTParticipantPacket(this.data, this.terminal, this.pos));
+        super.onClose();
     }
 
     @Override
@@ -77,8 +100,8 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
         addPriorityButtons();
         addFillRegimeButton();
 
-        addStackSizeButton();
-        addSortRegimeButton();
+        addStackSizeButtons();
+        addSelectionRegimeButton();
     }
 
     private void changeChannel(int amount){
@@ -189,47 +212,67 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
 
     private void addSideConfigButtons(){
 
-        this.sideConfigButtons.add(Button.builder(
+        Button button;
+
+        button = Button.builder(
                         Component.literal(""), pButton -> {
                             setSide( Direction.DOWN);
                         })
                 .bounds(8, 93, 20, 20)
-                .build());
+                .build();
 
-        this.sideConfigButtons.add(Button.builder(
+        button.active = availableSides.contains(Direction.DOWN);
+        this.sideConfigButtons.add(button);
+
+        button = Button.builder(
                         Component.literal(""), pButton -> {
                             setSide( Direction.UP);
                         })
                 .bounds(54, 47, 20, 20)
-                .build());
+                .build();
 
-        this.sideConfigButtons.add(Button.builder(
+        button.active = availableSides.contains(Direction.UP);
+        this.sideConfigButtons.add(button);
+
+        button = Button.builder(
                         Component.literal(""), pButton -> {
                             setSide( Direction.NORTH);
                         })
                 .bounds(31, 47, 20, 20)
-                .build());
+                .build();
 
-        this.sideConfigButtons.add(Button.builder(
+        button.active = availableSides.contains(Direction.NORTH);
+        this.sideConfigButtons.add(button);
+
+        button = Button.builder(
                         Component.literal(""), pButton -> {
                             setSide( Direction.SOUTH);
                         })
                 .bounds(31, 93, 20, 20)
-                .build());
+                .build();
 
-        this.sideConfigButtons.add(Button.builder(
+        button.active = availableSides.contains(Direction.SOUTH);
+        this.sideConfigButtons.add(button);
+
+        button = Button.builder(
                         Component.literal(""), pButton -> {
                             setSide( Direction.WEST);
                         })
                 .bounds(8, 70, 20, 20)
-                .build());
+                .build();
 
-        this.sideConfigButtons.add(Button.builder(
+        button.active = availableSides.contains(Direction.WEST);
+        this.sideConfigButtons.add(button);
+
+        button = Button.builder(
                         Component.literal(""), pButton -> {
                             setSide( Direction.EAST);
                         })
                 .bounds(54, 70, 20, 20)
-                .build());
+                .build();
+
+        button.active = availableSides.contains(Direction.EAST);
+        this.sideConfigButtons.add(button);
 
         for (AbstractWidget widget : this.sideConfigButtons){
             this.addRenderableWidget(widget);
@@ -278,7 +321,7 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
 
     private void changePriority(int amount){
         MaidenInteractionConfig config = data.getConfig(editingInsert, channelEdit);
-        config.setPriority(config.getPriority() + amount);
+        config.setPriority(Math.max(Math.min(config.getPriority() + amount, 999), 0));
         setChanged();
     }
 
@@ -304,7 +347,7 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
     private void updateFillRegimeButton(){
         if (editingInsert && this.data.isEnabled(editingInsert, channelEdit)){
             this.fillRegimeButton.visible = true;
-            this.priorityPanel.setMessage(Component.literal(
+            this.fillRegimeButton.setMessage(Component.literal(
                     switch (this.data.getConfig(editingInsert, channelEdit).getFillRegime()){
                         case ONE -> "One item";
                         case STACK -> "One stack";
@@ -350,9 +393,91 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
             for (int i = 0; i < 6 ; i++){
                 this.priorityConfigButtons.get(i).visible = true;
             }
-            this.priorityPanel.setMessage(Component.literal( "Priority: " + data.getConfig(editingInsert, channelEdit).getPriority()));
+            this.priorityPanel.setMessage(Component.literal( "" + data.getConfig(editingInsert, channelEdit).getPriority()));
         } else {
             for (AbstractWidget widget : this.priorityConfigButtons){
+                widget.visible = false;
+            }
+        }
+    }
+
+    private void changeStackSize(int amount){
+        MaidenInteractionConfig config = data.getConfig(editingInsert, channelEdit);
+        config.setExtractCount(Math.max(Math.min(config.getExtractCount() + amount, 64), 1 ));
+        setChanged();
+    }
+
+    private void cycleSelectionRegime(){
+        MaidenInteractionConfig config = data.getConfig(editingInsert, channelEdit);
+        config.cycleSelectionRegime();
+        setChanged();
+    }
+
+    private void addSelectionRegimeButton(){
+
+        this.selectionRegimeButton = Button.builder(
+                        Component.literal("Nearest"), pButton -> {
+                            cycleSelectionRegime();
+                        })
+                .bounds(117, 30, 45, 13)
+                .tooltip(Tooltip.create(Component.literal("Change distribution regime")))
+                .build();
+
+        this.addRenderableWidget(selectionRegimeButton);
+    }
+
+    private void updateSelectionRegimeButton(){
+        if (editingInsert && this.data.isEnabled(editingInsert, channelEdit)){
+            this.selectionRegimeButton.visible = true;
+            this.selectionRegimeButton.setMessage(Component.literal(
+                    switch (this.data.getConfig(editingInsert, channelEdit).getSelectionRegime()){
+                        case NEAREST -> "Nearest";
+                        case ROUND_ROBIN -> "Round robin";
+                        case PRIORITY -> "Priority";
+                    }
+            ));
+        } else {
+            this.selectionRegimeButton.visible = false;
+        }
+    }
+
+    private void addStackSizeButtons(){
+
+        this.extractCountConfigButtons.add(Button.builder(
+                        Component.literal("◀"), pButton -> {
+                            changeStackSize(modifier < 10 ? 1 : modifier < 100 ? 4 : 16);
+                        })
+                .bounds(61, 30, 8, 13)
+                .build());
+
+        this.extractCountPanel = Button.builder(
+                        Component.literal("0"), pButton -> {})
+                .bounds(72, 30, 23, 13)
+                .build();
+
+        this.extractCountPanel.active = false;
+        this.extractCountConfigButtons.add(this.priorityPanel);
+
+        this.extractCountConfigButtons.add(Button.builder(
+                        Component.literal("▶"), pButton -> {
+                            changeStackSize(modifier < 10 ? -1 : modifier < 100 ? -4 : -16);
+                        })
+                .bounds(98, 30, 8, 13)
+                .build());
+
+        for (AbstractWidget widget : this.priorityConfigButtons){
+            this.addRenderableWidget(widget);
+        }
+    }
+
+    private void updateStackSizeButtons(){
+        if (!editingInsert && this.data.isEnabled(editingInsert, channelEdit)){
+            for (int i = 0; i < 6 ; i++){
+                this.extractCountConfigButtons.get(i).visible = true;
+            }
+            this.extractCountPanel.setMessage(Component.literal("" + data.getConfig(editingInsert, channelEdit).getExtractCount()));
+        } else {
+            for (AbstractWidget widget : this.extractCountConfigButtons){
                 widget.visible = false;
             }
         }
@@ -422,8 +547,46 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
         this.addRenderableWidget(this.enableDisableButton);
     }
 
-    private void updateSlots(){
+    private void renderPriorityText(GuiGraphics guiGraphics){
+        if (editingInsert && this.data.isEnabled(editingInsert, channelEdit)){
+            guiGraphics.drawString(this.font, Component.literal("Priority"), 24, 31, 0xFFFFFFFF, true);
+        }
+    }
 
+    private void renderStacksizeText(GuiGraphics guiGraphics){
+        if (!editingInsert && this.data.isEnabled(editingInsert, channelEdit)){
+            guiGraphics.drawString(this.font, Component.literal("Extract size"), 24, 31, 0xFFFFFFFF, true);
+        }
+    }
+
+    private void renderFilterIcons(GuiGraphics guiGraphics){
+        if (this.data.isEnabled(editingInsert, channelEdit)){
+            if (this.data.getConfig(editingInsert, channelEdit).getWhiteList()){
+                guiGraphics.blit(TEXTURE, 167, 59, 176, 120, 18, 18);
+            } else {
+                guiGraphics.blit(TEXTURE, 167, 59, 176, 138, 18, 18);
+            }
+
+            guiGraphics.blit(TEXTURE, 167, 85, 176, 156, 18, 18);
+        }
+    }
+
+    private void renderFilterGrid(GuiGraphics guiGraphics){
+        if (this.data.isEnabled(editingInsert, channelEdit)){
+            guiGraphics.blit(TEXTURE, 85, 54, 15, 125, 18 * 4, 18 * 3);
+        }
+    }
+
+    private void updateSlots(){
+        if (this.data.isEnabled(editingInsert, channelEdit)){
+            for (int i = 36; i < 36 + 12; i++){
+                ((FilterSlot) this.menu.getSlot(i)).setActive(true);
+            }
+        } else {
+            for (int i = 36; i < 36 + 12; i++){
+                ((FilterSlot) this.menu.getSlot(i)).setActive(false);
+            }
+        }
     }
 
     @Override
@@ -435,8 +598,6 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
         int y = (height - imageHeight) / 2;
 
         guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
-
-        renderProgress(guiGraphics, x, y);
     }
 
     @Override
@@ -451,14 +612,20 @@ public class ClockworkMaidenTerminalParticipantScreen extends AbstractContainerS
         updateFillRegimeButton();
         updatePriorityButtons();
 
+        updateSelectionRegimeButton();
+        updateStackSizeButtons();
+
+        updateSlots();
+
         renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, delta);
-        renderSideConfigButtonsIcons(guiGraphics);
-        renderTooltip(guiGraphics, mouseX, mouseY);
-    }
 
-    private void renderProgress(GuiGraphics guiGraphics, int x, int y) {
-        guiGraphics.blit(TEXTURE, x + 107, y + 34, 176, 0, (int)(24 * (menu.getProgress() / ((float) menu.getMaxProgress()))), 17);
+        renderSideConfigButtonsIcons(guiGraphics);
+        renderPriorityText(guiGraphics);
+        renderStacksizeText(guiGraphics);
+        renderFilterIcons(guiGraphics);
+
+        renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
     @Override

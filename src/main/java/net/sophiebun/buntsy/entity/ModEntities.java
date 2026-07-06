@@ -10,7 +10,7 @@ import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.entity.animals.Fairy;
 import net.sophiebun.buntsy.entity.animals.Hootcat;
 import net.sophiebun.buntsy.entity.animals.Silkbun;
-import net.sophiebun.buntsy.entity.monsters.ClockworkMaiden;
+import net.sophiebun.buntsy.entity.monsters.Marionette;
 
 public class ModEntities {
     public static final DeferredRegister<EntityType<?>> enitityRegister =
@@ -26,8 +26,11 @@ public class ModEntities {
     public static final RegistryObject<EntityType<Hootcat>> HOOTCAT_ENTITY =
             enitityRegister.register("hootcat", () -> EntityType.Builder.of(Hootcat::new, MobCategory.CREATURE)
                     .sized(0.5f, 0.8f).build("hootcat"));
+    public static final RegistryObject<EntityType<Marionette>> MARIONETTE =
+            enitityRegister.register("marionette", () -> EntityType.Builder.of(Marionette::new, MobCategory.MONSTER)
+                    .sized(0.5f, 1.6f).build("marionette"));
     public static final RegistryObject<EntityType<ClockworkMaiden>> CLOCKWORK_MAIDEN_ENTITY =
-            enitityRegister.register("clockwork_maiden", () -> EntityType.Builder.of(ClockworkMaiden::new, MobCategory.MONSTER)
+            enitityRegister.register("clockwork_maiden", () -> EntityType.Builder.of(ClockworkMaiden::new, MobCategory.MISC)
                     .sized(0.5f, 1.6f).build("clockwork_maiden"));
 
     public static void register(IEventBus eventBus){

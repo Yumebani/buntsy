@@ -1,11 +1,12 @@
 package net.sophiebun.buntsy.entity.clockwork_maiden;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.sophiebun.buntsy.screen.ClockworkMaidenTerminalParticipantScreen;
+import net.sophiebun.buntsy.screen.CMTParticipantScreen;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CMTParticipantData {
@@ -34,7 +35,7 @@ public class CMTParticipantData {
         this.extractConfigs = new HashMap<>();
         this.enablings = new HashMap<>();
 
-        for (int i = 0; i < ClockworkMaidenTerminalParticipantScreen.MAX_CHANNELS; i++){
+        for (int i = 0; i < CMTParticipantScreen.MAX_CHANNELS; i++){
             this.enablings.put(i, new boolean[]{false, false});
         }
 
@@ -55,6 +56,10 @@ public class CMTParticipantData {
 
     public MaidenInteractionConfig getConfig(boolean inserting, int channel){
         return (inserting ? insertConfigs : extractConfigs).get(channel);
+    }
+
+    public Map<Integer, MaidenInteractionConfig> getAllConfigs(boolean inserting){
+        return (inserting ? insertConfigs : extractConfigs);
     }
 
     public void setChanged(boolean inserting, int channel){
@@ -84,7 +89,7 @@ public class CMTParticipantData {
 
         CompoundTag tag = new CompoundTag();
 
-        for (int i = 0; i < ClockworkMaidenTerminalParticipantScreen.MAX_CHANNELS; i++){
+        for (int i = 0; i < CMTParticipantScreen.MAX_CHANNELS; i++){
             tag.putBoolean("cmt_data.inserting_enabled_" + i, enablings.get(i)[0]);
             tag.putBoolean("cmt_data.extracting_enabled_" + i, enablings.get(i)[1]);
         }
@@ -119,7 +124,7 @@ public class CMTParticipantData {
     public static CMTParticipantData parseCompound(CompoundTag tag) {
 
         Map<Integer, boolean[]> enablings = new HashMap<>();
-        for (int i = 0; i < ClockworkMaidenTerminalParticipantScreen.MAX_CHANNELS; i++){
+        for (int i = 0; i < CMTParticipantScreen.MAX_CHANNELS; i++){
             enablings.put(i, new boolean[]{
                     tag.getBoolean("cmt_data.inserting_enabled_" + i),
                     tag.getBoolean("cmt_data.extracting_enabled_" + i)

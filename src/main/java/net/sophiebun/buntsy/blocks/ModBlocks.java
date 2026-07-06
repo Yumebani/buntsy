@@ -590,6 +590,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> CLOCKWORK_FAIRY_TERMINAL = registerBlock("clockwork_fairy_terminal",
             () -> new ClockworkFairyTerminalBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
 
+    public static final RegistryObject<Block> CLOCKWORK_MAIDEN_TERMINAL = registerBlock("clockwork_maiden_terminal",
+            () -> new ClockworkMaidenTerminalBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+
     //Beacon
     public static final RegistryObject<Block> PRISMATIC_BEACON = registerBlock("prismatic_beacon",
             () -> new PrismaticBeaconBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));

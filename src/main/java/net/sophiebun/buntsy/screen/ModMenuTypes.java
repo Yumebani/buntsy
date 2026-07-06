@@ -49,6 +49,9 @@ public class ModMenuTypes {
     public static final RegistryObject<MenuType<ClockworkFairyTerminalMenu>> CLOCKWORK_FAIRY_TERMINAL_MENU =
             registerMenuType("clockwork_fairy_terminal_menu", ClockworkFairyTerminalMenu::new);
 
+    public static final RegistryObject<MenuType<CMTParticipantMenu>> CMT_PARTICIPANT_MENU =
+            registerMenuType("cmt_participant_menu", CMTParticipantMenu::new);
+
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory){
         return MenusRegister.register(name, () -> IForgeMenuType.create(factory));
     }

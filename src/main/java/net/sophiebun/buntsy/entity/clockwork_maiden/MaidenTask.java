@@ -28,35 +28,32 @@ public class MaidenTask {
 
     private final MaidenInteractionConfig extractBlock;
     private final List<MaidenInteractionConfig> insertBlocks;
-    private final MaidenSelectionRegime selectionRegime;
 
     private int roundRobinSelector = 0;
 
-    MaidenTask(int id, BlockPos terminalLoc, MaidenInteractionConfig extractBlock, List<MaidenInteractionConfig> insertBlocks, MaidenSelectionRegime selectionRegime){
+    public MaidenTask(int id, BlockPos terminalLoc, MaidenInteractionConfig extractBlock, List<MaidenInteractionConfig> insertBlocks){
         this.id = id;
         this.terminalLoc = terminalLoc;
         this.extractBlock = extractBlock;
-        this.insertBlocks = insertBlocks.stream().sorted(selectionRegime == MaidenSelectionRegime.PRIORITY ?
-                Comparator.comparingInt(MaidenInteractionConfig::priority) :
-                Comparator.comparingInt(config -> Math.toIntExact(Math.round(config.pos().getCenter().distanceTo(terminalLoc.getCenter()))))).toList();
-        this.selectionRegime = selectionRegime;
+        this.insertBlocks = insertBlocks.stream().sorted(extractBlock.getSelectionRegime() == MaidenSelectionRegime.PRIORITY ?
+                Comparator.comparingInt(MaidenInteractionConfig::getPriority) :
+                Comparator.comparingInt(config -> Math.toIntExact(Math.round(config.getPos().getCenter().distanceTo(terminalLoc.getCenter()))))).toList();
     }
 
-    private MaidenTask(int id, BlockPos terminalLoc, MaidenInteractionConfig extractBlock, List<MaidenInteractionConfig> insertBlocks, MaidenSelectionRegime selectionRegime, int roundRobinSelector){
+    private MaidenTask(int id, BlockPos terminalLoc, MaidenInteractionConfig extractBlock, List<MaidenInteractionConfig> insertBlocks, int roundRobinSelector){
         this.id = id;
         this.terminalLoc = terminalLoc;
         this.extractBlock = extractBlock;
-        this.insertBlocks = insertBlocks.stream().sorted(selectionRegime == MaidenSelectionRegime.PRIORITY ?
-                Comparator.comparingInt(MaidenInteractionConfig::priority) :
-                Comparator.comparingInt(config -> Math.toIntExact(Math.round(config.pos().getCenter().distanceTo(terminalLoc.getCenter()))))).toList();
-        this.selectionRegime = selectionRegime;
+        this.insertBlocks = insertBlocks.stream().sorted(extractBlock.getSelectionRegime() == MaidenSelectionRegime.PRIORITY ?
+                Comparator.comparingInt(MaidenInteractionConfig::getPriority) :
+                Comparator.comparingInt(config -> Math.toIntExact(Math.round(config.getPos().getCenter().distanceTo(terminalLoc.getCenter()))))).toList();
         this.roundRobinSelector = roundRobinSelector;
     }
 
 
     public Pair<BlockPos, Integer> getNextBlock(Level level, ItemStack stackToMove){
 
-        return switch (selectionRegime){
+        return switch (extractBlock.getSelectionRegime()){
             case NEAREST -> getNextBlockNearest(level, stackToMove);
             case ROUND_ROBIN -> getNextBlockRoundRobin(level, stackToMove);
             case PRIORITY -> getNextBlockPriority(level, stackToMove);
@@ -65,10 +62,10 @@ public class MaidenTask {
 
     private Pair<BlockPos, Integer> getNextBlockNearest(Level level, ItemStack stackToMove){
         for (MaidenInteractionConfig config : insertBlocks){
-            if (level.isLoaded(config.pos()) && config.matchesFilter(stackToMove)){
+            if (level.isLoaded(config.getPos()) && config.matchesFilter(stackToMove)){
                 int availableSpace = tryPlace(level, config, stackToMove);
                 if (availableSpace > 0){
-                    return Pair.of(config.pos(), availableSpace);
+                    return Pair.of(config.getPos(), availableSpace);
                 }
             }
         }
@@ -80,10 +77,10 @@ public class MaidenTask {
         Pair<BlockPos, Integer> returnValue = null;
         while (roundRobinOrigin < roundRobinSelector + 1){
             MaidenInteractionConfig config = insertBlocks.get(roundRobinSelector);
-            if (level.isLoaded(config.pos()) && config.matchesFilter(stackToMove)){
+            if (level.isLoaded(config.getPos()) && config.matchesFilter(stackToMove)){
                 int availableSpace = tryPlace(level, config, stackToMove);
                 if (availableSpace > 0){
-                    returnValue = Pair.of(config.pos(), availableSpace);
+                    returnValue = Pair.of(config.getPos(), availableSpace);
                 }
             }
             roundRobinSelector++;
@@ -100,10 +97,10 @@ public class MaidenTask {
 
     private Pair<BlockPos, Integer> getNextBlockPriority(Level level, ItemStack stackToMove){
         for (MaidenInteractionConfig config : insertBlocks){
-            if (level.isLoaded(config.pos()) && config.matchesFilter(stackToMove)){
+            if (level.isLoaded(config.getPos()) && config.matchesFilter(stackToMove)){
                 int availableSpace = tryPlace(level, config, stackToMove);
                 if (availableSpace > 0){
-                    return Pair.of(config.pos(), availableSpace);
+                    return Pair.of(config.getPos(), availableSpace);
                 }
             }
         }
@@ -111,8 +108,8 @@ public class MaidenTask {
     }
 
     private Integer tryPlace(Level level, MaidenInteractionConfig config, ItemStack itemStack){
-        BlockEntity entity = level.getBlockEntity(config.pos());
-        LazyOptional<IItemHandler> capability = entity.getCapability(ForgeCapabilities.ITEM_HANDLER, config.side());
+        BlockEntity entity = level.getBlockEntity(config.getPos());
+        LazyOptional<IItemHandler> capability = entity.getCapability(ForgeCapabilities.ITEM_HANDLER, config.getSide());
 
         List<Integer> availableSpace = new ArrayList<>();
         capability.ifPresent(itemHandler -> {
@@ -151,7 +148,6 @@ public class MaidenTask {
         for (int i = 0; i < this.insertBlocks.size(); i++){
             tag.put("maiden_task.insert_config_" + i, this.insertBlocks.get(i).getCompound());
         }
-        tag.putInt("maiden_task.selection_regime", this.selectionRegime.ordinal());
         tag.putInt("maiden_task.round_robin", this.roundRobinSelector);
 
         return tag;
@@ -167,10 +163,9 @@ public class MaidenTask {
         for (int i = 0; i < configCount; i++){
             insertBlocks.add(MaidenInteractionConfig.parseCompound(tag.getCompound("maiden_task.insert_config_" + i)));
         }
-        MaidenSelectionRegime selectionRegime = MaidenSelectionRegime.values()[tag.getInt("maiden_task.selection_regime")];
         int roundRobinSelector = tag.getInt("maiden_task.round_robin");
 
-        return new MaidenTask(id, terminalLoc, extractBlock, insertBlocks, selectionRegime, roundRobinSelector);
+        return new MaidenTask(id, terminalLoc, extractBlock, insertBlocks, roundRobinSelector);
     }
 
     @Override

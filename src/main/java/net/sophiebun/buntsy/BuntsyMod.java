@@ -165,6 +165,8 @@ public class BuntsyMod
             MenuScreens.register(ModMenuTypes.CLOCKWORK_CRAFTER_MENU.get(), ClockworkCrafterScreen::new);
             MenuScreens.register(ModMenuTypes.CLOCKWORK_FAIRY_TERMINAL_MENU.get(), ClockworkFairyTerminalScreen::new);
 
+            MenuScreens.register(ModMenuTypes.CMT_PARTICIPANT_MENU.get(), CMTParticipantScreen::new);
+
             EntityRenderers.register(ModEntities.SILKBUN_ENTITY.get(), SilkbunRenderer::new);
             EntityRenderers.register(ModEntities.FAIRY_ENTITY.get(), FairyRenderer::new);
             EntityRenderers.register(ModEntities.HOOTCAT_ENTITY.get(), HootcatRenderer::new);

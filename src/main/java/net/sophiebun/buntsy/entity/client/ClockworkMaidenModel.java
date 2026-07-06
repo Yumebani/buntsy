@@ -10,10 +10,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.BowItem;
-import net.sophiebun.buntsy.entity.animals.Fairy;
 import net.sophiebun.buntsy.entity.animations.ClockworkMaidenAnimationDefinition;
-import net.sophiebun.buntsy.entity.animations.ModAnimationDefinitions;
-import net.sophiebun.buntsy.entity.monsters.ClockworkMaiden;
+import net.sophiebun.buntsy.entity.monsters.Marionette;
 
 public class ClockworkMaidenModel<T extends Entity> extends HierarchicalModel<T> {
 
@@ -106,7 +104,7 @@ public class ClockworkMaidenModel<T extends Entity> extends HierarchicalModel<T>
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 
-		ClockworkMaiden maiden = ((ClockworkMaiden) entity);
+		Marionette maiden = ((Marionette) entity);
 
 		this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
 

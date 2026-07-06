@@ -32,18 +32,18 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
-public class ClockworkMaiden extends Monster implements RangedAttackMob {
+public class Marionette extends Monster implements RangedAttackMob {
     private final RangedBowAttackGoal<AbstractSkeleton> bowGoal = new RangedBowAttackGoal<>(this, 1.0D, 20, 15.0F);
     private final MeleeAttackGoal meleeGoal = new MeleeAttackGoal(this, 1.2D, false) {
 
         public void stop() {
             super.stop();
-            ClockworkMaiden.this.setAggressive(false);
+            Marionette.this.setAggressive(false);
         }
 
         public void start() {
             super.start();
-            ClockworkMaiden.this.setAggressive(true);
+            Marionette.this.setAggressive(true);
         }
     };
 
@@ -54,7 +54,7 @@ public class ClockworkMaiden extends Monster implements RangedAttackMob {
 
     boolean animInit = false;
 
-    public ClockworkMaiden(EntityType<? extends Monster> pEntityType, Level pLevel) {
+    public Marionette(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.reassessWeaponGoal();
     }

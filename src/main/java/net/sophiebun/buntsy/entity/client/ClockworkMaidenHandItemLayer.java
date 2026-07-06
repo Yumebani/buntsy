@@ -2,9 +2,7 @@ package net.sophiebun.buntsy.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -15,7 +13,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.sophiebun.buntsy.entity.monsters.ClockworkMaiden;
+import net.sophiebun.buntsy.entity.monsters.Marionette;
 
 @OnlyIn(Dist.CLIENT)
 public class ClockworkMaidenHandItemLayer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
@@ -42,7 +40,7 @@ public class ClockworkMaidenHandItemLayer<T extends LivingEntity, M extends Enti
     protected void renderArmWithItem(LivingEntity pLivingEntity, ItemStack pItemStack, ItemDisplayContext pDisplayContext, HumanoidArm pArm, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
         if (!pItemStack.isEmpty()) {
             pPoseStack.pushPose();
-            ((ClockworkMaidenModel<ClockworkMaiden>) this.getParentModel()).getHand(pArm).translateAndRotate(pPoseStack);
+            ((ClockworkMaidenModel<Marionette>) this.getParentModel()).getHand(pArm).translateAndRotate(pPoseStack);
             pPoseStack.mulPose(Axis.XP.rotationDegrees(-90.0F));
             pPoseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
             boolean flag = pArm == HumanoidArm.LEFT;

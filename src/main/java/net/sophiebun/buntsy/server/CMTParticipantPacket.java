@@ -2,20 +2,18 @@ package net.sophiebun.buntsy.server;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.PacketDistributor;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkMaidenTerminalEntity;
-import net.sophiebun.buntsy.blocks.entity.custom.InfusionAltarBlockEntity;
-import net.sophiebun.buntsy.blocks.entity.directfairy.FairyPowerRelayBlockEntity;
 import net.sophiebun.buntsy.entity.clockwork_maiden.CMTParticipantData;
-import net.sophiebun.buntsy.screen.ClockworkMaidenTerminalParticipantScreen;
+import net.sophiebun.buntsy.screen.CMTParticipantMenu;
+import net.sophiebun.buntsy.screen.CMTParticipantScreen;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -26,15 +24,15 @@ public class CMTParticipantPacket {
     private final BlockPos terminal;
 
     private final BlockPos target;
-    private final UUID player;
+    private final List<Direction> validSides;
 
-    public CMTParticipantPacket(CMTParticipantData data, BlockPos terminal, BlockPos target, UUID player) {
+    public CMTParticipantPacket(CMTParticipantData data, BlockPos terminal, BlockPos target, List<Direction> validSides) {
         this.data = data;
         this.target = target;
 
         this.terminal = terminal;
 
-        this.player = player;
+        this.validSides = validSides;
     }
 
     public CMTParticipantPacket(CMTParticipantData data, BlockPos terminal, BlockPos target) {
@@ -43,50 +41,33 @@ public class CMTParticipantPacket {
 
         this.terminal = terminal;
 
-        this.player = null;
-    }
-
-    public CMTParticipantPacket(BlockPos terminal, BlockPos target, UUID player) {
-        this.data = null;
-        this.target = null;
-
-        this.terminal = terminal;
-
-        this.player = null;
+        this.validSides = new ArrayList<>();
     }
 
     public static CMTParticipantPacket read(FriendlyByteBuf buf) {
 
-        CMTParticipantData data = null;
-        if (buf.readBoolean()){
-            data = CMTParticipantData.parseCompound(buf.readNbt());
-        }
-
+        CMTParticipantData data = CMTParticipantData.parseCompound(buf.readNbt());
         BlockPos terminal = buf.readBlockPos();
 
-        BlockPos target = null;
-        UUID player = null;
-        if (buf.readBoolean()){
-            target = buf.readBlockPos();
-            player = buf.readUUID();
+        BlockPos target = buf.readBlockPos();
+        List<Direction> validSides = new ArrayList<>();
+        int count = buf.readInt();
+        for (int x = 0; x < count; x++){
+            validSides.add(Direction.values()[buf.readInt()]);
         }
 
-        return new CMTParticipantPacket(data, terminal, target, player);
+        return new CMTParticipantPacket(data, terminal, target, validSides);
     }
 
     public void write(FriendlyByteBuf buf){
 
-        buf.writeBoolean(data != null);
-        if (data != null){
-            buf.writeNbt(data.getCompound());
-        }
-
+        buf.writeNbt(data.getCompound());
         buf.writeBlockPos(terminal);
 
-        buf.writeBoolean(this.target != null);
-        if (this.target != null){
-            buf.writeBlockPos(this.target);
-            buf.writeUUID(player);
+        buf.writeBlockPos(this.target);
+        buf.writeInt(this.validSides.size());
+        for (Direction dir : validSides){
+            buf.writeInt(dir.ordinal());
         }
     }
 
@@ -106,21 +87,18 @@ public class CMTParticipantPacket {
 
     private void handlePacketServer(NetworkEvent.Context ctx) {
 
-        if (this.player != null){
-            ClockworkMaidenTerminalEntity entity = ((ClockworkMaidenTerminalEntity) ctx.getSender().level().getBlockEntity(this.terminal));
-            ModPacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> ctx.getSender()),
-                    new CMTParticipantPacket(entity.getData(target), terminal, target, player));
-        } else {
-            ClockworkMaidenTerminalEntity entity = ((ClockworkMaidenTerminalEntity) ctx.getSender().level().getBlockEntity(this.terminal));
-            entity.updateData(this.data, target);
-        }
+        ClockworkMaidenTerminalEntity entity = ((ClockworkMaidenTerminalEntity) ctx.getSender().level().getBlockEntity(this.terminal));
+        entity.updateData(this.data, target);
     }
 
     private void handlePacketClient(NetworkEvent.Context ctx) {
         Minecraft.getInstance().setScreen(
-                new ClockworkMaidenTerminalParticipantScreen(new CMTParticipantMenu(),
+                new CMTParticipantScreen(new CMTParticipantMenu(0, Minecraft.getInstance().player),
                         Minecraft.getInstance().player.getInventory(),
-                        )
+                        target,
+                        terminal,
+                        data,
+                        validSides)
         );
     }
 }
