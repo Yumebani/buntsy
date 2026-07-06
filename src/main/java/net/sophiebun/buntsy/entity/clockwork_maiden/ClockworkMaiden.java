@@ -169,26 +169,14 @@ public class ClockworkMaiden extends PathfinderMob {
         public void start() {
             if (!tasksQueue.isEmpty()){
                 for (int i = 0; i < tasksQueue.size(); i++){
-                    MaidenTask task = tasksQueue.removeFirst();
-                    if (maiden.carriedItems.get(task).isEmpty()){
-                        if (task.canStart()){
-                            maiden.currentTask = task;
-                            return;
-                        }
-                    } else {
-                        if (task.canContinue(maiden.carriedItems.get(task).get(0))){
-                            maiden.currentTask = task;
-                            return;
-                        }
-                    }
-                    tasksQueue.addLast(task);
+                    currentTask = tasksQueue.removeFirst();
                 }
             }
 
             ClockworkMaidenTerminalEntity terminalEntity = ((ClockworkMaidenTerminalEntity) maiden.level().getBlockEntity(terminal));
             for (int i = 0; i < terminalEntity.getTotalTasks(); i++){
                 MaidenTask task = terminalEntity.getTask();
-                if (task.canStart())
+                if (this.tasksQueue.)
             }
         }
     }

@@ -2,21 +2,18 @@ package net.sophiebun.buntsy.entity.clockwork_maiden;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.nbt.Tag;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
-import net.sophiebun.buntsy.tag.ModTags;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class MaidenTask {
 
@@ -48,100 +45,69 @@ public class MaidenTask {
         this.roundRobinSelector = roundRobinSelector;
     }
 
+    private ItemStack getExtractable(Level level, MaidenInteractionConfig nextConfig){
 
-    public ItemStack tryExtract(Level level){
+        if (!extractBlock.areFiltersCompatible(nextConfig)) return ItemStack.EMPTY;
 
         if (level.isLoaded(extractBlock.getPos())){
             BlockEntity entity = level.getBlockEntity(extractBlock.getPos());
             LazyOptional<IItemHandler> capability = entity.getCapability(ForgeCapabilities.ITEM_HANDLER, extractBlock.getSide());
 
             List<ItemStack> extractableSpace = new ArrayList<>();
+
             capability.ifPresent(itemHandler -> {
-                extractableSpace.add(getExtractableCount(itemHandler));
+
+                ItemStack target = null;
+                int total = 0;
+
+                for (int i = 0; i < itemHandler.getSlots(); i++){
+                    ItemStack content = itemHandler.getStackInSlot(i);
+                    if (extractBlock.matchesCombinedFilter(nextConfig, content)){
+                        if (target == null || extractBlock.matchItems(content, target)){
+
+                            int possibleTotal = content.getCount() + total;
+
+                            ItemStack test = ItemStack.EMPTY;
+                            test.deserializeNBT(content.serializeNBT());
+                            test.setCount(total);
+                            int availableSpace = tryPlace(level, nextConfig, test);
+
+                            if (availableSpace > 0){
+
+                                if (possibleTotal < Math.min(extractBlock.getExtractCount(), content.getMaxStackSize())){
+                                    total = possibleTotal;
+                                    if (target == null){
+                                        target = content;
+                                    }
+
+                                    if (availableSpace < possibleTotal){
+                                        break;
+                                    }
+                                }
+                                else {
+                                    total = Math.min(extractBlock.getExtractCount(), content.getMaxStackSize());
+                                    target = content;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (target != null){
+                    ItemStack returnStack = ItemStack.EMPTY;
+                    returnStack.deserializeNBT(target.serializeNBT());
+                    returnStack.setCount(total);
+                    extractableSpace.add(returnStack);
+                }
+
             });
 
             if (extractableSpace.isEmpty()){
                 return ItemStack.EMPTY;
             } else return extractableSpace.get(0);
         }
-    }
-
-    private ItemStack getExtractableCount(IItemHandler handler){
-        ItemStack toFilter = null;
-        int total = 0;
-        for (int i = 0; i < handler.getSlots(); i++){
-            ItemStack content = handler.getStackInSlot(i);
-            if (extractBlock.matchesFilter(content)){
-
-                if (toFilter == null){
-                    toFilter = content;
-                }
-
-                if (toFilter.is(content.getItem())){
-                    if (content.getCount() + total < extractBlock.getExtractCount()){
-                        total += content.getCount();
-                    } else {
-                        return new ItemStack(content.getItem(), extractBlock.getExtractCount());
-                    }
-                }
-            }
-        }
-    }
-
-    public Pair<BlockPos, Integer> getNextBlock(Level level, ItemStack stackToMove){
-
-        return switch (extractBlock.getSelectionRegime()){
-            case NEAREST -> getNextBlockNearest(level, stackToMove);
-            case ROUND_ROBIN -> getNextBlockRoundRobin(level, stackToMove);
-            case PRIORITY -> getNextBlockPriority(level, stackToMove);
-        };
-    }
-
-    private Pair<BlockPos, Integer> getNextBlockNearest(Level level, ItemStack stackToMove){
-        for (MaidenInteractionConfig config : insertBlocks){
-            if (level.isLoaded(config.getPos()) && config.matchesFilter(stackToMove)){
-                int availableSpace = tryPlace(level, config, stackToMove);
-                if (availableSpace > 0){
-                    return Pair.of(config.getPos(), availableSpace);
-                }
-            }
-        }
-        return null;
-    }
-
-    private Pair<BlockPos, Integer> getNextBlockRoundRobin(Level level, ItemStack stackToMove){
-        int roundRobinOrigin = roundRobinSelector;
-        Pair<BlockPos, Integer> returnValue = null;
-        while (roundRobinOrigin < roundRobinSelector + 1){
-            MaidenInteractionConfig config = insertBlocks.get(roundRobinSelector);
-            if (level.isLoaded(config.getPos()) && config.matchesFilter(stackToMove)){
-                int availableSpace = tryPlace(level, config, stackToMove);
-                if (availableSpace > 0){
-                    returnValue = Pair.of(config.getPos(), availableSpace);
-                }
-            }
-            roundRobinSelector++;
-            if (roundRobinSelector >= insertBlocks.size()){
-                roundRobinSelector = 0;
-            }
-
-            if (returnValue != null){
-                return returnValue;
-            }
-        }
-        return null;
-    }
-
-    private Pair<BlockPos, Integer> getNextBlockPriority(Level level, ItemStack stackToMove){
-        for (MaidenInteractionConfig config : insertBlocks){
-            if (level.isLoaded(config.getPos()) && config.matchesFilter(stackToMove)){
-                int availableSpace = tryPlace(level, config, stackToMove);
-                if (availableSpace > 0){
-                    return Pair.of(config.getPos(), availableSpace);
-                }
-            }
-        }
-        return null;
+        return ItemStack.EMPTY;
     }
 
     private Integer tryPlace(Level level, MaidenInteractionConfig config, ItemStack itemStack){
@@ -150,7 +116,7 @@ public class MaidenTask {
 
         List<Integer> availableSpace = new ArrayList<>();
         capability.ifPresent(itemHandler -> {
-            availableSpace.add(getAvailableSpace(itemHandler, itemStack));
+            availableSpace.add(getAvailableSpace(itemHandler, config, itemStack));
         });
 
         if (availableSpace.isEmpty()){
@@ -158,13 +124,15 @@ public class MaidenTask {
         } else return availableSpace.get(0);
     }
 
-    private Integer getAvailableSpace(IItemHandler handler, ItemStack itemStack){
+    private Integer getAvailableSpace(IItemHandler handler, MaidenInteractionConfig config, ItemStack itemStack){
         int total = itemStack.getCount();
+        ItemStack matched = null;
         for (int i = 0; i < handler.getSlots(); i++){
             ItemStack content = handler.getStackInSlot(i);
-            if (content.is(itemStack.getItem())){
+            if ((matched == null && config.matchItems(itemStack, content)) || (matched != null && config.matchExactly(matched, content))){
                 if (content.getCount() + total > content.getMaxStackSize()){
                     total -= content.getMaxStackSize() - content.getCount();
+                    matched = content;
                 } else {
                     return itemStack.getCount();
                 }
@@ -173,6 +141,34 @@ public class MaidenTask {
             }
         }
         return itemStack.getCount() - total;
+    }
+
+    public Pair<ItemStack, BlockPos> getNextDelivery(Level level){
+
+        for (int i = 0; i < insertBlocks.size(); i++){
+
+            int configPos = getNextConfig();
+            MaidenInteractionConfig config = insertBlocks.get(configPos);
+            ItemStack nextStack = getExtractable(level, config);
+
+            if (!nextStack.isEmpty()){
+                return Pair.of(nextStack, config.getPos());
+            }
+        }
+
+        return null;
+    }
+
+    public int getNextConfig(){
+
+        if (extractBlock.getSelectionRegime() == MaidenSelectionRegime.ROUND_ROBIN){
+            if (roundRobinSelector >= insertBlocks.size()){
+                roundRobinSelector = 0;
+            }
+            return roundRobinSelector++;
+        }
+
+        return 0;
     }
 
     public CompoundTag getCompound() {

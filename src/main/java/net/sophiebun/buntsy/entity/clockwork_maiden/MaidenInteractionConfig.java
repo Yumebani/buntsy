@@ -139,10 +139,26 @@ public class MaidenInteractionConfig {
 
     public boolean matchesFilter(ItemStack stackToMove) {
         for (ItemStack stack : filter){
-            if (!stack.isEmpty() && stack.is(stackToMove.getItem())){
-                if (!exact || (exact && stack.getTag().equals(stackToMove.getTag()))){
-                    return whiteList;
-                }
+            if (!stack.isEmpty() && matchItems(stack, stackToMove)){
+                return whiteList;
+            }
+        }
+        return false;
+    }
+
+    public boolean matchItems(ItemStack stack1, ItemStack stack2) {
+        if (stack1.is(stack2.getItem())){
+            if (!exact || (exact && !stack1.hasTag() && !stack2.hasTag()) || (stack1.hasTag() && stack2.hasTag() && (exact && stack1.getTag().equals(stack2.getTag())))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean matchExactly(ItemStack stack1, ItemStack stack2) {
+        if (stack1.is(stack2.getItem())){
+            if ((!stack1.hasTag() && !stack2.hasTag()) || (stack1.hasTag() && stack2.hasTag() && (stack1.getTag().equals(stack2.getTag())))){
+                return true;
             }
         }
         return false;
@@ -253,5 +269,24 @@ public class MaidenInteractionConfig {
 
     public int getExtractCount() {
         return extractSize;
+    }
+
+    public boolean areFiltersCompatible(MaidenInteractionConfig nextConfig) {
+        if (whiteList){
+            for (ItemStack stack : filter){
+                if (nextConfig.matchesFilter(stack)) return true;
+            }
+            return false;
+        } else if (nextConfig.getWhiteList()) {
+            boolean compatible = true;
+            for (ItemStack stack : filter){
+                compatible &= nextConfig.matchesFilter(stack);
+            }
+            return !compatible;
+        } else return true;
+    }
+
+    public boolean matchesCombinedFilter(MaidenInteractionConfig config, ItemStack content) {
+        return this.matchesFilter(content) && config.matchesFilter(content);
     }
 }
