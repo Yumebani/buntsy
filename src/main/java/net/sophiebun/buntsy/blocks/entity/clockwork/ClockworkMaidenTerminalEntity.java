@@ -263,4 +263,8 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
             case COMPLEX -> 8;
         };
     }
+
+    public int getTotalTasks() {
+        return maidenTasks.size();
+    }
 }

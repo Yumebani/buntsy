@@ -22,6 +22,7 @@ public class ModEventBusEvents {
         event.put(ModEntities.SILKBUN_ENTITY.get(), Silkbun.createAtributes().build());
         event.put(ModEntities.FAIRY_ENTITY.get(), Fairy.createAtributes().build());
         event.put(ModEntities.HOOTCAT_ENTITY.get(), Hootcat.createAttributes().build());
+        event.put(ModEntities.MARIONETTE.get(), Marionette.createAttributes().build());
         event.put(ModEntities.CLOCKWORK_MAIDEN_ENTITY.get(), Marionette.createAttributes().build());
     }
 
@@ -33,7 +34,7 @@ public class ModEventBusEvents {
                 Silkbun::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
         event.register(ModEntities.HOOTCAT_ENTITY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Hootcat::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
-        event.register(ModEntities.CLOCKWORK_MAIDEN_ENTITY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+        event.register(ModEntities.MARIONETTE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Monster::checkMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
     }
 }

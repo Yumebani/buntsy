@@ -16,9 +16,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.sophiebun.buntsy.tag.ModTags;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class MaidenTask {
 
@@ -50,6 +48,45 @@ public class MaidenTask {
         this.roundRobinSelector = roundRobinSelector;
     }
 
+
+    public ItemStack tryExtract(Level level){
+
+        if (level.isLoaded(extractBlock.getPos())){
+            BlockEntity entity = level.getBlockEntity(extractBlock.getPos());
+            LazyOptional<IItemHandler> capability = entity.getCapability(ForgeCapabilities.ITEM_HANDLER, extractBlock.getSide());
+
+            List<ItemStack> extractableSpace = new ArrayList<>();
+            capability.ifPresent(itemHandler -> {
+                extractableSpace.add(getExtractableCount(itemHandler));
+            });
+
+            if (extractableSpace.isEmpty()){
+                return ItemStack.EMPTY;
+            } else return extractableSpace.get(0);
+        }
+    }
+
+    private ItemStack getExtractableCount(IItemHandler handler){
+        ItemStack toFilter = null;
+        int total = 0;
+        for (int i = 0; i < handler.getSlots(); i++){
+            ItemStack content = handler.getStackInSlot(i);
+            if (extractBlock.matchesFilter(content)){
+
+                if (toFilter == null){
+                    toFilter = content;
+                }
+
+                if (toFilter.is(content.getItem())){
+                    if (content.getCount() + total < extractBlock.getExtractCount()){
+                        total += content.getCount();
+                    } else {
+                        return new ItemStack(content.getItem(), extractBlock.getExtractCount());
+                    }
+                }
+            }
+        }
+    }
 
     public Pair<BlockPos, Integer> getNextBlock(Level level, ItemStack stackToMove){
 

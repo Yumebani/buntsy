@@ -24,7 +24,7 @@ public class ModEntityLootTables extends EntityLootSubProvider {
     @Override
     public void generate() {
 
-        this.add(ModEntities.CLOCKWORK_MAIDEN_ENTITY.get(), LootTable.lootTable()
+        this.add(ModEntities.MARIONETTE.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(ModItems.CLOCKWORK_SCRAP.get())
@@ -49,6 +49,6 @@ public class ModEntityLootTables extends EntityLootSubProvider {
 
     @Override
     protected Stream<EntityType<?>> getKnownEntityTypes() {
-        return Stream.of(ModEntities.CLOCKWORK_MAIDEN_ENTITY.get());
+        return Stream.of(ModEntities.MARIONETTE.get());
     }
 }

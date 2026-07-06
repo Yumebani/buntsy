@@ -248,9 +248,10 @@ public class ModItems {
     public static final RegistryObject<Item> HOOTCAT_SPAWN_EGG = ItemsRegister.register(
             "hootcat_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.HOOTCAT_ENTITY, 0x4d3f3f, 0x9e7f4b , new Item.Properties()));
 
-    //TODO Change passive to clockwork maiden and evil to marionette
-    public static final RegistryObject<Item> CLOCKWORK_MAIDEN_SPAWN_EGG = ItemsRegister.register(
-            "clockwork_maiden_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.CLOCKWORK_MAIDEN_ENTITY, 0x45393b, 0xcb9257 , new Item.Properties()));
+    public static final RegistryObject<Item> MARIONETTE_SPAWN_EGG = ItemsRegister.register(
+            "marionette_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.MARIONETTE, 0x45393b, 0xcb9257 , new Item.Properties()));
+    public static final RegistryObject<Item> CLOCKWORK_MAIDEN = ItemsRegister.register(
+            "clockwork_maiden", () -> new ForgeSpawnEggItem(ModEntities.CLOCKWORK_MAIDEN_ENTITY, 0x45393b, 0xcb9257 , new Item.Properties()));
 
     public static void register(IEventBus eventBus){
         ItemsRegister.register(eventBus);
