@@ -127,6 +127,16 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
     }
 
     public MaidenTask getTask(){
+
+        boolean recompile = false;
+        for (BlockPos pos : ((BlockPos[]) registeredConfigs.keySet().toArray())){
+            if (level.isLoaded(pos) && level.getBlockEntity(pos) == null){
+                registeredConfigs.remove(pos);
+                recompile = true;
+            }
+        }
+        if (recompile) recompileTasks();
+
         if (tasksRoundRobin >= maidenTasks.size()){
             tasksRoundRobin = 0;
         }
@@ -228,19 +238,23 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
     }
 
     public boolean canRegisterNewBlock(BlockEntity blockEntity) {
-        return this.registeredConfigs.size() < (BASE_BLOCK_COUNT + getClockworkBlockCount());
+        return this.registeredConfigs.size() < (getClockworkBlockCount());
     }
 
     protected int getClockworkBlockCount() {
         return switch (clockworkTier){
-            case NONE -> 0;
-            case SIMPLE -> 2;
-            case INTRICATE -> 4;
-            case COMPLEX -> 8;
+            case NONE -> 8;
+            case SIMPLE -> 12;
+            case INTRICATE -> 16;
+            case COMPLEX -> 20;
         };
     }
 
     public int getTotalTasks() {
         return maidenTasks.size();
+    }
+
+    public void removeBlock(BlockEntity blockEntity) {
+        this.registeredConfigs.remove(blockEntity.getBlockPos());
     }
 }

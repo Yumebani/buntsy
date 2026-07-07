@@ -1,16 +1,10 @@
 package net.sophiebun.buntsy.server;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.PacketListener;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkEvent;
@@ -28,16 +22,16 @@ public class ModFairyStaffPacket {
     private final int fairyId;
     private final BlockPos terminalBlock;
     private final BlockPos block;
-    private final FairyStaffOperationType operationType;
+    private final ConfigureStaffOperationType operationType;
 
-    public ModFairyStaffPacket(int fairyId, BlockPos block, FairyStaffOperationType operationType) {
+    public ModFairyStaffPacket(int fairyId, BlockPos block, ConfigureStaffOperationType operationType) {
         this.fairyId = fairyId;
         this.terminalBlock = null;
         this.block = block;
         this.operationType = operationType;
     }
 
-    public ModFairyStaffPacket(BlockPos terminalBlock, BlockPos block, FairyStaffOperationType operationType) {
+    public ModFairyStaffPacket(BlockPos terminalBlock, BlockPos block, ConfigureStaffOperationType operationType) {
         this.terminalBlock = terminalBlock;
         this.fairyId = -1;
         this.block = block;
@@ -60,7 +54,7 @@ public class ModFairyStaffPacket {
         if (buf.readBoolean()){
             block = buf.readBlockPos();
         }
-        FairyStaffOperationType operationType = FairyStaffOperationType.values()[buf.readInt()];
+        ConfigureStaffOperationType operationType = ConfigureStaffOperationType.values()[buf.readInt()];
 
         return terminalBlock == null ? new ModFairyStaffPacket(fairyId, block, operationType) : new ModFairyStaffPacket(terminalBlock, block, operationType);
     }
@@ -114,11 +108,11 @@ public class ModFairyStaffPacket {
 
         ClockworkFairyTerminalEntity fairyTerminal = ((ClockworkFairyTerminalEntity) entity);
 
-        if (operationType == FairyStaffOperationType.CLEAR_DATA){
+        if (operationType == ConfigureStaffOperationType.CLEAR_DATA){
             fairyTerminal.clearBlockEntityData(level);
             finishSuccess(player, "Cleared fairy terminal data");
         }
-        else if (operationType == FairyStaffOperationType.SET_BLOCK){
+        else if (operationType == ConfigureStaffOperationType.SET_BLOCK){
 
             BlockState blockState = level.getBlockState(this.block);
             if (blockState.is(ModTags.Blocks.FAIRY_INTERACTABLE_BLOCK_ENTITY)) {
@@ -140,11 +134,11 @@ public class ModFairyStaffPacket {
 
         if (fairy == null || !fairy.isAlive()) return;
 
-        if (operationType == FairyStaffOperationType.CLEAR_DATA){
+        if (operationType == ConfigureStaffOperationType.CLEAR_DATA){
             fairy.clearBlockEntityData();
             finishSuccess(player, "Cleared fairy data");
         }
-        else if (operationType == FairyStaffOperationType.SET_BLOCK){
+        else if (operationType == ConfigureStaffOperationType.SET_BLOCK){
 
             BlockState blockState = level.getBlockState(this.block);
             if (blockState.is(ModTags.Blocks.FAIRY_INTERACTABLE_BLOCK_ENTITY)) {

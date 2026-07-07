@@ -35,7 +35,7 @@ public class CMTParticipantMenu extends AbstractContainerMenu {
         addPlayerInventory(player.getInventory());
 
         for (int i = 0; i < 12; i++){
-            this.addSlot(new FilterSlot(filterItemHandler, i, 8 + 86 + (18 * (i % 4)), 55 + (18 * (i / 4))));
+            this.addSlot(new FilterSlot(filterItemHandler, i,  86 + (18 * (i % 4)), 55 + (18 * (i / 4))));
         };
     }
 

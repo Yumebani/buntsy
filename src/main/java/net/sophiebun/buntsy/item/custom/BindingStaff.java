@@ -2,17 +2,11 @@ package net.sophiebun.buntsy.item.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
-import net.sophiebun.buntsy.entity.ModEntities;
-import net.sophiebun.buntsy.server.FairyStaffOperationType;
 import net.sophiebun.buntsy.server.ModBindingStaffPacket;
-import net.sophiebun.buntsy.server.ModFairyStaffPacket;
 import net.sophiebun.buntsy.server.ModPacketHandler;
 
 public class BindingStaff extends Item {

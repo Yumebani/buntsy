@@ -138,12 +138,13 @@ public class MaidenInteractionConfig {
     }
 
     public boolean matchesFilter(ItemStack stackToMove) {
+
         for (ItemStack stack : filter){
             if (!stack.isEmpty() && matchItems(stack, stackToMove)){
                 return whiteList;
             }
         }
-        return false;
+        return !whiteList;
     }
 
     public boolean matchItems(ItemStack stack1, ItemStack stack2) {
@@ -182,17 +183,17 @@ public class MaidenInteractionConfig {
         }
 
         tag.putBoolean("maiden_config.has_priority", this.priority > -1);
-        if (this.fillRegime != null){
+        if (this.priority > -1){
             tag.putInt("maiden_config.priority", this.priority);
         }
 
         tag.putBoolean("maiden_config.has_selection_regime", this.selectionRegime != null);
-        if (this.fillRegime != null){
+        if (this.selectionRegime != null){
             tag.putInt("maiden_config.selection_regime", this.selectionRegime.ordinal());
         }
 
         tag.putBoolean("maiden_config.has_extract_size", this.extractSize > -1);
-        if (this.fillRegime != null){
+        if (this.extractSize > -1){
             tag.putInt("maiden_config.extract_size", this.extractSize);
         }
 
@@ -273,8 +274,14 @@ public class MaidenInteractionConfig {
 
     public boolean areFiltersCompatible(MaidenInteractionConfig nextConfig) {
         if (whiteList){
-            for (ItemStack stack : filter){
-                if (nextConfig.matchesFilter(stack)) return true;
+            if (nextConfig.getWhiteList()){
+                for (ItemStack stack : filter){
+                    if (nextConfig.matchesFilter(stack)) return true;
+                }
+            } else {
+                for (ItemStack stack : filter){
+                    if (!nextConfig.matchesFilter(stack)) return true;
+                }
             }
             return false;
         } else if (nextConfig.getWhiteList()) {

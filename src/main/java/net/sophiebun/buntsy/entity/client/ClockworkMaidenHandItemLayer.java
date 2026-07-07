@@ -25,14 +25,12 @@ public class ClockworkMaidenHandItemLayer<T extends LivingEntity, M extends Enti
     }
 
     public void render(PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, T pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
-        ItemStack itemstackRight = pLivingEntity.getMainHandItem();
-        ItemStack itemstackLeft = pLivingEntity.getOffhandItem();
-        if (!itemstackRight.isEmpty() || !itemstackLeft.isEmpty()) {
+        ItemStack carried = ((ClockworkMaiden) pLivingEntity).getAnimationStack();
+        if (!carried.isEmpty()) {
             pPoseStack.pushPose();
             pPoseStack.translate(0.0F, 1.15F, 0.0F);
             pPoseStack.scale(0.75F, 0.75F, 0.75F);
-            this.renderArmWithItem(pLivingEntity, itemstackRight, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, HumanoidArm.RIGHT, pPoseStack, pBuffer, pPackedLight);
-            this.renderArmWithItem(pLivingEntity, itemstackLeft, ItemDisplayContext.THIRD_PERSON_LEFT_HAND, HumanoidArm.LEFT, pPoseStack, pBuffer, pPackedLight);
+            this.renderArmWithItem(pLivingEntity, carried, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, HumanoidArm.RIGHT, pPoseStack, pBuffer, pPackedLight);
             pPoseStack.popPose();
         }
     }

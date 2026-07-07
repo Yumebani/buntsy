@@ -46,7 +46,7 @@ public class CMTParticipantData {
         if (inserting){
             insertConfigs.put(channel, config.copy());
         } else {
-            insertConfigs.put(channel, config.copy());
+            extractConfigs.put(channel, config.copy());
         }
     }
 

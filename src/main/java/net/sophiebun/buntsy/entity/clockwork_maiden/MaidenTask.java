@@ -49,8 +49,12 @@ public class MaidenTask {
 
         if (!extractBlock.areFiltersCompatible(nextConfig)) return ItemStack.EMPTY;
 
+
         if (level.isLoaded(extractBlock.getPos())){
+
+            if (level.isLoaded(extractBlock.getPos())) return ItemStack.EMPTY;
             BlockEntity entity = level.getBlockEntity(extractBlock.getPos());
+            if (entity == null) return ItemStack.EMPTY;
             LazyOptional<IItemHandler> capability = entity.getCapability(ForgeCapabilities.ITEM_HANDLER, extractBlock.getSide());
 
             List<ItemStack> extractableSpace = new ArrayList<>();
@@ -62,15 +66,15 @@ public class MaidenTask {
 
                 for (int i = 0; i < itemHandler.getSlots(); i++){
                     ItemStack content = itemHandler.getStackInSlot(i);
-                    if (extractBlock.matchesCombinedFilter(nextConfig, content)){
+                    if (!content.isEmpty() && extractBlock.matchesCombinedFilter(nextConfig, content)){
                         if (target == null || extractBlock.matchItems(content, target)){
 
                             int possibleTotal = content.getCount() + total;
 
                             ItemStack test = ItemStack.EMPTY;
                             test.deserializeNBT(content.serializeNBT());
-                            test.setCount(total);
-                            int availableSpace = tryPlace(level, nextConfig, test, true);
+                            test.setCount(possibleTotal);
+                            int availableSpace = possibleTotal - tryPlace(level, nextConfig, test, true);
 
                             if (availableSpace > 0){
 
@@ -95,10 +99,9 @@ public class MaidenTask {
                 }
 
                 if (target != null){
-                    ItemStack returnStack = ItemStack.EMPTY;
-                    returnStack.deserializeNBT(target.serializeNBT());
-                    returnStack.setCount(total);
-                    extractableSpace.add(returnStack);
+                    extractableSpace.add(
+                            target.hasTag() ? new ItemStack(target.getItem(), total, target.getTag()):
+                                    new ItemStack(target.getItem(), total));
                 }
 
             });
@@ -111,7 +114,9 @@ public class MaidenTask {
     }
 
     public static Integer tryPlace(Level level, MaidenInteractionConfig config, ItemStack itemStack, boolean simulated){
+        if (level.isLoaded(config.getPos())) return itemStack.getCount();
         BlockEntity entity = level.getBlockEntity(config.getPos());
+        if (entity == null) return itemStack.getCount();
         LazyOptional<IItemHandler> capability = entity.getCapability(ForgeCapabilities.ITEM_HANDLER, config.getSide());
 
         List<Integer> availableSpace = new ArrayList<>();
@@ -120,7 +125,7 @@ public class MaidenTask {
         });
 
         if (availableSpace.isEmpty()){
-            return 0;
+            return itemStack.getCount();
         } else return availableSpace.get(0);
     }
 
@@ -129,20 +134,25 @@ public class MaidenTask {
         ItemStack matched = null;
         for (int i = 0; i < handler.getSlots(); i++){
             ItemStack content = handler.getStackInSlot(i);
-            if ((matched == null && config.matchItems(itemStack, content)) || (matched != null && config.matchExactly(matched, content))){
-                if (content.getCount() + total > content.getMaxStackSize()){
+            if (!content.isEmpty() && (matched == null && config.matchItems(itemStack, content)) || (matched != null && config.matchExactly(matched, content))){
+                if (content.getCount() + total > itemStack.getMaxStackSize()){
                     total -= content.getMaxStackSize() - content.getCount();
                     if (!simulated) {
-                        content.setCount(content.getMaxStackSize());
-                        handler.insertItem(i, content, false);
+                        ItemStack newStack = new ItemStack(itemStack.getItem(), itemStack.getMaxStackSize());
+                        if (itemStack.hasTag()){newStack.setTag(itemStack.getTag());}
+                        handler.insertItem(i, newStack, false);
                     }
                     matched = content;
                 } else {
-                    if (!simulated) handler.insertItem(i, itemStack, false);
+                    ItemStack newStack = new ItemStack(itemStack.getItem(), itemStack.getCount());
+                    if (itemStack.hasTag()){newStack.setTag(itemStack.getTag());}
+                    if (!simulated) handler.insertItem(i, newStack, false);
                     return itemStack.getCount();
                 }
             } else if (content.isEmpty()){
-                if (!simulated) handler.insertItem(i, itemStack, false);
+                ItemStack newStack = new ItemStack(itemStack.getItem(), itemStack.getCount());
+                if (itemStack.hasTag()){newStack.setTag(itemStack.getTag());}
+                if (!simulated) handler.insertItem(i, newStack, false);
                 return itemStack.getCount();
             }
         }
@@ -159,7 +169,9 @@ public class MaidenTask {
 
             if (!nextStack.isEmpty()){
 
+                if (level.isLoaded(config.getPos())) return null;
                 BlockEntity entity = level.getBlockEntity(extractBlock.getPos());
+                if (entity == null) return null;
                 LazyOptional<IItemHandler> capability = entity.getCapability(ForgeCapabilities.ITEM_HANDLER, extractBlock.getSide());
 
 
@@ -217,7 +229,7 @@ public class MaidenTask {
 
         int id = tag.getInt("maiden_task.id");
         BlockPos terminalLoc = NbtUtils.readBlockPos(tag.getCompound("maiden_task.terminal_loc"));
-        MaidenInteractionConfig extractBlock = MaidenInteractionConfig.parseCompound(tag.getCompound("maiden_task.terminal_loc"));
+        MaidenInteractionConfig extractBlock = MaidenInteractionConfig.parseCompound(tag.getCompound("maiden_task.extract_config"));
         List<MaidenInteractionConfig> insertBlocks = new ArrayList<>();
         int configCount = tag.getInt("maiden_task.insert_config_count");
         for (int i = 0; i < configCount; i++){

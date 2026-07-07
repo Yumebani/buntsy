@@ -317,13 +317,55 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
 
     private void renderSideConfigButtonsIcons(GuiGraphics guiGraphics){
         if (this.data.isEnabled(editingInsert, channelEdit)){
-            guiGraphics.blit(TEXTURE, xGlobal + 8, yGlobal + 93, 193, 0, 20, 20);
-            guiGraphics.blit(TEXTURE, xGlobal + 54, yGlobal + 47, 193, 20, 20, 20);
-            guiGraphics.blit(TEXTURE, xGlobal + 31, yGlobal + 47, 193, 40, 20, 20);
-            guiGraphics.blit(TEXTURE, xGlobal + 31, yGlobal + 93, 193, 60, 20, 20);
-            guiGraphics.blit(TEXTURE, xGlobal + 8, yGlobal + 70, 193, 80, 20, 20);
-            guiGraphics.blit(TEXTURE, xGlobal + 54, yGlobal + 70, 193, 100, 20, 20);
-        }
+            MaidenInteractionConfig config = this.data.getConfig(editingInsert, channelEdit);
+
+            if (availableSides.contains(Direction.DOWN)){
+                if (config.getSide() == Direction.DOWN){
+                    guiGraphics.blit(TEXTURE, xGlobal + 8, yGlobal + 93, 213, 0, 20, 20);
+                } else {
+                    guiGraphics.blit(TEXTURE, xGlobal + 8, yGlobal + 93, 193, 0, 20, 20);
+                }
+            }
+
+            if (availableSides.contains(Direction.UP)){
+                if (config.getSide() == Direction.UP){
+                    guiGraphics.blit(TEXTURE, xGlobal + 54, yGlobal + 47, 213, 20, 20, 20);
+                } else {
+                    guiGraphics.blit(TEXTURE, xGlobal + 54, yGlobal + 47, 193, 20, 20, 20);
+                }
+            }
+
+            if (availableSides.contains(Direction.NORTH)){
+                if (config.getSide() == Direction.NORTH){
+                    guiGraphics.blit(TEXTURE, xGlobal + 31, yGlobal + 47, 213, 40, 20, 20);
+                } else {
+                    guiGraphics.blit(TEXTURE, xGlobal + 31, yGlobal + 47, 193, 40, 20, 20);
+                }
+            }
+
+            if (availableSides.contains(Direction.SOUTH)){
+                if (config.getSide() == Direction.SOUTH){
+                    guiGraphics.blit(TEXTURE, xGlobal + 31, yGlobal + 93, 213, 60, 20, 20);
+                } else {
+                    guiGraphics.blit(TEXTURE, xGlobal + 31, yGlobal + 93, 193, 60, 20, 20);
+                }
+            }
+
+            if (availableSides.contains(Direction.WEST)){
+                if (config.getSide() == Direction.WEST){
+                    guiGraphics.blit(TEXTURE, xGlobal + 8, yGlobal + 70, 213, 80, 20, 20);
+                } else {
+                    guiGraphics.blit(TEXTURE, xGlobal + 8, yGlobal + 70, 193, 80, 20, 20);
+                }
+            }
+
+            if (availableSides.contains(Direction.EAST)){
+                if (config.getSide() == Direction.EAST){
+                    guiGraphics.blit(TEXTURE, xGlobal + 54, yGlobal + 70, 213, 100, 20, 20);
+                } else {
+                    guiGraphics.blit(TEXTURE, xGlobal + 54, yGlobal + 70, 193, 100, 20, 20);
+                }
+            }}
     }
 
     private void toggle(){
@@ -355,7 +397,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal("One stack"), pButton -> {
                             cycleFillRegime();
                         })
-                .bounds(xGlobal + 117, yGlobal + 30, 45, 13)
+                .bounds(xGlobal + 111, yGlobal + 30, 60, 13)
                 .tooltip(Tooltip.create(Component.literal("Change fill regime")))
                 .build();
 
@@ -437,7 +479,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                         Component.literal("Nearest"), pButton -> {
                             cycleSelectionRegime();
                         })
-                .bounds(xGlobal + 117, yGlobal + 30, 45, 13)
+                .bounds(xGlobal + 111, yGlobal + 30, 60, 13)
                 .tooltip(Tooltip.create(Component.literal("Change distribution regime")))
                 .build();
 
@@ -474,7 +516,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                 .build();
 
         this.extractCountPanel.active = false;
-        this.extractCountConfigButtons.add(this.priorityPanel);
+        this.extractCountConfigButtons.add(this.extractCountPanel);
 
         this.extractCountConfigButtons.add(Button.builder(
                         Component.literal("▶"), pButton -> {
@@ -483,7 +525,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                 .bounds(xGlobal + 98, yGlobal + 30, 8, 13)
                 .build());
 
-        for (AbstractWidget widget : this.priorityConfigButtons){
+        for (AbstractWidget widget : this.extractCountConfigButtons){
             this.addRenderableWidget(widget);
         }
     }
@@ -567,25 +609,29 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
 
     private void renderPriorityText(GuiGraphics guiGraphics){
         if (editingInsert && this.data.isEnabled(editingInsert, channelEdit)){
-            guiGraphics.drawString(this.font, Component.literal("Priority"), xGlobal + 24, yGlobal + 31, 0xFFFFFFFF, true);
+            guiGraphics.drawString(this.font, Component.literal("Priority"), xGlobal + 16, yGlobal + 31, 0xFFFFFFFF, true);
         }
     }
 
     private void renderStacksizeText(GuiGraphics guiGraphics){
         if (!editingInsert && this.data.isEnabled(editingInsert, channelEdit)){
-            guiGraphics.drawString(this.font, Component.literal("Extract size"), xGlobal + 24, yGlobal + 31, 0xFFFFFFFF, true);
+            guiGraphics.drawString(this.font, Component.literal("Extract size"), xGlobal + 6, yGlobal + 31, 0xFFFFFFFF, true);
         }
     }
 
     private void renderFilterIcons(GuiGraphics guiGraphics){
         if (this.data.isEnabled(editingInsert, channelEdit)){
             if (this.data.getConfig(editingInsert, channelEdit).getWhiteList()){
-                guiGraphics.blit(TEXTURE, xGlobal + 193, yGlobal + 59, 176, 138, 18, 18);
+                guiGraphics.blit(TEXTURE, xGlobal + 167, yGlobal + 59, 193, 138, 18, 18);
             } else {
-                guiGraphics.blit(TEXTURE, xGlobal + 193, yGlobal + 59, 176, 120, 18, 18);
+                guiGraphics.blit(TEXTURE, xGlobal + 167, yGlobal + 59, 193, 120, 18, 18);
             }
 
-            guiGraphics.blit(TEXTURE, xGlobal + 193, yGlobal + 85, 176, 156, 18, 18);
+            if (this.data.getConfig(editingInsert, channelEdit).getExact()){
+                guiGraphics.blit(TEXTURE, xGlobal + 167, yGlobal + 85, 193, 174, 18, 18);
+            } else {
+                guiGraphics.blit(TEXTURE, xGlobal + 167, yGlobal + 85, 193, 156, 18, 18);
+            }
         }
     }
 
@@ -616,6 +662,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
         int y = (height - imageHeight) / 2;
 
         guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
+        renderFilterGrid(guiGraphics);
     }
 
     @Override
@@ -642,7 +689,6 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
         renderPriorityText(guiGraphics);
         renderStacksizeText(guiGraphics);
         renderFilterIcons(guiGraphics);
-        renderFilterGrid(guiGraphics);
 
         renderTooltip(guiGraphics, mouseX, mouseY);
     }
