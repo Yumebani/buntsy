@@ -2,8 +2,12 @@ package net.sophiebun.buntsy.entity.clockwork_maiden;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -14,6 +18,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
@@ -22,6 +27,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkMaidenTerminalEntity;
 import net.sophiebun.buntsy.item.ClockworkTier;
@@ -42,11 +48,29 @@ public class ClockworkMaiden extends PathfinderMob {
     private final Map<MaidenTask, Pair<ItemStack, MaidenInteractionConfig>> carriedItems = new HashMap<>();
     private MaidenTask currentTask = null;
     private BlockPos terminal = null;
+    private BlockPos target = null;
 
     boolean animInit = false;
 
+    private static final EntityDataAccessor<ItemStack> CARRIED_ITEM =
+            SynchedEntityData.defineId(ClockworkMaiden.class, EntityDataSerializers.ITEM_STACK);
+
     public ClockworkMaiden(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(CARRIED_ITEM, ItemStack.EMPTY);
+    }
+
+    public ItemStack getCarriedItem() {
+        return this.entityData.get(CARRIED_ITEM);
+    }
+
+    public void setCarriedItem(ItemStack stack) {
+        this.entityData.set(CARRIED_ITEM, stack);
     }
 
     @Override
@@ -75,6 +99,11 @@ public class ClockworkMaiden extends PathfinderMob {
         pTag.putBoolean("clockwork_maiden.has_terminal", this.terminal != null);
         if (this.terminal != null){
             pTag.put("clockwork_maiden.terminal", NbtUtils.writeBlockPos(this.terminal));
+        }
+
+        pTag.putBoolean("clockwork_maiden.has_target", this.target != null);
+        if (this.terminal != null){
+            pTag.put("clockwork_maiden.target", NbtUtils.writeBlockPos(this.target));
         }
     }
 
@@ -105,6 +134,10 @@ public class ClockworkMaiden extends PathfinderMob {
 
         if (pTag.getBoolean("clockwork_maiden.has_terminal")){
             this.terminal = NbtUtils.readBlockPos(pTag.getCompound("clockwork_maiden.terminal"));
+        }
+
+        if (pTag.getBoolean("clockwork_maiden.has_target")){
+            this.target = NbtUtils.readBlockPos(pTag.getCompound("clockwork_maiden.target"));
         }
 
         super.readAdditionalSaveData(pTag);
@@ -163,14 +196,6 @@ public class ClockworkMaiden extends PathfinderMob {
         return super.mobInteract(pPlayer, pHand);
     }
 
-    public ItemStack getAnimationStack(){
-        if (currentTask != null && carriedItems.containsKey(currentTask)){
-            return carriedItems.get(currentTask).getFirst();
-        } else {
-            return ItemStack.EMPTY;
-        }
-    }
-
     private void animate(){
 
         if (this.level().isClientSide()){
@@ -185,7 +210,7 @@ public class ClockworkMaiden extends PathfinderMob {
                 animInit = true;
             }
 
-            if (currentTask != null && carriedItems.containsKey(currentTask)){
+            if (!getCarriedItem().isEmpty()){
                 ItemCarryStanceAnimationState.start(this.tickCount);
             } else {
                 ItemCarryStanceAnimationState.stop();
@@ -198,10 +223,12 @@ public class ClockworkMaiden extends PathfinderMob {
     }
 
     protected void reAssesGoals(){
+        this.goalSelector.removeAllGoals(goal -> true);
         if (terminal != null){
             this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 8.0F));
             this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
-            this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollWhileCloseGoal(this, terminal, 1.0D));
+            this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+            this.goalSelector.addGoal(10, new StayWithinPremises(this, terminal, 1.0D, 16));
             this.goalSelector.addGoal(20, new MaidenTaskGoal(this, terminal));
         } else {
             this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
@@ -287,8 +314,6 @@ public class ClockworkMaiden extends PathfinderMob {
 
         private final Deque<MaidenTask> tasksQueue = new ArrayDeque<>();
 
-        private BlockPos target;
-
         public MaidenTaskGoal(ClockworkMaiden maiden, BlockPos terminal) {
             this.maiden = maiden;
             this.terminal = terminal;
@@ -319,6 +344,9 @@ public class ClockworkMaiden extends PathfinderMob {
             if (maiden.currentTask != null){
                 if (!isBlockEntityValid(target)){
                     maiden.currentTask = null;
+                    if (!getCarriedItem().isEmpty()){
+                        setCarriedItem(ItemStack.EMPTY);
+                    }
                 }
             }
             return maiden.currentTask != null ;
@@ -326,8 +354,12 @@ public class ClockworkMaiden extends PathfinderMob {
 
         @Override
         public boolean canUse() {
-            if (isTerminalValid() && maiden.currentTask == null){
-                System.out.println("Trying to use");
+
+            if (maiden.currentTask != null && navigation.isDone()){
+                setTarget(this.maiden.target);
+                return true;
+            }
+            else if (isTerminalValid() && maiden.currentTask == null){
                 if (!tasksQueue.isEmpty()){
                     for (int i = 0; i < tasksQueue.size(); i++){
                         MaidenTask task = tasksQueue.removeFirst();
@@ -336,7 +368,9 @@ public class ClockworkMaiden extends PathfinderMob {
                         if (maiden.level().isLoaded(objective.getSecond().getPos())) {
 
                             if (isBlockEntityValid(objective.getSecond().getPos())){
-                                if (MaidenTask.tryPlace(maiden.level(), objective.getSecond(), objective.getFirst(), true).getCount() <= objective.getFirst().getCount()) {
+                                if (MaidenTask.tryPlace(maiden.level(), objective.getSecond(), objective.getFirst(), true).getCount() < objective.getFirst().getCount()
+                                    && this.setTarget(objective.getSecond().getPos())) {
+                                    setCarriedItem(objective.getFirst());
                                     maiden.currentTask = task;
                                     return true;
                                 } else {
@@ -355,7 +389,8 @@ public class ClockworkMaiden extends PathfinderMob {
                 ClockworkMaidenTerminalEntity terminalEntity = ((ClockworkMaidenTerminalEntity) maiden.level().getBlockEntity(terminal));
                 for (int i = 0; i < terminalEntity.getTotalTasks(); i++){
                     MaidenTask task = terminalEntity.getTask();
-                    if (!this.tasksQueue.contains(task) && isBlockEntityValid(task.getExtractPos())){
+                    if (!this.tasksQueue.contains(task) && isBlockEntityValid(task.getExtractPos())
+                        && this.setTarget(task.getExtractPos())){
                         maiden.currentTask = task;
                         return true;
                     }
@@ -364,11 +399,35 @@ public class ClockworkMaiden extends PathfinderMob {
             return false;
         }
 
-        private void setTarget(BlockPos pos){
-            this.target = pos;
-            Vec3 goal = pos.getCenter();
-            System.out.println("Moving to " + goal);
-            this.maiden.getNavigation().moveTo(goal.x(), goal.y(), goal.z(), this.maiden.getMoveSpeed());
+        public BlockPos getValidAdjacentPos(Level level, BlockPos targetPos) {
+            for (Direction direction : Direction.Plane.HORIZONTAL) {
+                BlockPos sidePos = targetPos.relative(direction);
+
+                if (isValidStandSpace(level, sidePos)) {
+                    return sidePos;
+                }
+            }
+            return targetPos.above();
+        }
+
+        private boolean isValidStandSpace(Level level, BlockPos pos) {
+            BlockState state = level.getBlockState(pos);
+            BlockState aboveState = level.getBlockState(pos.above());
+            BlockState belowState = level.getBlockState(pos.below());
+
+            return state.getCollisionShape(level, pos).isEmpty()
+                    && aboveState.getCollisionShape(level, pos.above()).isEmpty()
+                    && !belowState.getCollisionShape(level, pos.below()).isEmpty();
+        }
+
+        private boolean setTarget(BlockPos pos){
+            this.maiden.target = pos;
+            Path path = maiden.getNavigation().createPath(getValidAdjacentPos(maiden.level(), pos), 1);
+            if (path != null){
+                this.maiden.getNavigation().moveTo(path, this.maiden.getMoveSpeed());
+                return true;
+            }
+            else return false;
         }
 
         void playItemSound() {
@@ -377,20 +436,14 @@ public class ClockworkMaiden extends PathfinderMob {
         }
 
         @Override
-        public void start() {
-
-            if (!maiden.carriedItems.containsKey(maiden.currentTask)){
-                this.setTarget(maiden.currentTask.getExtractPos());
-            } else {
-                this.setTarget(maiden.carriedItems.get(maiden.currentTask).getSecond().getPos());
-            }
+        public boolean isInterruptable() {
+            return false;
         }
 
         @Override
         public void tick() {
 
-            if (maiden.position().distanceTo(this.target.getCenter()) <= 1.5f){
-                maiden.getNavigation().stop();
+            if (maiden.getNavigation().isDone() && maiden.position().distanceTo(this.maiden.target.getCenter()) <= 3f){
                 if (!maiden.carriedItems.containsKey(maiden.currentTask)){
 
                     Pair<ItemStack, MaidenInteractionConfig> objective = maiden.currentTask.getNextDelivery(maiden.level());
@@ -400,6 +453,7 @@ public class ClockworkMaiden extends PathfinderMob {
                         this.tasksQueue.addFirst(currentTask);
                     }
                     maiden.currentTask = null;
+                    this.maiden.target = null;
 
                 } else {
 
@@ -412,53 +466,85 @@ public class ClockworkMaiden extends PathfinderMob {
                     if (remainder.isEmpty()){
                         maiden.carriedItems.remove(maiden.currentTask);
                         maiden.currentTask = null;
+                        this.maiden.target = null;
+                        setCarriedItem(ItemStack.EMPTY);
                     } else {
                         this.maiden.carriedItems.put(maiden.currentTask, Pair.of(remainder, objective.getSecond()));
                         this.tasksQueue.addLast(maiden.currentTask);
                         maiden.currentTask = null;
+                        this.maiden.target = null;
+                        setCarriedItem(ItemStack.EMPTY);
                     }
                 }
+            } else if (maiden.getNavigation().isDone()){
+                setTarget(this.maiden.target);
             }
         }
     }
 
-    protected class WaterAvoidingRandomStrollWhileCloseGoal extends RandomStrollGoal {
-        public static final float PROBABILITY = 0.001F;
-        protected final float probability;
-        protected BlockPos terminal;
+    protected static class StayWithinPremises extends Goal {
 
-        public WaterAvoidingRandomStrollWhileCloseGoal(PathfinderMob pMob, BlockPos terminal, double pSpeedModifier) {
-            this(pMob, terminal, pSpeedModifier, 0.001F);
+        protected final BlockPos terminal;
+        protected final double speedModifier;
+        protected final int maxDistance;
+        protected final ClockworkMaiden maiden;
+
+        public StayWithinPremises(ClockworkMaiden maiden, BlockPos terminal, double speedModifier, int maxDistance) {
+            this.terminal = terminal;
+            this.speedModifier = speedModifier;
+            this.maxDistance = maxDistance;
+            this.maiden = maiden;
         }
 
-        public WaterAvoidingRandomStrollWhileCloseGoal(PathfinderMob pMob, BlockPos terminal, double pSpeedModifier, float pProbability) {
-            super(pMob, pSpeedModifier);
-            this.probability = pProbability;
-            this.terminal = terminal;
+        public BlockPos getValidAdjacentPos(Level level, BlockPos targetPos) {
+            for (Direction direction : Direction.Plane.HORIZONTAL) {
+                BlockPos sidePos = targetPos.relative(direction);
+
+                if (isValidStandSpace(level, sidePos)) {
+                    return sidePos;
+                }
+            }
+            return targetPos.above();
+        }
+
+        private boolean isValidStandSpace(Level level, BlockPos pos) {
+            BlockState state = level.getBlockState(pos);
+            BlockState aboveState = level.getBlockState(pos.above());
+            BlockState belowState = level.getBlockState(pos.below());
+
+            return state.getCollisionShape(level, pos).isEmpty()
+                    && aboveState.getCollisionShape(level, pos.above()).isEmpty()
+                    && !belowState.getCollisionShape(level, pos.below()).isEmpty();
+        }
+
+        private boolean setTarget(BlockPos pos){
+            Path path = maiden.getNavigation().createPath(getValidAdjacentPos(maiden.level(), pos), 2);
+            if (path != null){
+                this.maiden.getNavigation().moveTo(path, this.maiden.getMoveSpeed());
+                return true;
+            }
+            else return false;
         }
 
         @Override
         public boolean canUse() {
-            return mob.getNavigation().isDone();
+            Vec3 distance = terminal.getCenter().subtract(maiden.position());
+            return Math.abs(distance.x()) > maxDistance || Math.abs(distance.y()) > maxDistance || Math.abs(distance.z()) > maxDistance;
         }
 
-        @Nullable
-        protected Vec3 getPosition() {
-            if (this.mob.isInWaterOrBubble()) {
-                Vec3 vec3 = LandRandomPos.getPos(this.mob, 15, 7);
-                while (vec3 != null && vec3.distanceTo(this.terminal.getCenter()) > 12){
-                    vec3 = LandRandomPos.getPos(this.mob, 15, 7);
-                }
-                return vec3 == null ? super.getPosition() : vec3;
-            } else {
-                if (this.mob.getRandom().nextFloat() >= this.probability){
-                    Vec3 vec3 = LandRandomPos.getPos(this.mob, 10, 7);
-                    while (vec3 != null && vec3.distanceTo(this.terminal.getCenter()) > 12){
-                        vec3 = LandRandomPos.getPos(this.mob, 15, 7);
-                    }
-                    return vec3 == null ? super.getPosition() : vec3;
-                } else return super.getPosition();
-            }
+        @Override
+        public boolean canContinueToUse() {
+            return !this.maiden.navigation.isDone();
+        }
+
+        @Override
+        public void start() {
+            setTarget(terminal);
+        }
+
+        @Override
+        public boolean isInterruptable() {
+            return true;
         }
     }
 }

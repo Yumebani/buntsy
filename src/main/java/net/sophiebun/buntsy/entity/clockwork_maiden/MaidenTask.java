@@ -62,7 +62,7 @@ public class MaidenTask {
                 int total = 0;
 
                 for (int i = 0; i < itemHandler.getSlots(); i++){
-                    ItemStack content = itemHandler.getStackInSlot(i);
+                    ItemStack content = itemHandler.extractItem(i, extractBlock.getExtractCount(), true);
                     if (!content.isEmpty() && extractBlock.matchesCombinedFilter(nextConfig, content)){
                         if (target == null || extractBlock.matchItems(content, target)){
 
@@ -71,25 +71,24 @@ public class MaidenTask {
                             ItemStack test = ItemStack.EMPTY;
                             test.deserializeNBT(content.serializeNBT());
                             test.setCount(possibleTotal);
-                            int availableSpace = possibleTotal - tryPlace(level, nextConfig, test, true).getCount();
+                            int remainder = tryPlace(level, nextConfig, test, true).getCount();
+                            System.out.println("remainder " + remainder);
 
-                            if (availableSpace > 0){
-
+                            if (remainder == 0){
                                 if (possibleTotal < Math.min(extractBlock.getExtractCount(), content.getMaxStackSize())){
                                     total = possibleTotal;
                                     if (target == null){
                                         target = content;
                                     }
-
-                                    if (availableSpace < possibleTotal){
-                                        break;
-                                    }
-                                }
-                                else {
+                                } else {
                                     total = Math.min(extractBlock.getExtractCount(), content.getMaxStackSize());
                                     target = content;
                                     break;
                                 }
+                            } else {
+                                total = possibleTotal - remainder;
+                                target = content;
+                                break;
                             }
                         }
                     }
@@ -141,8 +140,8 @@ public class MaidenTask {
                 return null;
             }
 
-
             ItemStack nextStack = getExtractable(level, config);
+            System.out.println("should extract " + nextStack);
 
             if (!nextStack.isEmpty()){
 

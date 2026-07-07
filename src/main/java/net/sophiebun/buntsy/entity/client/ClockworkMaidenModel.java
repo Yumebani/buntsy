@@ -110,7 +110,7 @@ public class ClockworkMaidenModel<T extends Entity> extends HierarchicalModel<T>
 
 		this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
 
-		if (maiden.isUsingItem() && maiden.getUseItem().getItem() instanceof BowItem){
+		if (!maiden.getCarriedItem().isEmpty()){
 			animateWalk(MarionetteAnimationDefinition.walkCycleNoArms, limbSwing, limbSwingAmount, 2f, 3.5f);}
 		else {
 			animateWalk(MarionetteAnimationDefinition.walkCycle, limbSwing, limbSwingAmount, 2f, 3.5f);

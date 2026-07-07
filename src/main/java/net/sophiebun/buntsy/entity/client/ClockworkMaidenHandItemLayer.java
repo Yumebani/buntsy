@@ -16,7 +16,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.sophiebun.buntsy.entity.clockwork_maiden.ClockworkMaiden;
 
 @OnlyIn(Dist.CLIENT)
-public class ClockworkMaidenHandItemLayer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
+public class ClockworkMaidenHandItemLayer<T extends ClockworkMaiden, M extends EntityModel<T>> extends RenderLayer<T, M> {
     private final ItemInHandRenderer itemInHandRenderer;
 
     public ClockworkMaidenHandItemLayer(RenderLayerParent<T, M> pRenderer, ItemInHandRenderer pItemInHandRenderer) {
@@ -25,7 +25,7 @@ public class ClockworkMaidenHandItemLayer<T extends LivingEntity, M extends Enti
     }
 
     public void render(PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, T pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
-        ItemStack carried = ((ClockworkMaiden) pLivingEntity).getAnimationStack();
+        ItemStack carried = pLivingEntity.getCarriedItem();
         if (!carried.isEmpty()) {
             pPoseStack.pushPose();
             pPoseStack.translate(0.0F, 1.15F, 0.0F);

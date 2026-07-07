@@ -221,7 +221,7 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
     public boolean isBlockEntityInRange(BlockEntity blockEntity) {
         Vec3 distance = this.getBlockPos().getCenter().subtract(blockEntity.getBlockPos().getCenter());
         int maxDistance = getMaxDistance();
-        return distance.x() < maxDistance && distance.y() < maxDistance && distance.z() < maxDistance;
+        return Math.abs(distance.x()) < maxDistance && Math.abs(distance.y()) < maxDistance && Math.abs(distance.z()) < maxDistance;
     }
 
     protected int getMaxDistance(){
