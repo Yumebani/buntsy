@@ -48,7 +48,8 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
     private Button whiteListButton;
     private Button setExactButton;
 
-    private int modifier = 1;
+    private int modifierShift = 1;
+    private int modifierControl = 1;
 
     private  List<Direction> availableSides;
 
@@ -381,7 +382,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
 
     private void changePriority(int amount){
         MaidenInteractionConfig config = data.getConfig(editingInsert, channelEdit);
-        config.setPriority(Math.max(Math.min(config.getPriority() + amount, 999), 0));
+        config.setPriority(Math.max(Math.min(config.getPriority() + (amount * modifierShift * modifierControl), 999), 0));
         setChanged();
     }
 
@@ -423,7 +424,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
 
         this.priorityConfigButtons.add(Button.builder(
                         Component.literal("◀"), pButton -> {
-                            changePriority(-modifier);
+                            changePriority(-1);
                         })
                 .bounds(xGlobal + 61, yGlobal + 30, 8, 13)
                 .build());
@@ -438,7 +439,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
 
         this.priorityConfigButtons.add(Button.builder(
                         Component.literal("▶"), pButton -> {
-                            changePriority(modifier);
+                            changePriority(1);
                         })
                 .bounds(xGlobal + 98, yGlobal + 30, 8, 13)
                 .build());
@@ -505,7 +506,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
 
         this.extractCountConfigButtons.add(Button.builder(
                         Component.literal("◀"), pButton -> {
-                            changeStackSize(modifier < 10 ? 1 : modifier < 100 ? 4 : 16);
+                            changeStackSize(modifierShift * modifierControl < 10 ? 1 : modifierShift * modifierControl < 100 ? 4 : 16);
                         })
                 .bounds(xGlobal + 61, yGlobal + 30, 8, 13)
                 .build());
@@ -520,7 +521,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
 
         this.extractCountConfigButtons.add(Button.builder(
                         Component.literal("▶"), pButton -> {
-                            changeStackSize(modifier < 10 ? -1 : modifier < 100 ? -4 : -16);
+                            changeStackSize(modifierShift * modifierControl  < 10 ? -1 : modifierShift * modifierControl  < 100 ? -4 : -16);
                         })
                 .bounds(xGlobal + 98, yGlobal + 30, 8, 13)
                 .build());
@@ -697,12 +698,12 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
 
         if (pKeyCode == GLFW.GLFW_KEY_LEFT_SHIFT || pKeyCode == GLFW.GLFW_KEY_RIGHT_SHIFT) {
-            this.modifier *= 10;
+            this.modifierShift = 10;
             return true;
         }
 
         if (pKeyCode == GLFW.GLFW_KEY_LEFT_CONTROL || pKeyCode == GLFW.GLFW_KEY_RIGHT_CONTROL) {
-            this.modifier *= 10;
+            this.modifierControl = 10;
             return true;
         }
 
@@ -713,12 +714,12 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
     public boolean keyReleased(int pKeyCode, int pScanCode, int pModifiers) {
 
         if (pKeyCode == GLFW.GLFW_KEY_LEFT_SHIFT || pKeyCode == GLFW.GLFW_KEY_RIGHT_SHIFT) {
-            this.modifier /= 10;
+            this.modifierShift = 1;
             return true;
         }
 
         if (pKeyCode == GLFW.GLFW_KEY_LEFT_CONTROL || pKeyCode == GLFW.GLFW_KEY_RIGHT_CONTROL) {
-            this.modifier /= 10;
+            this.modifierControl = 1;
             return true;
         }
 

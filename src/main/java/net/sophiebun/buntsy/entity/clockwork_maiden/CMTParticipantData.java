@@ -113,6 +113,7 @@ public class CMTParticipantData {
         tag.putInt("cmt_data.changed_size", changed.size());
         i = 0;
         for (Integer key : changed.keySet()){
+            tag.putInt("cmt_data.changed_key_" + i, key);
             tag.putBoolean("cmt_data.inserting_changed_" + i, changed.get(key)[0]);
             tag.putBoolean("cmt_data.extracting_changed_" + i, changed.get(key)[1]);
             i++;
@@ -152,7 +153,7 @@ public class CMTParticipantData {
         Map<Integer, boolean[]>  changed = new HashMap<>();
         count = tag.getInt("cmt_data.changed_size");
         for (int i = 0; i < count; i++){
-            changed.put(i, new boolean[]{
+            changed.put(tag.getInt("cmt_data.changed_key_" + i), new boolean[]{
                     tag.getBoolean("cmt_data.inserting_changed_" + i),
                     tag.getBoolean("cmt_data.extracting_changed_" + i)
             });

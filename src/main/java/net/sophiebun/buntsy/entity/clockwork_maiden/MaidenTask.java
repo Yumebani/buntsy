@@ -49,12 +49,9 @@ public class MaidenTask {
 
         if (!extractBlock.areFiltersCompatible(nextConfig)) return ItemStack.EMPTY;
 
-
         if (level.isLoaded(extractBlock.getPos())){
 
-            if (level.isLoaded(extractBlock.getPos())) return ItemStack.EMPTY;
             BlockEntity entity = level.getBlockEntity(extractBlock.getPos());
-            if (entity == null) return ItemStack.EMPTY;
             LazyOptional<IItemHandler> capability = entity.getCapability(ForgeCapabilities.ITEM_HANDLER, extractBlock.getSide());
 
             List<ItemStack> extractableSpace = new ArrayList<>();
@@ -74,7 +71,7 @@ public class MaidenTask {
                             ItemStack test = ItemStack.EMPTY;
                             test.deserializeNBT(content.serializeNBT());
                             test.setCount(possibleTotal);
-                            int availableSpace = possibleTotal - tryPlace(level, nextConfig, test, true);
+                            int availableSpace = possibleTotal - tryPlace(level, nextConfig, test, true).getCount();
 
                             if (availableSpace > 0){
 
@@ -113,50 +110,23 @@ public class MaidenTask {
         return ItemStack.EMPTY;
     }
 
-    public static Integer tryPlace(Level level, MaidenInteractionConfig config, ItemStack itemStack, boolean simulated){
-        if (level.isLoaded(config.getPos())) return itemStack.getCount();
+    public static ItemStack tryPlace(Level level, MaidenInteractionConfig config, ItemStack itemStack, boolean simulated){
+
         BlockEntity entity = level.getBlockEntity(config.getPos());
-        if (entity == null) return itemStack.getCount();
         LazyOptional<IItemHandler> capability = entity.getCapability(ForgeCapabilities.ITEM_HANDLER, config.getSide());
 
-        List<Integer> availableSpace = new ArrayList<>();
+        ItemStack localStack = new ItemStack(itemStack.getItem(), itemStack.getCount());
+        if (itemStack.hasTag()){localStack.setTag(itemStack.getTag());}
+        List<ItemStack> stackHolder = new ArrayList<>();
+        stackHolder.add(localStack);
+
         capability.ifPresent(itemHandler -> {
-            availableSpace.add(getAvailableSpace(itemHandler, config, itemStack, simulated));
+            for (int i = 0; i < itemHandler.getSlots(); i++){
+                stackHolder.set(0, itemHandler.insertItem(i, stackHolder.get(0), simulated));
+            }
         });
 
-        if (availableSpace.isEmpty()){
-            return itemStack.getCount();
-        } else return availableSpace.get(0);
-    }
-
-    public static Integer getAvailableSpace(IItemHandler handler, MaidenInteractionConfig config, ItemStack itemStack, boolean simulated){
-        int total = itemStack.getCount();
-        ItemStack matched = null;
-        for (int i = 0; i < handler.getSlots(); i++){
-            ItemStack content = handler.getStackInSlot(i);
-            if (!content.isEmpty() && (matched == null && config.matchItems(itemStack, content)) || (matched != null && config.matchExactly(matched, content))){
-                if (content.getCount() + total > itemStack.getMaxStackSize()){
-                    total -= content.getMaxStackSize() - content.getCount();
-                    if (!simulated) {
-                        ItemStack newStack = new ItemStack(itemStack.getItem(), itemStack.getMaxStackSize());
-                        if (itemStack.hasTag()){newStack.setTag(itemStack.getTag());}
-                        handler.insertItem(i, newStack, false);
-                    }
-                    matched = content;
-                } else {
-                    ItemStack newStack = new ItemStack(itemStack.getItem(), itemStack.getCount());
-                    if (itemStack.hasTag()){newStack.setTag(itemStack.getTag());}
-                    if (!simulated) handler.insertItem(i, newStack, false);
-                    return itemStack.getCount();
-                }
-            } else if (content.isEmpty()){
-                ItemStack newStack = new ItemStack(itemStack.getItem(), itemStack.getCount());
-                if (itemStack.hasTag()){newStack.setTag(itemStack.getTag());}
-                if (!simulated) handler.insertItem(i, newStack, false);
-                return itemStack.getCount();
-            }
-        }
-        return itemStack.getCount() - total;
+        return stackHolder.get(0);
     }
 
     public Pair<ItemStack, MaidenInteractionConfig> getNextDelivery(Level level){
@@ -165,13 +135,18 @@ public class MaidenTask {
 
             int configPos = getNextConfig();
             MaidenInteractionConfig config = insertBlocks.get(configPos);
+
+            if (!level.isLoaded(this.extractBlock.getPos()) || level.getBlockEntity(extractBlock.getPos()) == null ||
+                !level.isLoaded(config.getPos()) || level.getBlockEntity(config.getPos()) == null){
+                return null;
+            }
+
+
             ItemStack nextStack = getExtractable(level, config);
 
             if (!nextStack.isEmpty()){
 
-                if (level.isLoaded(config.getPos())) return null;
                 BlockEntity entity = level.getBlockEntity(extractBlock.getPos());
-                if (entity == null) return null;
                 LazyOptional<IItemHandler> capability = entity.getCapability(ForgeCapabilities.ITEM_HANDLER, extractBlock.getSide());
 
 

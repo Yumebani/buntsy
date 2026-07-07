@@ -129,7 +129,7 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
     public MaidenTask getTask(){
 
         boolean recompile = false;
-        for (BlockPos pos : ((BlockPos[]) registeredConfigs.keySet().toArray())){
+        for (BlockPos pos : registeredConfigs.keySet().stream().toList()){
             if (level.isLoaded(pos) && level.getBlockEntity(pos) == null){
                 registeredConfigs.remove(pos);
                 recompile = true;
@@ -167,7 +167,7 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
                         if (y >= getClockworkBlockCount()) break;
                     }
                     if (!targets.isEmpty()){
-                        this.maidenTasks.add(new MaidenTask(i, this.getBlockPos(), configInQuestion, targets));
+                        this.maidenTasks.add(new MaidenTask(level.random.nextInt(), this.getBlockPos(), configInQuestion, targets));
                         i++;
                     }
                 }
@@ -185,7 +185,7 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
     public void updateData(CMTParticipantData data, BlockPos target) {
 
         boolean recompileTasks = false;
-        for (Integer channel : data.getChanged().keySet()){
+        for (Integer channel : data.getChanged().keySet().stream().toList()){
             boolean[] changes = data.getChanged().get(channel);
 
             if (changes[0]){

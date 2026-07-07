@@ -7,9 +7,6 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -17,30 +14,15 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
-import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.animal.Turtle;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkMaidenTerminalEntity;
 import net.sophiebun.buntsy.item.ClockworkTier;
 import net.sophiebun.buntsy.item.custom.ClockworkUpgradeItem;
@@ -97,7 +79,7 @@ public class ClockworkMaiden extends PathfinderMob {
     }
 
     @Override
-    public void load(CompoundTag pTag) {
+    public void readAdditionalSaveData(CompoundTag pTag) {
 
         this.clockworkTier = ClockworkTier.values()[pTag.getInt("clockwork_maiden.clockwork_tier")];
         if (pTag.getBoolean("clockwork_maiden.has_upgrade_item")){
@@ -125,7 +107,7 @@ public class ClockworkMaiden extends PathfinderMob {
             this.terminal = NbtUtils.readBlockPos(pTag.getCompound("clockwork_maiden.terminal"));
         }
 
-        super.load(pTag);
+        super.readAdditionalSaveData(pTag);
 
         reAssesGoals();
     }
@@ -258,9 +240,6 @@ public class ClockworkMaiden extends PathfinderMob {
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readAdditionalSaveData(CompoundTag pCompound) {
-        super.readAdditionalSaveData(pCompound);
-    }
 
     protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
         return 1.4F;
@@ -278,6 +257,11 @@ public class ClockworkMaiden extends PathfinderMob {
         }
         this.carriedItems.clear();
         this.reAssesGoals();
+    }
+
+    public void removeCarriedItem(MaidenTask task, Level level){
+        level.addFreshEntity(new ItemEntity(level, this.position().x, this.position().y, this.position().z, this.carriedItems.get(task).getFirst()));
+        this.carriedItems.remove(task);
     }
 
     @Override
@@ -320,9 +304,24 @@ public class ClockworkMaiden extends PathfinderMob {
             return false;
         }
 
+        private boolean isBlockEntityValid(BlockPos pos){
+            if (maiden.level().isLoaded(pos)){
+                BlockEntity blockEntity = maiden.level().getBlockEntity(pos);
+                if (blockEntity != null){
+                    return true;
+                }
+            }
+            return false;
+        }
+
         @Override
         public boolean canContinueToUse() {
-            return maiden.currentTask != null;
+            if (maiden.currentTask != null){
+                if (!isBlockEntityValid(target)){
+                    maiden.currentTask = null;
+                }
+            }
+            return maiden.currentTask != null ;
         }
 
         @Override
@@ -332,13 +331,22 @@ public class ClockworkMaiden extends PathfinderMob {
                 if (!tasksQueue.isEmpty()){
                     for (int i = 0; i < tasksQueue.size(); i++){
                         MaidenTask task = tasksQueue.removeFirst();
-                        Pair<ItemStack, MaidenInteractionConfig> objective = maiden.carriedItems.get(maiden.currentTask);
-                        if (MaidenTask.tryPlace(maiden.level(), objective.getSecond(), objective.getFirst(), true) < objective.getFirst().getCount()){
-                            maiden.currentTask = task;
-                            return true;
-                        } else if (level().isLoaded(objective.getSecond().getPos()) && level().getBlockEntity(objective.getSecond().getPos()) != null) {
-                            tasksQueue.addLast(task);
-                        } else if (!level().isLoaded(objective.getSecond().getPos())){
+                        Pair<ItemStack, MaidenInteractionConfig> objective = maiden.carriedItems.get(task);
+
+                        if (maiden.level().isLoaded(objective.getSecond().getPos())) {
+
+                            if (isBlockEntityValid(objective.getSecond().getPos())){
+                                if (MaidenTask.tryPlace(maiden.level(), objective.getSecond(), objective.getFirst(), true).getCount() <= objective.getFirst().getCount()) {
+                                    maiden.currentTask = task;
+                                    return true;
+                                } else {
+                                    tasksQueue.addLast(task);
+                                }
+                            } else {
+                                removeCarriedItem(task, maiden.level());
+                            }
+
+                        } else {
                             tasksQueue.addLast(task);
                         }
                     }
@@ -347,7 +355,7 @@ public class ClockworkMaiden extends PathfinderMob {
                 ClockworkMaidenTerminalEntity terminalEntity = ((ClockworkMaidenTerminalEntity) maiden.level().getBlockEntity(terminal));
                 for (int i = 0; i < terminalEntity.getTotalTasks(); i++){
                     MaidenTask task = terminalEntity.getTask();
-                    if (!this.tasksQueue.contains(task)){
+                    if (!this.tasksQueue.contains(task) && isBlockEntityValid(task.getExtractPos())){
                         maiden.currentTask = task;
                         return true;
                     }
@@ -359,6 +367,7 @@ public class ClockworkMaiden extends PathfinderMob {
         private void setTarget(BlockPos pos){
             this.target = pos;
             Vec3 goal = pos.getCenter();
+            System.out.println("Moving to " + goal);
             this.maiden.getNavigation().moveTo(goal.x(), goal.y(), goal.z(), this.maiden.getMoveSpeed());
         }
 
@@ -370,7 +379,7 @@ public class ClockworkMaiden extends PathfinderMob {
         @Override
         public void start() {
 
-            if (!maiden.carriedItems.keySet().contains(maiden.currentTask)){
+            if (!maiden.carriedItems.containsKey(maiden.currentTask)){
                 this.setTarget(maiden.currentTask.getExtractPos());
             } else {
                 this.setTarget(maiden.carriedItems.get(maiden.currentTask).getSecond().getPos());
@@ -382,26 +391,29 @@ public class ClockworkMaiden extends PathfinderMob {
 
             if (maiden.position().distanceTo(this.target.getCenter()) <= 1.5f){
                 maiden.getNavigation().stop();
-                if (!maiden.carriedItems.keySet().contains(maiden.currentTask)){
+                if (!maiden.carriedItems.containsKey(maiden.currentTask)){
+
                     Pair<ItemStack, MaidenInteractionConfig> objective = maiden.currentTask.getNextDelivery(maiden.level());
                     if (objective != null){
                         playItemSound();
                         this.maiden.carriedItems.put(maiden.currentTask, objective);
-                        this.setTarget(objective.getSecond().getPos());
-                    } else {
-                        maiden.currentTask = null;
+                        this.tasksQueue.addFirst(currentTask);
                     }
+                    maiden.currentTask = null;
+
                 } else {
+
                     Pair<ItemStack, MaidenInteractionConfig> objective = maiden.carriedItems.get(maiden.currentTask);
-                    int totalSpace = objective.getFirst().getCount() - MaidenTask.tryPlace(maiden.level(), objective.getSecond(), objective.getFirst(), false);
-                    if (totalSpace > 0){
+                    ItemStack remainder = MaidenTask.tryPlace(maiden.level(), objective.getSecond(), objective.getFirst(), false);
+                    if (remainder.getCount() != objective.getFirst().getCount()){
                         playItemSound();
                     }
-                    objective.getFirst().setCount(objective.getFirst().getCount() - totalSpace);
-                    if (objective.getFirst().isEmpty()){
+
+                    if (remainder.isEmpty()){
                         maiden.carriedItems.remove(maiden.currentTask);
                         maiden.currentTask = null;
                     } else {
+                        this.maiden.carriedItems.put(maiden.currentTask, Pair.of(remainder, objective.getSecond()));
                         this.tasksQueue.addLast(maiden.currentTask);
                         maiden.currentTask = null;
                     }
@@ -434,14 +446,14 @@ public class ClockworkMaiden extends PathfinderMob {
         protected Vec3 getPosition() {
             if (this.mob.isInWaterOrBubble()) {
                 Vec3 vec3 = LandRandomPos.getPos(this.mob, 15, 7);
-                while (vec3.distanceTo(this.terminal.getCenter()) > 12){
+                while (vec3 != null && vec3.distanceTo(this.terminal.getCenter()) > 12){
                     vec3 = LandRandomPos.getPos(this.mob, 15, 7);
                 }
                 return vec3 == null ? super.getPosition() : vec3;
             } else {
                 if (this.mob.getRandom().nextFloat() >= this.probability){
                     Vec3 vec3 = LandRandomPos.getPos(this.mob, 10, 7);
-                    while (vec3.distanceTo(this.terminal.getCenter()) > 12){
+                    while (vec3 != null && vec3.distanceTo(this.terminal.getCenter()) > 12){
                         vec3 = LandRandomPos.getPos(this.mob, 15, 7);
                     }
                     return vec3 == null ? super.getPosition() : vec3;
