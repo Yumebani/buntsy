@@ -170,9 +170,10 @@ public class MaidenInteractionConfig {
 
         tag.put("maiden_config.pos", NbtUtils.writeBlockPos(pos));
         tag.putInt("maiden_config.direction", side.ordinal());
-        tag.putInt("maiden_config.filter_size", filter.size());
-        for (int i = 0; i < filter.size(); i++){
-            tag.put("maiden_config.filter_item_" + i, filter.get(i).serializeNBT());
+        for (int i = 0; i < 12; i++){
+            CompoundTag tag2 = new CompoundTag();
+            filter.get(i).save(tag2);
+            tag.put("maiden_config.filter_item_" + i, tag2);
         }
         tag.putBoolean("maiden_config.whitelist", whiteList);
         tag.putBoolean("maiden_config.exact", exact);
@@ -204,11 +205,8 @@ public class MaidenInteractionConfig {
         BlockPos pos = NbtUtils.readBlockPos(tag.getCompound("maiden_config.pos"));
         Direction side = Direction.values()[tag.getInt("maiden_config.direction")];
         List<ItemStack> filter = new ArrayList<>();
-        int filterSize = tag.getInt("maiden_config.filter_size");
-        for (int i = 0; i < filterSize; i++){
-            ItemStack stack = ItemStack.EMPTY;
-            stack.deserializeNBT(tag.getCompound("maiden_config.filter_item_" + i));
-            filter.add(stack);
+        for (int i = 0; i < 12; i++){
+            filter.add(ItemStack.of(tag.getCompound("maiden_config.filter_item_" + i)));
         }
         boolean whiteList = tag.getBoolean("maiden_config.whitelist");
         boolean exact = tag.getBoolean("maiden_config.exact");

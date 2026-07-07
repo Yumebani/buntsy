@@ -1,20 +1,32 @@
 package net.sophiebun.buntsy.server;
 
+import io.netty.buffer.Unpooled;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
+import net.minecraftforge.network.*;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkMaidenTerminalEntity;
+import net.sophiebun.buntsy.entity.clockwork_maiden.CMTParticipantData;
 import net.sophiebun.buntsy.entity.clockwork_maiden.ClockworkMaiden;
+import net.sophiebun.buntsy.screen.CMTParticipantMenu;
+import net.sophiebun.buntsy.screen.CMTParticipantScreen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class ClockworkCardPuncherPacket {
@@ -170,9 +182,29 @@ public class ClockworkCardPuncherPacket {
                 });
             }
 
-            ModPacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player),
-                    new CMTParticipantPacket(maidenTerminal.getData(block),
-                            terminalBlock, block, validSides));
+            MenuProvider containerProvider = new MenuProvider() {
+                @Override
+                public Component getDisplayName() {
+                    return Component.translatable("screen.cmt_participant");
+                }
+
+                @Override
+                public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
+                    return new CMTParticipantMenu(containerId, playerInventory, block, terminalBlock, maidenTerminal.getData(block), validSides);
+                }
+            };
+
+            NetworkHooks.openScreen(player, containerProvider, buf -> {
+                buf.writeBlockPos(block);
+                buf.writeBlockPos(terminalBlock);
+                buf.writeNbt(maidenTerminal.getData(block).getCompound());
+
+                buf.writeInt(validSides.size());
+                for (int i = 0; i < validSides.size(); i++){
+                    buf.writeInt(validSides.get(i).ordinal());
+                }
+            });
+
         }
         else {
             finishFail(player, "Block not registered to selected terminal");

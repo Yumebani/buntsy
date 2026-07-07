@@ -1,5 +1,7 @@
 package net.sophiebun.buntsy.screen;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -16,23 +18,48 @@ import net.sophiebun.buntsy.blocks.inventory.FilterSlot;
 import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
 import net.sophiebun.buntsy.blocks.inventory.PatternOutputSlot;
 import net.sophiebun.buntsy.blocks.inventory.PatternSlot;
+import net.sophiebun.buntsy.entity.clockwork_maiden.CMTParticipantData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CMTParticipantMenu extends AbstractContainerMenu {
 
     private final ItemStackHandler filterItemHandler = new ItemStackHandler(12);
     private final Level level;
 
+    public final BlockPos pos;
+    public final BlockPos terminal;
+    public final CMTParticipantData data;
+    public final List<Direction> availableSides;
+
 
     protected CMTParticipantMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(pContainerId, inv.player);
+        this(pContainerId, inv, extraData.readBlockPos(), extraData.readBlockPos(),
+                CMTParticipantData.parseCompound(extraData.readNbt()), getSidesList(extraData));
     }
 
-    public CMTParticipantMenu(int pContainerId, Player player) {
-        super(ModMenuTypes.CMT_PARTICIPANT_MENU.get(), pContainerId);
-        this.level = player.level();
+    private static List<Direction> getSidesList(FriendlyByteBuf extraData){
 
-        addPlayerHotbar(player.getInventory());
-        addPlayerInventory(player.getInventory());
+        List<Direction> availableSides = new ArrayList<>();
+        int size = extraData.readInt();
+        for (int i = 0; i < size; i++){
+            availableSides.add(Direction.values()[extraData.readInt()]);
+        }
+        return availableSides;
+    }
+
+    public CMTParticipantMenu(int pContainerId, Inventory playerInventory, BlockPos pos, BlockPos terminal, CMTParticipantData data, List<Direction> availableSides) {
+        super(ModMenuTypes.CMT_PARTICIPANT_MENU.get(), pContainerId);
+        this.level = playerInventory.player.level();
+
+        this.pos = pos;
+        this.terminal = terminal;
+        this.data = data;
+        this.availableSides = availableSides;
+
+        addPlayerHotbar(playerInventory);
+        addPlayerInventory(playerInventory);
 
         for (int i = 0; i < 12; i++){
             this.addSlot(new FilterSlot(filterItemHandler, i,  86 + (18 * (i % 4)), 55 + (18 * (i / 4))));

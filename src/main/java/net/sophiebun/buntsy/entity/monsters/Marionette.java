@@ -29,6 +29,7 @@ import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fluids.FluidType;
 
 import javax.annotation.Nullable;
 
@@ -46,6 +47,11 @@ public class Marionette extends Monster implements RangedAttackMob {
             Marionette.this.setAggressive(true);
         }
     };
+
+    @Override
+    public boolean canDrownInFluidType(FluidType type) {
+        return false;
+    }
 
     public  AnimationState idleAnimationState = new AnimationState();
     public  AnimationState windUpAnimationState = new AnimationState();

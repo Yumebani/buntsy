@@ -67,28 +67,30 @@ public class MaidenTask {
                         if (target == null || extractBlock.matchItems(content, target)){
 
                             int possibleTotal = content.getCount() + total;
+                            int amountInContainer = getCountInStorage(level, nextConfig, content);
+                            possibleTotal = calibrateToAmountSettings(nextConfig, possibleTotal, amountInContainer);
 
-                            ItemStack test = ItemStack.EMPTY;
-                            test.deserializeNBT(content.serializeNBT());
-                            test.setCount(possibleTotal);
-                            int remainder = tryPlace(level, nextConfig, test, true).getCount();
-                            System.out.println("remainder " + remainder);
+                            if (possibleTotal > 0){
+                                ItemStack test = new ItemStack(content.getItem(), possibleTotal);
+                                if (content.hasTag()){test.setTag(content.getTag());}
+                                int remainder = tryPlace(level, nextConfig, test, true).getCount();
 
-                            if (remainder == 0){
-                                if (possibleTotal < Math.min(extractBlock.getExtractCount(), content.getMaxStackSize())){
-                                    total = possibleTotal;
-                                    if (target == null){
+                                if (remainder == 0){
+                                    if (possibleTotal < Math.min(extractBlock.getExtractCount(), content.getMaxStackSize())){
+                                        total = possibleTotal;
+                                        if (target == null){
+                                            target = content;
+                                        }
+                                    } else {
+                                        total = Math.min(extractBlock.getExtractCount(), content.getMaxStackSize());
                                         target = content;
+                                        break;
                                     }
                                 } else {
-                                    total = Math.min(extractBlock.getExtractCount(), content.getMaxStackSize());
+                                    total = possibleTotal - remainder;
                                     target = content;
                                     break;
                                 }
-                            } else {
-                                total = possibleTotal - remainder;
-                                target = content;
-                                break;
                             }
                         }
                     }
@@ -107,6 +109,34 @@ public class MaidenTask {
             } else return extractableSpace.get(0);
         }
         return ItemStack.EMPTY;
+    }
+
+    private int calibrateToAmountSettings(MaidenInteractionConfig config, int possibleTotal, int amountInContainer) {
+
+        return switch (config.getFillRegime()){
+            case ONE -> Math.max(0, Math.min(1 - amountInContainer, possibleTotal));
+            case STACK -> Math.max(0, Math.min(64 - amountInContainer, possibleTotal));
+            case FILL -> possibleTotal;
+        };
+    }
+
+    private int getCountInStorage(Level level, MaidenInteractionConfig config, ItemStack itemStack) {
+        BlockEntity entity = level.getBlockEntity(config.getPos());
+        LazyOptional<IItemHandler> capability = entity.getCapability(ForgeCapabilities.ITEM_HANDLER, config.getSide());
+
+        List<Integer> count = new ArrayList<>();
+        count.add(0);
+
+        capability.ifPresent(itemHandler -> {
+            for (int i = 0; i < itemHandler.getSlots(); i++){
+                ItemStack content = itemHandler.getStackInSlot(i);
+                if (MaidenInteractionConfig.matchExactly(content, itemStack)){
+                    count.set(0, content.getCount() + count.get(0));
+                }
+            }
+        });
+
+        return count.get(0);
     }
 
     public static ItemStack tryPlace(Level level, MaidenInteractionConfig config, ItemStack itemStack, boolean simulated){
@@ -130,43 +160,47 @@ public class MaidenTask {
 
     public Pair<ItemStack, MaidenInteractionConfig> getNextDelivery(Level level){
 
-        for (int i = 0; i < insertBlocks.size(); i++){
+        ItemStack nextStack = ItemStack.EMPTY;
+        MaidenInteractionConfig config = null;
 
-            int configPos = getNextConfig();
-            MaidenInteractionConfig config = insertBlocks.get(configPos);
+        int startConfig = getNextConfig();
+        for (int i = startConfig; i < (extractBlock.getSelectionRegime() != MaidenSelectionRegime.ROUND_ROBIN ? insertBlocks.size() : startConfig + 1) ; i++){
+            config = insertBlocks.get(i);
 
             if (!level.isLoaded(this.extractBlock.getPos()) || level.getBlockEntity(extractBlock.getPos()) == null ||
-                !level.isLoaded(config.getPos()) || level.getBlockEntity(config.getPos()) == null){
+                    !level.isLoaded(config.getPos()) || level.getBlockEntity(config.getPos()) == null){
                 return null;
             }
 
-            ItemStack nextStack = getExtractable(level, config);
-            System.out.println("should extract " + nextStack);
+            nextStack = getExtractable(level, config);
 
-            if (!nextStack.isEmpty()){
+            if (!nextStack.isEmpty()) break;
+        }
 
-                BlockEntity entity = level.getBlockEntity(extractBlock.getPos());
-                LazyOptional<IItemHandler> capability = entity.getCapability(ForgeCapabilities.ITEM_HANDLER, extractBlock.getSide());
+        if (!nextStack.isEmpty()){
+
+            BlockEntity entity = level.getBlockEntity(extractBlock.getPos());
+            LazyOptional<IItemHandler> capability = entity.getCapability(ForgeCapabilities.ITEM_HANDLER, extractBlock.getSide());
 
 
-                capability.ifPresent(itemHandler -> {
-                    int total = 0;
-                    for (int ii = 0; ii < itemHandler.getSlots(); ii++){
-                        if (MaidenInteractionConfig.matchExactly(itemHandler.getStackInSlot(ii), nextStack)){
-                            ItemStack stack = itemHandler.getStackInSlot(ii);
-                            if (total + stack.getCount() < nextStack.getCount()){
-                                total += stack.getCount();
-                                itemHandler.extractItem(ii, stack.getCount(), false);
-                            } else {
-                                itemHandler.extractItem(ii, nextStack.getCount() - total, false);
-                                break;
-                            }
+            ItemStack finalNextStack = nextStack;
+            capability.ifPresent(itemHandler -> {
+                int total = 0;
+                for (int ii = 0; ii < itemHandler.getSlots(); ii++){
+                    if (MaidenInteractionConfig.matchExactly(itemHandler.getStackInSlot(ii), finalNextStack)){
+                        ItemStack stack = itemHandler.getStackInSlot(ii);
+                        if (total + stack.getCount() < finalNextStack.getCount()){
+                            total += stack.getCount();
+                            itemHandler.extractItem(ii, stack.getCount(), false);
+                        } else {
+                            itemHandler.extractItem(ii, finalNextStack.getCount() - total, false);
+                            break;
                         }
                     }
-                });
+                }
+            });
 
-                return Pair.of(nextStack, config);
-            }
+            return Pair.of(nextStack, config);
         }
 
         return null;

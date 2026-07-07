@@ -69,29 +69,10 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
         this.imageHeight = 207;
         this.imageWidth = 192;
 
-        this.pos = null;
-        this.terminal = null;
-        this.data = null;
-        this.availableSides = null;
-    }
-
-    public CMTParticipantScreen loadData(BlockPos pos, BlockPos terminal, CMTParticipantData data, List<Direction> availableSides){
-        this.pos = pos;
-        this.terminal = terminal;
-        this.data = data;
-        this.availableSides = availableSides;
-        return this;
-    }
-
-    private CMTParticipantScreen(CMTParticipantMenu pMenu, Inventory pPlayerInventory, BlockPos pos, BlockPos terminal, CMTParticipantData data, List<Direction> availableSides) {
-        super(pMenu, pPlayerInventory, Component.translatable("screen.cmt_participant"));
-        this.imageHeight = 205;
-        this.imageWidth = 192;
-
-        this.pos = pos;
-        this.terminal = terminal;
-        this.data = data;
-        this.availableSides = availableSides;
+        this.pos = pMenu.pos;
+        this.terminal = pMenu.terminal;
+        this.data = pMenu.data;
+        this.availableSides = pMenu.availableSides;
     }
 
     @Override
@@ -175,10 +156,10 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
 
         if (this.data.isEnabled(editingInsert, channelEdit)){
             List<ItemStack> filter = data.getConfig(editingInsert, channelEdit).getFilter();
-            for (int i = 36; i < 48; i++){
-                ItemStack entry = ItemStack.EMPTY;
-                entry.deserializeNBT(filter.get(i - 36).serializeNBT());
-                this.menu.slots.get(i).set(entry);
+            for (int i = 0; i < 12; i++){
+                ItemStack entry = new ItemStack(filter.get(i).getItem(), 1);
+                if (filter.get(i).hasTag()) entry.setTag(filter.get(i).getTag());
+                this.menu.slots.get(i + 36).set(entry);
             }
         }
     }
@@ -188,13 +169,17 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
         if (this.data.isEnabled(editingInsert, channelEdit)){
             List<ItemStack> filter = data.getConfig(editingInsert, channelEdit).getFilter();
             filter.clear();
-            for (int i = 36; i < 48; i++){
+
+            for (int i = 0; i < 12; i++){
+                filter.add(ItemStack.EMPTY);
+            }
+
+            for (int i = 0; i < 12; i++){
                 if (this.menu.slots.get(i).hasItem()){
-                    ItemStack entry = ItemStack.EMPTY;
-                    entry.deserializeNBT(this.menu.slots.get(i).getItem().serializeNBT());
-                    filter.add(entry);
-                } else {
-                    filter.add(ItemStack.EMPTY);
+                    ItemStack toCopy = this.menu.slots.get(36 + i).getItem();
+                    ItemStack entry = new ItemStack(toCopy.getItem(), 1);
+                    if (toCopy.hasTag()) entry.setTag(toCopy.getTag());
+                    filter.set(i, entry);
                 }
             }
             setChanged();

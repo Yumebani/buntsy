@@ -29,6 +29,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fluids.FluidType;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkMaidenTerminalEntity;
 import net.sophiebun.buntsy.item.ClockworkTier;
 import net.sophiebun.buntsy.item.custom.ClockworkUpgradeItem;
@@ -80,14 +81,18 @@ public class ClockworkMaiden extends PathfinderMob {
         pTag.putInt("clockwork_maiden.clockwork_tier", this.clockworkTier.ordinal());
         pTag.putBoolean("clockwork_maiden.has_upgrade_item", upgradeItem != null);
         if (upgradeItem != null){
-            pTag.put("clockwork_maiden.upgrade_item", upgradeItem.serializeNBT());
+            CompoundTag tag = new CompoundTag();
+            upgradeItem.save(tag);
+            pTag.put("clockwork_maiden.upgrade_item", tag);
         }
 
         pTag.putInt("clockwork_maiden.carried_items_size", carriedItems.size());
         for (int i = 0; i < carriedItems.size(); i++){
             MaidenTask task = ((MaidenTask) carriedItems.keySet().toArray()[i]);
+            CompoundTag tag = new CompoundTag();
+            carriedItems.get(task).getFirst().save(tag);
             pTag.put("clockwork_maiden.carried_items_task_" + i, task.getCompound());
-            pTag.put("clockwork_maiden.carried_items_item_" + i, carriedItems.get(task).getFirst().serializeNBT());
+            pTag.put("clockwork_maiden.carried_items_item_" + i, tag);
             pTag.put("clockwork_maiden.carried_items_config_" + i, carriedItems.get(task).getSecond().getCompound());
         }
 
@@ -102,7 +107,7 @@ public class ClockworkMaiden extends PathfinderMob {
         }
 
         pTag.putBoolean("clockwork_maiden.has_target", this.target != null);
-        if (this.terminal != null){
+        if (this.target != null){
             pTag.put("clockwork_maiden.target", NbtUtils.writeBlockPos(this.target));
         }
     }
@@ -112,19 +117,16 @@ public class ClockworkMaiden extends PathfinderMob {
 
         this.clockworkTier = ClockworkTier.values()[pTag.getInt("clockwork_maiden.clockwork_tier")];
         if (pTag.getBoolean("clockwork_maiden.has_upgrade_item")){
-            this.upgradeItem = ItemStack.EMPTY;
-            this.upgradeItem.deserializeNBT(pTag.getCompound("clockwork_maiden.upgrade_item"));
+            this.upgradeItem = ItemStack.of(pTag.getCompound("clockwork_maiden.upgrade_item"));
         } else {
             this.upgradeItem = null;
         }
 
         int size = pTag.getInt("clockwork_maiden.carried_items_size");
         for (int i = 0; i < size; i++){
-            ItemStack in = ItemStack.EMPTY;
-            in.deserializeNBT(pTag.getCompound("clockwork_maiden.carried_items_item_" + i));
             this.carriedItems.put(
                     MaidenTask.parseCompound(pTag.getCompound("clockwork_maiden.carried_items_task_" + i)),
-                    Pair.of(in,
+                    Pair.of(ItemStack.of(pTag.getCompound("clockwork_maiden.carried_items_item_" + i)),
                             MaidenInteractionConfig.parseCompound(pTag.getCompound("clockwork_maiden.carried_items_config_" + i))));
         }
 
@@ -149,6 +151,11 @@ public class ClockworkMaiden extends PathfinderMob {
     public void tick() {
         super.tick();
         animate();
+    }
+
+    @Override
+    public boolean canDrownInFluidType(FluidType type) {
+        return false;
     }
 
     public InteractionResult putUpgrade(ItemStack potentialUpgrade, Level level, Player player, InteractionHand hand){
@@ -227,7 +234,6 @@ public class ClockworkMaiden extends PathfinderMob {
         if (terminal != null){
             this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 8.0F));
             this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
-            this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
             this.goalSelector.addGoal(10, new StayWithinPremises(this, terminal, 1.0D, 16));
             this.goalSelector.addGoal(20, new MaidenTaskGoal(this, terminal));
         } else {

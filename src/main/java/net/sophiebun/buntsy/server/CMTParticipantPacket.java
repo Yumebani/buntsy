@@ -93,13 +93,5 @@ public class CMTParticipantPacket {
     }
 
     private void handlePacketClient(NetworkEvent.Context ctx) {
-        Minecraft.getInstance().setScreen(
-                new CMTParticipantScreen(new CMTParticipantMenu(0, Minecraft.getInstance().player),
-                        Minecraft.getInstance().player.getInventory(), Component.translatable("screen.cmt_participant")).loadData(
-                        target,
-                        terminal,
-                        data,
-                        validSides)
-        );
     }
 }

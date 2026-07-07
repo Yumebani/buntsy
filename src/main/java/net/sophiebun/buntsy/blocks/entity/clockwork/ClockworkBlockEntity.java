@@ -28,7 +28,9 @@ public class ClockworkBlockEntity extends BlockEntity {
         pTag.putInt("clockwork_base.clockwork_tier", this.clockworkTier.ordinal());
         pTag.putBoolean("clockwork_base.has_upgrade_item", upgradeItem != null);
         if (upgradeItem != null){
-            pTag.put("clockwork_base.upgrade_item", upgradeItem.serializeNBT());
+            CompoundTag tag = new CompoundTag();
+            upgradeItem.save(tag);
+            pTag.put("clockwork_base.upgrade_item", tag);
         }
 
         super.saveAdditional(pTag);
@@ -40,8 +42,7 @@ public class ClockworkBlockEntity extends BlockEntity {
 
         this.clockworkTier = ClockworkTier.values()[pTag.getInt("clockwork_base.clockwork_tier")];
         if (pTag.getBoolean("clockwork_base.has_upgrade_item")){
-            this.upgradeItem = ItemStack.EMPTY;
-            this.upgradeItem.deserializeNBT(pTag.getCompound("clockwork_base.upgrade_item"));
+            this.upgradeItem = ItemStack.of(pTag.getCompound("clockwork_base.upgrade_item"));
         } else {
             this.upgradeItem = null;
         }
