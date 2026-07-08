@@ -46,8 +46,10 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.sophiebun.buntsy.blocks.custom.entityblocks.ThreadReelerBlock;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
+import net.sophiebun.buntsy.blocks.entity.basicfairy.ThreadReelerBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyCollectionTrayBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyInfusionBenchBlockEntity;
@@ -60,10 +62,15 @@ import net.sophiebun.buntsy.screen.FairyOfferingBenchMenu;
 import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoBlockEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.*;
 import java.util.stream.Stream;
-public class ClockworkFairyTerminalEntity extends ClockworkBlockEntity implements MenuProvider {
+public class ClockworkFairyTerminalEntity extends ClockworkBlockEntity implements MenuProvider, GeoBlockEntity {
 
     private boolean isWatched = false;
     private boolean isEnchanted = false;
@@ -651,6 +658,25 @@ public class ClockworkFairyTerminalEntity extends ClockworkBlockEntity implement
 
     public boolean isBlockEntityInRange(BlockEntity blockEntity) {
         return isInRange(blockEntity.getBlockPos());
+    }
+
+    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private AnimationController<ClockworkFairyTerminalEntity> controller;
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controller = new AnimationController<>(this, "controller", 2, this::predicate);
+        controllers.add(controller);
+    }
+
+    private PlayState predicate(AnimationState<ClockworkFairyTerminalEntity> clockworkFairyTerminalEntityAnimationState) {
+        clockworkFairyTerminalEntityAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.clockwork_fairy_terminal.idle", Animation.LoopType.LOOP));
+        return PlayState.CONTINUE;
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 
     private interface FairyTerminalTask {

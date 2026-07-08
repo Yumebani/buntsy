@@ -245,12 +245,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         simpleBlockWithItem(ModBlocks.CLOCKWORK_CRAFTER.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/clockwork_crafter")));
-        simpleBlockWithItem(ModBlocks.CLOCKWORK_SYRUP_EXTRACTOR.get(),
-                new ModelFile.UncheckedModelFile(modLoc("block/clockwork_syrup_extractor")));
+        clockworkSyrupExtractorBlock(ModBlocks.CLOCKWORK_SYRUP_EXTRACTOR);
+        simpleBlockItem(ModBlocks.CLOCKWORK_SYRUP_EXTRACTOR.get(), new ModelFile.UncheckedModelFile(modLoc("block/clockwork_syrup_extractor")));
         simpleBlockWithItem(ModBlocks.CLOCKWORK_GEYSER_COLLECTOR.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/clockwork_geyser_collector")));
         simpleBlockWithItem(ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/clockwork_powdered_sugar_collector")));
+        simpleBlockWithItem(ModBlocks.CLOCKWORK_FAIRY_TERMINAL.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/clockwork_fairy_terminal_item")));
 
         simpleBlockWithItem(ModBlocks.CLOCKWORK_MAIDEN_TERMINAL.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/clockwork_maiden_terminal")));
@@ -313,6 +315,23 @@ public class ModBlockStateProvider extends BlockStateProvider {
                     return ConfiguredModel.builder().modelFile(model).rotationY(90).build();
                 default:
                     return ConfiguredModel.builder().modelFile(model).rotationY(180).build();
+            }
+        });
+    }
+
+    private void clockworkSyrupExtractorBlock(RegistryObject<Block> block){
+
+        getVariantBuilder(block.get()).forAllStates(blockState -> {
+            ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/clockwork_syrup_extractor"));
+            switch (blockState.getValue(HorizontalDirectionalBlock.FACING)){
+                case EAST:
+                    return ConfiguredModel.builder().modelFile(model).rotationY(90).build();
+                case SOUTH:
+                    return ConfiguredModel.builder().modelFile(model).rotationY(180).build();
+                case WEST:
+                    return ConfiguredModel.builder().modelFile(model).rotationY(270).build();
+                default:
+                    return ConfiguredModel.builder().modelFile(model).rotationY(0).build();
             }
         });
     }

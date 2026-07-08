@@ -220,6 +220,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.BINDING_STAFF);
 
         simpleItem(ModItems.CLOCKWORK_CARD_PUNCHER);
+        simpleItem(ModItems.CLOCKWORK_MAIDEN);
 
         simpleItem(ModItems.HOT_CHOCOLATE_BUCKET);
 

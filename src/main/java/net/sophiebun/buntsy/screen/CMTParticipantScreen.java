@@ -73,6 +73,8 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
         this.terminal = pMenu.terminal;
         this.data = pMenu.data;
         this.availableSides = pMenu.availableSides;
+
+        loadWhiteList();
     }
 
     @Override

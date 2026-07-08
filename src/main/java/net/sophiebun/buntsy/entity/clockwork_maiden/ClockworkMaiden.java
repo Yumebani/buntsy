@@ -32,6 +32,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidType;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkMaidenTerminalEntity;
 import net.sophiebun.buntsy.item.ClockworkTier;
+import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.item.custom.ClockworkUpgradeItem;
 
 import javax.annotation.Nullable;
@@ -298,9 +299,13 @@ public class ClockworkMaiden extends PathfinderMob {
     }
 
     @Override
-    public void remove(RemovalReason pReason) {
-        this.clearBlockEntityData(level());
-        super.remove(pReason);
+    protected void dropCustomDeathLoot(DamageSource pSource, int pLooting, boolean pRecentlyHit) {
+        Level level = level();
+        this.clearBlockEntityData(level);
+        if (!this.upgradeItem.isEmpty()){
+            level.addFreshEntity(new ItemEntity(level, this.position().x, this.position().y, this.position().z, this.upgradeItem));
+        }
+        level.addFreshEntity(new ItemEntity(level, this.position().x, this.position().y, this.position().z, new ItemStack(ModItems.CLOCKWORK_MAIDEN.get())));
     }
 
     public boolean containsTerminal(ClockworkMaidenTerminalEntity blockEntity) {

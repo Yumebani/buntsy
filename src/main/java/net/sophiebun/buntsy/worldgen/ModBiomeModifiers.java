@@ -28,27 +28,11 @@ public class ModBiomeModifiers {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
         var biomes = context.lookup(Registries.BIOME);
 
-        /*
-        context.register(ADD_WILD_STRAWBERRY, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
-                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.WILD_STRAWBERRY_PLACED_KEY)),
-                GenerationStep.Decoration.VEGETAL_DECORATION
-        ));
-
         context.register(ADD_WILD_HOOTNIP, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.WILD_HOOTNIP_PLACED_KEY)),
                 GenerationStep.Decoration.VEGETAL_DECORATION
         ));
-
-        context.register(ADD_SILKBUN, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
-                biomes.getOrThrow(ModTags.Biomes.SILK_BUN_SPAWN),
-                List.of(new MobSpawnSettings.SpawnerData(ModEntities.SILKBUN_ENTITY.get(), 4, 2, 4))));
-
-        context.register(ADD_FAIRY, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
-                biomes.getOrThrow(ModTags.Biomes.FAIRY_SPAWN),
-                List.of(new MobSpawnSettings.SpawnerData(ModEntities.FAIRY_ENTITY.get(), 3, 2, 4))));
-        */
 
     }
 

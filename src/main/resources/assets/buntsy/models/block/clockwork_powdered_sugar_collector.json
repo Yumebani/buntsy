@@ -5,7 +5,8 @@
 	"textures": {
 		"4": "buntsy:block/clockwork_storage_door",
 		"5": "buntsy:block/clockwork_filter_face",
-		"6": "buntsy:block/clockwork_filter_side"
+		"6": "buntsy:block/clockwork_filter_side",
+		"particle": "buntsy:block/clockwork_storage_door"
 	},
 	"elements": [
 		{

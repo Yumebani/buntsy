@@ -1,0 +1,15 @@
+{
+  "name": "buntsy:ruined_house_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "buntsy:ruined_house",
+        "processors": "buntsy:structure_decay",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

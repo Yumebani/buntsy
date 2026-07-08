@@ -253,7 +253,7 @@ public class ModItems {
     public static final RegistryObject<Item> MARIONETTE_SPAWN_EGG = ItemsRegister.register(
             "marionette_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.MARIONETTE, 0x45393b, 0xcb9257 , new Item.Properties()));
     public static final RegistryObject<Item> CLOCKWORK_MAIDEN = ItemsRegister.register(
-            "clockwork_maiden", () -> new ForgeSpawnEggItem(ModEntities.CLOCKWORK_MAIDEN_ENTITY, 0x45393b, 0xcb9257 , new Item.Properties()));
+            "clockwork_maiden", () -> new ForgeSpawnEggItem(ModEntities.CLOCKWORK_MAIDEN_ENTITY, 0xFFFFFF, 0xFFFFFF , new Item.Properties()));
 
     public static void register(IEventBus eventBus){
         ItemsRegister.register(eventBus);
