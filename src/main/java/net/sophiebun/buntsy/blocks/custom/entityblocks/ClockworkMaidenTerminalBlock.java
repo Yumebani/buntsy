@@ -28,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class ClockworkMaidenTerminalBlock extends ClockworkBlock {
 
-    public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
+    public static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 16, 15);
 
     public ClockworkMaidenTerminalBlock(Properties pProperties) {
         super(pProperties);

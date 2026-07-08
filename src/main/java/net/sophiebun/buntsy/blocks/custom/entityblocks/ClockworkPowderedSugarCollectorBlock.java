@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class ClockworkPowderedSugarCollectorBlock extends ClockworkBlock{
 
-    public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
+    public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 12, 16);
 
     public ClockworkPowderedSugarCollectorBlock(Properties pProperties) {
         super(pProperties);

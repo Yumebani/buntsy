@@ -243,6 +243,18 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 new ResourceLocation(BuntsyMod.MODID, "block/giant_cocoon_side"),
                 new ResourceLocation(BuntsyMod.MODID, "block/giant_cocoon_top")));
 
+        simpleBlockWithItem(ModBlocks.CLOCKWORK_CRAFTER.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/clockwork_crafter")));
+        simpleBlockWithItem(ModBlocks.CLOCKWORK_SYRUP_EXTRACTOR.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/clockwork_syrup_extractor")));
+        simpleBlockWithItem(ModBlocks.CLOCKWORK_GEYSER_COLLECTOR.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/clockwork_geyser_collector")));
+        simpleBlockWithItem(ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/clockwork_powdered_sugar_collector")));
+
+        simpleBlockWithItem(ModBlocks.CLOCKWORK_MAIDEN_TERMINAL.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/clockwork_maiden_terminal")));
+
 
 
 
