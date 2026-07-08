@@ -4,16 +4,15 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.sophiebun.buntsy.blocks.custom.plants.ModLeaves;
 
-public class ModRandomPatchFeature extends Feature<RandomPatchConfiguration> {
+public class ModWaterRandomPatchFeature extends Feature<RandomPatchConfiguration> {
 
-    public ModRandomPatchFeature(Codec<RandomPatchConfiguration> codec) {
+    public ModWaterRandomPatchFeature(Codec<RandomPatchConfiguration> codec) {
         super(codec);
     }
 
@@ -37,7 +36,7 @@ public class ModRandomPatchFeature extends Feature<RandomPatchConfiguration> {
         for(int l = 0; l < randompatchconfiguration.tries(); ++l) {
             BlockPos pos = blockpos.offset(randomsource.nextInt(j) - randomsource.nextInt(j), y + randomsource.nextInt(k) - randomsource.nextInt(k), randomsource.nextInt(j) - randomsource.nextInt(j));
 
-            if (worldgenlevel.getBlockState(pos.below()).isSolidRender(worldgenlevel, pos.below())){
+            if (!worldgenlevel.getBlockState(pos.below()).getFluidState().isEmpty()){
                 if (randompatchconfiguration.feature().value().place(worldgenlevel, config.chunkGenerator(), randomsource, pos)) {
                     ++i;
                 }

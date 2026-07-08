@@ -178,15 +178,15 @@ public class ModConfiguredFeatures {
                         .setValue(HugeMushroomBlock.DOWN, false)), 0));
 
         //Lotus
-        register(context, CHARMING_LOTUS_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
+        register(context, CHARMING_LOTUS_KEY, ModFeatures.WATER_PATCH_FEATURE.get(), new RandomPatchConfiguration(
                 5, 8, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.CHARMING_LOTUS.get())))));
 
-        register(context, BRAVE_LOTUS_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
+        register(context, BRAVE_LOTUS_KEY, ModFeatures.WATER_PATCH_FEATURE.get(), new RandomPatchConfiguration(
                 5, 8, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.BRAVE_LOTUS.get())))));
 
-        register(context, MALIUM_LOTUS_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
+        register(context, MALIUM_LOTUS_KEY, ModFeatures.WATER_PATCH_FEATURE.get(), new RandomPatchConfiguration(
                 8, 8, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.MALIUM_LOTUS.get())))));
 

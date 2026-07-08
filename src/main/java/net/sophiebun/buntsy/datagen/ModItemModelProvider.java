@@ -223,7 +223,6 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         simpleItem(ModItems.HOT_CHOCOLATE_BUCKET);
 
-        simpleItem(ModItems.HOT_CHOCOLATE_BUCKET);
 
         //Cocoon and stuff
         simpleItem(ModItems.URO);

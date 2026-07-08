@@ -47,6 +47,8 @@ public class ModFeatures {
             featureRegister.register("swice_spike_feature", () -> new SwiceSpikeFeature(NoneFeatureConfiguration.CODEC));
     public static final RegistryObject<Feature<RandomPatchConfiguration>> PATCH_FEATURE =
             featureRegister.register("patch_feature", () -> new ModRandomPatchFeature(RandomPatchConfiguration.CODEC));
+    public static final RegistryObject<Feature<RandomPatchConfiguration>> WATER_PATCH_FEATURE =
+            featureRegister.register("water_patch_feature", () -> new ModWaterRandomPatchFeature(RandomPatchConfiguration.CODEC));
        public static final RegistryObject<Feature<BlockStateConfiguration>> BLOCK_PATCH_FEATURE =
             featureRegister.register("block_patch_feature", () -> new BlockPatchFeature(BlockStateConfiguration.CODEC));
     public static final RegistryObject<Feature<BlockStateConfiguration>> LIMESTONE_FEATURE =
