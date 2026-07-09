@@ -25,7 +25,7 @@ public class ClockworkCrafterScreen extends AbstractContainerScreen<ClockworkCra
     @Override
     protected void init() {
         super.init();
-        this.titleLabelX = 37;
+        this.titleLabelX = 46;
         this.inventoryLabelY = 116;
     }
 

@@ -90,6 +90,7 @@ public class ModConfiguredFeatures {
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> FROZEN_GRASS_KEY = registerKey("frozen_grass_key");
     public static final ResourceKey<ConfiguredFeature<?, ?>> FROZEN_BLOOM_KEY = registerKey("frozen_bloom_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FREEZE_TOP_KEY = registerKey("freeze_top_key");
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> ORIGAMI_FERN_KEY = registerKey("origami_fern_key");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SEASHELLS_KEY = registerKey("seashells_key");
@@ -205,6 +206,8 @@ public class ModConfiguredFeatures {
         register(context, CANDY_BOULDER_KEY, ModFeatures.CANDY_BOULDER.get(), new NoneFeatureConfiguration());
 
         //Other
+        register(context, FREEZE_TOP_KEY, ModFeatures.SNOW_FREEZE_FEATURE.get(), new NoneFeatureConfiguration());
+
         register(context, MUD_PATCH_KEY, ModFeatures.MUD_PATCH_FEATURE.get(), new NoneFeatureConfiguration());
         register(context, SWICE_SPIKE_KEY, ModFeatures.SWICE_SPIKE_FEATURE.get(), new NoneFeatureConfiguration());
 

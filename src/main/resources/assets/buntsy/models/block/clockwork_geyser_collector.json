@@ -3,7 +3,7 @@
 	"credit": "Made with Blockbench",
 	"ambientocclusion": false,
 	"textures": {
-		"4": "buntsy:block/clockwork_storage_door",
+		"4": "buntsy:block/clockwork_storage_door_up",
 		"5": "buntsy:block/clockwork_filter_face",
 		"6": "buntsy:block/clockwork_filter_side",
 		"particle": "buntsy:block/clockwork_storage_door"

@@ -21,7 +21,7 @@ public class ClockworkFairyTerminalScreen extends AbstractContainerScreen<Clockw
     @Override
     protected void init() {
         super.init();
-        this.titleLabelX = 37;
+        this.titleLabelX = 28;
     }
 
     @Override

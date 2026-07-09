@@ -87,9 +87,10 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
     @Override
     protected void init() {
         super.init();
-        this.titleLabelX = 37;
+        this.titleLabelX = 80;
         this.titleLabelY = 2;
-        this.inventoryLabelY = 117;
+        this.inventoryLabelY = 116;
+        this.inventoryLabelX = 30;
 
         xGlobal = (width - imageWidth) / 2;
         yGlobal = (height - imageHeight) / 2;
@@ -603,7 +604,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
 
     private void renderStacksizeText(GuiGraphics guiGraphics){
         if (!editingInsert && this.data.isEnabled(editingInsert, channelEdit)){
-            guiGraphics.drawString(this.font, Component.literal("Extraction"), xGlobal + 12, yGlobal + 31, 0xFFFFFFFF, true);
+            guiGraphics.drawString(this.font, Component.literal("Extract"), xGlobal + 16, yGlobal + 31, 0xFFFFFFFF, true);
         }
     }
 

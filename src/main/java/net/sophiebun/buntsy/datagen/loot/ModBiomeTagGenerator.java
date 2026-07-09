@@ -5,6 +5,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.sophiebun.buntsy.BuntsyMod;
@@ -23,7 +24,18 @@ public class ModBiomeTagGenerator extends BiomeTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        this.tag(ModTags.Biomes.FAIRY_SPAWN).add(ModBiomes.CUTERLY_BIOME).add(ModBiomes.CANDY_CRAGS_BIOME);
-        this.tag(ModTags.Biomes.SILK_BUN_SPAWN).add(ModBiomes.CUTERLY_BIOME);
+        this.tag(ModTags.Biomes.FAIRY_SPAWN)
+                .add(ModBiomes.CUTERLY_BIOME)
+                .add(ModBiomes.CANDY_CRAGS_BIOME);
+
+        this.tag(ModTags.Biomes.SILK_BUN_SPAWN)
+                .add(ModBiomes.CUTERLY_BIOME);
+
+        this.tag(Tags.Biomes.IS_SNOWY)
+                .add(ModBiomes.POWDERY_TUNDRA_BIOME)
+                .add(ModBiomes.CHOCOLATE_SPRINGS_BIOME);
+
+        this.tag(Tags.Biomes.IS_DESERT)
+                .add(ModBiomes.CANDY_CRAGS_BIOME);
     }
 }

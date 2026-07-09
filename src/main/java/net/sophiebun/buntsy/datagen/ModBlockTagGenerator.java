@@ -162,6 +162,12 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.ODIATE_SOIL.get())
                 .add(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get());
 
+        this.tag(ModTags.Blocks.NO_SNOW)
+                .add(ModBlocks.CHOCOLATE_GEYSER.get())
+                .add(ModBlocks.PETRIFIED_CHOCOLATE.get())
+                .add(ModBlocks.SWICE.get())
+                .add(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get());
+
         this.tag(ModTags.Blocks.FREEZWEET_BLOCKS)
                 .add(ModBlocks.FROZEN_POWDER_BLOCK.get())
                 .add(ModBlocks.FROZEN_POWDER_LAYER.get());

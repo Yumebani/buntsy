@@ -21,7 +21,7 @@ public class ClockworkGeyserCollectorScreen extends AbstractContainerScreen<Cloc
     @Override
     protected void init() {
         super.init();
-        this.titleLabelX = 37;
+        this.titleLabelX = 22;
     }
 
     @Override

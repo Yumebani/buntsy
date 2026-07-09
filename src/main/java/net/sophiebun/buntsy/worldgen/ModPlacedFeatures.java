@@ -71,6 +71,7 @@ public class ModPlacedFeatures {
 
     public static final ResourceKey<PlacedFeature> FROZEN_GRASS_PLACED_KEY = registerKey("frozen_grass_placed");
     public static final ResourceKey<PlacedFeature> FROZEN_BLOOM_PLACED_KEY = registerKey("frozen_bloom_placed");
+    public static final ResourceKey<PlacedFeature> FREEZE_TOP = registerKey("freeze_top_placed");
 
     public static final ResourceKey<PlacedFeature> ORIGAMI_FERN_PLACED_KEY = registerKey("origami_fern_placed");
     public static final ResourceKey<PlacedFeature> SEASHELLS_PLACED_KEY = registerKey("seashells_placed");
@@ -174,6 +175,7 @@ public class ModPlacedFeatures {
         //Powder tundra
         register(context, SWICE_SPIKE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SWICE_SPIKE_KEY),
                 List.of(PlacementUtils.countExtra(0, 0.5f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+        register(context, FREEZE_TOP, configuredFeatures.getOrThrow(ModConfiguredFeatures.FREEZE_TOP_KEY), List.of(BiomeFilter.biome()));
 
         //Bonemeal
         register(context, CHARMIL_BONEMEAL_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CHARMIL_BONEMEAL_KEY),

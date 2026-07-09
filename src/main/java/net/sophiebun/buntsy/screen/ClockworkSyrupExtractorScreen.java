@@ -22,7 +22,7 @@ public class ClockworkSyrupExtractorScreen extends AbstractContainerScreen<Clock
     @Override
     protected void init() {
         super.init();
-        this.titleLabelX = 37;
+        this.titleLabelX = 22;
         this.inventoryLabelY = 82;
     }
 

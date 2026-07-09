@@ -102,6 +102,12 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.STRAWBERRY);
         simpleItem(ModItems.BOWL_OF_CARAMEL);
         simpleItem(ModItems.CARAMEL_STRAWBERRIES);
+        simpleItem(ModItems.CHOCOLATE_STRAWBERRIES);
+        simpleItem(ModItems.CHOCOLATE);
+        simpleItem(ModItems.VANILLA_ICECREAM);
+        simpleItem(ModItems.CHOCOLATE_ICECREAM);
+        simpleItem(ModItems.CARAMEL_ICECREAM);
+        simpleItem(ModItems.TRIPLE_SHOT_ICECREAM);
         simpleItem(ModItems.GOLDEN_STRAWBERRY);
         simpleItem(ModItems.BOWL_OF_ROCKCANDY);
 

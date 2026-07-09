@@ -1,0 +1,11 @@
+{
+  "type": "buntsy:fairy_offering",
+  "ingredients": [
+    {
+      "item": "buntsy:triple_shot_icecream"
+    }
+  ],
+  "has_output": false,
+  "food_tick": 4000,
+  "chance_modifier": 2
+}

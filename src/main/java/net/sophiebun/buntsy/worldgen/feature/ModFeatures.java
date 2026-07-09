@@ -41,6 +41,8 @@ public class ModFeatures {
             featureRegister.register("candy_crag_pile", () -> new CandyCragPileFeature(NoneFeatureConfiguration.CODEC));
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> CANDY_BOULDER =
             featureRegister.register("candy_boulder", () -> new CandyBoulderFeature(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> SNOW_FREEZE_FEATURE =
+            featureRegister.register("freeze_top", () -> new ModSnowAndFreezeFeature(NoneFeatureConfiguration.CODEC));
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> MUD_PATCH_FEATURE =
             featureRegister.register("mud_patch_feature", () -> new MudPatchFeature(NoneFeatureConfiguration.CODEC));
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> SWICE_SPIKE_FEATURE =

@@ -68,7 +68,7 @@ public class ModItems {
     public static final RegistryObject<Item> FAIRY_DUST = ItemsRegister.register(
             "fairy_dust", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> GENTLIT_SYRUP = ItemsRegister.register(
-            "gentlit_syrup", () -> new BottleItem(new Item.Properties().stacksTo(16)));
+            "gentlit_syrup", () -> new BottleItem(new Item.Properties().stacksTo(16).craftRemainder(Items.GLASS_BOTTLE)));
     public static final RegistryObject<Item> SUGAR_BOWL = ItemsRegister.register(
             "sugar_bowl", () -> new BowlFoodItem(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> SYRUPY_MIXTURE_BOWL = ItemsRegister.register(
@@ -218,15 +218,27 @@ public class ModItems {
             "gas_mask", () -> new GasMaskItem(ClothArmorMaterial.CLOTH, ArmorItem.Type.HELMET, new Item.Properties()));
 
     public static final RegistryObject<Item> BOWL_OF_CARAMEL = ItemsRegister.register(
-            "bowl_of_caramel", () -> new BowlFoodItem(new Item.Properties().food(ModFoods.BOWL_OF_CARAMEL).stacksTo(16)));
+            "bowl_of_caramel", () -> new BowlFoodItem(new Item.Properties().food(ModFoods.BOWL_OF_CARAMEL).stacksTo(16).craftRemainder(Items.BOWL)));
     public static final RegistryObject<Item> BOWL_OF_ROCKCANDY = ItemsRegister.register(
             "bowl_of_rockcandy", () -> new BowlFoodItem(new Item.Properties().food(ModFoods.BOWL_OF_ROCKCANDY).stacksTo(16)));
     public static final RegistryObject<Item> CARAMEL_STRAWBERRIES = ItemsRegister.register(
-            "caramel_strawberries", () -> new Item(new Item.Properties().food(ModFoods.CARAMEL_STRAWBERRIES).stacksTo(16)));
+            "caramel_strawberries", () -> new Item(new Item.Properties().food(ModFoods.CARAMEL_STRAWBERRIES)));
+    public static final RegistryObject<Item> CHOCOLATE_STRAWBERRIES = ItemsRegister.register(
+            "chocolate_strawberries", () -> new Item(new Item.Properties().food(ModFoods.CHOCOLATE_STRAWBERRIES)));
     public static final RegistryObject<Item> STRAWBERRY = ItemsRegister.register(
             "strawberry", () -> new Item(new Item.Properties().food(ModFoods.STRAWBERRY)));
     public static final RegistryObject<Item> GOLDEN_STRAWBERRY = ItemsRegister.register(
             "golden_strawberry", () -> new Item(new Item.Properties().food(ModFoods.GOLDEN_STRAWBERRY)));
+    public static final RegistryObject<Item> CHOCOLATE = ItemsRegister.register(
+            "chocolate", () -> new Item(new Item.Properties().food(ModFoods.CHOCOLATE)));
+    public static final RegistryObject<Item> VANILLA_ICECREAM = ItemsRegister.register(
+            "vanilla_icecream", () -> new Item(new Item.Properties().food(ModFoods.ICECREAM)));
+    public static final RegistryObject<Item> CHOCOLATE_ICECREAM = ItemsRegister.register(
+            "chocolate_icecream", () -> new Item(new Item.Properties().food(ModFoods.CHOCOLATE_ICECREAM)));
+    public static final RegistryObject<Item> CARAMEL_ICECREAM = ItemsRegister.register(
+            "caramel_icecream", () -> new Item(new Item.Properties().food(ModFoods.CARAMEL_ICECREAM)));
+    public static final RegistryObject<Item> TRIPLE_SHOT_ICECREAM = ItemsRegister.register(
+            "triple_shot_icecream", () -> new Item(new Item.Properties().food(ModFoods.TRIPLE_SHOT_ICECREAM)));
 
     public static final RegistryObject<Item> FAIRY_IN_A_BOTTLE = ItemsRegister.register(
             "fairy_in_a_bottle", () -> new FairyBottle(new Item.Properties().stacksTo(1)));

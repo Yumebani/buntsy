@@ -73,8 +73,8 @@ public class BuntsyDimension {
                                                 0f), biomeRegistry.getOrThrow(ModBiomes.CUTERLY_BIOME)),
                                 Pair.of(
                                         Climate.parameters(
-                                                Climate.Parameter.span(0.4f, 1f),
-                                                Climate.Parameter.span(-1f, 0f),
+                                                Climate.Parameter.span(0.2f, 1f),
+                                                Climate.Parameter.span(-1f, 0.2f),
                                                 Climate.Parameter.span(0.25f, 1f),
                                                 Climate.Parameter.span(-0.2f, 1.0f),
                                                 Climate.Parameter.point(0f),
@@ -85,18 +85,18 @@ public class BuntsyDimension {
                                                 Climate.Parameter.span(-1f, -0.2f),
                                                 Climate.Parameter.span(-1f, 1f),
                                                 Climate.Parameter.span(-0.2f, 1f),
-                                                Climate.Parameter.span(-1.0f, 0.1f),
+                                                Climate.Parameter.span(-1.0f, 0.4f),
                                                 Climate.Parameter.point(0f),
                                                 Climate.Parameter.span(-1f, 1f),
                                                 0f), biomeRegistry.getOrThrow(ModBiomes.POWDERY_TUNDRA_BIOME)),
                                 Pair.of(
                                         Climate.parameters(
-                                                Climate.Parameter.span(-1f, -0.2f),
+                                                Climate.Parameter.span(-0.6f, -0.2f),
                                                 Climate.Parameter.span(-1f, 1f),
                                                 Climate.Parameter.span(0.2f, 1f),
-                                                Climate.Parameter.span(0.1f, 1.0f),
+                                                Climate.Parameter.span(0.4f, 1.0f),
                                                 Climate.Parameter.point(0f),
-                                                Climate.Parameter.span(-1f, 1f),
+                                                Climate.Parameter.span(-0.6f, 0.6f),
                                                 0f), biomeRegistry.getOrThrow(ModBiomes.CHOCOLATE_SPRINGS_BIOME)),
                                 Pair.of(
                                         Climate.parameters(

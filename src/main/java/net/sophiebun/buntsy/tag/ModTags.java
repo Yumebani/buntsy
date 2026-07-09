@@ -37,6 +37,8 @@ public class ModTags {
         public static final TagKey<Block> PRISMATIC_BEACON_EFFECT_BLOCK = tag("prismatic_beacon_effect_block");
         public static final TagKey<Block> LIMESTONE = tag("limestone");
 
+        public static final TagKey<Block> NO_SNOW = tag("no_snow");
+
         private static TagKey<Block> tag(String name) {
             return BlockTags.create(new ResourceLocation(BuntsyMod.MODID, name));
         }

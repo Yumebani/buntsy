@@ -15,13 +15,13 @@ public class ClockworkPowderedSugarCollectorScreen extends AbstractContainerScre
             new ResourceLocation(BuntsyMod.MODID, "textures/gui/clockwork_passive_collector_gui.png");
 
     public ClockworkPowderedSugarCollectorScreen(ClockworkPowderedSugarCollectorMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
-        super(pMenu, pPlayerInventory, pTitle);
+        super(pMenu, pPlayerInventory, Component.translatable("screen.buntsy.clockwork_powdered_sugar_collector"));
     }
 
     @Override
     protected void init() {
         super.init();
-        this.titleLabelX = 37;
+        this.titleLabelX = 22;
     }
 
     @Override

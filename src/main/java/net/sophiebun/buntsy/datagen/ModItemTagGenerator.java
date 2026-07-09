@@ -86,6 +86,13 @@ public class ModItemTagGenerator extends ItemTagsProvider {
                 .add(ModItems.BOWL_OF_CARAMEL.get().asItem())
                 .add(ModItems.SUGAR_BOWL.get().asItem())
                 .add(ModItems.SYRUPY_MIXTURE_BOWL.get().asItem())
+                .add(ModItems.CARAMEL_STRAWBERRIES.get().asItem())
+                .add(ModItems.CHOCOLATE_STRAWBERRIES.get().asItem())
+                .add(ModItems.CHOCOLATE.get().asItem())
+                .add(ModItems.VANILLA_ICECREAM.get().asItem())
+                .add(ModItems.CHOCOLATE_ICECREAM.get().asItem())
+                .add(ModItems.CARAMEL_ICECREAM.get().asItem())
+                .add(ModItems.TRIPLE_SHOT_ICECREAM.get().asItem())
                 .add(ModItems.BOWL_OF_ROCKCANDY.get().asItem());
 
         this.tag(ModTags.Items.BOTTLED_ITEM)

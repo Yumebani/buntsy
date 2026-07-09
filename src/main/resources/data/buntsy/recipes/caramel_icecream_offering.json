@@ -1,0 +1,11 @@
+{
+  "type": "buntsy:fairy_offering",
+  "ingredients": [
+    {
+      "item": "buntsy:caramel_icecream"
+    }
+  ],
+  "has_output": false,
+  "food_tick": 2000,
+  "chance_modifier": 1
+}
