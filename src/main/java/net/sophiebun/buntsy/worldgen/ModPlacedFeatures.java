@@ -82,6 +82,8 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> CHARMIL_BONEMEAL_PLACED_KEY = registerKey("charmil_bonemeal_placed");
     public static final ResourceKey<PlacedFeature> ODIATE_BONEMEAL_PLACED_KEY = registerKey("odiate_bonemeal_placed");
 
+    public static final ResourceKey<PlacedFeature> CLOCKWORK_STRUCTURES_PLACED_KEY = registerKey("clockwork_structures_placed");
+
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
@@ -176,6 +178,9 @@ public class ModPlacedFeatures {
         register(context, SWICE_SPIKE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SWICE_SPIKE_KEY),
                 List.of(PlacementUtils.countExtra(0, 0.5f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
         register(context, FREEZE_TOP, configuredFeatures.getOrThrow(ModConfiguredFeatures.FREEZE_TOP_KEY), List.of(BiomeFilter.biome()));
+
+        register(context, CLOCKWORK_STRUCTURES_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CLOCKWORK_STRUCTURES_KEY),
+                List.of(PlacementUtils.countExtra(0, 0.1f, 1), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
 
         //Bonemeal
         register(context, CHARMIL_BONEMEAL_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CHARMIL_BONEMEAL_KEY),

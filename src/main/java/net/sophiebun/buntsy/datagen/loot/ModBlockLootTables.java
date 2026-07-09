@@ -193,6 +193,13 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.FROZEN_LIMESTONE_BRICKS_SLAB.get());
         this.dropSelf(ModBlocks.FROZEN_LIMESTONE_BRICKS_WALL.get());
 
+        this.dropSelf(ModBlocks.DECAYED_CLOCKWORK_BRASS_BLOCK.get());
+        this.dropSelf(ModBlocks.DECAYED_CUT_CLOCKWORK_BRASS.get());
+        this.dropSelf(ModBlocks.CLOCKWORK_BRASS_BLOCK.get());
+        this.dropSelf(ModBlocks.CUT_CLOCKWORK_BRASS.get());
+        this.dropSelf(ModBlocks.CUT_CLOCKWORK_BRASS_SLAB.get());
+        this.dropSelf(ModBlocks.CUT_CLOCKWORK_BRASS_STAIRS.get());
+
         this.dropSelf(ModBlocks.CHOCOLATE_BLOCK.get());
         this.add(ModBlocks.PETRIFIED_CHOCOLATE.get(), (block) -> {
             return this.createSingleItemTableWithSilkTouch(block, ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get());});

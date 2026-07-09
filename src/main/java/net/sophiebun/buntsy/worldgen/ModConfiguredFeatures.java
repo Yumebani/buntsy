@@ -98,6 +98,8 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> CHARMIL_BONEMEAL_KEY = registerKey("charmil_bonemeal_key");
     public static final ResourceKey<ConfiguredFeature<?, ?>> ODIATE_BONEMEAL_KEY = registerKey("odiate_bonemeal_key");
 
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CLOCKWORK_STRUCTURES_KEY = registerKey("clockwork_structures_key");
+
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context){
 
 
@@ -203,6 +205,8 @@ public class ModConfiguredFeatures {
         register(context, CANDY_BOULDER_KEY, ModFeatures.CANDY_BOULDER.get(), new NoneFeatureConfiguration());
 
         //Other
+        register(context, CLOCKWORK_STRUCTURES_KEY, ModFeatures.CLOCKWORK_STRUCTURE_FEATURE.get(), new NoneFeatureConfiguration());
+
         register(context, FREEZE_TOP_KEY, ModFeatures.SNOW_FREEZE_FEATURE.get(), new NoneFeatureConfiguration());
 
         register(context, MUD_PATCH_KEY, ModFeatures.MUD_PATCH_FEATURE.get(), new NoneFeatureConfiguration());

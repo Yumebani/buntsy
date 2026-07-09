@@ -171,6 +171,13 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
                 .add(ModBlocks.CHOCOLATE_BLOCK.get())
 
+                .add(ModBlocks.DECAYED_CLOCKWORK_BRASS_BLOCK.get())
+                .add(ModBlocks.DECAYED_CUT_CLOCKWORK_BRASS.get())
+                .add(ModBlocks.CLOCKWORK_BRASS_BLOCK.get())
+                .add(ModBlocks.CUT_CLOCKWORK_BRASS.get())
+                .add(ModBlocks.CUT_CLOCKWORK_BRASS_STAIRS.get())
+                .add(ModBlocks.CUT_CLOCKWORK_BRASS_SLAB.get())
+
                 .add(ModBlocks.PETRIFIED_CHOCOLATE.get())
                 .add(ModBlocks.PETRIFIED_CHOCOLATE_STAIRS.get())
                 .add(ModBlocks.PETRIFIED_CHOCOLATE_SLAB.get())

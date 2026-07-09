@@ -212,6 +212,13 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 modLoc("block/" + ModBlocks.PETRIFIED_CHOCOLATE.getId().getPath()),
                 modLoc("block/" + ModBlocks.CHOCOLATE_GEYSER.getId().getPath())));
 
+        blockWithItem(ModBlocks.DECAYED_CLOCKWORK_BRASS_BLOCK);
+        blockWithItem(ModBlocks.DECAYED_CUT_CLOCKWORK_BRASS);
+        blockWithItem(ModBlocks.CLOCKWORK_BRASS_BLOCK);
+        blockWithItem(ModBlocks.CUT_CLOCKWORK_BRASS);
+        stairsBlock((StairBlock) ModBlocks.CUT_CLOCKWORK_BRASS_STAIRS.get(), blockTexture(ModBlocks.CUT_CLOCKWORK_BRASS.get()));
+        slabBlock((SlabBlock) ModBlocks.CUT_CLOCKWORK_BRASS_SLAB.get(), blockTexture(ModBlocks.CUT_CLOCKWORK_BRASS.get()), blockTexture(ModBlocks.CUT_CLOCKWORK_BRASS.get()));
+
         blockWithItem(ModBlocks.FROZEN_POWDER_BLOCK);
         translucentBlockWithItem(ModBlocks.SWICE);
 

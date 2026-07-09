@@ -306,6 +306,9 @@ public class ModBiomes {
         //Ground
         biomeBuilder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, ModPlacedFeatures.MUD_PATCH_PLACED_KEY);
 
+
+        biomeBuilder.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.CLOCKWORK_STRUCTURES_PLACED_KEY);
+
         //Plants
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.MALVOR_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.GIANT_PALESHROOM_PLACED_KEY);

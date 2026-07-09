@@ -309,6 +309,20 @@ public class ModBlocks {
     public static final RegistryObject<Block> CHOCOLATE_GEYSER = registerBlock("chocolate_geyser",
             () -> new ChocolateGeyserBlock(BlockBehaviour.Properties.copy(Blocks.STONE).randomTicks()));
 
+    public static final RegistryObject<Block> DECAYED_CLOCKWORK_BRASS_BLOCK = registerBlock("decayed_clockwork_brass_block",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK)));
+    public static final RegistryObject<Block> DECAYED_CUT_CLOCKWORK_BRASS = registerBlock("decayed_cut_clockwork_brass",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.CUT_COPPER)));
+
+    public static final RegistryObject<Block> CLOCKWORK_BRASS_BLOCK = registerBlock("clockwork_brass_block",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK)));
+    public static final RegistryObject<Block> CUT_CLOCKWORK_BRASS = registerBlock("cut_clockwork_brass",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.CUT_COPPER)));
+    public static final RegistryObject<Block> CUT_CLOCKWORK_BRASS_STAIRS = registerBlock("cut_clockwork_brass_stairs",
+            () -> new StairBlock(() -> ModBlocks.CUT_CLOCKWORK_BRASS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> CUT_CLOCKWORK_BRASS_SLAB = registerBlock("cut_clockwork_brass_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+
     public static final RegistryObject<Block> SEA_SHELLS = registerBlock("sea_shells",
             () -> new SeaShellsBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noCollission().noOcclusion().instabreak()));
 

@@ -238,6 +238,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         evenSimplerBlockItem(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_SLAB);
         wallItem(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_WALL, ModBlocks.COBBLED_PETRIFIED_CHOCOLATE);
 
+        evenSimplerBlockItem(ModBlocks.CUT_CLOCKWORK_BRASS_STAIRS);
+        evenSimplerBlockItem(ModBlocks.CUT_CLOCKWORK_BRASS_SLAB);
+
         evenSimplerBlockItem(ModBlocks.ODIATE_MUD_BRICKS_STAIRS);
         evenSimplerBlockItem(ModBlocks.ODIATE_MUD_BRICKS_SLAB);
         wallItem(ModBlocks.ODIATE_MUD_BRICKS_WALL, ModBlocks.ODIATE_MUD_BRICKS);
