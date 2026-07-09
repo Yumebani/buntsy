@@ -32,14 +32,43 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get());
                         pOutput.accept(ModBlocks.ODIATE_SOIL.get());
                         pOutput.accept(ModBlocks.ODIATE_MUD.get());
+                        pOutput.accept(ModBlocks.PACKED_ODIATE_MUD.get());
+                        pOutput.accept(ModBlocks.ODIATE_MUD_BRICKS.get());
+                        pOutput.accept(ModBlocks.ODIATE_MUD_BRICKS_STAIRS.get());
+                        pOutput.accept(ModBlocks.ODIATE_MUD_BRICKS_SLAB.get());
+                        pOutput.accept(ModBlocks.ODIATE_MUD_BRICKS_WALL.get());
 
                         pOutput.accept(ModBlocks.SWEET_CORAL_SAND.get());
                         pOutput.accept(ModBlocks.FROZEN_CORAL_SAND.get());
                         pOutput.accept(ModBlocks.SUNNY_CORAL_SAND.get());
 
                         pOutput.accept(ModBlocks.SWEET_LIMESTONE.get());
-                        pOutput.accept(ModBlocks.FROZEN_LIMSTONE.get());
+                        pOutput.accept(ModBlocks.SWEET_LIMESTONE_STAIRS.get());
+                        pOutput.accept(ModBlocks.SWEET_LIMESTONE_SLAB.get());
+                        pOutput.accept(ModBlocks.SWEET_LIMESTONE_WALL.get());
+                        pOutput.accept(ModBlocks.SWEET_LIMESTONE_BRICKS.get());
+                        pOutput.accept(ModBlocks.SWEET_LIMESTONE_BRICKS_STAIRS.get());
+                        pOutput.accept(ModBlocks.SWEET_LIMESTONE_BRICKS_SLAB.get());
+                        pOutput.accept(ModBlocks.SWEET_LIMESTONE_BRICKS_WALL.get());
+
+                        pOutput.accept(ModBlocks.FROZEN_LIMESTONE.get());
+                        pOutput.accept(ModBlocks.FROZEN_LIMESTONE_STAIRS.get());
+                        pOutput.accept(ModBlocks.FROZEN_LIMESTONE_SLAB.get());
+                        pOutput.accept(ModBlocks.FROZEN_LIMESTONE_WALL.get());
+                        pOutput.accept(ModBlocks.FROZEN_LIMESTONE_BRICKS.get());
+                        pOutput.accept(ModBlocks.FROZEN_LIMESTONE_BRICKS_STAIRS.get());
+                        pOutput.accept(ModBlocks.FROZEN_LIMESTONE_BRICKS_SLAB.get());
+                        pOutput.accept(ModBlocks.FROZEN_LIMESTONE_BRICKS_WALL.get());
+
                         pOutput.accept(ModBlocks.SUNNY_LIMESTONE.get());
+                        pOutput.accept(ModBlocks.SUNNY_LIMESTONE_STAIRS.get());
+                        pOutput.accept(ModBlocks.SUNNY_LIMESTONE_SLAB.get());
+                        pOutput.accept(ModBlocks.SUNNY_LIMESTONE_WALL.get());
+                        pOutput.accept(ModBlocks.SUNNY_LIMESTONE_BRICKS.get());
+                        pOutput.accept(ModBlocks.SUNNY_LIMESTONE_BRICKS_STAIRS.get());
+                        pOutput.accept(ModBlocks.SUNNY_LIMESTONE_BRICKS_SLAB.get());
+                        pOutput.accept(ModBlocks.SUNNY_LIMESTONE_BRICKS_WALL.get());
+
                         pOutput.accept(ModBlocks.SEA_SHELLS.get());
 
                         pOutput.accept(ModBlocks.FROZEN_POWDER_BLOCK.get());
@@ -47,13 +76,46 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.SWICE.get());
 
                         pOutput.accept(ModBlocks.PETRIFIED_CHOCOLATE.get());
+                        pOutput.accept(ModBlocks.PETRIFIED_CHOCOLATE_STAIRS.get());
+                        pOutput.accept(ModBlocks.PETRIFIED_CHOCOLATE_SLAB.get());
+                        pOutput.accept(ModBlocks.PETRIFIED_CHOCOLATE_WALL.get());
+                        pOutput.accept(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS.get());
+                        pOutput.accept(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_STAIRS.get());
+                        pOutput.accept(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_SLAB.get());
+                        pOutput.accept(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_WALL.get());
                         pOutput.accept(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get());
+                        pOutput.accept(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_STAIRS.get());
+                        pOutput.accept(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_SLAB.get());
+                        pOutput.accept(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_WALL.get());
                         pOutput.accept(ModBlocks.CHOCOLATE_BLOCK.get());
                         pOutput.accept(ModBlocks.CHOCOLATE_GEYSER.get());
 
                         pOutput.accept(ModBlocks.SWEET_CANDY_ROCK.get());
+                        pOutput.accept(ModBlocks.SWEET_CANDY_ROCK_STAIRS.get());
+                        pOutput.accept(ModBlocks.SWEET_CANDY_ROCK_SLAB.get());
+                        pOutput.accept(ModBlocks.SWEET_CANDY_ROCK_WALL.get());
+                        pOutput.accept(ModBlocks.SWEET_CANDY_BRICKS.get());
+                        pOutput.accept(ModBlocks.SWEET_CANDY_BRICKS_STAIRS.get());
+                        pOutput.accept(ModBlocks.SWEET_CANDY_BRICKS_SLAB.get());
+                        pOutput.accept(ModBlocks.SWEET_CANDY_BRICKS_WALL.get());
+
                         pOutput.accept(ModBlocks.SOUR_CANDY_ROCK.get());
+                        pOutput.accept(ModBlocks.SOUR_CANDY_ROCK_STAIRS.get());
+                        pOutput.accept(ModBlocks.SOUR_CANDY_ROCK_SLAB.get());
+                        pOutput.accept(ModBlocks.SOUR_CANDY_ROCK_WALL.get());
+                        pOutput.accept(ModBlocks.SOUR_CANDY_BRICKS.get());
+                        pOutput.accept(ModBlocks.SOUR_CANDY_BRICKS_STAIRS.get());
+                        pOutput.accept(ModBlocks.SOUR_CANDY_BRICKS_SLAB.get());
+                        pOutput.accept(ModBlocks.SOUR_CANDY_BRICKS_WALL.get());
+
                         pOutput.accept(ModBlocks.BITTER_CANDY_ROCK.get());
+                        pOutput.accept(ModBlocks.BITTER_CANDY_ROCK_STAIRS.get());
+                        pOutput.accept(ModBlocks.BITTER_CANDY_ROCK_SLAB.get());
+                        pOutput.accept(ModBlocks.BITTER_CANDY_ROCK_WALL.get());
+                        pOutput.accept(ModBlocks.BITTER_CANDY_BRICKS.get());
+                        pOutput.accept(ModBlocks.BITTER_CANDY_BRICKS_STAIRS.get());
+                        pOutput.accept(ModBlocks.BITTER_CANDY_BRICKS_SLAB.get());
+                        pOutput.accept(ModBlocks.BITTER_CANDY_BRICKS_WALL.get());
 
                         pOutput.accept(ModBlocks.SWEET_CORAL.get());
                         pOutput.accept(ModBlocks.SWEET_CORAL_BLOCK.get());

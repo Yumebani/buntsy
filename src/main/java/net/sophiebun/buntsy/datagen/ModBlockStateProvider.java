@@ -128,21 +128,84 @@ public class ModBlockStateProvider extends BlockStateProvider {
         grassBlock(ModBlocks.GRAY_MOSS_ODIATE_SOIL, ModBlocks.ODIATE_SOIL.getId().getPath());
         blockWithItem(ModBlocks.ODIATE_SOIL);
         blockWithItem(ModBlocks.ODIATE_MUD);
+        blockWithItem(ModBlocks.PACKED_ODIATE_MUD);
+        blockWithItem(ModBlocks.ODIATE_MUD_BRICKS);
+        stairsBlock((StairBlock) ModBlocks.ODIATE_MUD_BRICKS_STAIRS.get(), blockTexture(ModBlocks.ODIATE_MUD_BRICKS.get()));
+        slabBlock((SlabBlock) ModBlocks.ODIATE_MUD_BRICKS_SLAB.get(), blockTexture(ModBlocks.ODIATE_MUD_BRICKS.get()), blockTexture(ModBlocks.ODIATE_MUD_BRICKS.get()));
+        wallBlock((WallBlock) ModBlocks.ODIATE_MUD_BRICKS_WALL.get(), blockTexture(ModBlocks.ODIATE_MUD_BRICKS.get()));
         farmlandBlock(ModBlocks.ODIATE_FARMLAND, ModBlocks.ODIATE_SOIL);
 
         blockWithItem(ModBlocks.SWEET_CORAL_SAND);
         blockWithItem(ModBlocks.FROZEN_CORAL_SAND);
         blockWithItem(ModBlocks.SUNNY_CORAL_SAND);
+
         blockWithItem(ModBlocks.SWEET_CANDY_ROCK);
+        stairsBlock((StairBlock) ModBlocks.SWEET_CANDY_ROCK_STAIRS.get(), blockTexture(ModBlocks.SWEET_CANDY_ROCK.get()));
+        slabBlock((SlabBlock) ModBlocks.SWEET_CANDY_ROCK_SLAB.get(), blockTexture(ModBlocks.SWEET_CANDY_ROCK.get()), blockTexture(ModBlocks.SWEET_CANDY_ROCK.get()));
+        wallBlock((WallBlock) ModBlocks.SWEET_CANDY_ROCK_WALL.get(), blockTexture(ModBlocks.SWEET_CANDY_ROCK.get()));
+        blockWithItem(ModBlocks.SWEET_CANDY_BRICKS);
+        stairsBlock((StairBlock) ModBlocks.SWEET_CANDY_BRICKS_STAIRS.get(), blockTexture(ModBlocks.SWEET_CANDY_BRICKS.get()));
+        slabBlock((SlabBlock) ModBlocks.SWEET_CANDY_BRICKS_SLAB.get(), blockTexture(ModBlocks.SWEET_CANDY_BRICKS.get()), blockTexture(ModBlocks.SWEET_CANDY_BRICKS.get()));
+        wallBlock((WallBlock) ModBlocks.SWEET_CANDY_BRICKS_WALL.get(), blockTexture(ModBlocks.SWEET_CANDY_BRICKS.get()));
+
         blockWithItem(ModBlocks.BITTER_CANDY_ROCK);
+        stairsBlock((StairBlock) ModBlocks.BITTER_CANDY_ROCK_STAIRS.get(), blockTexture(ModBlocks.BITTER_CANDY_ROCK.get()));
+        slabBlock((SlabBlock) ModBlocks.BITTER_CANDY_ROCK_SLAB.get(), blockTexture(ModBlocks.BITTER_CANDY_ROCK.get()), blockTexture(ModBlocks.BITTER_CANDY_ROCK.get()));
+        wallBlock((WallBlock) ModBlocks.BITTER_CANDY_ROCK_WALL.get(), blockTexture(ModBlocks.BITTER_CANDY_ROCK.get()));
+        blockWithItem(ModBlocks.BITTER_CANDY_BRICKS);
+        stairsBlock((StairBlock) ModBlocks.BITTER_CANDY_BRICKS_STAIRS.get(), blockTexture(ModBlocks.BITTER_CANDY_BRICKS.get()));
+        slabBlock((SlabBlock) ModBlocks.BITTER_CANDY_BRICKS_SLAB.get(), blockTexture(ModBlocks.BITTER_CANDY_BRICKS.get()), blockTexture(ModBlocks.BITTER_CANDY_BRICKS.get()));
+        wallBlock((WallBlock) ModBlocks.BITTER_CANDY_BRICKS_WALL.get(), blockTexture(ModBlocks.BITTER_CANDY_BRICKS.get()));
+
         blockWithItem(ModBlocks.SOUR_CANDY_ROCK);
+        stairsBlock((StairBlock) ModBlocks.SOUR_CANDY_ROCK_STAIRS.get(), blockTexture(ModBlocks.SOUR_CANDY_ROCK.get()));
+        slabBlock((SlabBlock) ModBlocks.SOUR_CANDY_ROCK_SLAB.get(), blockTexture(ModBlocks.SOUR_CANDY_ROCK.get()), blockTexture(ModBlocks.SOUR_CANDY_ROCK.get()));
+        wallBlock((WallBlock) ModBlocks.SOUR_CANDY_ROCK_WALL.get(), blockTexture(ModBlocks.SOUR_CANDY_ROCK.get()));
+        blockWithItem(ModBlocks.SOUR_CANDY_BRICKS);
+        stairsBlock((StairBlock) ModBlocks.SOUR_CANDY_BRICKS_STAIRS.get(), blockTexture(ModBlocks.SOUR_CANDY_BRICKS.get()));
+        slabBlock((SlabBlock) ModBlocks.SOUR_CANDY_BRICKS_SLAB.get(), blockTexture(ModBlocks.SOUR_CANDY_BRICKS.get()), blockTexture(ModBlocks.SOUR_CANDY_BRICKS.get()));
+        wallBlock((WallBlock) ModBlocks.SOUR_CANDY_BRICKS_WALL.get(), blockTexture(ModBlocks.SOUR_CANDY_BRICKS.get()));
 
         blockWithItem(ModBlocks.SWEET_LIMESTONE);
+        stairsBlock((StairBlock) ModBlocks.SWEET_LIMESTONE_STAIRS.get(), blockTexture(ModBlocks.SWEET_LIMESTONE.get()));
+        slabBlock((SlabBlock) ModBlocks.SWEET_LIMESTONE_SLAB.get(), blockTexture(ModBlocks.SWEET_LIMESTONE.get()), blockTexture(ModBlocks.SWEET_LIMESTONE.get()));
+        wallBlock((WallBlock) ModBlocks.SWEET_LIMESTONE_WALL.get(), blockTexture(ModBlocks.SWEET_LIMESTONE.get()));
+        blockWithItem(ModBlocks.SWEET_LIMESTONE_BRICKS);
+        stairsBlock((StairBlock) ModBlocks.SWEET_LIMESTONE_BRICKS_STAIRS.get(), blockTexture(ModBlocks.SWEET_LIMESTONE_BRICKS.get()));
+        slabBlock((SlabBlock) ModBlocks.SWEET_LIMESTONE_BRICKS_SLAB.get(), blockTexture(ModBlocks.SWEET_LIMESTONE_BRICKS.get()), blockTexture(ModBlocks.SWEET_LIMESTONE_BRICKS.get()));
+        wallBlock((WallBlock) ModBlocks.SWEET_LIMESTONE_BRICKS_WALL.get(), blockTexture(ModBlocks.SWEET_LIMESTONE_BRICKS.get()));
+
         blockWithItem(ModBlocks.SUNNY_LIMESTONE);
-        blockWithItem(ModBlocks.FROZEN_LIMSTONE);
+        stairsBlock((StairBlock) ModBlocks.SUNNY_LIMESTONE_STAIRS.get(), blockTexture(ModBlocks.SUNNY_LIMESTONE.get()));
+        slabBlock((SlabBlock) ModBlocks.SUNNY_LIMESTONE_SLAB.get(), blockTexture(ModBlocks.SUNNY_LIMESTONE.get()), blockTexture(ModBlocks.SUNNY_LIMESTONE.get()));
+        wallBlock((WallBlock) ModBlocks.SUNNY_LIMESTONE_WALL.get(), blockTexture(ModBlocks.SUNNY_LIMESTONE.get()));
+        blockWithItem(ModBlocks.SUNNY_LIMESTONE_BRICKS);
+        stairsBlock((StairBlock) ModBlocks.SUNNY_LIMESTONE_BRICKS_STAIRS.get(), blockTexture(ModBlocks.SUNNY_LIMESTONE_BRICKS.get()));
+        slabBlock((SlabBlock) ModBlocks.SUNNY_LIMESTONE_BRICKS_SLAB.get(), blockTexture(ModBlocks.SUNNY_LIMESTONE_BRICKS.get()), blockTexture(ModBlocks.SUNNY_LIMESTONE_BRICKS.get()));
+        wallBlock((WallBlock) ModBlocks.SUNNY_LIMESTONE_BRICKS_WALL.get(), blockTexture(ModBlocks.SUNNY_LIMESTONE_BRICKS.get()));
+
+        blockWithItem(ModBlocks.FROZEN_LIMESTONE);
+        stairsBlock((StairBlock) ModBlocks.FROZEN_LIMESTONE_STAIRS.get(), blockTexture(ModBlocks.FROZEN_LIMESTONE.get()));
+        slabBlock((SlabBlock) ModBlocks.FROZEN_LIMESTONE_SLAB.get(), blockTexture(ModBlocks.FROZEN_LIMESTONE.get()), blockTexture(ModBlocks.FROZEN_LIMESTONE.get()));
+        wallBlock((WallBlock) ModBlocks.FROZEN_LIMESTONE_WALL.get(), blockTexture(ModBlocks.FROZEN_LIMESTONE.get()));
+        blockWithItem(ModBlocks.FROZEN_LIMESTONE_BRICKS);
+        stairsBlock((StairBlock) ModBlocks.FROZEN_LIMESTONE_BRICKS_STAIRS.get(), blockTexture(ModBlocks.FROZEN_LIMESTONE_BRICKS.get()));
+        slabBlock((SlabBlock) ModBlocks.FROZEN_LIMESTONE_BRICKS_SLAB.get(), blockTexture(ModBlocks.FROZEN_LIMESTONE_BRICKS.get()), blockTexture(ModBlocks.FROZEN_LIMESTONE_BRICKS.get()));
+        wallBlock((WallBlock) ModBlocks.FROZEN_LIMESTONE_BRICKS_WALL.get(), blockTexture(ModBlocks.FROZEN_LIMESTONE_BRICKS.get()));
 
         blockWithItem(ModBlocks.PETRIFIED_CHOCOLATE);
+        stairsBlock((StairBlock) ModBlocks.PETRIFIED_CHOCOLATE_STAIRS.get(), blockTexture(ModBlocks.PETRIFIED_CHOCOLATE.get()));
+        slabBlock((SlabBlock) ModBlocks.PETRIFIED_CHOCOLATE_SLAB.get(), blockTexture(ModBlocks.PETRIFIED_CHOCOLATE.get()), blockTexture(ModBlocks.PETRIFIED_CHOCOLATE.get()));
+        wallBlock((WallBlock) ModBlocks.PETRIFIED_CHOCOLATE_WALL.get(), blockTexture(ModBlocks.PETRIFIED_CHOCOLATE.get()));
+        blockWithItem(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS);
+        stairsBlock((StairBlock) ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_STAIRS.get(), blockTexture(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS.get()));
+        slabBlock((SlabBlock) ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_SLAB.get(), blockTexture(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS.get()), blockTexture(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS.get()));
+        wallBlock((WallBlock) ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_WALL.get(), blockTexture(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS.get()));
         blockWithItem(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE);
+        stairsBlock((StairBlock) ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_STAIRS.get(), blockTexture(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get()));
+        slabBlock((SlabBlock) ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_SLAB.get(), blockTexture(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get()), blockTexture(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get()));
+        wallBlock((WallBlock) ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_WALL.get(), blockTexture(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get()));
+
         blockWithItem(ModBlocks.CHOCOLATE_BLOCK);
         simpleBlockWithItem(ModBlocks.CHOCOLATE_GEYSER.get(), models().cubeTop(
                 ForgeRegistries.BLOCKS.getKey(ModBlocks.CHOCOLATE_GEYSER.get()).getPath(),

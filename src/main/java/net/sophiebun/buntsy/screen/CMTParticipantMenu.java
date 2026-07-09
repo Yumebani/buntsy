@@ -3,6 +3,8 @@ package net.sophiebun.buntsy.screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
@@ -25,8 +27,9 @@ import java.util.List;
 
 public class CMTParticipantMenu extends AbstractContainerMenu {
 
-    private final ItemStackHandler filterItemHandler = new ItemStackHandler(12);
     private final Level level;
+
+    public final IItemHandler itemHandler;
 
     public final BlockPos pos;
     public final BlockPos terminal;
@@ -34,8 +37,8 @@ public class CMTParticipantMenu extends AbstractContainerMenu {
     public final List<Direction> availableSides;
 
 
-    protected CMTParticipantMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(pContainerId, inv, extraData.readBlockPos(), extraData.readBlockPos(),
+    public CMTParticipantMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
+        this(pContainerId, inv, new ItemStackHandler(12), extraData.readBlockPos(), extraData.readBlockPos(),
                 CMTParticipantData.parseCompound(extraData.readNbt()), getSidesList(extraData));
     }
 
@@ -49,9 +52,11 @@ public class CMTParticipantMenu extends AbstractContainerMenu {
         return availableSides;
     }
 
-    public CMTParticipantMenu(int pContainerId, Inventory playerInventory, BlockPos pos, BlockPos terminal, CMTParticipantData data, List<Direction> availableSides) {
+    public CMTParticipantMenu(int pContainerId, Inventory playerInventory, IItemHandler itemHandler, BlockPos pos, BlockPos terminal, CMTParticipantData data, List<Direction> availableSides) {
         super(ModMenuTypes.CMT_PARTICIPANT_MENU.get(), pContainerId);
         this.level = playerInventory.player.level();
+
+        this.itemHandler = itemHandler;
 
         this.pos = pos;
         this.terminal = terminal;
@@ -62,7 +67,7 @@ public class CMTParticipantMenu extends AbstractContainerMenu {
         addPlayerInventory(playerInventory);
 
         for (int i = 0; i < 12; i++){
-            this.addSlot(new FilterSlot(filterItemHandler, i,  86 + (18 * (i % 4)), 55 + (18 * (i / 4))));
+            this.addSlot(new FilterSlot(itemHandler, i,  86 + (18 * (i % 4)), 55 + (18 * (i / 4))));
         };
     }
 

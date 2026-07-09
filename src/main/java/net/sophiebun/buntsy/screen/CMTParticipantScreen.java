@@ -18,6 +18,7 @@ import net.sophiebun.buntsy.blocks.inventory.FilterSlot;
 import net.sophiebun.buntsy.entity.clockwork_maiden.CMTParticipantData;
 import net.sophiebun.buntsy.entity.clockwork_maiden.MaidenInteractionConfig;
 import net.sophiebun.buntsy.server.CMTParticipantPacket;
+import net.sophiebun.buntsy.server.CMTParticipantPacketOperation;
 import net.sophiebun.buntsy.server.ModPacketHandler;
 import org.lwjgl.glfw.GLFW;
 
@@ -80,15 +81,16 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
     @Override
     public void onClose() {
         saveCurrentWhiteList();
-        ModPacketHandler.INSTANCE.sendToServer(new CMTParticipantPacket(this.data, this.terminal, this.pos));
+        ModPacketHandler.INSTANCE.sendToServer(new CMTParticipantPacket(CMTParticipantPacketOperation.SET_DATA, this.data, this.terminal, this.pos));
         super.onClose();
     }
 
     @Override
     protected void init() {
+        this.clearWidgets();
         super.init();
-        this.titleLabelX = 80;
-        this.titleLabelY = 2;
+        this.titleLabelX = 70;
+        this.titleLabelY = 3;
         this.inventoryLabelY = 116;
         this.inventoryLabelX = 30;
 
@@ -158,12 +160,8 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
     private void loadWhiteList(){
 
         if (this.data.isEnabled(editingInsert, channelEdit)){
-            List<ItemStack> filter = data.getConfig(editingInsert, channelEdit).getFilter();
-            for (int i = 0; i < 12; i++){
-                ItemStack entry = new ItemStack(filter.get(i).getItem(), 1);
-                if (filter.get(i).hasTag()) entry.setTag(filter.get(i).getTag());
-                this.menu.slots.get(i + 36).set(entry);
-            }
+            ModPacketHandler.INSTANCE.sendToServer(new CMTParticipantPacket(CMTParticipantPacketOperation.LOAD_FILTER,
+                    data.getConfig(editingInsert, channelEdit).getFilter()));
         }
     }
 
@@ -178,7 +176,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
             }
 
             for (int i = 0; i < 12; i++){
-                if (this.menu.slots.get(i).hasItem()){
+                if (this.menu.slots.get(36 + i).hasItem()){
                     ItemStack toCopy = this.menu.slots.get(36 + i).getItem();
                     ItemStack entry = new ItemStack(toCopy.getItem(), 1);
                     if (toCopy.hasTag()) entry.setTag(toCopy.getTag());

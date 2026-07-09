@@ -7,7 +7,6 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SeaPickleBlock;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -129,25 +128,85 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get(), block -> createSingleItemTableWithSilkTouch(block, ModBlocks.ODIATE_SOIL.get()));
         this.dropSelf(ModBlocks.ODIATE_SOIL.get());
         this.dropSelf(ModBlocks.ODIATE_MUD.get());
+        this.dropSelf(ModBlocks.PACKED_ODIATE_MUD.get());
+        this.dropSelf(ModBlocks.ODIATE_MUD_BRICKS.get());
+        this.dropSelf(ModBlocks.ODIATE_MUD_BRICKS_STAIRS.get());
+        this.dropSelf(ModBlocks.ODIATE_MUD_BRICKS_SLAB.get());
+        this.dropSelf(ModBlocks.ODIATE_MUD_BRICKS_WALL.get());
         this.add(ModBlocks.ODIATE_FARMLAND.get(), block -> createSingleItemTable(ModBlocks.ODIATE_SOIL.get()));
 
         this.dropSelf(ModBlocks.SWEET_CORAL_SAND.get());
         this.dropSelf(ModBlocks.FROZEN_CORAL_SAND.get());
         this.dropSelf(ModBlocks.SUNNY_CORAL_SAND.get());
+
         this.dropSelf(ModBlocks.SWEET_CANDY_ROCK.get());
+        this.dropSelf(ModBlocks.SWEET_CANDY_ROCK_STAIRS.get());
+        this.dropSelf(ModBlocks.SWEET_CANDY_ROCK_SLAB.get());
+        this.dropSelf(ModBlocks.SWEET_CANDY_ROCK_WALL.get());
+        this.dropSelf(ModBlocks.SWEET_CANDY_BRICKS.get());
+        this.dropSelf(ModBlocks.SWEET_CANDY_BRICKS_STAIRS.get());
+        this.dropSelf(ModBlocks.SWEET_CANDY_BRICKS_SLAB.get());
+        this.dropSelf(ModBlocks.SWEET_CANDY_BRICKS_WALL.get());
+
         this.dropSelf(ModBlocks.BITTER_CANDY_ROCK.get());
+        this.dropSelf(ModBlocks.BITTER_CANDY_ROCK_STAIRS.get());
+        this.dropSelf(ModBlocks.BITTER_CANDY_ROCK_SLAB.get());
+        this.dropSelf(ModBlocks.BITTER_CANDY_ROCK_WALL.get());
+        this.dropSelf(ModBlocks.BITTER_CANDY_BRICKS.get());
+        this.dropSelf(ModBlocks.BITTER_CANDY_BRICKS_STAIRS.get());
+        this.dropSelf(ModBlocks.BITTER_CANDY_BRICKS_SLAB.get());
+        this.dropSelf(ModBlocks.BITTER_CANDY_BRICKS_WALL.get());
+
         this.dropSelf(ModBlocks.SOUR_CANDY_ROCK.get());
+        this.dropSelf(ModBlocks.SOUR_CANDY_ROCK_STAIRS.get());
+        this.dropSelf(ModBlocks.SOUR_CANDY_ROCK_SLAB.get());
+        this.dropSelf(ModBlocks.SOUR_CANDY_ROCK_WALL.get());
+        this.dropSelf(ModBlocks.SOUR_CANDY_BRICKS.get());
+        this.dropSelf(ModBlocks.SOUR_CANDY_BRICKS_STAIRS.get());
+        this.dropSelf(ModBlocks.SOUR_CANDY_BRICKS_SLAB.get());
+        this.dropSelf(ModBlocks.SOUR_CANDY_BRICKS_WALL.get());
 
         this.dropSelf(ModBlocks.SWEET_LIMESTONE.get());
+        this.dropSelf(ModBlocks.SWEET_LIMESTONE_STAIRS.get());
+        this.dropSelf(ModBlocks.SWEET_LIMESTONE_SLAB.get());
+        this.dropSelf(ModBlocks.SWEET_LIMESTONE_WALL.get());
+        this.dropSelf(ModBlocks.SWEET_LIMESTONE_BRICKS.get());
+        this.dropSelf(ModBlocks.SWEET_LIMESTONE_BRICKS_STAIRS.get());
+        this.dropSelf(ModBlocks.SWEET_LIMESTONE_BRICKS_SLAB.get());
+        this.dropSelf(ModBlocks.SWEET_LIMESTONE_BRICKS_WALL.get());
+
         this.dropSelf(ModBlocks.SUNNY_LIMESTONE.get());
-        this.dropSelf(ModBlocks.FROZEN_LIMSTONE.get());
+        this.dropSelf(ModBlocks.SUNNY_LIMESTONE_STAIRS.get());
+        this.dropSelf(ModBlocks.SUNNY_LIMESTONE_SLAB.get());
+        this.dropSelf(ModBlocks.SUNNY_LIMESTONE_WALL.get());
+        this.dropSelf(ModBlocks.SUNNY_LIMESTONE_BRICKS.get());
+        this.dropSelf(ModBlocks.SUNNY_LIMESTONE_BRICKS_STAIRS.get());
+        this.dropSelf(ModBlocks.SUNNY_LIMESTONE_BRICKS_SLAB.get());
+        this.dropSelf(ModBlocks.SUNNY_LIMESTONE_BRICKS_WALL.get());
+
+        this.dropSelf(ModBlocks.FROZEN_LIMESTONE.get());
+        this.dropSelf(ModBlocks.FROZEN_LIMESTONE_STAIRS.get());
+        this.dropSelf(ModBlocks.FROZEN_LIMESTONE_SLAB.get());
+        this.dropSelf(ModBlocks.FROZEN_LIMESTONE_WALL.get());
+        this.dropSelf(ModBlocks.FROZEN_LIMESTONE_BRICKS.get());
+        this.dropSelf(ModBlocks.FROZEN_LIMESTONE_BRICKS_STAIRS.get());
+        this.dropSelf(ModBlocks.FROZEN_LIMESTONE_BRICKS_SLAB.get());
+        this.dropSelf(ModBlocks.FROZEN_LIMESTONE_BRICKS_WALL.get());
 
         this.dropSelf(ModBlocks.CHOCOLATE_BLOCK.get());
         this.add(ModBlocks.PETRIFIED_CHOCOLATE.get(), (block) -> {
-            return this.createSingleItemTableWithSilkTouch(block, ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get());
-
-        });
+            return this.createSingleItemTableWithSilkTouch(block, ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get());});
+        this.dropSelf(ModBlocks.PETRIFIED_CHOCOLATE_STAIRS.get());
+        this.dropSelf(ModBlocks.PETRIFIED_CHOCOLATE_SLAB.get());
+        this.dropSelf(ModBlocks.PETRIFIED_CHOCOLATE_WALL.get());
+        this.dropSelf(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS.get());
+        this.dropSelf(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_STAIRS.get());
+        this.dropSelf(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_SLAB.get());
+        this.dropSelf(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_WALL.get());
         this.dropSelf(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get());
+        this.dropSelf(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_STAIRS.get());
+        this.dropSelf(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_SLAB.get());
+        this.dropSelf(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_WALL.get());
         this.dropOther(ModBlocks.CHOCOLATE_GEYSER.get(), ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get());
 
         this.dropSelf(ModBlocks.SEA_SHELLS.get());

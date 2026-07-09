@@ -186,6 +186,63 @@ public class ModItemModelProvider extends ItemModelProvider {
         evenSimplerBlockItem(ModBlocks.CRYSTALLIZED_LOG);
         evenSimplerBlockItem(ModBlocks.CRYSTALLIZED_LEAVES);
 
+        evenSimplerBlockItem(ModBlocks.SWEET_CANDY_ROCK_STAIRS);
+        evenSimplerBlockItem(ModBlocks.SWEET_CANDY_ROCK_SLAB);
+        wallItem(ModBlocks.SWEET_CANDY_ROCK_WALL, ModBlocks.SWEET_CANDY_ROCK);
+        evenSimplerBlockItem(ModBlocks.SWEET_CANDY_BRICKS_STAIRS);
+        evenSimplerBlockItem(ModBlocks.SWEET_CANDY_BRICKS_SLAB);
+        wallItem(ModBlocks.SWEET_CANDY_BRICKS_WALL, ModBlocks.SWEET_CANDY_BRICKS);
+
+        evenSimplerBlockItem(ModBlocks.SOUR_CANDY_ROCK_STAIRS);
+        evenSimplerBlockItem(ModBlocks.SOUR_CANDY_ROCK_SLAB);
+        wallItem(ModBlocks.SOUR_CANDY_ROCK_WALL, ModBlocks.SOUR_CANDY_ROCK);
+        evenSimplerBlockItem(ModBlocks.SOUR_CANDY_BRICKS_STAIRS);
+        evenSimplerBlockItem(ModBlocks.SOUR_CANDY_BRICKS_SLAB);
+        wallItem(ModBlocks.SOUR_CANDY_BRICKS_WALL, ModBlocks.SOUR_CANDY_BRICKS);
+
+        evenSimplerBlockItem(ModBlocks.BITTER_CANDY_ROCK_STAIRS);
+        evenSimplerBlockItem(ModBlocks.BITTER_CANDY_ROCK_SLAB);
+        wallItem(ModBlocks.BITTER_CANDY_ROCK_WALL, ModBlocks.BITTER_CANDY_ROCK);
+        evenSimplerBlockItem(ModBlocks.BITTER_CANDY_BRICKS_STAIRS);
+        evenSimplerBlockItem(ModBlocks.BITTER_CANDY_BRICKS_SLAB);
+        wallItem(ModBlocks.BITTER_CANDY_BRICKS_WALL, ModBlocks.BITTER_CANDY_BRICKS);
+
+        evenSimplerBlockItem(ModBlocks.SWEET_LIMESTONE_STAIRS);
+        evenSimplerBlockItem(ModBlocks.SWEET_LIMESTONE_SLAB);
+        wallItem(ModBlocks.SWEET_LIMESTONE_WALL, ModBlocks.SWEET_LIMESTONE);
+        evenSimplerBlockItem(ModBlocks.SWEET_LIMESTONE_BRICKS_STAIRS);
+        evenSimplerBlockItem(ModBlocks.SWEET_LIMESTONE_BRICKS_SLAB);
+        wallItem(ModBlocks.SWEET_LIMESTONE_BRICKS_WALL, ModBlocks.SWEET_LIMESTONE_BRICKS);
+
+        evenSimplerBlockItem(ModBlocks.SUNNY_LIMESTONE_STAIRS);
+        evenSimplerBlockItem(ModBlocks.SUNNY_LIMESTONE_SLAB);
+        wallItem(ModBlocks.SUNNY_LIMESTONE_WALL, ModBlocks.SUNNY_LIMESTONE);
+        evenSimplerBlockItem(ModBlocks.SUNNY_LIMESTONE_BRICKS_STAIRS);
+        evenSimplerBlockItem(ModBlocks.SUNNY_LIMESTONE_BRICKS_SLAB);
+        wallItem(ModBlocks.SUNNY_LIMESTONE_BRICKS_WALL, ModBlocks.SUNNY_LIMESTONE_BRICKS);
+
+        evenSimplerBlockItem(ModBlocks.FROZEN_LIMESTONE_STAIRS);
+        evenSimplerBlockItem(ModBlocks.FROZEN_LIMESTONE_SLAB);
+        wallItem(ModBlocks.FROZEN_LIMESTONE_WALL, ModBlocks.FROZEN_LIMESTONE);
+        evenSimplerBlockItem(ModBlocks.FROZEN_LIMESTONE_BRICKS_STAIRS);
+        evenSimplerBlockItem(ModBlocks.FROZEN_LIMESTONE_BRICKS_SLAB);
+        wallItem(ModBlocks.FROZEN_LIMESTONE_BRICKS_WALL, ModBlocks.FROZEN_LIMESTONE_BRICKS);
+
+        evenSimplerBlockItem(ModBlocks.PETRIFIED_CHOCOLATE_STAIRS);
+        evenSimplerBlockItem(ModBlocks.PETRIFIED_CHOCOLATE_SLAB);
+        wallItem(ModBlocks.PETRIFIED_CHOCOLATE_WALL, ModBlocks.PETRIFIED_CHOCOLATE);
+        evenSimplerBlockItem(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_STAIRS);
+        evenSimplerBlockItem(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_SLAB);
+        wallItem(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_WALL, ModBlocks.PETRIFIED_CHOCOLATE_BRICKS);
+        evenSimplerBlockItem(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_STAIRS);
+        evenSimplerBlockItem(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_SLAB);
+        wallItem(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_WALL, ModBlocks.COBBLED_PETRIFIED_CHOCOLATE);
+
+        evenSimplerBlockItem(ModBlocks.ODIATE_MUD_BRICKS_STAIRS);
+        evenSimplerBlockItem(ModBlocks.ODIATE_MUD_BRICKS_SLAB);
+        wallItem(ModBlocks.ODIATE_MUD_BRICKS_WALL, ModBlocks.ODIATE_MUD_BRICKS);
+
+
         //Crops
         simpleCropBlockItem(ModBlocks.WILD_STRAWBERRY, "wild_strawberry");
         simpleCropBlockItem(ModBlocks.STRAWBERRY_CROP, "strawberry_crop_stage5");

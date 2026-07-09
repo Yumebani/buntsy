@@ -141,7 +141,9 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
             tasksRoundRobin = 0;
         }
 
-        return this.maidenTasks.get(tasksRoundRobin++);
+        if (!this.maidenTasks.isEmpty()){
+            return this.maidenTasks.get(tasksRoundRobin++);
+        } else return null;
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {

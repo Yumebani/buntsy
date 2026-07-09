@@ -3,8 +3,10 @@ package net.sophiebun.buntsy.server;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.PacketDistributor;
@@ -12,6 +14,7 @@ import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkMaidenTerminalEntit
 import net.sophiebun.buntsy.entity.clockwork_maiden.CMTParticipantData;
 import net.sophiebun.buntsy.screen.CMTParticipantMenu;
 import net.sophiebun.buntsy.screen.CMTParticipantScreen;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,67 +23,64 @@ import java.util.function.Supplier;
 
 public class CMTParticipantPacket {
 
-    private final CMTParticipantData data;
+    private final CMTParticipantPacketOperation operation;
 
-    private final BlockPos terminal;
+    private CMTParticipantData data;
+    private BlockPos terminal;
+    private BlockPos target;
+    private List<ItemStack> filter;
 
-    private final BlockPos target;
-    private final List<Direction> validSides;
-
-    public CMTParticipantPacket(CMTParticipantData data, BlockPos terminal, BlockPos target, List<Direction> validSides) {
+    public CMTParticipantPacket(CMTParticipantPacketOperation operation, CMTParticipantData data, BlockPos terminal, BlockPos target) {
+        this.operation = operation;
         this.data = data;
         this.target = target;
-
         this.terminal = terminal;
-
-        this.validSides = validSides;
     }
 
-    public CMTParticipantPacket(CMTParticipantData data, BlockPos terminal, BlockPos target) {
-        this.data = data;
-        this.target = target;
-
-        this.terminal = terminal;
-
-        this.validSides = new ArrayList<>();
+    public CMTParticipantPacket(CMTParticipantPacketOperation operation, List<ItemStack> filter) {
+        this.operation = operation;
+        this.filter = filter;
     }
 
     public static CMTParticipantPacket read(FriendlyByteBuf buf) {
 
-        CMTParticipantData data = CMTParticipantData.parseCompound(buf.readNbt());
-        BlockPos terminal = buf.readBlockPos();
+        CMTParticipantPacketOperation operation = CMTParticipantPacketOperation.values()[buf.readInt()];
 
-        BlockPos target = buf.readBlockPos();
-        List<Direction> validSides = new ArrayList<>();
-        int count = buf.readInt();
-        for (int x = 0; x < count; x++){
-            validSides.add(Direction.values()[buf.readInt()]);
+        if (operation == CMTParticipantPacketOperation.SET_DATA){
+            CMTParticipantData data = CMTParticipantData.parseCompound(buf.readNbt());
+            BlockPos terminal = buf.readBlockPos();
+            BlockPos target = buf.readBlockPos();
+            return new CMTParticipantPacket(operation, data, terminal, target);
         }
-
-        return new CMTParticipantPacket(data, terminal, target, validSides);
+        else {
+            List<ItemStack> filter = new ArrayList<>();
+            for (int i = 0; i < 12; i++){
+                filter.add(buf.readItem());
+            }
+            return new CMTParticipantPacket(operation, filter);
+        }
     }
 
     public void write(FriendlyByteBuf buf){
 
-        buf.writeNbt(data.getCompound());
-        buf.writeBlockPos(terminal);
+        buf.writeInt(operation.ordinal());
 
-        buf.writeBlockPos(this.target);
-        buf.writeInt(this.validSides.size());
-        for (Direction dir : validSides){
-            buf.writeInt(dir.ordinal());
+        if (operation == CMTParticipantPacketOperation.SET_DATA){
+            buf.writeNbt(data.getCompound());
+            buf.writeBlockPos(terminal);
+            buf.writeBlockPos(this.target);
+        }
+        else {
+            for (ItemStack stack : this.filter){
+                buf.writeItem(stack);
+            }
         }
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier){
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
-
-            if (ctx.getDirection().getReceptionSide() == LogicalSide.CLIENT){
-                handlePacketClient(ctx);
-            } else {
                 handlePacketServer(ctx);
-            }
         });
             
         ctx.setPacketHandled(true);
@@ -88,10 +88,15 @@ public class CMTParticipantPacket {
 
     private void handlePacketServer(NetworkEvent.Context ctx) {
 
-        ClockworkMaidenTerminalEntity entity = ((ClockworkMaidenTerminalEntity) ctx.getSender().level().getBlockEntity(this.terminal));
-        entity.updateData(this.data, target);
-    }
-
-    private void handlePacketClient(NetworkEvent.Context ctx) {
+        if (operation == CMTParticipantPacketOperation.SET_DATA){
+            ClockworkMaidenTerminalEntity entity = ((ClockworkMaidenTerminalEntity) ctx.getSender().level().getBlockEntity(this.terminal));
+            entity.updateData(this.data, target);
+        } else if (operation == CMTParticipantPacketOperation.LOAD_FILTER){
+            CMTParticipantMenu menu = ((CMTParticipantMenu) ctx.getSender().containerMenu);
+            for (int i = 0; i < 12; i++){
+                menu.slots.get(i + 36).set(filter.get(i));
+            }
+            menu.broadcastChanges();
+        }
     }
 }

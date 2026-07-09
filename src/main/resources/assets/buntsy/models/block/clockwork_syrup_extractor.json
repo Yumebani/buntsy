@@ -3,9 +3,9 @@
 	"credit": "Made with Blockbench",
 	"ambientocclusion": false,
 	"textures": {
-		"0": "buntsy:block/clockwork_block_side_up",
+		"0": "buntsy:block/clockwork_block_side",
 		"3": "buntsy:block/clockwork_syrup_extractor_under",
-		"4": "buntsy:block/clockwork_storage_door",
+		"4": "buntsy:block/clockwork_storage_door_up",
 		"particle": "buntsy:block/clockwork_block_side"
 	},
 	"elements": [

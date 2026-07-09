@@ -8,6 +8,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -17,6 +18,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 import net.minecraftforge.network.*;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkMaidenTerminalEntity;
 import net.sophiebun.buntsy.entity.clockwork_maiden.CMTParticipantData;
@@ -183,6 +186,9 @@ public class ClockworkCardPuncherPacket {
             }
 
             MenuProvider containerProvider = new MenuProvider() {
+
+                ItemStackHandler stackHandler = new ItemStackHandler(12);
+
                 @Override
                 public Component getDisplayName() {
                     return Component.translatable("screen.cmt_participant");
@@ -190,7 +196,7 @@ public class ClockworkCardPuncherPacket {
 
                 @Override
                 public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-                    return new CMTParticipantMenu(containerId, playerInventory, block, terminalBlock, maidenTerminal.getData(block), validSides);
+                    return new CMTParticipantMenu(containerId, playerInventory, stackHandler, block, terminalBlock, maidenTerminal.getData(block), validSides);
                 }
             };
 

@@ -29,7 +29,6 @@ import net.sophiebun.buntsy.blocks.custom.hanging_block.HangingStringBlock;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
 import net.sophiebun.buntsy.blocks.custom.plants.*;
 import net.sophiebun.buntsy.blocks.custom.wood.*;
-import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkFairyTerminalEntity;
 import net.sophiebun.buntsy.fluids.ModFluids;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.worldgen.ModConfiguredFeatures;
@@ -220,6 +219,16 @@ public class ModBlocks {
                     ModPlacedFeatures.ODIATE_BONEMEAL_PLACED_KEY));
     public static final RegistryObject<Block> ODIATE_MUD = registerBlock("odiate_mud",
             () -> new MudBlock(BlockBehaviour.Properties.copy(Blocks.MUD).sound(SoundType.MUD)));
+    public static final RegistryObject<Block> PACKED_ODIATE_MUD = registerBlock("packed_odiate_mud",
+            () -> new MudBlock(BlockBehaviour.Properties.copy(Blocks.PACKED_MUD).sound(SoundType.PACKED_MUD)));
+    public static final RegistryObject<Block> ODIATE_MUD_BRICKS = registerBlock("odiate_mud_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SANDSTONE)));
+    public static final RegistryObject<Block> ODIATE_MUD_BRICKS_STAIRS = registerBlock("odiate_mud_bricks_stairs",
+            () -> new StairBlock(() -> ModBlocks.ODIATE_MUD_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> ODIATE_MUD_BRICKS_SLAB = registerBlock("odiate_mud_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> ODIATE_MUD_BRICKS_WALL = registerBlock("odiate_mud_bricks_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
 
     public static final RegistryObject<Block> FROZEN_POWDER_BLOCK = registerBlock("frozen_powder_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SNOW_BLOCK).sound(SoundType.SNOW)));
@@ -230,8 +239,23 @@ public class ModBlocks {
             });
     public static final RegistryObject<Block> FROZEN_CORAL_SAND = registerBlock("frozen_coral_sand",
             () -> new SandBlock(0xA3C8DA, BlockBehaviour.Properties.copy(Blocks.SAND)));
-    public static final RegistryObject<Block> FROZEN_LIMSTONE = registerBlock("frozen_limestone",
+    public static final RegistryObject<Block> FROZEN_LIMESTONE = registerBlock("frozen_limestone",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SANDSTONE)));
+    public static final RegistryObject<Block> FROZEN_LIMESTONE_STAIRS = registerBlock("frozen_limestone_stairs",
+            () -> new StairBlock(() -> ModBlocks.FROZEN_LIMESTONE.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> FROZEN_LIMESTONE_SLAB = registerBlock("frozen_limestone_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> FROZEN_LIMESTONE_WALL = registerBlock("frozen_limestone_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
+    public static final RegistryObject<Block> FROZEN_LIMESTONE_BRICKS = registerBlock("frozen_limestone_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SANDSTONE)));
+    public static final RegistryObject<Block> FROZEN_LIMESTONE_BRICKS_STAIRS = registerBlock("frozen_limestone_bricks_stairs",
+            () -> new StairBlock(() -> ModBlocks.FROZEN_LIMESTONE_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> FROZEN_LIMESTONE_BRICKS_SLAB = registerBlock("frozen_limestone_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> FROZEN_LIMESTONE_BRICKS_WALL = registerBlock("frozen_limestone_bricks_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
+
     public static final RegistryObject<Block> SWICE = registerBlock("swice",
             () -> new HalfTransparentBlock(BlockBehaviour.Properties.copy(Blocks.ICE).noOcclusion()));
 
@@ -239,11 +263,47 @@ public class ModBlocks {
             () -> new SandBlock(0xA3C8DA, BlockBehaviour.Properties.copy(Blocks.SAND)));
     public static final RegistryObject<Block> SUNNY_LIMESTONE = registerBlock("sunny_limestone",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SANDSTONE)));
+    public static final RegistryObject<Block> SUNNY_LIMESTONE_STAIRS = registerBlock("sunny_limestone_stairs",
+            () -> new StairBlock(() -> ModBlocks.SUNNY_LIMESTONE.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> SUNNY_LIMESTONE_SLAB = registerBlock("sunny_limestone_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> SUNNY_LIMESTONE_WALL = registerBlock("sunny_limestone_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
+    public static final RegistryObject<Block> SUNNY_LIMESTONE_BRICKS = registerBlock("sunny_limestone_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SANDSTONE)));
+    public static final RegistryObject<Block> SUNNY_LIMESTONE_BRICKS_STAIRS = registerBlock("sunny_limestone_bricks_stairs",
+            () -> new StairBlock(() -> ModBlocks.SUNNY_LIMESTONE_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> SUNNY_LIMESTONE_BRICKS_SLAB = registerBlock("sunny_limestone_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> SUNNY_LIMESTONE_BRICKS_WALL = registerBlock("sunny_limestone_bricks_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
 
     public static final RegistryObject<Block> PETRIFIED_CHOCOLATE = registerBlock("petrified_chocolate",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public static final RegistryObject<Block> PETRIFIED_CHOCOLATE_STAIRS = registerBlock("petrified_chocolate_stairs",
+            () -> new StairBlock(() -> ModBlocks.PETRIFIED_CHOCOLATE.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> PETRIFIED_CHOCOLATE_SLAB = registerBlock("petrified_chocolate_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> PETRIFIED_CHOCOLATE_WALL = registerBlock("petrified_chocolate_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
+    public static final RegistryObject<Block> PETRIFIED_CHOCOLATE_BRICKS = registerBlock("petrified_chocolate_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SANDSTONE)));
+    public static final RegistryObject<Block> PETRIFIED_CHOCOLATE_BRICKS_STAIRS = registerBlock("petrified_chocolate_bricks_stairs",
+            () -> new StairBlock(() -> ModBlocks.PETRIFIED_CHOCOLATE_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> PETRIFIED_CHOCOLATE_BRICKS_SLAB = registerBlock("petrified_chocolate_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> PETRIFIED_CHOCOLATE_BRICKS_WALL = registerBlock("petrified_chocolate_bricks_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
+
     public static final RegistryObject<Block> COBBLED_PETRIFIED_CHOCOLATE = registerBlock("cobbled_petrified_chocolate",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE)));
+    public static final RegistryObject<Block> COBBLED_PETRIFIED_CHOCOLATE_STAIRS = registerBlock("cobbled_petrified_chocolate_stairs",
+            () -> new StairBlock(() -> ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> COBBLED_PETRIFIED_CHOCOLATE_SLAB = registerBlock("cobbled_petrified_chocolate_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> COBBLED_PETRIFIED_CHOCOLATE_WALL = registerBlock("cobbled_petrified_chocolate_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
+
     public static final RegistryObject<Block> CHOCOLATE_BLOCK = registerBlock("chocolate_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public static final RegistryObject<Block> CHOCOLATE_GEYSER = registerBlock("chocolate_geyser",
@@ -254,14 +314,74 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> SWEET_CORAL_SAND = registerBlock("sweet_coral_sand",
             () -> new SandBlock(0xdaa3b0, BlockBehaviour.Properties.copy(Blocks.SAND)));
+
     public static final RegistryObject<Block> SWEET_LIMESTONE = registerBlock("sweet_limestone",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SANDSTONE)));
+    public static final RegistryObject<Block> SWEET_LIMESTONE_STAIRS = registerBlock("sweet_limestone_stairs",
+            () -> new StairBlock(() -> ModBlocks.SWEET_LIMESTONE.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> SWEET_LIMESTONE_SLAB = registerBlock("sweet_limestone_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> SWEET_LIMESTONE_WALL = registerBlock("sweet_limestone_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
+    public static final RegistryObject<Block> SWEET_LIMESTONE_BRICKS = registerBlock("sweet_limestone_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SANDSTONE)));
+    public static final RegistryObject<Block> SWEET_LIMESTONE_BRICKS_STAIRS = registerBlock("sweet_limestone_bricks_stairs",
+            () -> new StairBlock(() -> ModBlocks.SWEET_LIMESTONE_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> SWEET_LIMESTONE_BRICKS_SLAB = registerBlock("sweet_limestone_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> SWEET_LIMESTONE_BRICKS_WALL = registerBlock("sweet_limestone_bricks_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
+
     public static final RegistryObject<Block> SWEET_CANDY_ROCK = registerBlock("sweet_candy_rock",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SWEET_CANDY_ROCK_STAIRS = registerBlock("sweet_candy_rock_stairs",
+            () -> new StairBlock(() -> ModBlocks.SWEET_CANDY_ROCK.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SWEET_CANDY_ROCK_SLAB = registerBlock("sweet_candy_rock_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SWEET_CANDY_ROCK_WALL = registerBlock("sweet_candy_rock_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SWEET_CANDY_BRICKS = registerBlock("sweet_candy_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SWEET_CANDY_BRICKS_STAIRS = registerBlock("sweet_candy_bricks_stairs",
+            () -> new StairBlock(() -> ModBlocks.SWEET_CANDY_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SWEET_CANDY_BRICKS_SLAB = registerBlock("sweet_candy_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SWEET_CANDY_BRICKS_WALL = registerBlock("sweet_candy_bricks_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+
     public static final RegistryObject<Block> BITTER_CANDY_ROCK = registerBlock("bitter_candy_rock",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> BITTER_CANDY_ROCK_STAIRS = registerBlock("bitter_candy_rock_stairs",
+            () -> new StairBlock(() -> ModBlocks.BITTER_CANDY_ROCK.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> BITTER_CANDY_ROCK_SLAB = registerBlock("bitter_candy_rock_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> BITTER_CANDY_ROCK_WALL = registerBlock("bitter_candy_rock_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> BITTER_CANDY_BRICKS = registerBlock("bitter_candy_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> BITTER_CANDY_BRICKS_STAIRS = registerBlock("bitter_candy_bricks_stairs",
+            () -> new StairBlock(() -> ModBlocks.BITTER_CANDY_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> BITTER_CANDY_BRICKS_SLAB = registerBlock("bitter_candy_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> BITTER_CANDY_BRICKS_WALL = registerBlock("bitter_candy_bricks_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+
     public static final RegistryObject<Block> SOUR_CANDY_ROCK = registerBlock("sour_candy_rock",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SOUR_CANDY_ROCK_STAIRS = registerBlock("sour_candy_rock_stairs",
+            () -> new StairBlock(() -> ModBlocks.SOUR_CANDY_ROCK.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SOUR_CANDY_ROCK_SLAB = registerBlock("sour_candy_rock_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SOUR_CANDY_ROCK_WALL = registerBlock("sour_candy_rock_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SOUR_CANDY_BRICKS = registerBlock("sour_candy_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SOUR_CANDY_BRICKS_STAIRS = registerBlock("sour_candy_bricks_stairs",
+            () -> new StairBlock(() -> ModBlocks.SOUR_CANDY_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SOUR_CANDY_BRICKS_SLAB = registerBlock("sour_candy_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SOUR_CANDY_BRICKS_WALL = registerBlock("sour_candy_bricks_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
 
     //Crops
     public static final RegistryObject<Block> WILD_STRAWBERRY = registerBlock("wild_strawberry",

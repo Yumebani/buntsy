@@ -82,13 +82,79 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         //Wool
         compact2By2(ModItems.SILK_FABRIC.get(), Items.WHITE_WOOL, 2, consumer);
 
+
+
         //Sand
         smeltingRecipe(ModBlocks.SWEET_CORAL_SAND.get(), Blocks.GLASS, 0.5f, consumer);
+        brickBlock(ModBlocks.SWEET_CORAL_SAND.get(), ModBlocks.SWEET_LIMESTONE.get(), consumer);
+        stairsRecipe(ModBlocks.SWEET_LIMESTONE.get(), ModBlocks.SWEET_LIMESTONE_STAIRS.get(), consumer);
+        slabRecipe(ModBlocks.SWEET_LIMESTONE.get(), ModBlocks.SWEET_LIMESTONE_SLAB.get(), consumer);
+        wallRecipe(ModBlocks.SWEET_LIMESTONE.get(), ModBlocks.SWEET_LIMESTONE_WALL.get(), consumer);
+        brickBlock(ModBlocks.SWEET_LIMESTONE.get(), ModBlocks.SWEET_LIMESTONE_BRICKS.get(), consumer);
+        stairsRecipe(ModBlocks.SWEET_LIMESTONE_BRICKS.get(), ModBlocks.SWEET_LIMESTONE_BRICKS_STAIRS.get(), consumer);
+        slabRecipe(ModBlocks.SWEET_LIMESTONE_BRICKS.get(), ModBlocks.SWEET_LIMESTONE_BRICKS_SLAB.get(), consumer);
+        wallRecipe(ModBlocks.SWEET_LIMESTONE_BRICKS.get(), ModBlocks.SWEET_LIMESTONE_BRICKS_WALL.get(), consumer);
+
         smeltingRecipe(ModBlocks.FROZEN_CORAL_SAND.get(), Blocks.GLASS, 0.5f, consumer);
+        brickBlock(ModBlocks.FROZEN_CORAL_SAND.get(), ModBlocks.FROZEN_LIMESTONE.get(), consumer);
+        stairsRecipe(ModBlocks.FROZEN_LIMESTONE.get(), ModBlocks.FROZEN_LIMESTONE_STAIRS.get(), consumer);
+        slabRecipe(ModBlocks.FROZEN_LIMESTONE.get(), ModBlocks.FROZEN_LIMESTONE_SLAB.get(), consumer);
+        wallRecipe(ModBlocks.FROZEN_LIMESTONE.get(), ModBlocks.FROZEN_LIMESTONE_WALL.get(), consumer);
+        brickBlock(ModBlocks.FROZEN_LIMESTONE.get(), ModBlocks.FROZEN_LIMESTONE_BRICKS.get(), consumer);
+        stairsRecipe(ModBlocks.FROZEN_LIMESTONE_BRICKS.get(), ModBlocks.FROZEN_LIMESTONE_BRICKS_STAIRS.get(), consumer);
+        slabRecipe(ModBlocks.FROZEN_LIMESTONE_BRICKS.get(), ModBlocks.FROZEN_LIMESTONE_BRICKS_SLAB.get(), consumer);
+        wallRecipe(ModBlocks.FROZEN_LIMESTONE_BRICKS.get(), ModBlocks.FROZEN_LIMESTONE_BRICKS_WALL.get(), consumer);
+
         smeltingRecipe(ModBlocks.SUNNY_CORAL_SAND.get(), Blocks.GLASS, 0.5f, consumer);
+        brickBlock(ModBlocks.SUNNY_CORAL_SAND.get(), ModBlocks.SUNNY_LIMESTONE.get(), consumer);
+        stairsRecipe(ModBlocks.SUNNY_LIMESTONE.get(), ModBlocks.SUNNY_LIMESTONE_STAIRS.get(), consumer);
+        slabRecipe(ModBlocks.SUNNY_LIMESTONE.get(), ModBlocks.SUNNY_LIMESTONE_SLAB.get(), consumer);
+        wallRecipe(ModBlocks.SUNNY_LIMESTONE.get(), ModBlocks.SUNNY_LIMESTONE_WALL.get(), consumer);
+        brickBlock(ModBlocks.SUNNY_LIMESTONE.get(), ModBlocks.SUNNY_LIMESTONE_BRICKS.get(), consumer);
+        stairsRecipe(ModBlocks.SUNNY_LIMESTONE_BRICKS.get(), ModBlocks.SUNNY_LIMESTONE_BRICKS_STAIRS.get(), consumer);
+        slabRecipe(ModBlocks.SUNNY_LIMESTONE_BRICKS.get(), ModBlocks.SUNNY_LIMESTONE_BRICKS_SLAB.get(), consumer);
+        wallRecipe(ModBlocks.SUNNY_LIMESTONE_BRICKS.get(), ModBlocks.SUNNY_LIMESTONE_BRICKS_WALL.get(), consumer);
 
+        stairsRecipe(ModBlocks.SOUR_CANDY_ROCK.get(), ModBlocks.SOUR_CANDY_ROCK_STAIRS.get(), consumer);
+        slabRecipe(ModBlocks.SOUR_CANDY_ROCK.get(), ModBlocks.SOUR_CANDY_ROCK_SLAB.get(), consumer);
+        wallRecipe(ModBlocks.SOUR_CANDY_ROCK.get(), ModBlocks.SOUR_CANDY_ROCK_WALL.get(), consumer);
+        brickBlock(ModBlocks.SOUR_CANDY_ROCK.get(), ModBlocks.SOUR_CANDY_BRICKS.get(), consumer);
+        stairsRecipe(ModBlocks.SOUR_CANDY_BRICKS.get(), ModBlocks.SOUR_CANDY_BRICKS_STAIRS.get(), consumer);
+        slabRecipe(ModBlocks.SOUR_CANDY_BRICKS.get(), ModBlocks.SOUR_CANDY_BRICKS_SLAB.get(), consumer);
+        wallRecipe(ModBlocks.SOUR_CANDY_BRICKS.get(), ModBlocks.SOUR_CANDY_BRICKS_WALL.get(), consumer);
 
+        stairsRecipe(ModBlocks.SWEET_CANDY_ROCK.get(), ModBlocks.SWEET_CANDY_ROCK_STAIRS.get(), consumer);
+        slabRecipe(ModBlocks.SWEET_CANDY_ROCK.get(), ModBlocks.SWEET_CANDY_ROCK_SLAB.get(), consumer);
+        wallRecipe(ModBlocks.SWEET_CANDY_ROCK.get(), ModBlocks.SWEET_CANDY_ROCK_WALL.get(), consumer);
+        brickBlock(ModBlocks.SWEET_CANDY_ROCK.get(), ModBlocks.SWEET_CANDY_BRICKS.get(), consumer);
+        stairsRecipe(ModBlocks.SWEET_CANDY_BRICKS.get(), ModBlocks.SWEET_CANDY_BRICKS_STAIRS.get(), consumer);
+        slabRecipe(ModBlocks.SWEET_CANDY_BRICKS.get(), ModBlocks.SWEET_CANDY_BRICKS_SLAB.get(), consumer);
+        wallRecipe(ModBlocks.SWEET_CANDY_BRICKS.get(), ModBlocks.SWEET_CANDY_BRICKS_WALL.get(), consumer);
+
+        stairsRecipe(ModBlocks.BITTER_CANDY_ROCK.get(), ModBlocks.BITTER_CANDY_ROCK_STAIRS.get(), consumer);
+        slabRecipe(ModBlocks.BITTER_CANDY_ROCK.get(), ModBlocks.BITTER_CANDY_ROCK_SLAB.get(), consumer);
+        wallRecipe(ModBlocks.BITTER_CANDY_ROCK.get(), ModBlocks.BITTER_CANDY_ROCK_WALL.get(), consumer);
+        brickBlock(ModBlocks.BITTER_CANDY_ROCK.get(), ModBlocks.BITTER_CANDY_BRICKS.get(), consumer);
+        stairsRecipe(ModBlocks.BITTER_CANDY_BRICKS.get(), ModBlocks.BITTER_CANDY_BRICKS_STAIRS.get(), consumer);
+        slabRecipe(ModBlocks.BITTER_CANDY_BRICKS.get(), ModBlocks.BITTER_CANDY_BRICKS_SLAB.get(), consumer);
+        wallRecipe(ModBlocks.BITTER_CANDY_BRICKS.get(), ModBlocks.BITTER_CANDY_BRICKS_WALL.get(), consumer);
+
+        stairsRecipe(ModBlocks.PETRIFIED_CHOCOLATE.get(), ModBlocks.PETRIFIED_CHOCOLATE_STAIRS.get(), consumer);
+        slabRecipe(ModBlocks.PETRIFIED_CHOCOLATE.get(), ModBlocks.PETRIFIED_CHOCOLATE_SLAB.get(), consumer);
+        wallRecipe(ModBlocks.PETRIFIED_CHOCOLATE.get(), ModBlocks.PETRIFIED_CHOCOLATE_WALL.get(), consumer);
         smeltingRecipe(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get(), ModBlocks.PETRIFIED_CHOCOLATE.get(), 0.5f, consumer);
+        stairsRecipe(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get(), ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_STAIRS.get(), consumer);
+        slabRecipe(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get(), ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_SLAB.get(), consumer);
+        wallRecipe(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get(), ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_WALL.get(), consumer);
+        brickBlock(ModBlocks.PETRIFIED_CHOCOLATE.get(), ModBlocks.PETRIFIED_CHOCOLATE_BRICKS.get(), consumer);
+        stairsRecipe(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS.get(), ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_STAIRS.get(), consumer);
+        slabRecipe(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS.get(), ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_SLAB.get(), consumer);
+        wallRecipe(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS.get(), ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_WALL.get(), consumer);
+
+        brickBlock(ModBlocks.PACKED_ODIATE_MUD.get(), ModBlocks.ODIATE_MUD_BRICKS.get(), consumer);
+        stairsRecipe(ModBlocks.ODIATE_MUD_BRICKS.get(), ModBlocks.ODIATE_MUD_BRICKS_STAIRS.get(), consumer);
+        slabRecipe(ModBlocks.ODIATE_MUD_BRICKS.get(), ModBlocks.ODIATE_MUD_BRICKS_SLAB.get(), consumer);
+        wallRecipe(ModBlocks.ODIATE_MUD_BRICKS.get(), ModBlocks.ODIATE_MUD_BRICKS_WALL.get(), consumer);
 
         //Icy
         compact2By2(ModItems.COLD_POWDERED_SUGAR.get(), ModBlocks.FROZEN_POWDER_BLOCK.get(), 1, consumer);
@@ -121,6 +187,15 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         //Foods
         cookingFoodRecipe(ModItems.SUGAR_BOWL.get(), ModItems.BOWL_OF_CARAMEL.get(), consumer);
         cookingFoodRecipe(ModItems.SYRUPY_MIXTURE_BOWL.get(), ModItems.BOWL_OF_ROCKCANDY.get(), consumer);
+
+        //Clockwork processor
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.PACKED_ODIATE_MUD.get(), 1)
+                .define('A', ModBlocks.ODIATE_MUD.get())
+                .define('C', Items.WHEAT)
+                .pattern("AAC")
+                .pattern("AAC")
+                .unlockedBy(getHasName(ModBlocks.ODIATE_MUD.get()), has(ModBlocks.ODIATE_MUD.get()))
+                .save(consumer);
 
         //Clockwork gear
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CLOCKWORK_GEAR.get(), 2)
@@ -873,6 +948,15 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(material) + "_compacting");
     }
 
+    private void brickBlock(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 4)
+                .define('#', material)
+                .pattern("##")
+                .pattern("##")
+                .unlockedBy(getHasName(material), has(material))
+                .save(consumer, BuntsyMod.MODID + ":" + getItemName(material) + "_bricking");
+    }
+
     private void compact3By3(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .define('#', material)
@@ -920,6 +1004,15 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     private void slabRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 6)
                 .define('#', material)
+                .pattern("###")
+                .unlockedBy(getHasName(material), has(material))
+                .save(consumer);
+    }
+
+    private void wallRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 6)
+                .define('#', material)
+                .pattern("###")
                 .pattern("###")
                 .unlockedBy(getHasName(material), has(material))
                 .save(consumer);

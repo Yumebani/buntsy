@@ -293,6 +293,16 @@ public class ClockworkMaiden extends PathfinderMob {
         this.reAssesGoals();
     }
 
+    public void clearCarriedData(Level level, MaidenTask task) {
+        this.currentTask = null;
+        for (MaidenTask key : this.carriedItems.keySet().stream().toList()){
+            if (task.equals(key)){
+                level.addFreshEntity(new ItemEntity(level, this.position().x, this.position().y, this.position().z, this.carriedItems.get(key).getFirst()));
+                this.carriedItems.remove(key);
+            }
+        }
+    }
+
     public void removeCarriedItem(MaidenTask task, Level level){
         level.addFreshEntity(new ItemEntity(level, this.position().x, this.position().y, this.position().z, this.carriedItems.get(task).getFirst()));
         this.carriedItems.remove(task);
@@ -400,7 +410,7 @@ public class ClockworkMaiden extends PathfinderMob {
                 ClockworkMaidenTerminalEntity terminalEntity = ((ClockworkMaidenTerminalEntity) maiden.level().getBlockEntity(terminal));
                 for (int i = 0; i < terminalEntity.getTotalTasks(); i++){
                     MaidenTask task = terminalEntity.getTask();
-                    if (!this.tasksQueue.contains(task) && isBlockEntityValid(task.getExtractPos()) && task.achievable(maiden.level())
+                    if (task != null && !this.tasksQueue.contains(task) && isBlockEntityValid(task.getExtractPos()) && task.achievable(maiden.level())
                         && this.setTarget(task.getExtractPos())){
                         maiden.currentTask = task;
                         return true;
@@ -469,22 +479,27 @@ public class ClockworkMaiden extends PathfinderMob {
                 } else {
 
                     Pair<ItemStack, MaidenInteractionConfig> objective = maiden.carriedItems.get(maiden.currentTask);
-                    ItemStack remainder = MaidenTask.tryPlace(maiden.level(), objective.getSecond(), objective.getFirst(), false);
-                    if (remainder.getCount() != objective.getFirst().getCount()){
-                        playItemSound();
-                    }
+                    if (isBlockEntityValid(objective.getSecond().getPos())){
+                        ItemStack remainder = MaidenTask.tryPlace(maiden.level(), objective.getSecond(), objective.getFirst(), false);
+                        if (remainder.getCount() != objective.getFirst().getCount()){
+                            playItemSound();
+                        }
 
-                    if (remainder.isEmpty()){
-                        maiden.carriedItems.remove(maiden.currentTask);
-                        maiden.currentTask = null;
-                        this.maiden.target = null;
-                        setCarriedItem(ItemStack.EMPTY);
-                    } else {
-                        this.maiden.carriedItems.put(maiden.currentTask, Pair.of(remainder, objective.getSecond()));
-                        this.tasksQueue.addLast(maiden.currentTask);
-                        maiden.currentTask = null;
-                        this.maiden.target = null;
-                        setCarriedItem(ItemStack.EMPTY);
+                        if (remainder.isEmpty()){
+                            maiden.carriedItems.remove(maiden.currentTask);
+                            maiden.currentTask = null;
+                            this.maiden.target = null;
+                            setCarriedItem(ItemStack.EMPTY);
+                        } else {
+                            this.maiden.carriedItems.put(maiden.currentTask, Pair.of(remainder, objective.getSecond()));
+                            this.tasksQueue.addLast(maiden.currentTask);
+                            maiden.currentTask = null;
+                            this.maiden.target = null;
+                            setCarriedItem(ItemStack.EMPTY);
+                        }
+                    }
+                    else {
+                        clearCarriedData(maiden.level(), this.maiden.currentTask);
                     }
                 }
             } else if (maiden.getNavigation().isDone()){

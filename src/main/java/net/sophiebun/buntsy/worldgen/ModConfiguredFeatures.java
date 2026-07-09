@@ -1,13 +1,11 @@
 package net.sophiebun.buntsy.worldgen;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.block.Blocks;
@@ -18,7 +16,6 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
-import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
@@ -225,7 +222,7 @@ public class ModConfiguredFeatures {
         register(context, SWEET_LIMESTONE_KEY, ModFeatures.LIMESTONE_FEATURE.get(), new BlockStateConfiguration(
                 ModBlocks.SWEET_LIMESTONE.get().defaultBlockState()));
         register(context, FROZEN_LIMESTONE_KEY, ModFeatures.LIMESTONE_FEATURE.get(), new BlockStateConfiguration(
-                ModBlocks.FROZEN_LIMSTONE.get().defaultBlockState()));
+                ModBlocks.FROZEN_LIMESTONE.get().defaultBlockState()));
 
         //Bonemeal Patches
         register(context, CHARMIL_BONEMEAL_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
