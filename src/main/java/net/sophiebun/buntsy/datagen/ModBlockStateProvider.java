@@ -252,7 +252,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/clockwork_powdered_sugar_collector")));
         simpleBlockWithItem(ModBlocks.CLOCKWORK_FAIRY_TERMINAL.get(),
-                new ModelFile.UncheckedModelFile(modLoc("block/clockwork_fairy_terminal_item")));
+                new ModelFile.UncheckedModelFile(modLoc("block/clockwork_fairy_terminal")));
 
         simpleBlockWithItem(ModBlocks.CLOCKWORK_MAIDEN_TERMINAL.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/clockwork_maiden_terminal")));
@@ -436,14 +436,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         getVariantBuilder(registryObject.get()).forAllStates(blockState ->
                 ConfiguredModel.builder()
-                        .modelFile(var1).weight(1).nextModel()
-                        .modelFile(var1).weight(1).rotationY(90).nextModel()
-                        .modelFile(var1).weight(1).rotationY(180).nextModel()
-                        .modelFile(var1).weight(1).rotationY(270).nextModel()
-                        .modelFile(var2).weight(1).nextModel()
-                        .modelFile(var2).weight(1).rotationY(90).nextModel()
-                        .modelFile(var2).weight(1).rotationY(180).nextModel()
-                        .modelFile(var2).weight(1).rotationY(270).nextModel()
+                        .modelFile(var1).weight(3).nextModel()
+                        .modelFile(var1).weight(3).rotationY(90).nextModel()
+                        .modelFile(var1).weight(3).rotationY(180).nextModel()
+                        .modelFile(var1).weight(3).rotationY(270).nextModel()
+                        .modelFile(var2).weight(2).nextModel()
+                        .modelFile(var2).weight(2).rotationY(90).nextModel()
+                        .modelFile(var2).weight(2).rotationY(180).nextModel()
+                        .modelFile(var2).weight(2).rotationY(270).nextModel()
                         .modelFile(var3).weight(1).nextModel()
                         .modelFile(var3).weight(1).rotationY(90).nextModel()
                         .modelFile(var3).weight(1).rotationY(180).nextModel()

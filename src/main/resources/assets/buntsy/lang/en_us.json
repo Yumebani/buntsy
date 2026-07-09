@@ -53,10 +53,55 @@
   "block.buntsy.malvor_pressure_plate": "Malvor Pressure Plate",
   "block.buntsy.malvor_button": "Malvor Button",
 
+  "block.buntsy.origami_palm_log": "Origami Palm Log",
+  "block.buntsy.stripped_origami_palm_log": "Stripped Origami Palm Log",
+  "block.buntsy.origami_palm_wood": "Origami Palm Wood",
+  "block.buntsy.stripped_origami_palm_wood": "Stripped Origami Palm Wood",
+
+  "block.buntsy.origami_palm_leaves": "Origami Palm Leaves",
+  "block.buntsy.origami_palm_sapling": "Origami Palm Sapling",
+
+  "block.buntsy.origami_palm_planks": "Origami Palm Planks",
+  "block.buntsy.origami_palm_stairs": "Origami Palm Stairs",
+  "block.buntsy.origami_palm_slab": "Origami Palm Slab",
+  "block.buntsy.origami_palm_trapdoor": "Origami Palm Trapdoor",
+  "block.buntsy.origami_palm_door": "Origami Palm Door",
+  "block.buntsy.origami_palm_fence": "Origami Palm Fence",
+  "block.buntsy.origami_palm_fence_gate": "Origami Palm Fence Gate",
+  "block.buntsy.origami_palm_pressure_plate": "Origami Palm Pressure Plate",
+  "block.buntsy.origami_palm_button": "Origami Palm Button",
+
+  "block.buntsy.crystallized_log": "Crystallized Log",
+  "block.buntsy.crystallized_leaves": "Crystallized Leaves",
+
   "block.buntsy.pink_fluf_charmil_soil": "Pink Fluf Charmil Soil",
   "block.buntsy.charmil_soil": "Charmil Soil",
   "block.buntsy.charmil_farmland": "Charmil Farmland",
+
+  "block.buntsy.gray_moss_odiate_soil": "Gray Moss Odiate Soil",
+  "block.buntsy.odiate_soil": "Odiate Soil",
+  "block.buntsy.odiate_mud": "Odiate Mud",
+  "block.buntsy.odiate_farmland": "Odiate Farmland",
+
   "block.buntsy.sweet_coral_sand": "Sweet Coral Sand",
+  "block.buntsy.frozen_coral_sand": "Frozen Coral Sand",
+  "block.buntsy.sunny_coral_sand": "Sunny Coral Sand",
+
+  "block.buntsy.sweet_limestone": "Sweet Limestone",
+  "block.buntsy.frozen_limestone": "Frozen Limestone",
+  "block.buntsy.sunny_limestone": "Sunny Limestone",
+
+  "block.buntsy.sea_shells": "Sea Shells",
+
+  "block.buntsy.frozen_powder_block": "Frozen Powder Block",
+  "block.buntsy.frozen_powder_layer": "Frozen Powder Layer",
+  "block.buntsy.swice": "Swice",
+
+  "block.buntsy.petrified_chocolate": "Petrified Chocolate",
+  "block.buntsy.cobbled_petrified_chocolate": "Cobbled Petrified Chocolate",
+  "block.buntsy.chocolate_block": "Chocolate Block",
+  "block.buntsy.chocolate_geyser": "Chocolate Geyser",
+
   "block.buntsy.sweet_candy_rock": "Sweet Candy Rock",
   "block.buntsy.bitter_candy_rock": "Bitter Candy Rock",
   "block.buntsy.sour_candy_rock": "Sour Candy Rock",
@@ -90,14 +135,28 @@
   "block.buntsy.wild_hootnip": "Wild Hootnip",
   "block.buntsy.hootnip_crop": "Hootnip Crop",
 
+  "block.buntsy.charming_lotus": "Charming Lotus",
+  "block.buntsy.brave_lotus": "Brave Lotus",
+  "block.buntsy.malium_lotus": "Malium Lotus",
+
   "block.buntsy.pink_charmil_grass": "Pink Charmil Grass",
   "block.buntsy.blue_charmil_grass": "Blue Charmil Grass",
+  "block.buntsy.palegrass": "Palegrass",
+  "block.buntsy.frozen_grass": "Frozen Grass",
+
+  "block.buntsy.luminum": "Luminum",
   "block.buntsy.pink_bloom": "Pink Bloom",
   "block.buntsy.blue_bloom": "Blue Bloom",
+  "block.buntsy.abyssal_bloom": "Abyssal Bloom",
+  "block.buntsy.frozen_bloom": "Frozen Bloom",
+  "block.buntsy.origami_fern": "Origami Fern",
+
   "block.buntsy.loveshroom": "Loveshroom",
   "block.buntsy.loveshroom_block": "Loveshroom Block",
   "block.buntsy.glowshroom": "Glowshroom",
   "block.buntsy.glowshroom_block": "Glowshroom Block",
+  "block.buntsy.paleshroom": "Paleshroom",
+  "block.buntsy.paleshroom_block": "Paleshroom Block",
 
   "block.buntsy.growable_amethyst_cluster": "Growable Amethyst Cluster",
   "block.buntsy.large_growable_amethyst_cluster": "Large Growable Amethyst Cluster",
@@ -158,6 +217,13 @@
   "block.buntsy.infusion_altar_advanced": "Advanced Infusion Altar",
   "block.buntsy.giant_cocoon": "Giant Cocoon",
   "block.buntsy.mixer_block": "Mixer",
+
+  "block.buntsy.clockwork_syrup_extractor": "Clockwork Syrup Extractor",
+  "block.buntsy.clockwork_geyser_collector": "Clockwork Geyser Collector",
+  "block.buntsy.clockwork_powdered_sugar_collector": "Clockwork Powdered Sugar Collector",
+  "block.buntsy.clockwork_crafter": "Clockwork Crafter",
+  "block.buntsy.clockwork_fairy_terminal": "Clockwork Fairy Terminal",
+  "block.buntsy.clockwork_maiden_terminal": "Clockwork Maiden Terminal",
 
   "block.buntsy.prismatic_beacon": "Prismatic Beacon",
   "block.buntsy.prismatic_beacon_base": "Prismatic Beacon Base",
@@ -227,6 +293,8 @@
   "prism.buntsy.end": "End",
   "prism.buntsy.dense_matter": "Dense Matter",
 
+  "item.buntsy.hot_chocolate_bucket": "Hot Chocolate Bucket",
+
   "item.buntsy.fairy_dust": "Fairy Dust",
   "item.buntsy.hootcat_feather": "Hootcat Feather",
   "item.buntsy.hootcat_plume": "Hootcat Plume",
@@ -245,9 +313,17 @@
   "item.buntsy.silky_nugget": "Silky Nugget",
   "item.buntsy.silky_crystal": "Silky Crystal",
   "item.buntsy.clockwork_scrap": "Clockwork Scrap",
+  "item.buntsy.clockwork_scrap_clump": "Clockwork Scrap Clump",
   "item.buntsy.clockwork_brass": "Clockwork Brass",
   "item.buntsy.clockwork_gear": "Clockwork Gear",
   "item.buntsy.clockwork_processor": "Clockwork Processor",
+  "item.buntsy.clockwork_modification": "Clockwork Modification",
+  "item.buntsy.simple_clockwork_unit": "Simple Clockwork Unit",
+  "item.buntsy.intricate_clockwork_unit": "Intricate Clockwork Unit",
+  "item.buntsy.complex_clockwork_unit": "Complex Clockwork Unit",
+  "item.buntsy.swice_shards": "Swice Shards",
+  "item.buntsy.cold_powdered_sugar": "Cold Powdered Sugar",
+  "item.buntsy.chocolate_flakes": "Chocolate Flakes",
   "item.buntsy.strawberry_seeds": "Strawberry Seeds",
   "item.buntsy.hootnip_seeds": "Hootnip Seeds",
 
@@ -301,6 +377,7 @@
   "item.buntsy.head_bow": "Head Bow",
   "item.buntsy.bunny_ears": "Bunny Ears",
   "item.buntsy.cat_ears": "Cat Ears",
+  "item.buntsy.gas_mask": "Gas Mask",
 
   "item.buntsy.blazing_hootnip": "Blazing Hootnip",
   "item.buntsy.hootnip": "Hootnip",
@@ -318,16 +395,24 @@
   "item.buntsy.fairy_in_a_bottle": "Fairy in a Bottle",
   "item.buntsy.fairy_staff": "Fairy Staff",
   "item.buntsy.binding_staff": "Binding Staff",
+  "item.buntsy.clockwork_card_puncher": "Clockwork Card Puncher",
+  "item.buntsy.empty_clockwork_fairy_terminal": "Empty Clockwork Fairy Terminal",
 
   "item.buntsy.silkbun_spawn_egg": "Silkbun Spawn Egg",
   "item.buntsy.fairy_spawn_egg": "Fairy Spawn Egg",
   "item.buntsy.hootcat_spawn_egg": "Hootcat Spawn Egg",
-  "item.buntsy.clockwork_maiden_spawn_egg": "Clockwork Maiden Spawn Egg",
+  "item.buntsy.marionette_spawn_egg": "Marionette Spawn Egg",
+  "item.buntsy.clockwork_maiden": "Clockwork Maiden",
+
+  "item.buntsy.fairy_tale_book": "Fairy Tale Book",
 
   "entity.buntsy.fairy": "Fairy",
   "entity.buntsy.silkbun": "Silkbun",
   "entity.buntsy.hootcat": "Hootcat",
+  "entity.buntsy.marionette": "Marionette",
   "entity.buntsy.clockwork_maiden": "Clockwork Maiden",
+
+  "screen.cmt_participant": "Editing Config",
 
   "creativetab.buntsy_tab": "Buntsy"
 }

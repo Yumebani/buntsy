@@ -23,7 +23,7 @@ public class ModFluids {
 
     public static final ForgeFlowingFluid.Properties HOT_CHOCOLATE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
             ModFluidTypes.HOT_CHOCOLATE_FLUID_TYPE, SOURCE_HOT_CHOCOLATE, FLOWING_HOT_CHOCOLATE)
-            .slopeFindDistance(2).levelDecreasePerBlock(5).block(ModBlocks.HOT_CHOCOLATE_BLOCK)
+            .slopeFindDistance(2).levelDecreasePerBlock(3).block(ModBlocks.HOT_CHOCOLATE_BLOCK)
             .bucket(ModItems.HOT_CHOCOLATE_BUCKET);
 
 

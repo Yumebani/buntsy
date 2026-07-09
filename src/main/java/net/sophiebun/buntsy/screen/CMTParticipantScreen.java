@@ -603,7 +603,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
 
     private void renderStacksizeText(GuiGraphics guiGraphics){
         if (!editingInsert && this.data.isEnabled(editingInsert, channelEdit)){
-            guiGraphics.drawString(this.font, Component.literal("Extract size"), xGlobal + 6, yGlobal + 31, 0xFFFFFFFF, true);
+            guiGraphics.drawString(this.font, Component.literal("Extraction"), xGlobal + 12, yGlobal + 31, 0xFFFFFFFF, true);
         }
     }
 

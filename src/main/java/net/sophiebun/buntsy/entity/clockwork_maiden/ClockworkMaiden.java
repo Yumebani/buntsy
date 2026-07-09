@@ -400,7 +400,7 @@ public class ClockworkMaiden extends PathfinderMob {
                 ClockworkMaidenTerminalEntity terminalEntity = ((ClockworkMaidenTerminalEntity) maiden.level().getBlockEntity(terminal));
                 for (int i = 0; i < terminalEntity.getTotalTasks(); i++){
                     MaidenTask task = terminalEntity.getTask();
-                    if (!this.tasksQueue.contains(task) && isBlockEntityValid(task.getExtractPos())
+                    if (!this.tasksQueue.contains(task) && isBlockEntityValid(task.getExtractPos()) && task.achievable(maiden.level())
                         && this.setTarget(task.getExtractPos())){
                         maiden.currentTask = task;
                         return true;

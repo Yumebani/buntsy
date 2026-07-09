@@ -163,7 +163,7 @@ public class MaidenTask {
         ItemStack nextStack = ItemStack.EMPTY;
         MaidenInteractionConfig config = null;
 
-        int startConfig = getNextConfig();
+        int startConfig = getNextConfig(false);
         for (int i = startConfig; i < (extractBlock.getSelectionRegime() != MaidenSelectionRegime.ROUND_ROBIN ? insertBlocks.size() : startConfig + 1) ; i++){
             config = insertBlocks.get(i);
 
@@ -206,13 +206,13 @@ public class MaidenTask {
         return null;
     }
 
-    public int getNextConfig(){
+    public int getNextConfig(boolean simulate){
 
         if (extractBlock.getSelectionRegime() == MaidenSelectionRegime.ROUND_ROBIN){
             if (roundRobinSelector >= insertBlocks.size()){
                 roundRobinSelector = 0;
             }
-            return roundRobinSelector++;
+            return simulate ? roundRobinSelector : roundRobinSelector++;
         }
 
         return 0;
@@ -258,5 +258,26 @@ public class MaidenTask {
 
     public BlockPos getExtractPos() {
         return extractBlock.getPos();
+    }
+
+    public boolean achievable(Level level) {
+        ItemStack nextStack = ItemStack.EMPTY;
+        MaidenInteractionConfig config = null;
+
+        int startConfig = getNextConfig(false);
+        for (int i = startConfig; i < (extractBlock.getSelectionRegime() != MaidenSelectionRegime.ROUND_ROBIN ? insertBlocks.size() : startConfig + 1) ; i++){
+            config = insertBlocks.get(i);
+
+            if (!level.isLoaded(this.extractBlock.getPos()) || level.getBlockEntity(extractBlock.getPos()) == null ||
+                    !level.isLoaded(config.getPos()) || level.getBlockEntity(config.getPos()) == null){
+                return false;
+            }
+
+            nextStack = getExtractable(level, config);
+
+            if (!nextStack.isEmpty()) break;
+        }
+
+        return !nextStack.isEmpty();
     }
 }

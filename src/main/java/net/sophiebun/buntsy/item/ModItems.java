@@ -251,7 +251,7 @@ public class ModItems {
             "hootcat_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.HOOTCAT_ENTITY, 0x4d3f3f, 0x9e7f4b , new Item.Properties()));
 
     public static final RegistryObject<Item> MARIONETTE_SPAWN_EGG = ItemsRegister.register(
-            "marionette_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.MARIONETTE, 0x45393b, 0xcb9257 , new Item.Properties()));
+            "marionette_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.MARIONETTE, 0x45393b, 0xb8433b , new Item.Properties()));
     public static final RegistryObject<Item> CLOCKWORK_MAIDEN = ItemsRegister.register(
             "clockwork_maiden", () -> new ForgeSpawnEggItem(ModEntities.CLOCKWORK_MAIDEN_ENTITY, 0xFFFFFF, 0xFFFFFF , new Item.Properties()));
 

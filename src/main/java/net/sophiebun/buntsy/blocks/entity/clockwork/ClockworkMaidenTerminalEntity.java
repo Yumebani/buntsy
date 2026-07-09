@@ -243,10 +243,10 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
 
     protected int getClockworkBlockCount() {
         return switch (clockworkTier){
-            case NONE -> 8;
-            case SIMPLE -> 12;
-            case INTRICATE -> 16;
-            case COMPLEX -> 20;
+            case NONE -> 12;
+            case SIMPLE -> 16;
+            case INTRICATE -> 22;
+            case COMPLEX -> 28;
         };
     }
 
