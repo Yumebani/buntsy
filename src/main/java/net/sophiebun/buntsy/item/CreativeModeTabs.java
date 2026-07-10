@@ -90,8 +90,6 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.CHOCOLATE_BLOCK.get());
                         pOutput.accept(ModBlocks.CHOCOLATE_GEYSER.get());
 
-                        pOutput.accept(ModBlocks.DECAYED_CLOCKWORK_BRASS_BLOCK.get());
-                        pOutput.accept(ModBlocks.DECAYED_CUT_CLOCKWORK_BRASS.get());
                         pOutput.accept(ModBlocks.CLOCKWORK_BRASS_BLOCK.get());
                         pOutput.accept(ModBlocks.CUT_CLOCKWORK_BRASS.get());
                         pOutput.accept(ModBlocks.CUT_CLOCKWORK_BRASS_STAIRS.get());

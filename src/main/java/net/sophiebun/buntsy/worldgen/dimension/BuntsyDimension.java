@@ -82,7 +82,7 @@ public class BuntsyDimension {
                                                 0f), biomeRegistry.getOrThrow(ModBiomes.CANDY_CRAGS_BIOME)),
                                 Pair.of(
                                         Climate.parameters(
-                                                Climate.Parameter.span(-1f, -0.2f),
+                                                Climate.Parameter.span(-1f, -0.3f),
                                                 Climate.Parameter.span(-1f, 1f),
                                                 Climate.Parameter.span(-0.2f, 1f),
                                                 Climate.Parameter.span(-1.0f, 0.4f),
@@ -94,9 +94,9 @@ public class BuntsyDimension {
                                                 Climate.Parameter.span(-0.6f, -0.2f),
                                                 Climate.Parameter.span(-1f, 1f),
                                                 Climate.Parameter.span(0.2f, 1f),
-                                                Climate.Parameter.span(0.4f, 1.0f),
+                                                Climate.Parameter.span(0.2f, 1.0f),
                                                 Climate.Parameter.point(0f),
-                                                Climate.Parameter.span(-0.6f, 0.6f),
+                                                Climate.Parameter.span(-0.3f, 0.3f),
                                                 0f), biomeRegistry.getOrThrow(ModBiomes.CHOCOLATE_SPRINGS_BIOME)),
                                 Pair.of(
                                         Climate.parameters(
@@ -118,7 +118,7 @@ public class BuntsyDimension {
                                                 0f), biomeRegistry.getOrThrow(ModBiomes.SWEET_OCEAN_BIOME)),
                                 Pair.of(
                                         Climate.parameters(
-                                                Climate.Parameter.span(0.1f, 1f),
+                                                Climate.Parameter.span(0f, 1f),
                                                 Climate.Parameter.span(-1f, 1f),
                                                 Climate.Parameter.span(-1f, -0.4f),
                                                 Climate.Parameter.span(-1.0f, 1.0f),
@@ -127,7 +127,7 @@ public class BuntsyDimension {
                                                 0f), biomeRegistry.getOrThrow(ModBiomes.WARM_SWEET_OCEAN_BIOME)),
                                 Pair.of(
                                         Climate.parameters(
-                                                Climate.Parameter.span(-1f, -0.1f),
+                                                Climate.Parameter.span(-1f, 0f),
                                                 Climate.Parameter.span(-1f, 1f),
                                                 Climate.Parameter.span(-1f, -0.4f),
                                                 Climate.Parameter.span(-1.0f, 1.0f),
@@ -145,7 +145,7 @@ public class BuntsyDimension {
                                                 0f), biomeRegistry.getOrThrow(ModBiomes.ORIGAMI_BEACH_BIOME)),
                                 Pair.of(
                                         Climate.parameters(
-                                                Climate.Parameter.span(0.1f, 1f),
+                                                Climate.Parameter.span(0f, 1f),
                                                 Climate.Parameter.span(-1f, 1f),
                                                 Climate.Parameter.span(-0.4f, -0.2f),
                                                 Climate.Parameter.span(-1.0f, 1.0f),
@@ -154,7 +154,7 @@ public class BuntsyDimension {
                                                 0f), biomeRegistry.getOrThrow(ModBiomes.WARM_ORIGAMI_BEACH_BIOME)),
                                 Pair.of(
                                         Climate.parameters(
-                                                Climate.Parameter.span(-1f, -0.1f),
+                                                Climate.Parameter.span(-1f, 0f),
                                                 Climate.Parameter.span(-1f, 1f),
                                                 Climate.Parameter.span(-0.4f, -0.2f),
                                                 Climate.Parameter.span(-1.0f, 1.0f),

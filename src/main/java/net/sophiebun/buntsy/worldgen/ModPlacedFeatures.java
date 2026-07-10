@@ -180,7 +180,7 @@ public class ModPlacedFeatures {
         register(context, FREEZE_TOP, configuredFeatures.getOrThrow(ModConfiguredFeatures.FREEZE_TOP_KEY), List.of(BiomeFilter.biome()));
 
         register(context, CLOCKWORK_STRUCTURES_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CLOCKWORK_STRUCTURES_KEY),
-                List.of(PlacementUtils.countExtra(0, 0.1f, 1), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
+                List.of(PlacementUtils.countExtra(0, 0.25f, 1), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome()));
 
         //Bonemeal
         register(context, CHARMIL_BONEMEAL_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CHARMIL_BONEMEAL_KEY),
