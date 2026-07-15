@@ -202,6 +202,22 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
             }
         }
 
+        this.tag(ModTags.Blocks.VANILLA_WALLS)
+                .add(ModBlocks.BITTER_CANDY_BRICKS_WALL.get())
+                .add(ModBlocks.BITTER_CANDY_ROCK_WALL.get())
+                .add(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_WALL.get())
+                .add(ModBlocks.PETRIFIED_CHOCOLATE_WALL.get())
+                .add(ModBlocks.FROZEN_LIMESTONE_BRICKS_WALL.get())
+                .add(ModBlocks.FROZEN_LIMESTONE_WALL.get())
+                .add(ModBlocks.SWEET_CANDY_BRICKS_WALL.get())
+                .add(ModBlocks.SWEET_LIMESTONE_BRICKS_WALL.get())
+                .add(ModBlocks.SWEET_LIMESTONE_WALL.get())
+                .add(ModBlocks.SWEET_CANDY_ROCK_WALL.get())
+                .add(ModBlocks.SUNNY_LIMESTONE_WALL.get())
+                .add(ModBlocks.SUNNY_LIMESTONE_BRICKS_WALL.get())
+                .add(ModBlocks.SOUR_CANDY_BRICKS_WALL.get())
+                .add(ModBlocks.SOUR_CANDY_ROCK_WALL.get());
+
         this.tag(Tags.Blocks.SAND)
                 .add(ModBlocks.SWEET_CORAL_SAND.get())
                 .add(ModBlocks.FROZEN_CORAL_SAND.get())

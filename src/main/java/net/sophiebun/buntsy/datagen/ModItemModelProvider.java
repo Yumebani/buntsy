@@ -268,6 +268,10 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleCrossBlockItem(ModBlocks.GLOWSHROOM);
         simpleCrossBlockItem(ModBlocks.PALESHROOM);
 
+        specificCrossBlockItem(ModBlocks.HANGING_STRING, "_top_ending");
+        specificCrossBlockItem(ModBlocks.HANGING_LUMINUM, "_1");
+        specificCrossBlockItem(ModBlocks.HANGING_CLOCKWORK, "_1");
+
         //Adding mushroom blocks
         blockItemNonBlockDependent(ModBlocks.LOVESHROOM_BLOCK);
         blockItemNonBlockDependent(ModBlocks.GLOWSHROOM_BLOCK);
@@ -288,7 +292,11 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.CLOCKWORK_CARD_PUNCHER);
         simpleItem(ModItems.CLOCKWORK_MAIDEN);
 
+        simpleBlockItemSpecific(ModBlocks.BITTER_CORAL_WALL_FAN, ModBlocks.BITTER_CORAL_FAN.getId().getPath());
+        simpleBlockItemSpecific(ModBlocks.SWEET_CORAL_WALL_FAN, ModBlocks.SWEET_CORAL_FAN.getId().getPath());
+
         simpleItem(ModItems.HOT_CHOCOLATE_BUCKET);
+        simpleItemSpecific(ModBlocks.HOT_CHOCOLATE_BLOCK, ModItems.HOT_CHOCOLATE_BUCKET.getId().getPath());
 
 
         //Cocoon and stuff
@@ -355,6 +363,18 @@ public class ModItemModelProvider extends ItemModelProvider {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
                 new ResourceLocation(BuntsyMod.MODID,"item/" + item.getId().getPath()));
+    }
+
+    private ItemModelBuilder simpleItemSpecific (RegistryObject<?> item, String string){
+        return withExistingParent(item.getId().getPath(),
+                new ResourceLocation("item/generated")).texture("layer0",
+                new ResourceLocation(BuntsyMod.MODID,"item/" + string));
+    }
+
+    private ItemModelBuilder simpleBlockItemSpecific (RegistryObject<?> item, String string){
+        return withExistingParent(item.getId().getPath(),
+                new ResourceLocation("item/generated")).texture("layer0",
+                new ResourceLocation(BuntsyMod.MODID,"block/" + string));
     }
 
     private ItemModelBuilder fumeBottleItem (RegistryObject<Item> item){

@@ -324,7 +324,7 @@ public class ModBlocks {
             () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
 
     public static final RegistryObject<Block> SEA_SHELLS = registerBlock("sea_shells",
-            () -> new SeaShellsBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noCollission().noOcclusion().instabreak()));
+            () -> new SeaShellsBlock(BlockBehaviour.Properties.copy(Blocks.SAND).sound(SoundType.STONE).noCollission().noOcclusion().instabreak()));
 
     public static final RegistryObject<Block> SWEET_CORAL_SAND = registerBlock("sweet_coral_sand",
             () -> new SandBlock(0xdaa3b0, BlockBehaviour.Properties.copy(Blocks.SAND)));

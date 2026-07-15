@@ -4,6 +4,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
@@ -37,5 +38,18 @@ public class ModBiomeTagGenerator extends BiomeTagsProvider {
 
         this.tag(Tags.Biomes.IS_DESERT)
                 .add(ModBiomes.CANDY_CRAGS_BIOME);
+
+        this.tag(ModTags.Biomes.RUINED_HOUSE_SPAWN)
+                .add(Biomes.BIRCH_FOREST)
+                .add(Biomes.OLD_GROWTH_BIRCH_FOREST)
+                .add(Biomes.FOREST)
+                .add(Biomes.FLOWER_FOREST)
+                .add(Biomes.WINDSWEPT_FOREST)
+                .add(Biomes.PLAINS)
+                .add(Biomes.SUNFLOWER_PLAINS)
+                .add(Biomes.CHERRY_GROVE)
+                .addTag(Tags.Biomes.IS_LUSH)
+                .addTag(Tags.Biomes.IS_CONIFEROUS)
+                .addTag(Tags.Biomes.IS_PLAINS);
     }
 }

@@ -38,7 +38,7 @@ public class ModSnowAndFreezeFeature extends Feature<NoneFeatureConfiguration> {
                     worldgenlevel.setBlock(mutableBlockPos1, Blocks.ICE.defaultBlockState(), 2);
                 }
 
-                if (biome.shouldSnow(worldgenlevel, mutableBlockPos) && worldgenlevel.getBlockState(mutableBlockPos.below()).is(ModTags.Blocks.NO_SNOW)) {
+                if (biome.shouldSnow(worldgenlevel, mutableBlockPos) && !worldgenlevel.getBlockState(mutableBlockPos.below()).is(ModTags.Blocks.NO_SNOW)) {
                     worldgenlevel.setBlock(mutableBlockPos, ModBlocks.FROZEN_POWDER_LAYER.get().defaultBlockState(), 2);
                     BlockState blockstate = worldgenlevel.getBlockState(mutableBlockPos1);
                     if (blockstate.hasProperty(SnowyDirtBlock.SNOWY)) {

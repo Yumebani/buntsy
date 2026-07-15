@@ -306,6 +306,12 @@
 
   "block.buntsy.syrup_extractor": "Syrup Extractor",
 
+  "block.buntsy.hanging_string": "Hanging String",
+  "block.buntsy.hanging_luminum": "Hanging Luminum",
+  "block.buntsy.hanging_clockwork": "Hanging Clockwork",
+
+  "block.buntsy.hot_chocolate_block": "Hot Chocolate",
+
 
   "item.buntsy.fume_bottle": "Fume Bottle",
   "item.buntsy.empty_catalyst": "Empty Catalyst",
@@ -487,6 +493,18 @@
 
   "screen.cmt_participant": "Editing Config",
   "screen.buntsy.clockwork_powdered_sugar_collector": "Powdered Sugar Collector",
+
+  "biome.buntsy.cuterly_biome": "Cuterly",
+  "biome.buntsy.candy_crags_biome": "Candy Crags",
+  "biome.buntsy.powdery_tundra_biome": "Powdery Tundra",
+  "biome.buntsy.chocolate_springs_biome": "Chocolate Springs",
+  "biome.buntsy.clockwork_canopy_biome": "Clockwork Canopy",
+  "biome.buntsy.sweet_ocean_biome": "Sweet Ocean",
+  "biome.buntsy.warm_sweet_ocean_biome": "Warm Sweet Ocean",
+  "biome.buntsy.cold_sweet_ocean_biome": "Cold Sweet Ocean",
+  "biome.buntsy.origami_beach_biome": "Origami Beach",
+  "biome.buntsy.warm_origami_beach_biome": "Warm Origami Beach",
+  "biome.buntsy.cold_origami_beach_biome": "Cold Origami Beach",
 
   "creativetab.buntsy_tab": "Buntsy"
 }

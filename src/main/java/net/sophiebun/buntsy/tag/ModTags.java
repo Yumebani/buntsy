@@ -15,6 +15,10 @@ public class ModTags {
 
     public static class Blocks {
 
+        public static final TagKey<Block> VANILLA_WALLS = TagKey.create(
+                Registries.BLOCK,
+                new ResourceLocation("minecraft", "walls")
+        );
 
         public static final TagKey<Block> BUNTSY_CORAL_BLOCKS = tag("buntsy_coral_blocks");
         public static final TagKey<Block> BUNTSY_WALL_CORALS = tag("buntsy_wall_corals");
@@ -63,6 +67,8 @@ public class ModTags {
     
     public static class Biomes {
 
+
+        public static final TagKey<Biome> RUINED_HOUSE_SPAWN = tag("ruined_house_spawn");
 
         public static final TagKey<Biome> SILK_BUN_SPAWN = tag("silk_bun_spawn");
         public static final TagKey<Biome> FAIRY_SPAWN = tag("fairy_spawn");

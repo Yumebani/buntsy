@@ -24,10 +24,7 @@ import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.recipe.GrindingWheelRecipe;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GrindingWheelCategory implements IRecipeCategory<GrindingWheelRecipe> {
 
@@ -71,7 +68,7 @@ public class GrindingWheelCategory implements IRecipeCategory<GrindingWheelRecip
 
         List<ItemStack> inputs = new ArrayList<>();
         for (Ingredient ingredient : grindingWheelRecipe.getInputs()){
-            inputs.add(ingredient.getItems()[0]);
+            inputs.addAll(Arrays.asList(ingredient.getItems()));
         }
         iRecipeLayoutBuilder.addSlot(RecipeIngredientRole.INPUT,40, 25).addItemStacks(inputs);
 

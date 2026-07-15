@@ -94,8 +94,6 @@ public class BuntsyMod
     {
 
         event.enqueueWork(() -> {
-            //ModTerrablender.registerBiomes();
-
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.PINK_BLOOM.getId(), ModBlocks.POTTED_PINK_BLOOM);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.BLUE_BLOOM.getId(), ModBlocks.POTTED_BLUE_BLOOM);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.ABYSSAL_BLOOM.getId(), ModBlocks.POTTED_ABYSSAL_BLOOM);
