@@ -39,7 +39,15 @@ public class ModItemTagGenerator extends ItemTagsProvider {
                 .add(ModBlocks.BRAVOT_LOG.get().asItem())
                 .add(ModBlocks.STRIPPED_BRAVOT_LOG.get().asItem())
                 .add(ModBlocks.BRAVOT_WOOD.get().asItem())
-                .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get().asItem());
+                .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get().asItem())
+                .add(ModBlocks.MALVOR_LOG.get().asItem())
+                .add(ModBlocks.STRIPPED_MALVOR_LOG.get().asItem())
+                .add(ModBlocks.MALVOR_WOOD.get().asItem())
+                .add(ModBlocks.STRIPPED_MALVOR_WOOD.get().asItem())
+                .add(ModBlocks.ORIGAMI_PALM_LOG.get().asItem())
+                .add(ModBlocks.STRIPPED_ORIGAMI_PALM_LOG.get().asItem())
+                .add(ModBlocks.ORIGAMI_PALM_WOOD.get().asItem())
+                .add(ModBlocks.STRIPPED_ORIGAMI_PALM_WOOD.get().asItem());
 
         this.tag(ModTags.Items.GENTLIT_LOGS)
                 .add(ModBlocks.GENTLIT_LOG.get().asItem())
@@ -53,9 +61,23 @@ public class ModItemTagGenerator extends ItemTagsProvider {
                 .add(ModBlocks.BRAVOT_WOOD.get().asItem())
                 .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get().asItem());
 
+        this.tag(ModTags.Items.MALVOR_LOGS)
+                .add(ModBlocks.MALVOR_LOG.get().asItem())
+                .add(ModBlocks.STRIPPED_MALVOR_LOG.get().asItem())
+                .add(ModBlocks.MALVOR_WOOD.get().asItem())
+                .add(ModBlocks.STRIPPED_MALVOR_WOOD.get().asItem());
+
+        this.tag(ModTags.Items.ORIGAMI_PALM_LOGS)
+                .add(ModBlocks.ORIGAMI_PALM_LOG.get().asItem())
+                .add(ModBlocks.STRIPPED_ORIGAMI_PALM_LOG.get().asItem())
+                .add(ModBlocks.ORIGAMI_PALM_WOOD.get().asItem())
+                .add(ModBlocks.STRIPPED_ORIGAMI_PALM_WOOD.get().asItem());
+
         this.tag(ItemTags.PLANKS)
                 .add(ModBlocks.GENTLIT_PLANKS.get().asItem())
-                .add(ModBlocks.BRAVOT_PLANKS.get().asItem());
+                .add(ModBlocks.BRAVOT_PLANKS.get().asItem())
+                .add(ModBlocks.MALVOR_PLANKS.get().asItem())
+                .add(ModBlocks.ORIGAMI_PALM_PLANKS.get().asItem());
 
         this.tag(ModTags.Items.FAIRY_FOOD)
                 .add(ModItems.GENTLIT_SYRUP.get().asItem())
@@ -64,6 +86,13 @@ public class ModItemTagGenerator extends ItemTagsProvider {
                 .add(ModItems.BOWL_OF_CARAMEL.get().asItem())
                 .add(ModItems.SUGAR_BOWL.get().asItem())
                 .add(ModItems.SYRUPY_MIXTURE_BOWL.get().asItem())
+                .add(ModItems.CARAMEL_STRAWBERRIES.get().asItem())
+                .add(ModItems.CHOCOLATE_STRAWBERRIES.get().asItem())
+                .add(ModItems.CHOCOLATE.get().asItem())
+                .add(ModItems.VANILLA_ICECREAM.get().asItem())
+                .add(ModItems.CHOCOLATE_ICECREAM.get().asItem())
+                .add(ModItems.CARAMEL_ICECREAM.get().asItem())
+                .add(ModItems.TRIPLE_SHOT_ICECREAM.get().asItem())
                 .add(ModItems.BOWL_OF_ROCKCANDY.get().asItem());
 
         this.tag(ModTags.Items.BOTTLED_ITEM)

@@ -1,0 +1,49 @@
+{
+  "type": "buntsy:infusion_altar_basic",
+  "inputs": [
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:iron_block"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:diamond"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:silky_ingot"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:silky_ingot"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:emerald"
+      },
+      "nbt": []
+    }
+  ],
+  "output":
+    {
+      "item": {
+        "count": 4,
+        "item":"buntsy:prismatic_beacon_base"
+      },
+      "nbt": []
+    },
+  "max_progress": 500
+}

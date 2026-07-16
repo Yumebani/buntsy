@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/coral_wall_fan",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "fan": "buntsy:block/dead_bitter_coral_fan"
+  }
+}

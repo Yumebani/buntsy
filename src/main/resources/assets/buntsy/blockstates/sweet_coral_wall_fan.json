@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "buntsy:block/sweet_coral_wall_fan",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "buntsy:block/sweet_coral_wall_fan"
+    },
+    "facing=south": {
+      "model": "buntsy:block/sweet_coral_wall_fan",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "buntsy:block/sweet_coral_wall_fan",
+      "y": 270
+    }
+  }
+}

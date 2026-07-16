@@ -1,0 +1,25 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:block_rot",
+      "integrity": 0.8,
+      "rottable_blocks": [
+        "stone_bricks",
+        "minecraft:stone_brick_stairs",
+        "minecraft:stone_brick_slab",
+        "minecraft:cracked_stone_bricks",
+        "minecraft:oak_planks",
+        "minecraft:oak_stairs",
+        "minecraft:oak_slab"
+      ]
+    },
+    {
+      "processor_type": "minecraft:block_ignore",
+      "blocks": [
+        {
+          "Name": "minecraft:air"
+        }
+      ]
+    }
+  ]
+}

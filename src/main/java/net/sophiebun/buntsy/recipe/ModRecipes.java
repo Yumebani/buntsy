@@ -26,6 +26,14 @@ public class ModRecipes {
             SERIALIZERS.register("fairy_infusion", () -> FairyInfusionRecipe.Serializer.INSTANCE);
     public static final RegistryObject<RecipeSerializer<MagicCrystalizerRecipe>> MAGIC_CRYSTALIZER_SERIALIZER =
             SERIALIZERS.register("magic_crystalizer", () -> MagicCrystalizerRecipe.Serializer.INSTANCE);
+    public static final RegistryObject<RecipeSerializer<FumeDistilleryRecipe>> FUME_DISTILLERY_SERIALIZER =
+            SERIALIZERS.register("fume_distillery", () -> FumeDistilleryRecipe.Serializer.INSTANCE);
+    public static final RegistryObject<RecipeSerializer<InfusionAltarBasicRecipe>> INFUSION_ALTAR_BASIC_RECIPE =
+            SERIALIZERS.register("infusion_altar_basic", () -> InfusionAltarBasicRecipe.Serializer.INSTANCE);
+    public static final RegistryObject<RecipeSerializer<InfusionAltarAdvancedRecipe>> INFUSION_ALTAR_ADVANCED_RECIPE =
+            SERIALIZERS.register("infusion_altar_advanced", () -> InfusionAltarAdvancedRecipe.Serializer.INSTANCE);
+    public static final RegistryObject<RecipeSerializer<MixerRecipe>> MIXER_RECIPE =
+            SERIALIZERS.register("mixer", () -> MixerRecipe.Serializer.INSTANCE);
 
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);

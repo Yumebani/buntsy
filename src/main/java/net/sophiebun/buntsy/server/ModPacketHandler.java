@@ -21,5 +21,40 @@ public class ModPacketHandler {
                 ModFairyStaffPacket::write,
                 ModFairyStaffPacket::read,
                 ModFairyStaffPacket::handle);
+
+        INSTANCE.registerMessage(1, ModBindingStaffPacket.class,
+                ModBindingStaffPacket::write,
+                ModBindingStaffPacket::read,
+                ModBindingStaffPacket::handle);
+
+        INSTANCE.registerMessage(2, ModGiantCocoonClientPacket.class,
+                ModGiantCocoonClientPacket::write,
+                ModGiantCocoonClientPacket::read,
+                ModGiantCocoonClientPacket::handle);
+
+        INSTANCE.registerMessage(3, ModGiantCocoonServerPacket.class,
+                ModGiantCocoonServerPacket::write,
+                ModGiantCocoonServerPacket::read,
+                ModGiantCocoonServerPacket::handle);
+
+        INSTANCE.registerMessage(4, ModCocoonBagClientPacket.class,
+                ModCocoonBagClientPacket::write,
+                ModCocoonBagClientPacket::read,
+                ModCocoonBagClientPacket::handle);
+
+        INSTANCE.registerMessage(5, ModCocoonBagServerPacket.class,
+                ModCocoonBagServerPacket::write,
+                ModCocoonBagServerPacket::read,
+                ModCocoonBagServerPacket::handle);
+
+        INSTANCE.registerMessage(6, ClockworkCardPuncherPacket.class,
+                ClockworkCardPuncherPacket::write,
+                ClockworkCardPuncherPacket::read,
+                ClockworkCardPuncherPacket::handle);
+
+        INSTANCE.registerMessage(7, CMTParticipantPacket.class,
+                CMTParticipantPacket::write,
+                CMTParticipantPacket::read,
+                CMTParticipantPacket::handle);
     }
 }

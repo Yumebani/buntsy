@@ -1,0 +1,67 @@
+{
+  "type": "buntsy:infusion_altar_basic",
+  "inputs": [
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:catalyst"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.fumeType",
+          "value": 0
+        },
+        {
+          "field": "buntsy.catalystType",
+          "value": "creation"
+        }
+      ]
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:redstone_block"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:redstone_block"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:sugar_bowl"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:gentlit_syrup"
+      },
+      "nbt": []
+    }
+  ],
+  "output":
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:catalyst"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.fumeType",
+          "value": 2
+        },
+        {
+          "field": "buntsy.catalystType",
+          "value": "creation"
+        }
+      ]
+    },
+  "max_progress": 1000
+}

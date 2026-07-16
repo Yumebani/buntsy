@@ -120,7 +120,7 @@ public class FairyInfusionRecipe implements Recipe<SimpleContainer> {
         public void toNetwork(FriendlyByteBuf pBuffer, FairyInfusionRecipe pRecipe) {
             pBuffer.writeInt(pRecipe.inputItems.size());
 
-            for (Ingredient ingredient : pRecipe.getIngredients()) {
+            for (Ingredient ingredient : pRecipe.getInputs()) {
                 ingredient.toNetwork(pBuffer);
             }
 

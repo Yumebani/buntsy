@@ -52,7 +52,15 @@ public class ModGrowableMineral extends AmethystClusterBlock {
             List.of(ModBlocks.SMALL_DEBRIS_CRYSTAL_CLUSTER,
                     ModBlocks.MEDIUM_DEBRIS_CRYSTAL_CLUSTER,
                     ModBlocks.LARGE_DEBRIS_CRYSTAL_CLUSTER,
-                    ModBlocks.DEBRIS_CRYSTAL_CLUSTER)
+                    ModBlocks.DEBRIS_CRYSTAL_CLUSTER),
+            List.of(ModBlocks.SMALL_QUARTZ_CRYSTAL_CLUSTER,
+                    ModBlocks.MEDIUM_QUARTZ_CRYSTAL_CLUSTER,
+                    ModBlocks.LARGE_QUARTZ_CRYSTAL_CLUSTER,
+                    ModBlocks.QUARTZ_CRYSTAL_CLUSTER),
+            List.of(ModBlocks.SMALL_GLOWSTONE_CRYSTAL_CLUSTER,
+                    ModBlocks.MEDIUM_GLOWSTONE_CRYSTAL_CLUSTER,
+                    ModBlocks.LARGE_GLOWSTONE_CRYSTAL_CLUSTER,
+                    ModBlocks.GLOWSTONE_CRYSTAL_CLUSTER)
             );
 
     private byte id;
@@ -75,7 +83,7 @@ public class ModGrowableMineral extends AmethystClusterBlock {
     @Override
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
 
-        if (this.stage != 3 && pLevel.random.nextInt(10) == 0){
+        if (this.stage != 3 && pLevel.random.nextInt(0,3) == 0){
             pLevel.setBlockAndUpdate(pPos, getStages().get(stage + 1).get().defaultBlockState()
                     .setValue(AmethystClusterBlock.FACING, pState.getValue(AmethystClusterBlock.FACING))
                     .setValue(AmethystClusterBlock.WATERLOGGED, pState.getFluidState().getType() == Fluids.WATER));

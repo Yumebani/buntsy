@@ -9,4 +9,12 @@ public class ModModelLayers {
             new ResourceLocation(BuntsyMod.MODID, "silkbun_layer"), "main");
     public static final ModelLayerLocation FAIRY_LAYER = new ModelLayerLocation(
             new ResourceLocation(BuntsyMod.MODID, "fairy_layer"), "main");
+    public static final ModelLayerLocation HOOTCAT_LAYER = new ModelLayerLocation(
+            new ResourceLocation(BuntsyMod.MODID, "hootcat_layer"), "main");
+    public static final ModelLayerLocation HOOTCAT_COLLAR_LAYER = new ModelLayerLocation(
+            new ResourceLocation(BuntsyMod.MODID, "hootcat_collar_layer"), "main");
+    public static final ModelLayerLocation MARIONETTE_LAYER = new ModelLayerLocation(
+            new ResourceLocation(BuntsyMod.MODID, "marionette_layer"), "main");
+    public static final ModelLayerLocation CLOCKWORK_MAIDEN_LAYER = new ModelLayerLocation(
+            new ResourceLocation(BuntsyMod.MODID, "clockwork_maiden_layer"), "main");
 }

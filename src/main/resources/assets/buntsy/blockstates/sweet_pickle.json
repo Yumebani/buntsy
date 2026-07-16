@@ -1,0 +1,140 @@
+{
+  "variants": {
+    "pickles=1,waterlogged=false": [
+      {
+        "model": "minecraft:block/dead_sea_pickle"
+      },
+      {
+        "model": "minecraft:block/dead_sea_pickle",
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/dead_sea_pickle",
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/dead_sea_pickle",
+        "y": 270
+      }
+    ],
+    "pickles=1,waterlogged=true": [
+      {
+        "model": "buntsy:block/sweet_pickle"
+      },
+      {
+        "model": "buntsy:block/sweet_pickle",
+        "y": 90
+      },
+      {
+        "model": "buntsy:block/sweet_pickle",
+        "y": 180
+      },
+      {
+        "model": "buntsy:block/sweet_pickle",
+        "y": 270
+      }
+    ],
+    "pickles=2,waterlogged=false": [
+      {
+        "model": "minecraft:block/two_dead_sea_pickles"
+      },
+      {
+        "model": "minecraft:block/two_dead_sea_pickles",
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/two_dead_sea_pickles",
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/two_dead_sea_pickles",
+        "y": 270
+      }
+    ],
+    "pickles=2,waterlogged=true": [
+      {
+        "model": "buntsy:block/two_sweet_pickles"
+      },
+      {
+        "model": "buntsy:block/two_sweet_pickles",
+        "y": 90
+      },
+      {
+        "model": "buntsy:block/two_sweet_pickles",
+        "y": 180
+      },
+      {
+        "model": "buntsy:block/two_sweet_pickles",
+        "y": 270
+      }
+    ],
+    "pickles=3,waterlogged=false": [
+      {
+        "model": "minecraft:block/three_dead_sea_pickles"
+      },
+      {
+        "model": "minecraft:block/three_dead_sea_pickles",
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/three_dead_sea_pickles",
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/three_dead_sea_pickles",
+        "y": 270
+      }
+    ],
+    "pickles=3,waterlogged=true": [
+      {
+        "model": "buntsy:block/three_sweet_pickles"
+      },
+      {
+        "model": "buntsy:block/three_sweet_pickles",
+        "y": 90
+      },
+      {
+        "model": "buntsy:block/three_sweet_pickles",
+        "y": 180
+      },
+      {
+        "model": "buntsy:block/three_sweet_pickles",
+        "y": 270
+      }
+    ],
+    "pickles=4,waterlogged=false": [
+      {
+        "model": "minecraft:block/four_dead_sea_pickles"
+      },
+      {
+        "model": "minecraft:block/four_dead_sea_pickles",
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/four_dead_sea_pickles",
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/four_dead_sea_pickles",
+        "y": 270
+      }
+    ],
+    "pickles=4,waterlogged=true": [
+      {
+        "model": "buntsy:block/four_sweet_pickles"
+      },
+      {
+        "model": "buntsy:block/four_sweet_pickles",
+        "y": 90
+      },
+      {
+        "model": "buntsy:block/four_sweet_pickles",
+        "y": 180
+      },
+      {
+        "model": "buntsy:block/four_sweet_pickles",
+        "y": 270
+      }
+    ]
+  }
+}

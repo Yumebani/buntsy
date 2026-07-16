@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "buntsy:block/large_diamond_crystal_cluster"
-  }
-}

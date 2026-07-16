@@ -56,7 +56,7 @@ public class FairyCollectionTrayBlockEntity extends FairyInteractBlockEntity imp
 
     public FairyCollectionTrayBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.FAIRY_COLLECTION_TRAY_BLOCK_ENTITY.get(), pPos, pBlockState);
-        setConsumption(1.25f);
+        setConsumption(0.7f);
 
         Random random = new Random();
 
@@ -64,6 +64,11 @@ public class FairyCollectionTrayBlockEntity extends FairyInteractBlockEntity imp
         for (int i = 0; i < 4; i++){
             randomRotations.add(random.nextInt(0, 270));
         }
+    }
+
+    @Override
+    public boolean isTitular() {
+        return true;
     }
 
     @Override

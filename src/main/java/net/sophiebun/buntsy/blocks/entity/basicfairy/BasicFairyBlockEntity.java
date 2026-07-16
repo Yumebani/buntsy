@@ -3,6 +3,7 @@ package net.sophiebun.buntsy.blocks.entity.basicfairy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -225,10 +226,14 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
 
     public boolean isOutputClear(ItemStack primary, ItemStack secondary){
         Integer pSlot = getPrimaryAvailableSlot(primary);
-        return ((secondary == null && pSlot != null) || (secondary != null && pSlot == OUTPUT_SLOT));
+        return (pSlot != null) && ((secondary == null && pSlot != null) || (secondary != null && pSlot == OUTPUT_SLOT));
     }
 
     public void outputItems(ItemStack primary, ItemStack secondary){
+        if (primary == null && secondary != null) {
+            primary = secondary;
+            secondary = null;
+        }
         int pSlot = getPrimaryAvailableSlot(primary);
         insertIntoSlot(pSlot, primary);
         if (secondary != null){
@@ -241,9 +246,15 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     }
 
     public void insertIntoSlot(int slot, ItemStack item){
-        this.outputItemHandler.setStackInSlot(slot,
-                new ItemStack(item.getItem(),
-                        this.outputItemHandler.getStackInSlot(slot).getCount() + item.getCount()));
+        ItemStack inserted;
+        if (this.outputItemHandler.getStackInSlot(slot).isEmpty()){
+            inserted = item;
+        } else {
+            inserted = new ItemStack(item.getItem(),
+                    this.outputItemHandler.getStackInSlot(slot).getCount() + item.getCount());
+        }
+        if (item.hasTag()) inserted.setTag(item.getTag());
+        this.outputItemHandler.setStackInSlot(slot, inserted);
     }
 
     public Integer getPrimaryAvailableSlot(ItemStack item){
@@ -265,7 +276,7 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     }
 
     private void increaseProgress() {
-        this.progress++;
+        this.progress += getSpeedUp();
     }
 
     private void resetProgress() {
@@ -281,5 +292,10 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     @Override
     public CompoundTag getUpdateTag() {
         return saveWithoutMetadata();
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        super.onDataPacket(net, pkt);
     }
 }

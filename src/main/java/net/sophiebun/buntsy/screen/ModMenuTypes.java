@@ -27,6 +27,30 @@ public class ModMenuTypes {
             registerMenuType("fairy_infusion_bench_menu", FairyInfusionBenchMenu::new);
     public static final RegistryObject<MenuType<MagicCrystalizerMenu>> MAGIC_CRYSTALIZER_MENU =
             registerMenuType("magic_crystalizer_menu", MagicCrystalizerMenu::new);
+    public static final RegistryObject<MenuType<FumeDistilleryMenu>> FUME_DISTILLERY_MENU =
+            registerMenuType("fume_distillery_menu", FumeDistilleryMenu::new);
+    public static final RegistryObject<MenuType<FumeSpreaderMenu>> FUME_SPREADER_MENU =
+            registerMenuType("fume_spreader_menu", FumeSpreaderMenu::new);
+    public static final RegistryObject<MenuType<GiantCocoonMenu>> GIANT_COCOON_MENU =
+            registerMenuType("giant_cocoon_menu", GiantCocoonMenu::new);
+    public static final RegistryObject<MenuType<CocoonBagMenu>> COCOON_BAG_MENU =
+            registerMenuType("cocoon_bag_menu", CocoonBagMenu::new);
+    public static final RegistryObject<MenuType<MixerMenu>> MIXER_MENU =
+            registerMenuType("mixer_menu", MixerMenu::new);
+
+    public static final RegistryObject<MenuType<ClockworkSyrupExtractorMenu>> CLOCKWORK_SYRUP_EXTRACTOR_MENU =
+            registerMenuType("clockwork_syrup_extractor_menu", ClockworkSyrupExtractorMenu::new);
+    public static final RegistryObject<MenuType<ClockworkGeyserCollectorMenu>> CLOCKWORK_GEYSER_COLLECTOR_MENU =
+            registerMenuType("clockwork_geyser_collector_menu", ClockworkGeyserCollectorMenu::new);
+    public static final RegistryObject<MenuType<ClockworkPowderedSugarCollectorMenu>> CLOCKWORK_POWDERED_SUGAR_COLLECTOR_MENU =
+            registerMenuType("clockwork_powdered_sugar_collector_menu", ClockworkPowderedSugarCollectorMenu::new);
+    public static final RegistryObject<MenuType<ClockworkCrafterMenu>> CLOCKWORK_CRAFTER_MENU =
+            registerMenuType("clockwork_crafter_menu", ClockworkCrafterMenu::new);
+    public static final RegistryObject<MenuType<ClockworkFairyTerminalMenu>> CLOCKWORK_FAIRY_TERMINAL_MENU =
+            registerMenuType("clockwork_fairy_terminal_menu", ClockworkFairyTerminalMenu::new);
+
+    public static final RegistryObject<MenuType<CMTParticipantMenu>> CMT_PARTICIPANT_MENU =
+            registerMenuType("cmt_participant_menu", CMTParticipantMenu::new);
 
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory){
         return MenusRegister.register(name, () -> IForgeMenuType.create(factory));

@@ -2,6 +2,7 @@ package net.sophiebun.buntsy.entity.animals;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -33,19 +34,28 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.sophiebun.buntsy.entity.ModEntities;
+import net.sophiebun.buntsy.entity.interfaces.IFumeAffectedEntity;
 import net.sophiebun.buntsy.item.ModItems;
+import net.sophiebun.buntsy.server.PersistantAmbientMobSavedData;
 import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
-public class Silkbun extends Animal {
+public class Silkbun extends Animal implements IFumeAffectedEntity {
 
     private static final int JUMP_DURATION_TIME = 30;
     private static final int WAKE_UP_TIME = 30;
@@ -78,19 +88,29 @@ public class Silkbun extends Animal {
     private boolean initialized = false;
     private int wakupTime = 0;
 
+    private final Map<Integer, List<Integer>> fumes = new HashMap<>();
+    private int fumeTickCount = 0;
+
     public Silkbun(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+        this.setPersistenceRequired();
         this.jumpControl = new SilkbunJumpControl(this);
         this.moveControl = new SilkbunMoveControl(this);
     }
 
     public static boolean canSpawn(EntityType<Silkbun> entityType, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random){
-        return level.getBlockState(pos.below()).is(ModTags.Blocks.CUTERLY_SPAWNER);
+        return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double pDistanceToClosestPlayer) {
+        return false;
     }
 
     protected void registerGoals() {
         if (!getIsSleeping()){
             resetGoals();
+            this.setPersistenceRequired();
             this.goalSelector.addGoal(1, new FloatGoal(this));
             this.goalSelector.addGoal(1, new ClimbOnTopOfPowderSnowGoal(this, this.level()));
             this.goalSelector.addGoal(1, new SilkbunPanicGoal(this, 2.2));
@@ -104,6 +124,23 @@ public class Silkbun extends Animal {
         else{
             resetGoals();
             this.goalSelector.addGoal(1, new SilkbunSleep(this));
+        }
+    }
+
+    public void addFume(int fumeType, int level, int duration){
+        List<Integer> list = new ArrayList<>();
+        list.add(level);
+        list.add(duration);
+        fumes.put(fumeType, list);
+    }
+
+    public void tickFumes(){
+        for (Integer key : fumes.keySet()){
+            List<Integer> list = fumes.get(key);
+            list.set(1, list.get(1) - 1);
+            if (list.get(1) <= 0){
+                fumes.remove(key);
+            }
         }
     }
 
@@ -298,20 +335,30 @@ public class Silkbun extends Animal {
 
     public void customServerAiStep() {
 
+        if (this.fumeTickCount <= 0){
+            this.fumeTickCount = 20;
+            this.tickFumes();
+        }
+        else {
+            this.fumeTickCount--;
+        }
+
         if (this.fallDistance > 0) this.fallDistance = 0;
 
         if (!this.isBaby()){
             if (this.nextSleepShift > 0){
-                this.nextSleepShift--;
+                this.nextSleepShift -= (this.fumes.containsKey(8) ? this.fumes.get(8).get(0) + 1 : 1);
             }
             else if (goalSelector.getRunningGoals().count() <= 0 && !this.moveControl.hasWanted()){
-                this.nextSleepShift = this.random.nextInt(14000,18000);
+                this.nextSleepShift = this.random.nextInt(10000,14000);
                 setSleeping(!this.getIsSleeping());
 
                 if (!getIsSleeping()){
                     setDataIsWakingUp(true);
                     if (!level().isClientSide()){
-                        Containers.dropItemStack(level(), this.getX(), this.getY(), this.getZ(), new ItemStack(ModItems.COCOON.get()));
+                        ItemStack stackToDrop = level().getRandom().nextIntBetweenInclusive(0, 100) <= 5 ?
+                                new ItemStack(ModItems.STRANGE_COCOON.get()) : new ItemStack(ModItems.COCOON.get());
+                        Containers.dropItemStack(level(), this.getX(), this.getY(), this.getZ(), stackToDrop);
                     }
                 }
 
@@ -418,6 +465,17 @@ public class Silkbun extends Animal {
         pCompound.putInt("SilkbunType", this.getVariant().id);
         pCompound.putInt("NextSleepShift", this.nextSleepShift);
 
+        pCompound.putInt("fairy.applied_fume_count", this.fumes.size());
+        if (!this.fumes.keySet().isEmpty()){
+            List<Integer> keys = this.fumes.keySet().stream().toList();
+
+            for (int i = 0; i < this.fumes.size(); i++){
+                pCompound.putInt("fairy.applied_fume_type_" + i, keys.get(i));
+                pCompound.putInt("fairy.applied_fume_level_" + i, this.fumes.get(keys.get(i)).get(0));
+                pCompound.putInt("fairy.applied_fume_duration_" + i, this.fumes.get(keys.get(i)).get(1));
+            }
+        }
+
         pCompound.putBoolean("IsSleeping", this.getIsSleeping());
     }
 
@@ -425,6 +483,16 @@ public class Silkbun extends Animal {
         super.readAdditionalSaveData(pCompound);
         this.setVariant(Silkbun.Variant.byId(pCompound.getInt("SilkbunType")));
         this.nextSleepShift = pCompound.getInt("NextSleepShift");
+
+        int fumeCount = pCompound.getInt("fairy.applied_fume_count");
+
+        for (int i = 0; i < fumeCount; i++){
+            List<Integer> list = new ArrayList<>();
+            list.add(pCompound.getInt("fairy.applied_fume_level_" + i));
+            list.add(pCompound.getInt("fairy.applied_fume_duration_" + i));
+            this.fumes.put(
+                    pCompound.getInt("fairy.applied_fume_type_" + i), list);
+        }
 
         this.setSleeping(pCompound.getBoolean("IsSleeping"));
 
@@ -489,7 +557,7 @@ public class Silkbun extends Animal {
         this.entityData.set(DATA_TYPE_ID, pVariant.id);
     }
 
-        private static Silkbun.Variant getRandomSilkbunVariant(LevelAccessor pLevel, BlockPos pPos) {
+    public static Silkbun.Variant getRandomSilkbunVariant(LevelAccessor pLevel, BlockPos pPos) {
             return Silkbun.Variant.byId(pLevel.getRandom().nextInt(0,3));
     }
 

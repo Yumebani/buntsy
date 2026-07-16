@@ -3,13 +3,19 @@ package net.sophiebun.buntsy.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
+import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
 import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class ModBlockTagGenerator extends BlockTagsProvider {
@@ -26,13 +32,237 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.GENTLIT_WOOD.get())
                 .add(ModBlocks.STRIPPED_GENTLIT_WOOD.get())
                 .add(ModBlocks.GENTLIT_PLANKS.get())
+                .add(ModBlocks.GENTLIT_TRAPDOOR.get())
+                .add(ModBlocks.GENTLIT_BUTTON.get())
+                .add(ModBlocks.GENTLIT_STAIRS.get())
+                .add(ModBlocks.GENTLIT_SLAB.get())
+                .add(ModBlocks.GENTLIT_DOOR.get())
+                .add(ModBlocks.BRAVOT_LOG.get())
+                .add(ModBlocks.STRIPPED_BRAVOT_LOG.get())
+                .add(ModBlocks.BRAVOT_WOOD.get())
+                .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get())
+                .add(ModBlocks.BRAVOT_PLANKS.get())
+                .add(ModBlocks.BRAVOT_TRAPDOOR.get())
+                .add(ModBlocks.BRAVOT_BUTTON.get())
+                .add(ModBlocks.BRAVOT_STAIRS.get())
+                .add(ModBlocks.BRAVOT_SLAB.get())
+                .add(ModBlocks.BRAVOT_DOOR.get())
+                .add(ModBlocks.MALVOR_LOG.get())
+                .add(ModBlocks.STRIPPED_MALVOR_LOG.get())
+                .add(ModBlocks.MALVOR_WOOD.get())
+                .add(ModBlocks.STRIPPED_MALVOR_WOOD.get())
+                .add(ModBlocks.MALVOR_PLANKS.get())
+                .add(ModBlocks.MALVOR_TRAPDOOR.get())
+                .add(ModBlocks.MALVOR_BUTTON.get())
+                .add(ModBlocks.MALVOR_STAIRS.get())
+                .add(ModBlocks.MALVOR_SLAB.get())
+                .add(ModBlocks.MALVOR_DOOR.get())
+                .add(ModBlocks.ORIGAMI_PALM_LOG.get())
+                .add(ModBlocks.STRIPPED_ORIGAMI_PALM_LOG.get())
+                .add(ModBlocks.ORIGAMI_PALM_WOOD.get())
+                .add(ModBlocks.STRIPPED_ORIGAMI_PALM_WOOD.get())
+                .add(ModBlocks.ORIGAMI_PALM_PLANKS.get())
+                .add(ModBlocks.ORIGAMI_PALM_TRAPDOOR.get())
+                .add(ModBlocks.ORIGAMI_PALM_BUTTON.get())
+                .add(ModBlocks.ORIGAMI_PALM_STAIRS.get())
+                .add(ModBlocks.ORIGAMI_PALM_SLAB.get())
+                .add(ModBlocks.ORIGAMI_PALM_DOOR.get())
                 .add(ModBlocks.LOVESHROOM_BLOCK.get())
-                .add(ModBlocks.GLOWSHROOM_BLOCK.get());
+                .add(ModBlocks.GLOWSHROOM_BLOCK.get())
+                .add(ModBlocks.PALESHROOM_BLOCK.get())
+                .add(ModBlocks.FAIRY_OFFERING_BENCH.get())
+                .add(ModBlocks.FAIRY_COLLECTION_TRAY.get())
+                .add(ModBlocks.FAIRY_INFUSION_BENCH.get())
+                .add(ModBlocks.INFUSION_PEDESTAL.get())
+                .add(ModBlocks.THREAD_REELER.get());
 
         this.tag(BlockTags.MINEABLE_WITH_SHOVEL)
+                .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
                 .add(ModBlocks.CHARMIL_SOIL.get())
                 .add(ModBlocks.CHARMIL_FARMLAND.get())
-                .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get());
+                .add(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_MUD.get())
+                .add(ModBlocks.PACKED_ODIATE_MUD.get())
+                .add(ModBlocks.ODIATE_FARMLAND.get())
+                .add(ModBlocks.SWEET_CORAL_SAND.get())
+                .add(ModBlocks.FROZEN_POWDER_BLOCK.get())
+                .add(ModBlocks.FROZEN_POWDER_LAYER.get())
+                .add(ModBlocks.SUNNY_CORAL_SAND.get())
+                .add(ModBlocks.FROZEN_CORAL_SAND.get());
+
+        this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(ModBlocks.CRYSTALLIZED_LOG.get())
+                .add(ModBlocks.MAGIC_CRYSTALIZER.get())
+                .add(ModBlocks.FUME_DISTILLERY.get())
+                .add(ModBlocks.FUME_SPREADER.get())
+                .add(ModBlocks.FAIRY_POWER_RELAY.get())
+                .add(ModBlocks.INFUSION_ALTAR_BASIC.get())
+                .add(ModBlocks.INFUSION_ALTAR_ADVANCED.get())
+                .add(ModBlocks.MIXER_BLOCK.get())
+                .add(ModBlocks.CLOCKWORK_SYRUP_EXTRACTOR.get())
+                .add(ModBlocks.CLOCKWORK_GEYSER_COLLECTOR.get())
+                .add(ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get())
+                .add(ModBlocks.CLOCKWORK_CRAFTER.get())
+                .add(ModBlocks.CLOCKWORK_FAIRY_TERMINAL.get())
+                .add(ModBlocks.DEAD_SWEET_CORAL_BLOCK.get())
+                .add(ModBlocks.SWEET_CORAL_BLOCK.get())
+                .add(ModBlocks.BITTER_CORAL_BLOCK.get())
+                .add(ModBlocks.DEAD_BITTER_CORAL_BLOCK.get())
+                .add(ModBlocks.SWICE.get())
+
+                .add(ModBlocks.ODIATE_MUD_BRICKS_STAIRS.get())
+                .add(ModBlocks.ODIATE_MUD_BRICKS_SLAB.get())
+                .add(ModBlocks.ODIATE_MUD_BRICKS_WALL.get())
+
+                .add(ModBlocks.SWEET_LIMESTONE.get())
+                .add(ModBlocks.SWEET_LIMESTONE_STAIRS.get())
+                .add(ModBlocks.SWEET_LIMESTONE_SLAB.get())
+                .add(ModBlocks.SWEET_LIMESTONE_WALL.get())
+                .add(ModBlocks.SWEET_LIMESTONE_BRICKS.get())
+                .add(ModBlocks.SWEET_LIMESTONE_BRICKS_STAIRS.get())
+                .add(ModBlocks.SWEET_LIMESTONE_BRICKS_SLAB.get())
+                .add(ModBlocks.SWEET_LIMESTONE_BRICKS_WALL.get())
+
+                .add(ModBlocks.SUNNY_LIMESTONE.get())
+                .add(ModBlocks.SUNNY_LIMESTONE_STAIRS.get())
+                .add(ModBlocks.SUNNY_LIMESTONE_SLAB.get())
+                .add(ModBlocks.SUNNY_LIMESTONE_WALL.get())
+                .add(ModBlocks.SUNNY_LIMESTONE_BRICKS.get())
+                .add(ModBlocks.SUNNY_LIMESTONE_BRICKS_STAIRS.get())
+                .add(ModBlocks.SUNNY_LIMESTONE_BRICKS_SLAB.get())
+                .add(ModBlocks.SUNNY_LIMESTONE_BRICKS_WALL.get())
+
+                .add(ModBlocks.FROZEN_LIMESTONE.get())
+                .add(ModBlocks.FROZEN_LIMESTONE_STAIRS.get())
+                .add(ModBlocks.FROZEN_LIMESTONE_SLAB.get())
+                .add(ModBlocks.FROZEN_LIMESTONE_WALL.get())
+                .add(ModBlocks.FROZEN_LIMESTONE_BRICKS.get())
+                .add(ModBlocks.FROZEN_LIMESTONE_BRICKS_STAIRS.get())
+                .add(ModBlocks.FROZEN_LIMESTONE_BRICKS_SLAB.get())
+                .add(ModBlocks.FROZEN_LIMESTONE_BRICKS_WALL.get())
+
+                .add(ModBlocks.SOUR_CANDY_ROCK.get())
+                .add(ModBlocks.SOUR_CANDY_ROCK_STAIRS.get())
+                .add(ModBlocks.SOUR_CANDY_ROCK_SLAB.get())
+                .add(ModBlocks.SOUR_CANDY_ROCK_WALL.get())
+                .add(ModBlocks.SOUR_CANDY_BRICKS.get())
+                .add(ModBlocks.SOUR_CANDY_BRICKS_STAIRS.get())
+                .add(ModBlocks.SOUR_CANDY_BRICKS_SLAB.get())
+                .add(ModBlocks.SOUR_CANDY_BRICKS_WALL.get())
+
+                .add(ModBlocks.BITTER_CANDY_ROCK.get())
+                .add(ModBlocks.BITTER_CANDY_ROCK_STAIRS.get())
+                .add(ModBlocks.BITTER_CANDY_ROCK_SLAB.get())
+                .add(ModBlocks.BITTER_CANDY_ROCK_WALL.get())
+                .add(ModBlocks.BITTER_CANDY_BRICKS.get())
+                .add(ModBlocks.BITTER_CANDY_BRICKS_STAIRS.get())
+                .add(ModBlocks.BITTER_CANDY_BRICKS_SLAB.get())
+                .add(ModBlocks.BITTER_CANDY_BRICKS_WALL.get())
+
+                .add(ModBlocks.SWEET_CANDY_ROCK.get())
+                .add(ModBlocks.SWEET_CANDY_ROCK_STAIRS.get())
+                .add(ModBlocks.SWEET_CANDY_ROCK_SLAB.get())
+                .add(ModBlocks.SWEET_CANDY_ROCK_WALL.get())
+                .add(ModBlocks.SWEET_CANDY_BRICKS.get())
+                .add(ModBlocks.SWEET_CANDY_BRICKS_STAIRS.get())
+                .add(ModBlocks.SWEET_CANDY_BRICKS_SLAB.get())
+                .add(ModBlocks.SWEET_CANDY_BRICKS_WALL.get())
+
+                .add(ModBlocks.CHOCOLATE_BLOCK.get())
+
+                .add(ModBlocks.DECAYED_CLOCKWORK_BRASS_BLOCK.get())
+                .add(ModBlocks.DECAYED_CUT_CLOCKWORK_BRASS.get())
+                .add(ModBlocks.CLOCKWORK_BRASS_BLOCK.get())
+                .add(ModBlocks.CUT_CLOCKWORK_BRASS.get())
+                .add(ModBlocks.CUT_CLOCKWORK_BRASS_STAIRS.get())
+                .add(ModBlocks.CUT_CLOCKWORK_BRASS_SLAB.get())
+
+                .add(ModBlocks.PETRIFIED_CHOCOLATE.get())
+                .add(ModBlocks.PETRIFIED_CHOCOLATE_STAIRS.get())
+                .add(ModBlocks.PETRIFIED_CHOCOLATE_SLAB.get())
+                .add(ModBlocks.PETRIFIED_CHOCOLATE_WALL.get())
+                .add(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS.get())
+                .add(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_STAIRS.get())
+                .add(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_SLAB.get())
+                .add(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_WALL.get())
+                .add(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get())
+                .add(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_STAIRS.get())
+                .add(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_SLAB.get())
+                .add(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_WALL.get())
+
+                .add(ModBlocks.CHOCOLATE_GEYSER.get())
+                .add(ModBlocks.CRYSTALLIZED_LEAVES.get())
+                .add(ModBlocks.CRYSTALLIZED_LOG.get())
+                .add(ModBlocks.GRINDING_WHEEL.get());
+
+        for (List<RegistryObject<Block>> blocks : ModGrowableMineral.GROWABLE_MINERAL_STAGES){
+            for (RegistryObject<Block> block : blocks){
+                this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block.get());
+            }
+        }
+
+        this.tag(ModTags.Blocks.VANILLA_WALLS)
+                .add(ModBlocks.BITTER_CANDY_BRICKS_WALL.get())
+                .add(ModBlocks.BITTER_CANDY_ROCK_WALL.get())
+                .add(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_WALL.get())
+                .add(ModBlocks.PETRIFIED_CHOCOLATE_WALL.get())
+                .add(ModBlocks.FROZEN_LIMESTONE_BRICKS_WALL.get())
+                .add(ModBlocks.FROZEN_LIMESTONE_WALL.get())
+                .add(ModBlocks.SWEET_CANDY_BRICKS_WALL.get())
+                .add(ModBlocks.SWEET_LIMESTONE_BRICKS_WALL.get())
+                .add(ModBlocks.SWEET_LIMESTONE_WALL.get())
+                .add(ModBlocks.SWEET_CANDY_ROCK_WALL.get())
+                .add(ModBlocks.SUNNY_LIMESTONE_WALL.get())
+                .add(ModBlocks.SUNNY_LIMESTONE_BRICKS_WALL.get())
+                .add(ModBlocks.SOUR_CANDY_BRICKS_WALL.get())
+                .add(ModBlocks.SOUR_CANDY_ROCK_WALL.get());
+
+        this.tag(Tags.Blocks.SAND)
+                .add(ModBlocks.SWEET_CORAL_SAND.get())
+                .add(ModBlocks.FROZEN_CORAL_SAND.get())
+                .add(ModBlocks.SUNNY_CORAL_SAND.get());
+
+        this.tag(Tags.Blocks.STONE)
+                .add(ModBlocks.SWEET_LIMESTONE.get())
+                .add(ModBlocks.SUNNY_LIMESTONE.get())
+                .add(ModBlocks.FROZEN_LIMESTONE.get());
+
+        this.tag(ModTags.Blocks.LIMESTONE)
+                .add(ModBlocks.SWEET_LIMESTONE.get())
+                .add(ModBlocks.FROZEN_LIMESTONE.get())
+                .add(ModBlocks.SUNNY_LIMESTONE.get());
+
+        this.tag(ModTags.Blocks.BUNTSY_CORAL_PLANTS)
+                .add(ModBlocks.SWEET_CORAL.get())
+                .add(ModBlocks.BITTER_CORAL.get());
+
+        this.tag(ModTags.Blocks.BUNTSY_CORAL_BLOCKS)
+                .add(ModBlocks.SWEET_CORAL_BLOCK.get())
+                .add(ModBlocks.BITTER_CORAL_BLOCK.get());
+
+        this.tag(ModTags.Blocks.BUNTSY_WALL_CORALS)
+                .add(ModBlocks.SWEET_CORAL_WALL_FAN.get())
+                .add(ModBlocks.BITTER_CORAL_WALL_FAN.get());
+
+        this.tag(ModTags.Blocks.BUNTSY_CORALS)
+                .addTag(ModTags.Blocks.BUNTSY_CORAL_PLANTS)
+                .add(ModBlocks.SWEET_CORAL_FAN.get())
+                .add(ModBlocks.BITTER_CORAL_FAN.get());
+
+        this.tag(ModTags.Blocks.ODIATE_SOIL)
+                .add(ModBlocks.ODIATE_SOIL.get())
+                .add(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get());
+
+        this.tag(ModTags.Blocks.NO_SNOW)
+                .add(ModBlocks.CHOCOLATE_GEYSER.get())
+                .add(ModBlocks.PETRIFIED_CHOCOLATE.get())
+                .add(ModBlocks.SWICE.get())
+                .add(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get());
+
+        this.tag(ModTags.Blocks.FREEZWEET_BLOCKS)
+                .add(ModBlocks.FROZEN_POWDER_BLOCK.get())
+                .add(ModBlocks.FROZEN_POWDER_LAYER.get());
 
         this.tag(ModTags.Blocks.GENTLIT_LOGS)
                 .add(ModBlocks.GENTLIT_LOG.get())
@@ -46,17 +276,29 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.BRAVOT_WOOD.get())
                 .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get());
 
+        this.tag(ModTags.Blocks.MALVOR_LOGS)
+                .add(ModBlocks.MALVOR_LOG.get())
+                .add(ModBlocks.STRIPPED_MALVOR_LOG.get())
+                .add(ModBlocks.MALVOR_WOOD.get())
+                .add(ModBlocks.STRIPPED_MALVOR_WOOD.get());
+
         this.tag(BlockTags.WOODEN_FENCES)
                 .add(ModBlocks.GENTLIT_FENCE.get())
-                .add(ModBlocks.BRAVOT_FENCE.get());
+                .add(ModBlocks.BRAVOT_FENCE.get())
+                .add(ModBlocks.ORIGAMI_PALM_FENCE.get())
+                .add(ModBlocks.MALVOR_FENCE.get());
 
         this.tag(BlockTags.FENCE_GATES)
                 .add(ModBlocks.GENTLIT_FENCE_GATE.get())
-                .add(ModBlocks.BRAVOT_FENCE_GATE.get());
+                .add(ModBlocks.BRAVOT_FENCE_GATE.get())
+                .add(ModBlocks.MALVOR_FENCE_GATE.get())
+                .add(ModBlocks.ORIGAMI_PALM_FENCE_GATE.get());
 
         this.tag(BlockTags.LEAVES)
                 .add(ModBlocks.GENTLIT_LEAVES.get())
-                .add(ModBlocks.BRAVOT_LEAVES.get());
+                .add(ModBlocks.BRAVOT_LEAVES.get())
+                .add(ModBlocks.MALVOR_LEAVES.get())
+                .add(ModBlocks.ORIGAMI_PALM_LEAVES.get());
 
         this.tag(BlockTags.LOGS_THAT_BURN)
                 .add(ModBlocks.GENTLIT_LOG.get())
@@ -66,9 +308,18 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.BRAVOT_LOG.get())
                 .add(ModBlocks.BRAVOT_WOOD.get())
                 .add(ModBlocks.STRIPPED_BRAVOT_LOG.get())
-                .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get());
+                .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get())
+                .add(ModBlocks.MALVOR_LOG.get())
+                .add(ModBlocks.MALVOR_WOOD.get())
+                .add(ModBlocks.STRIPPED_MALVOR_LOG.get())
+                .add(ModBlocks.STRIPPED_MALVOR_WOOD.get())
+                .add(ModBlocks.ORIGAMI_PALM_LOG.get())
+                .add(ModBlocks.ORIGAMI_PALM_WOOD.get())
+                .add(ModBlocks.STRIPPED_ORIGAMI_PALM_LOG.get())
+                .add(ModBlocks.STRIPPED_ORIGAMI_PALM_WOOD.get());
 
         this.tag(BlockTags.LOGS)
+                .add(ModBlocks.CRYSTALLIZED_LOG.get())
                 .add(ModBlocks.GENTLIT_LOG.get())
                 .add(ModBlocks.GENTLIT_WOOD.get())
                 .add(ModBlocks.STRIPPED_GENTLIT_LOG.get())
@@ -76,22 +327,52 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.BRAVOT_LOG.get())
                 .add(ModBlocks.BRAVOT_WOOD.get())
                 .add(ModBlocks.STRIPPED_BRAVOT_LOG.get())
-                .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get());
+                .add(ModBlocks.STRIPPED_BRAVOT_WOOD.get())
+                .add(ModBlocks.MALVOR_LOG.get())
+                .add(ModBlocks.MALVOR_WOOD.get())
+                .add(ModBlocks.STRIPPED_MALVOR_LOG.get())
+                .add(ModBlocks.STRIPPED_MALVOR_WOOD.get())
+                .add(ModBlocks.ORIGAMI_PALM_LOG.get())
+                .add(ModBlocks.ORIGAMI_PALM_WOOD.get())
+                .add(ModBlocks.STRIPPED_ORIGAMI_PALM_LOG.get())
+                .add(ModBlocks.STRIPPED_ORIGAMI_PALM_WOOD.get());
 
         this.tag(BlockTags.MUSHROOM_GROW_BLOCK)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
-                .add(ModBlocks.CHARMIL_SOIL.get());
+                .add(ModBlocks.CHARMIL_SOIL.get())
+                .add(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_MUD.get());
 
         this.tag(BlockTags.DIRT)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
-                .add(ModBlocks.CHARMIL_SOIL.get());
+                .add(ModBlocks.CHARMIL_SOIL.get())
+                .add(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_MUD.get());
 
-        this.tag(ModTags.Blocks.CUTERLY_SPAWNER)
+        this.tag(BlockTags.ANIMALS_SPAWNABLE_ON)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
-                .add(ModBlocks.CHARMIL_SOIL.get());
+                .add(ModBlocks.CHARMIL_SOIL.get())
+                .add(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_MUD.get())
+                .add(ModBlocks.SWEET_CORAL_SAND.get());
 
         this.tag(BlockTags.VALID_SPAWN)
                 .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
+                .add(ModBlocks.CHARMIL_SOIL.get())
+                .add(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_SOIL.get())
+                .add(ModBlocks.ODIATE_MUD.get())
+                .add(ModBlocks.FROZEN_POWDER_BLOCK.get())
+                .add(ModBlocks.FROZEN_CORAL_SAND.get())
+                .add(ModBlocks.SUNNY_CORAL_SAND.get())
+                .add(ModBlocks.SWEET_CORAL_SAND.get());
+
+        this.tag(ModTags.Blocks.CUTERLY_SPAWNER)
+                .add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get())
+                .add(ModBlocks.SWEET_CORAL_SAND.get())
                 .add(ModBlocks.CHARMIL_SOIL.get());
 
         this.tag(ModTags.Blocks.FAIRY_INTERACTABLE_BLOCK_ENTITY)
@@ -100,7 +381,21 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.THREAD_REELER.get())
                 .add(ModBlocks.FAIRY_COLLECTION_TRAY.get())
                 .add(ModBlocks.FAIRY_INFUSION_BENCH.get())
+                .add(ModBlocks.FUME_DISTILLERY.get())
+                .add(ModBlocks.FAIRY_POWER_RELAY.get())
+                .add(ModBlocks.MIXER_BLOCK.get())
                 .add(ModBlocks.MAGIC_CRYSTALIZER.get());
+
+        this.tag(ModTags.Blocks.PRISMATIC_BEACON_EFFECT_BLOCK)
+                .add(ModBlocks.BEACON_HEALTH_BOOST_MODIFIER.get())
+                .add(ModBlocks.BEACON_SPEED_MODIFIER.get())
+                .add(ModBlocks.BEACON_HASTE_MODIFIER.get())
+                .add(ModBlocks.BEACON_STRENGTH_MODIFIER.get())
+                .add(ModBlocks.BEACON_JUMP_BOOST_MODIFIER.get())
+                .add(ModBlocks.BEACON_REGENERATION_MODIFIER.get())
+                .add(ModBlocks.BEACON_RESISTANCE_MODIFIER.get())
+                .add(ModBlocks.BEACON_FIRE_RESISTANCE_MODIFIER.get())
+                .add(ModBlocks.BEACON_WATER_BREATHING_MODIFIER.get());
 
         this.tag(ModTags.Blocks.FAIRY_HARVESTABLE)
                 .addTag(BlockTags.FLOWERS)
@@ -112,9 +407,17 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.LAPIS_CRYSTAL_CLUSTER.get())
                 .add(ModBlocks.DIAMOND_CRYSTAL_CLUSTER.get())
                 .add(ModBlocks.EMERALD_CRYSTAL_CLUSTER.get())
+                .add(ModBlocks.QUARTZ_CRYSTAL_CLUSTER.get())
+                .add(ModBlocks.GLOWSTONE_CRYSTAL_CLUSTER.get())
                 .add(ModBlocks.DEBRIS_CRYSTAL_CLUSTER.get());
 
         this.tag(BlockTags.PLANKS)
                 .add(ModBlocks.GENTLIT_PLANKS.get());
+
+        this.tag(ModTags.Blocks.FUME_TICKABLE)
+                .addTag(BlockTags.CROPS)
+                .addTag(BlockTags.SAPLINGS)
+                .addTag(BlockTags.MUSHROOM_GROW_BLOCK)
+                .add(Blocks.SUGAR_CANE);
     }
 }

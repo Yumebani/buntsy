@@ -1,0 +1,67 @@
+{
+  "type": "buntsy:infusion_altar_basic",
+  "inputs": [
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:catalyst"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.fumeType",
+          "value": 6
+        },
+        {
+          "field": "buntsy.catalystType",
+          "value": "creation"
+        }
+      ]
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:rotten_blend"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:rotten_blend"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:rotten_blend"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:ender_pearl"
+      },
+      "nbt": []
+    }
+  ],
+  "output":
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:catalyst"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.fumeType",
+          "value": 9
+        },
+        {
+          "field": "buntsy.catalystType",
+          "value": "creation"
+        }
+      ]
+    },
+  "max_progress": 1000
+}

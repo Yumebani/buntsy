@@ -1,6 +1,7 @@
 package net.sophiebun.buntsy.item;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -9,6 +10,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
+import net.sophiebun.buntsy.item.custom.Essence;
+import net.sophiebun.buntsy.item.custom.FumeBottle;
+import net.sophiebun.buntsy.item.custom.Prism;
 
 public class CreativeModeTabs {
 
@@ -20,17 +24,142 @@ public class CreativeModeTabs {
                     .title(Component.translatable("creativetab.buntsy_tab"))
                     .displayItems((pParameters, pOutput) -> {
 
+                        pOutput.accept(ModItems.FAIRY_TALE_BOOK.get());
+
                         pOutput.accept(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get());
                         pOutput.accept(ModBlocks.CHARMIL_SOIL.get());
 
+                        pOutput.accept(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get());
+                        pOutput.accept(ModBlocks.ODIATE_SOIL.get());
+                        pOutput.accept(ModBlocks.ODIATE_MUD.get());
+                        pOutput.accept(ModBlocks.PACKED_ODIATE_MUD.get());
+                        pOutput.accept(ModBlocks.ODIATE_MUD_BRICKS.get());
+                        pOutput.accept(ModBlocks.ODIATE_MUD_BRICKS_STAIRS.get());
+                        pOutput.accept(ModBlocks.ODIATE_MUD_BRICKS_SLAB.get());
+                        pOutput.accept(ModBlocks.ODIATE_MUD_BRICKS_WALL.get());
+
+                        pOutput.accept(ModBlocks.SWEET_CORAL_SAND.get());
+                        pOutput.accept(ModBlocks.FROZEN_CORAL_SAND.get());
+                        pOutput.accept(ModBlocks.SUNNY_CORAL_SAND.get());
+
+                        pOutput.accept(ModBlocks.SWEET_LIMESTONE.get());
+                        pOutput.accept(ModBlocks.SWEET_LIMESTONE_STAIRS.get());
+                        pOutput.accept(ModBlocks.SWEET_LIMESTONE_SLAB.get());
+                        pOutput.accept(ModBlocks.SWEET_LIMESTONE_WALL.get());
+                        pOutput.accept(ModBlocks.SWEET_LIMESTONE_BRICKS.get());
+                        pOutput.accept(ModBlocks.SWEET_LIMESTONE_BRICKS_STAIRS.get());
+                        pOutput.accept(ModBlocks.SWEET_LIMESTONE_BRICKS_SLAB.get());
+                        pOutput.accept(ModBlocks.SWEET_LIMESTONE_BRICKS_WALL.get());
+
+                        pOutput.accept(ModBlocks.FROZEN_LIMESTONE.get());
+                        pOutput.accept(ModBlocks.FROZEN_LIMESTONE_STAIRS.get());
+                        pOutput.accept(ModBlocks.FROZEN_LIMESTONE_SLAB.get());
+                        pOutput.accept(ModBlocks.FROZEN_LIMESTONE_WALL.get());
+                        pOutput.accept(ModBlocks.FROZEN_LIMESTONE_BRICKS.get());
+                        pOutput.accept(ModBlocks.FROZEN_LIMESTONE_BRICKS_STAIRS.get());
+                        pOutput.accept(ModBlocks.FROZEN_LIMESTONE_BRICKS_SLAB.get());
+                        pOutput.accept(ModBlocks.FROZEN_LIMESTONE_BRICKS_WALL.get());
+
+                        pOutput.accept(ModBlocks.SUNNY_LIMESTONE.get());
+                        pOutput.accept(ModBlocks.SUNNY_LIMESTONE_STAIRS.get());
+                        pOutput.accept(ModBlocks.SUNNY_LIMESTONE_SLAB.get());
+                        pOutput.accept(ModBlocks.SUNNY_LIMESTONE_WALL.get());
+                        pOutput.accept(ModBlocks.SUNNY_LIMESTONE_BRICKS.get());
+                        pOutput.accept(ModBlocks.SUNNY_LIMESTONE_BRICKS_STAIRS.get());
+                        pOutput.accept(ModBlocks.SUNNY_LIMESTONE_BRICKS_SLAB.get());
+                        pOutput.accept(ModBlocks.SUNNY_LIMESTONE_BRICKS_WALL.get());
+
+                        pOutput.accept(ModBlocks.SEA_SHELLS.get());
+
+                        pOutput.accept(ModBlocks.FROZEN_POWDER_BLOCK.get());
+                        pOutput.accept(ModBlocks.FROZEN_POWDER_LAYER.get());
+                        pOutput.accept(ModBlocks.SWICE.get());
+
+                        pOutput.accept(ModBlocks.PETRIFIED_CHOCOLATE.get());
+                        pOutput.accept(ModBlocks.PETRIFIED_CHOCOLATE_STAIRS.get());
+                        pOutput.accept(ModBlocks.PETRIFIED_CHOCOLATE_SLAB.get());
+                        pOutput.accept(ModBlocks.PETRIFIED_CHOCOLATE_WALL.get());
+                        pOutput.accept(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS.get());
+                        pOutput.accept(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_STAIRS.get());
+                        pOutput.accept(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_SLAB.get());
+                        pOutput.accept(ModBlocks.PETRIFIED_CHOCOLATE_BRICKS_WALL.get());
+                        pOutput.accept(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get());
+                        pOutput.accept(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_STAIRS.get());
+                        pOutput.accept(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_SLAB.get());
+                        pOutput.accept(ModBlocks.COBBLED_PETRIFIED_CHOCOLATE_WALL.get());
+                        pOutput.accept(ModBlocks.CHOCOLATE_BLOCK.get());
+                        pOutput.accept(ModBlocks.CHOCOLATE_GEYSER.get());
+
+                        pOutput.accept(ModBlocks.CLOCKWORK_BRASS_BLOCK.get());
+                        pOutput.accept(ModBlocks.CUT_CLOCKWORK_BRASS.get());
+                        pOutput.accept(ModBlocks.CUT_CLOCKWORK_BRASS_STAIRS.get());
+                        pOutput.accept(ModBlocks.CUT_CLOCKWORK_BRASS_SLAB.get());
+
+                        pOutput.accept(ModBlocks.SWEET_CANDY_ROCK.get());
+                        pOutput.accept(ModBlocks.SWEET_CANDY_ROCK_STAIRS.get());
+                        pOutput.accept(ModBlocks.SWEET_CANDY_ROCK_SLAB.get());
+                        pOutput.accept(ModBlocks.SWEET_CANDY_ROCK_WALL.get());
+                        pOutput.accept(ModBlocks.SWEET_CANDY_BRICKS.get());
+                        pOutput.accept(ModBlocks.SWEET_CANDY_BRICKS_STAIRS.get());
+                        pOutput.accept(ModBlocks.SWEET_CANDY_BRICKS_SLAB.get());
+                        pOutput.accept(ModBlocks.SWEET_CANDY_BRICKS_WALL.get());
+
+                        pOutput.accept(ModBlocks.SOUR_CANDY_ROCK.get());
+                        pOutput.accept(ModBlocks.SOUR_CANDY_ROCK_STAIRS.get());
+                        pOutput.accept(ModBlocks.SOUR_CANDY_ROCK_SLAB.get());
+                        pOutput.accept(ModBlocks.SOUR_CANDY_ROCK_WALL.get());
+                        pOutput.accept(ModBlocks.SOUR_CANDY_BRICKS.get());
+                        pOutput.accept(ModBlocks.SOUR_CANDY_BRICKS_STAIRS.get());
+                        pOutput.accept(ModBlocks.SOUR_CANDY_BRICKS_SLAB.get());
+                        pOutput.accept(ModBlocks.SOUR_CANDY_BRICKS_WALL.get());
+
+                        pOutput.accept(ModBlocks.BITTER_CANDY_ROCK.get());
+                        pOutput.accept(ModBlocks.BITTER_CANDY_ROCK_STAIRS.get());
+                        pOutput.accept(ModBlocks.BITTER_CANDY_ROCK_SLAB.get());
+                        pOutput.accept(ModBlocks.BITTER_CANDY_ROCK_WALL.get());
+                        pOutput.accept(ModBlocks.BITTER_CANDY_BRICKS.get());
+                        pOutput.accept(ModBlocks.BITTER_CANDY_BRICKS_STAIRS.get());
+                        pOutput.accept(ModBlocks.BITTER_CANDY_BRICKS_SLAB.get());
+                        pOutput.accept(ModBlocks.BITTER_CANDY_BRICKS_WALL.get());
+
+                        pOutput.accept(ModBlocks.SWEET_CORAL.get());
+                        pOutput.accept(ModBlocks.SWEET_CORAL_BLOCK.get());
+                        pOutput.accept(ModBlocks.SWEET_CORAL_FAN.get());
+                        pOutput.accept(ModBlocks.DEAD_SWEET_CORAL.get());
+                        pOutput.accept(ModBlocks.DEAD_SWEET_CORAL_BLOCK.get());
+                        pOutput.accept(ModBlocks.DEAD_SWEET_CORAL_FAN.get());
+
+                        pOutput.accept(ModBlocks.BITTER_CORAL.get());
+                        pOutput.accept(ModBlocks.BITTER_CORAL_BLOCK.get());
+                        pOutput.accept(ModBlocks.BITTER_CORAL_FAN.get());
+                        pOutput.accept(ModBlocks.DEAD_BITTER_CORAL.get());
+                        pOutput.accept(ModBlocks.DEAD_BITTER_CORAL_BLOCK.get());
+                        pOutput.accept(ModBlocks.DEAD_BITTER_CORAL_FAN.get());
+
+                        pOutput.accept(ModBlocks.SWEETGRASS.get());
+                        pOutput.accept(ModBlocks.SWEET_PICKLE.get());
+                        pOutput.accept(ModBlocks.COTTON_VINE.get());
+
+                        pOutput.accept(ModBlocks.CHARMING_LOTUS.get());
+                        pOutput.accept(ModBlocks.BRAVE_LOTUS.get());
+                        pOutput.accept(ModBlocks.MALIUM_LOTUS.get());
+
                         pOutput.accept(ModBlocks.PINK_CHARMIL_GRASS.get());
                         pOutput.accept(ModBlocks.BLUE_CHARMIL_GRASS.get());
+                        pOutput.accept(ModBlocks.PALEGRASS.get());
+                        pOutput.accept(ModBlocks.FROZEN_GRASS.get());
+                        pOutput.accept(ModBlocks.LUMINUM.get());
                         pOutput.accept(ModBlocks.PINK_BLOOM.get());
                         pOutput.accept(ModBlocks.BLUE_BLOOM.get());
+                        pOutput.accept(ModBlocks.ABYSSAL_BLOOM.get());
+                        pOutput.accept(ModBlocks.FROZEN_BLOOM.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_FERN.get());
                         pOutput.accept(ModBlocks.LOVESHROOM.get());
                         pOutput.accept(ModBlocks.LOVESHROOM_BLOCK.get());
                         pOutput.accept(ModBlocks.GLOWSHROOM.get());
                         pOutput.accept(ModBlocks.GLOWSHROOM_BLOCK.get());
+                        pOutput.accept(ModBlocks.PALESHROOM.get());
+                        pOutput.accept(ModBlocks.PALESHROOM_BLOCK.get());
 
                         pOutput.accept(ModBlocks.GENTLIT_LOG.get());
                         pOutput.accept(ModBlocks.STRIPPED_GENTLIT_LOG.get());
@@ -67,6 +196,45 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.BRAVOT_FENCE_GATE.get());
                         pOutput.accept(ModBlocks.BRAVOT_PRESSURE_PLATE.get());
                         pOutput.accept(ModBlocks.BRAVOT_BUTTON.get());
+
+                        pOutput.accept(ModBlocks.MALVOR_LOG.get());
+                        pOutput.accept(ModBlocks.STRIPPED_MALVOR_LOG.get());
+                        pOutput.accept(ModBlocks.MALVOR_WOOD.get());
+                        pOutput.accept(ModBlocks.STRIPPED_MALVOR_LOG.get());
+
+                        pOutput.accept(ModBlocks.MALVOR_LEAVES.get());
+                        pOutput.accept(ModBlocks.MALVOR_SAPLING.get());
+
+                        pOutput.accept(ModBlocks.MALVOR_PLANKS.get());
+                        pOutput.accept(ModBlocks.MALVOR_STAIRS.get());
+                        pOutput.accept(ModBlocks.MALVOR_SLAB.get());
+                        pOutput.accept(ModBlocks.MALVOR_TRAPDOOR.get());
+                        pOutput.accept(ModBlocks.MALVOR_DOOR.get());
+                        pOutput.accept(ModBlocks.MALVOR_FENCE.get());
+                        pOutput.accept(ModBlocks.MALVOR_FENCE_GATE.get());
+                        pOutput.accept(ModBlocks.MALVOR_PRESSURE_PLATE.get());
+                        pOutput.accept(ModBlocks.MALVOR_BUTTON.get());
+
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_LOG.get());
+                        pOutput.accept(ModBlocks.STRIPPED_ORIGAMI_PALM_LOG.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_WOOD.get());
+                        pOutput.accept(ModBlocks.STRIPPED_ORIGAMI_PALM_LOG.get());
+
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_LEAVES.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_SAPLING.get());
+
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_PLANKS.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_STAIRS.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_SLAB.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_TRAPDOOR.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_DOOR.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_FENCE.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_FENCE_GATE.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_PRESSURE_PLATE.get());
+                        pOutput.accept(ModBlocks.ORIGAMI_PALM_BUTTON.get());
+
+                        pOutput.accept(ModBlocks.CRYSTALLIZED_LOG.get());
+                        pOutput.accept(ModBlocks.CRYSTALLIZED_LEAVES.get());
 
                         pOutput.accept(ModItems.AMETHYST_DUST.get());
                         pOutput.accept(ModItems.PRISTINE_AMETHYST_GRAIN.get());
@@ -107,6 +275,19 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.MEDIUM_DEBRIS_CRYSTAL_CLUSTER.get());
                         pOutput.accept(ModBlocks.SMALL_DEBRIS_CRYSTAL_CLUSTER.get());
 
+                        pOutput.accept(ModItems.PRISTINE_QUARTZ_SAMPLE.get());
+                        pOutput.accept(ModBlocks.QUARTZ_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.LARGE_QUARTZ_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.MEDIUM_QUARTZ_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.SMALL_QUARTZ_CRYSTAL_CLUSTER.get());
+
+                        pOutput.accept(ModItems.GLOWSTONE_CRYSTAL.get());
+                        pOutput.accept(ModItems.PRISTINE_GLOWSTONE_SAMPLE.get());
+                        pOutput.accept(ModBlocks.GLOWSTONE_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.LARGE_GLOWSTONE_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.MEDIUM_GLOWSTONE_CRYSTAL_CLUSTER.get());
+                        pOutput.accept(ModBlocks.SMALL_GLOWSTONE_CRYSTAL_CLUSTER.get());
+
                         pOutput.accept(ModItems.REDSTONE_CRYSTAL.get());
                         pOutput.accept(ModItems.PRISTINE_REDSTONE_SAMPLE.get());
                         pOutput.accept(ModBlocks.REDSTONE_CRYSTAL_CLUSTER.get());
@@ -141,11 +322,48 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.FAIRY_COLLECTION_TRAY.get());
                         pOutput.accept(ModBlocks.FAIRY_INFUSION_BENCH.get());
                         pOutput.accept(ModBlocks.MAGIC_CRYSTALIZER.get());
+                        pOutput.accept(ModBlocks.FUME_DISTILLERY.get());
+                        pOutput.accept(ModBlocks.FUME_SPREADER.get());
+                        pOutput.accept(ModBlocks.INFUSION_PEDESTAL.get());
+                        pOutput.accept(ModBlocks.FAIRY_POWER_RELAY.get());
+                        pOutput.accept(ModBlocks.INFUSION_ALTAR_BASIC.get());
+                        pOutput.accept(ModBlocks.INFUSION_ALTAR_ADVANCED.get());
+                        pOutput.accept(ModBlocks.MIXER_BLOCK.get());
+                        pOutput.accept(ModBlocks.CLOCKWORK_SYRUP_EXTRACTOR.get());
+                        pOutput.accept(ModBlocks.CLOCKWORK_GEYSER_COLLECTOR.get());
+                        pOutput.accept(ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get());
+                        pOutput.accept(ModBlocks.CLOCKWORK_CRAFTER.get());
+                        pOutput.accept(ModBlocks.CLOCKWORK_FAIRY_TERMINAL.get());
+                        pOutput.accept(ModBlocks.CLOCKWORK_MAIDEN_TERMINAL.get());
+                        pOutput.accept(ModBlocks.GIANT_COCOON.get());
                         pOutput.accept(ModBlocks.SYRUP_EXTRACTOR.get());
 
-                        pOutput.accept(ModItems.FAIRY_STAFF.get());
+                        pOutput.accept(ModBlocks.PRISMATIC_BEACON.get());
+                        pOutput.accept(ModBlocks.PRISMATIC_BEACON_BASE.get());
+                        pOutput.accept(ModBlocks.BEACON_WATER_BREATHING_MODIFIER.get());
+                        pOutput.accept(ModBlocks.BEACON_STRENGTH_MODIFIER.get());
+                        pOutput.accept(ModBlocks.BEACON_SPEED_MODIFIER.get());
+                        pOutput.accept(ModBlocks.BEACON_JUMP_BOOST_MODIFIER.get());
+                        pOutput.accept(ModBlocks.BEACON_RESISTANCE_MODIFIER.get());
+                        pOutput.accept(ModBlocks.BEACON_HEALTH_BOOST_MODIFIER.get());
+                        pOutput.accept(ModBlocks.BEACON_FIRE_RESISTANCE_MODIFIER.get());
+                        pOutput.accept(ModBlocks.BEACON_HASTE_MODIFIER.get());
+                        pOutput.accept(ModBlocks.BEACON_REGENERATION_MODIFIER.get());
 
+                        pOutput.accept(ModItems.HOT_CHOCOLATE_BUCKET.get());
+
+                        pOutput.accept(ModItems.FAIRY_STAFF.get());
+                        pOutput.accept(ModItems.BINDING_STAFF.get());
+                        pOutput.accept(ModItems.CLOCKWORK_CARD_PUNCHER.get());
+
+                        pOutput.accept(ModItems.EMPTY_CLOCKWORK_FAIRY_TERMINAL.get());
+
+                        pOutput.accept(ModItems.FAIRY_POWER_RECEPTOR.get());
+                        pOutput.accept(ModItems.FAIRY_POWER_EMITTER.get());
                         pOutput.accept(ModItems.FAIRY_DUST.get());
+                        pOutput.accept(ModItems.HOOTCAT_FEATHER.get());
+                        pOutput.accept(ModItems.HOOTCAT_PLUME.get());
+                        pOutput.accept(ModItems.PHELINIX_FEATHER.get());
                         pOutput.accept(ModItems.COCOON.get());
                         pOutput.accept(ModItems.SILK.get());
                         pOutput.accept(ModItems.SILK_SPOOL.get());
@@ -156,6 +374,26 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.SILKY_NUGGET.get());
                         pOutput.accept(ModItems.SILKY_INGOT.get());
                         pOutput.accept(ModItems.SILKY_CRYSTAL.get());
+                        pOutput.accept(ModItems.CLOCKWORK_SCRAP.get());
+                        pOutput.accept(ModItems.CLOCKWORK_SCRAP_CLUMP.get());
+                        pOutput.accept(ModItems.CLOCKWORK_BRASS.get());
+                        pOutput.accept(ModItems.CLOCKWORK_GEAR.get());
+                        pOutput.accept(ModItems.CLOCKWORK_PROCESSOR.get());
+                        pOutput.accept(ModItems.CLOCKWORK_MODIFICATION.get());
+                        pOutput.accept(ModItems.SIMPLE_CLOCKWORK_UNIT.get());
+                        pOutput.accept(ModItems.INTRICATE_CLOCKWORK_UNIT.get());
+                        pOutput.accept(ModItems.COMPLEX_CLOCKWORK_UNIT.get());
+                        pOutput.accept(ModItems.SWICE_SHARDS.get());
+                        pOutput.accept(ModItems.COLD_POWDERED_SUGAR.get());
+                        pOutput.accept(ModItems.CHOCOLATE_FLAKES.get());
+                        pOutput.accept(ModItems.SPEED_BLEND.get());
+                        pOutput.accept(ModItems.EFFICIENCY_BLEND.get());
+                        pOutput.accept(ModItems.GROWTH_BLEND.get());
+                        pOutput.accept(ModItems.SLOTH_BLEND.get());
+                        pOutput.accept(ModItems.ROTTEN_BLEND.get());
+
+                        pOutput.accept(ModItems.STRANGE_COCOON.get());
+                        pOutput.accept(ModItems.COCOON_BAG.get());
 
                         pOutput.accept(ModItems.SILKY_SWORD.get());
                         pOutput.accept(ModItems.SILKY_PICKAXE.get());
@@ -166,9 +404,69 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.SILKY_CHESTPLATE.get());
                         pOutput.accept(ModItems.SILKY_LEGGINGS.get());
                         pOutput.accept(ModItems.SILKY_BOOTS.get());
-                        pOutput.accept(ModItems.FAIRY_IN_A_BOTTLE.get());
+                        pOutput.accept(ModItems.HOOTCAT_HELMET.get());
+                        pOutput.accept(ModItems.HOOTCAT_CHESTPLATE.get());
+                        pOutput.accept(ModItems.HOOTCAT_LEGGINGS.get());
+                        pOutput.accept(ModItems.HOOTCAT_BOOTS.get());
+                        pOutput.accept(ModItems.BUNNY_EARS.get());
+                        pOutput.accept(ModItems.CAT_EARS.get());
+                        pOutput.accept(ModItems.HEAD_BOW.get());
+                        pOutput.accept(ModItems.GAS_MASK.get());
+
+                        for (String essenceType : Essence.EssenceTypes){
+
+                            CompoundTag nbt = new CompoundTag();
+                            nbt.putString("buntsy.essenceType", essenceType);
+                            ItemStack stack = new ItemStack(ModItems.ESSENCE.get());
+                            stack.setTag(nbt);
+                            pOutput.accept(stack);
+                        }
+
+                        for (String prismType : Prism.PrismTypes){
+
+                            CompoundTag nbt = new CompoundTag();
+                            nbt.putString("buntsy.prismType", prismType);
+                            ItemStack stack = new ItemStack(ModItems.PRISM.get());
+                            stack.setTag(nbt);
+                            pOutput.accept(stack);
+                        }
+
+                        for (FumeBottle.FumeType fumeType : FumeBottle.FumeType.values()){
+
+                            for (int i = 1; i < 4; i++){
+                                CompoundTag nbt = new CompoundTag();
+                                nbt.putInt("buntsy.fumeType", fumeType.ordinal());
+                                nbt.putInt("buntsy.fumeLevel", i);
+
+                                ItemStack stack = new ItemStack(ModItems.FUME_BOTTLE.get());
+                                stack.setTag(nbt);
+                                pOutput.accept(stack);
+                            }
+                        }
+
+                        pOutput.accept(ModItems.EMPTY_CATALYST.get());
+
+                        for (FumeBottle.FumeType fumeType : FumeBottle.FumeType.values()){
+
+                            CompoundTag nbt = new CompoundTag();
+                            nbt.putInt("buntsy.fumeType", fumeType.ordinal());
+                            nbt.putString("buntsy.catalystType", "creation");
+
+                            ItemStack stack = new ItemStack(ModItems.CATALYST.get());
+                            stack.setTag(nbt);
+                            pOutput.accept(stack);
+
+                            nbt = new CompoundTag();
+                            nbt.putInt("buntsy.fumeType", fumeType.ordinal());
+                            nbt.putString("buntsy.catalystType", "enhancer");
+
+                            stack = new ItemStack(ModItems.CATALYST.get());
+                            stack.setTag(nbt);
+                            pOutput.accept(stack);
+                        }
 
                         pOutput.accept(ModItems.HOOTNIP.get());
+                        pOutput.accept(ModItems.BLAZING_HOOTNIP.get());
                         pOutput.accept(ModItems.HOOTNIP_SEEDS.get());
                         pOutput.accept(ModItems.GROUND_HOOTNIP.get());
                         pOutput.accept(ModItems.HOOTNIP_CEREAL.get());
@@ -180,10 +478,19 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.STRAWBERRY.get());
                         pOutput.accept(ModItems.STRAWBERRY_SEEDS.get());
                         pOutput.accept(ModItems.CARAMEL_STRAWBERRIES.get());
+                        pOutput.accept(ModItems.CHOCOLATE.get());
+                        pOutput.accept(ModItems.CHOCOLATE_STRAWBERRIES.get());
+                        pOutput.accept(ModItems.VANILLA_ICECREAM.get());
+                        pOutput.accept(ModItems.CHOCOLATE_ICECREAM.get());
+                        pOutput.accept(ModItems.CARAMEL_ICECREAM.get());
+                        pOutput.accept(ModItems.TRIPLE_SHOT_ICECREAM.get());
                         pOutput.accept(ModItems.GOLDEN_STRAWBERRY.get());
 
                         pOutput.accept(ModItems.SILKBUN_SPAWN_EGG.get());
                         pOutput.accept(ModItems.FAIRY_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.HOOTCAT_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.MARIONETTE_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.CLOCKWORK_MAIDEN.get());
 
                     })
                     .build());

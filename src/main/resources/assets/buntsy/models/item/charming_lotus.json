@@ -1,0 +1,6 @@
+{
+  "parent": "buntsy:item/lotus",
+  "textures": {
+    "lotus": "buntsy:block/charming_lotus"
+  }
+}

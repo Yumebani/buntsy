@@ -1,0 +1,15 @@
+{
+  "type": "buntsy:grinding_wheel",
+  "ingredients": [
+    {
+      "item": "minecraft:amethyst_block"
+    }
+  ],
+  "output": [
+    {
+      "count": 4,
+      "chance": 1.0,
+      "item": "buntsy:amethyst_shard"
+    }
+  ]
+}

@@ -1,10 +1,10 @@
 package net.sophiebun.buntsy.blocks;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
@@ -12,7 +12,9 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
-import net.minecraftforge.common.Tags;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -20,12 +22,21 @@ import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.custom.*;
 import net.sophiebun.buntsy.blocks.custom.entityblocks.*;
+import net.sophiebun.buntsy.blocks.custom.farmland.CharmilFarmland;
+import net.sophiebun.buntsy.blocks.custom.farmland.OdiateFarmland;
+import net.sophiebun.buntsy.blocks.custom.hanging_block.HangingObjectBlock;
+import net.sophiebun.buntsy.blocks.custom.hanging_block.HangingStringBlock;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
-import net.sophiebun.buntsy.entity.animals.Fairy;
+import net.sophiebun.buntsy.blocks.custom.plants.*;
+import net.sophiebun.buntsy.blocks.custom.wood.*;
+import net.sophiebun.buntsy.fluids.ModFluids;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.worldgen.ModConfiguredFeatures;
+import net.sophiebun.buntsy.worldgen.ModPlacedFeatures;
 import net.sophiebun.buntsy.worldgen.tree.BravotTreeGrower;
 import net.sophiebun.buntsy.worldgen.tree.GentlitTreeGrower;
+import net.sophiebun.buntsy.worldgen.tree.MalvorTreeGrower;
+import net.sophiebun.buntsy.worldgen.tree.OrigamiPalmTreeGrower;
 
 import java.util.function.Supplier;
 
@@ -34,8 +45,46 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BlocksRegister =
             DeferredRegister.create(ForgeRegistries.BLOCKS, BuntsyMod.MODID);
 
+    public static final RegistryObject<Block> MALVOR_LEAVES = registerBlock("malvor_leaves",
+            () -> new ModThickLeaves(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion().strength(0.2F).randomTicks().isSuffocating((state, level, pos) -> false).isViewBlocking((state, level, pos) -> false)));
+    public static final RegistryObject<Block> MALVOR_SAPLING = registerBlock("malvor_sapling",
+            () -> new SaplingBlock(new MalvorTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+    public static final RegistryObject<Block> POTTED_MALVOR_SAPLING = BlocksRegister.register("potted_malvor_sapling",
+            () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, ModBlocks.MALVOR_SAPLING,
+                    BlockBehaviour.Properties.copy(Blocks.POTTED_PINK_TULIP).noOcclusion()));
+
+    public static final RegistryObject<Block> MALVOR_LOG = registerBlock("malvor_log",
+            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
+    public static final RegistryObject<Block> STRIPPED_MALVOR_LOG = registerBlock("stripped_malvor_log",
+            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistryObject<Block> MALVOR_WOOD = registerBlock("malvor_wood",
+            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)));
+    public static final RegistryObject<Block> STRIPPED_MALVOR_WOOD = registerBlock("stripped_malvor_wood",
+            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
+
+    public static final RegistryObject<Block> MALVOR_PLANKS = registerBlock("malvor_planks",
+            () -> new ModPlanks(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
+    public static final RegistryObject<Block> MALVOR_STAIRS = registerBlock("malvor_stairs",
+            () -> new ModWoodStairs(() -> ModBlocks.MALVOR_PLANKS.get().defaultBlockState(),BlockBehaviour.Properties.copy(Blocks.OAK_STAIRS)));
+    public static final RegistryObject<Block> MALVOR_SLAB = registerBlock("malvor_slab",
+            () -> new ModWoodSlab(BlockBehaviour.Properties.copy(Blocks.OAK_SLAB)));
+    public static final RegistryObject<Block> MALVOR_BUTTON = registerBlock("malvor_button",
+            () -> new ButtonBlock(BlockBehaviour.Properties.copy(Blocks.OAK_BUTTON), BlockSetType.OAK, 10, true));
+    public static final RegistryObject<Block> MALVOR_PRESSURE_PLATE = registerBlock("malvor_pressure_plate",
+            () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.OAK_PRESSURE_PLATE),
+                    BlockSetType.OAK));
+    public static final RegistryObject<Block> MALVOR_FENCE = registerBlock("malvor_fence",
+            () -> new ModWoodFence(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE)));
+    public static final RegistryObject<Block> MALVOR_FENCE_GATE = registerBlock("malvor_fence_gate",
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE).noOcclusion(), SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
+    public static final RegistryObject<Block> MALVOR_DOOR = registerBlock("malvor_door",
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion(), BlockSetType.OAK));
+    public static final RegistryObject<Block> MALVOR_TRAPDOOR = registerBlock("malvor_trapdoor",
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion(), BlockSetType.OAK));
+
+
     public static final RegistryObject<Block> GENTLIT_LEAVES = registerBlock("gentlit_leaves",
-            () -> new ModLeaves(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
+            () -> new ModLeaves(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion().strength(0.2F).randomTicks().isSuffocating((state, level, pos) -> false).isViewBlocking((state, level, pos) -> false)));
     public static final RegistryObject<Block> GENTLIT_SAPLING = registerBlock("gentlit_sapling",
             () -> new SaplingBlock(new GentlitTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
     public static final RegistryObject<Block> POTTED_GENTLIT_SAPLING = BlocksRegister.register("potted_gentlit_sapling",
@@ -65,14 +114,14 @@ public class ModBlocks {
     public static final RegistryObject<Block> GENTLIT_FENCE = registerBlock("gentlit_fence",
             () -> new ModWoodFence(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE)));
     public static final RegistryObject<Block> GENTLIT_FENCE_GATE = registerBlock("gentlit_fence_gate",
-            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE), SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE).noOcclusion(), SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
     public static final RegistryObject<Block> GENTLIT_DOOR = registerBlock("gentlit_door",
-            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noCollission(), BlockSetType.OAK));
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion(), BlockSetType.OAK));
     public static final RegistryObject<Block> GENTLIT_TRAPDOOR = registerBlock("gentlit_trapdoor",
-            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noCollission(), BlockSetType.OAK));
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion(), BlockSetType.OAK));
 
     public static final RegistryObject<Block> BRAVOT_LEAVES = registerBlock("bravot_leaves",
-            () -> new ModLeaves(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
+            () -> new ModLeaves(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion().strength(0.2F).randomTicks().isSuffocating((state, level, pos) -> false).isViewBlocking((state, level, pos) -> false)));
     public static final RegistryObject<Block> BRAVOT_SAPLING = registerBlock("bravot_sapling",
             () -> new SaplingBlock(new BravotTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
     public static final RegistryObject<Block> POTTED_BRAVOT_SAPLING = BlocksRegister.register("potted_bravot_sapling",
@@ -102,19 +151,251 @@ public class ModBlocks {
     public static final RegistryObject<Block> BRAVOT_FENCE = registerBlock("bravot_fence",
             () -> new ModWoodFence(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE)));
     public static final RegistryObject<Block> BRAVOT_FENCE_GATE = registerBlock("bravot_fence_gate",
-            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE), SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE).noOcclusion(), SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
     public static final RegistryObject<Block> BRAVOT_DOOR = registerBlock("bravot_door",
-            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noCollission(), BlockSetType.OAK));
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion(), BlockSetType.OAK));
     public static final RegistryObject<Block> BRAVOT_TRAPDOOR = registerBlock("bravot_trapdoor",
-            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noCollission(), BlockSetType.OAK));
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion(), BlockSetType.OAK));
+
+    public static final RegistryObject<Block> ORIGAMI_PALM_LEAVES = registerBlock("origami_palm_leaves",
+            () -> new ModLeaves(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion().strength(0.2F).randomTicks().isSuffocating((state, level, pos) -> false).isViewBlocking((state, level, pos) -> false)));
+    public static final RegistryObject<Block> ORIGAMI_PALM_SAPLING = registerBlock("origami_palm_sapling",
+            () -> new SandySaplingBlock(new OrigamiPalmTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+    public static final RegistryObject<Block> POTTED_ORIGAMI_PALM_SAPLING = BlocksRegister.register("potted_origami_palm_sapling",
+            () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, ModBlocks.ORIGAMI_PALM_SAPLING,
+                    BlockBehaviour.Properties.copy(Blocks.POTTED_PINK_TULIP).noOcclusion()));
+
+    public static final RegistryObject<Block> ORIGAMI_PALM_LOG = registerBlock("origami_palm_log",
+            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
+    public static final RegistryObject<Block> STRIPPED_ORIGAMI_PALM_LOG = registerBlock("stripped_origami_palm_log",
+            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistryObject<Block> ORIGAMI_PALM_WOOD = registerBlock("origami_palm_wood",
+            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)));
+    public static final RegistryObject<Block> STRIPPED_ORIGAMI_PALM_WOOD = registerBlock("stripped_origami_palm_wood",
+            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
+
+    public static final RegistryObject<Block> ORIGAMI_PALM_PLANKS = registerBlock("origami_palm_planks",
+            () -> new ModPlanks(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
+    public static final RegistryObject<Block> ORIGAMI_PALM_STAIRS = registerBlock("origami_palm_stairs",
+            () -> new ModWoodStairs(() -> ModBlocks.ORIGAMI_PALM_PLANKS.get().defaultBlockState(),BlockBehaviour.Properties.copy(Blocks.OAK_STAIRS)));
+    public static final RegistryObject<Block> ORIGAMI_PALM_SLAB = registerBlock("origami_palm_slab",
+            () -> new ModWoodSlab(BlockBehaviour.Properties.copy(Blocks.OAK_SLAB)));
+    public static final RegistryObject<Block> ORIGAMI_PALM_BUTTON = registerBlock("origami_palm_button",
+            () -> new ButtonBlock(BlockBehaviour.Properties.copy(Blocks.OAK_BUTTON), BlockSetType.OAK, 10, true));
+    public static final RegistryObject<Block> ORIGAMI_PALM_PRESSURE_PLATE = registerBlock("origami_palm_pressure_plate",
+            () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.OAK_PRESSURE_PLATE),
+                    BlockSetType.OAK));
+    public static final RegistryObject<Block> ORIGAMI_PALM_FENCE = registerBlock("origami_palm_fence",
+            () -> new ModWoodFence(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE)));
+    public static final RegistryObject<Block> ORIGAMI_PALM_FENCE_GATE = registerBlock("origami_palm_fence_gate",
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE).noOcclusion(), SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
+    public static final RegistryObject<Block> ORIGAMI_PALM_DOOR = registerBlock("origami_palm_door",
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion(), BlockSetType.OAK));
+    public static final RegistryObject<Block> ORIGAMI_PALM_TRAPDOOR = registerBlock("origami_palm_trapdoor",
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion(), BlockSetType.OAK));
+
+    public static final RegistryObject<Block> CRYSTALLIZED_LOG = registerBlock("crystallized_log",
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.BLUE_ICE).noOcclusion()));
+    public static final RegistryObject<Block> CRYSTALLIZED_LEAVES = registerBlock("crystallized_leaves",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.BLUE_ICE).noOcclusion()));
 
     //Biome ground blocks
-    public static final RegistryObject<Block> PINK_FLUF_CHARMIL_SOIL = registerBlock("pink_fluf_charmil_soil", //MAKE FLUF SPIRAL DOWNWWARDS
-            () -> new TillableCharmilGrass(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK).sound(SoundType.MOSS)));
-    public static final RegistryObject<Block> CHARMIL_SOIL = registerBlock("charmil_soil",
-            () -> new TillableCharmilSoil(BlockBehaviour.Properties.copy(Blocks.DIRT).sound(SoundType.MOSS)));
     public static final RegistryObject<Block> CHARMIL_FARMLAND = registerBlock("charmil_farmland",
             () -> new CharmilFarmland(BlockBehaviour.Properties.copy(Blocks.FARMLAND).sound(SoundType.MOSS)));
+    public static final RegistryObject<Block> CHARMIL_SOIL = registerBlock("charmil_soil",
+            () -> new TillableModSoil(BlockBehaviour.Properties.copy(Blocks.DIRT).sound(SoundType.MOSS), ModBlocks.CHARMIL_FARMLAND.get()));
+    public static final RegistryObject<Block> PINK_FLUF_CHARMIL_SOIL = registerBlock("pink_fluf_charmil_soil",
+            () -> new TillableModGrass(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK).sound(SoundType.MOSS),
+                    ModBlocks.CHARMIL_SOIL.get(), ModBlocks.CHARMIL_FARMLAND.get(),
+                    ModPlacedFeatures.CHARMIL_BONEMEAL_PLACED_KEY));
+
+    public static final RegistryObject<Block> ODIATE_FARMLAND = registerBlock("odiate_farmland",
+            () -> new OdiateFarmland(BlockBehaviour.Properties.copy(Blocks.FARMLAND).sound(SoundType.MOSS)));
+    public static final RegistryObject<Block> ODIATE_SOIL = registerBlock("odiate_soil",
+            () -> new TillableModSoil(BlockBehaviour.Properties.copy(Blocks.DIRT).sound(SoundType.MOSS), ModBlocks.ODIATE_FARMLAND.get()));
+    public static final RegistryObject<Block> GRAY_MOSS_ODIATE_SOIL = registerBlock("gray_moss_odiate_soil",
+            () -> new TillableModGrass(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK).sound(SoundType.MOSS),
+                    ModBlocks.ODIATE_SOIL.get(), ModBlocks.ODIATE_FARMLAND.get(),
+                    ModPlacedFeatures.ODIATE_BONEMEAL_PLACED_KEY));
+    public static final RegistryObject<Block> ODIATE_MUD = registerBlock("odiate_mud",
+            () -> new MudBlock(BlockBehaviour.Properties.copy(Blocks.MUD).sound(SoundType.MUD)));
+    public static final RegistryObject<Block> PACKED_ODIATE_MUD = registerBlock("packed_odiate_mud",
+            () -> new MudBlock(BlockBehaviour.Properties.copy(Blocks.PACKED_MUD).sound(SoundType.PACKED_MUD)));
+    public static final RegistryObject<Block> ODIATE_MUD_BRICKS = registerBlock("odiate_mud_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SANDSTONE)));
+    public static final RegistryObject<Block> ODIATE_MUD_BRICKS_STAIRS = registerBlock("odiate_mud_bricks_stairs",
+            () -> new StairBlock(() -> ModBlocks.ODIATE_MUD_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> ODIATE_MUD_BRICKS_SLAB = registerBlock("odiate_mud_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> ODIATE_MUD_BRICKS_WALL = registerBlock("odiate_mud_bricks_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
+
+    public static final RegistryObject<Block> FROZEN_POWDER_BLOCK = registerBlock("frozen_powder_block",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SNOW_BLOCK).sound(SoundType.SNOW)));
+    public static final RegistryObject<Block> FROZEN_POWDER_LAYER = registerBlock("frozen_powder_layer",
+            () -> new SnowLayerBlock(BlockBehaviour.Properties.copy(Blocks.SNOW_BLOCK).sound(SoundType.SNOW)){
+                @Override
+                public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {}
+            });
+    public static final RegistryObject<Block> FROZEN_CORAL_SAND = registerBlock("frozen_coral_sand",
+            () -> new SandBlock(0xA3C8DA, BlockBehaviour.Properties.copy(Blocks.SAND)));
+    public static final RegistryObject<Block> FROZEN_LIMESTONE = registerBlock("frozen_limestone",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SANDSTONE)));
+    public static final RegistryObject<Block> FROZEN_LIMESTONE_STAIRS = registerBlock("frozen_limestone_stairs",
+            () -> new StairBlock(() -> ModBlocks.FROZEN_LIMESTONE.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> FROZEN_LIMESTONE_SLAB = registerBlock("frozen_limestone_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> FROZEN_LIMESTONE_WALL = registerBlock("frozen_limestone_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
+    public static final RegistryObject<Block> FROZEN_LIMESTONE_BRICKS = registerBlock("frozen_limestone_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SANDSTONE)));
+    public static final RegistryObject<Block> FROZEN_LIMESTONE_BRICKS_STAIRS = registerBlock("frozen_limestone_bricks_stairs",
+            () -> new StairBlock(() -> ModBlocks.FROZEN_LIMESTONE_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> FROZEN_LIMESTONE_BRICKS_SLAB = registerBlock("frozen_limestone_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> FROZEN_LIMESTONE_BRICKS_WALL = registerBlock("frozen_limestone_bricks_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
+
+    public static final RegistryObject<Block> SWICE = registerBlock("swice",
+            () -> new HalfTransparentBlock(BlockBehaviour.Properties.copy(Blocks.ICE).noOcclusion()));
+
+    public static final RegistryObject<Block> SUNNY_CORAL_SAND = registerBlock("sunny_coral_sand",
+            () -> new SandBlock(0xA3C8DA, BlockBehaviour.Properties.copy(Blocks.SAND)));
+    public static final RegistryObject<Block> SUNNY_LIMESTONE = registerBlock("sunny_limestone",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SANDSTONE)));
+    public static final RegistryObject<Block> SUNNY_LIMESTONE_STAIRS = registerBlock("sunny_limestone_stairs",
+            () -> new StairBlock(() -> ModBlocks.SUNNY_LIMESTONE.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> SUNNY_LIMESTONE_SLAB = registerBlock("sunny_limestone_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> SUNNY_LIMESTONE_WALL = registerBlock("sunny_limestone_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
+    public static final RegistryObject<Block> SUNNY_LIMESTONE_BRICKS = registerBlock("sunny_limestone_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SANDSTONE)));
+    public static final RegistryObject<Block> SUNNY_LIMESTONE_BRICKS_STAIRS = registerBlock("sunny_limestone_bricks_stairs",
+            () -> new StairBlock(() -> ModBlocks.SUNNY_LIMESTONE_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> SUNNY_LIMESTONE_BRICKS_SLAB = registerBlock("sunny_limestone_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> SUNNY_LIMESTONE_BRICKS_WALL = registerBlock("sunny_limestone_bricks_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
+
+    public static final RegistryObject<Block> PETRIFIED_CHOCOLATE = registerBlock("petrified_chocolate",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public static final RegistryObject<Block> PETRIFIED_CHOCOLATE_STAIRS = registerBlock("petrified_chocolate_stairs",
+            () -> new StairBlock(() -> ModBlocks.PETRIFIED_CHOCOLATE.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> PETRIFIED_CHOCOLATE_SLAB = registerBlock("petrified_chocolate_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> PETRIFIED_CHOCOLATE_WALL = registerBlock("petrified_chocolate_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
+    public static final RegistryObject<Block> PETRIFIED_CHOCOLATE_BRICKS = registerBlock("petrified_chocolate_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SANDSTONE)));
+    public static final RegistryObject<Block> PETRIFIED_CHOCOLATE_BRICKS_STAIRS = registerBlock("petrified_chocolate_bricks_stairs",
+            () -> new StairBlock(() -> ModBlocks.PETRIFIED_CHOCOLATE_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> PETRIFIED_CHOCOLATE_BRICKS_SLAB = registerBlock("petrified_chocolate_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> PETRIFIED_CHOCOLATE_BRICKS_WALL = registerBlock("petrified_chocolate_bricks_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
+
+    public static final RegistryObject<Block> COBBLED_PETRIFIED_CHOCOLATE = registerBlock("cobbled_petrified_chocolate",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE)));
+    public static final RegistryObject<Block> COBBLED_PETRIFIED_CHOCOLATE_STAIRS = registerBlock("cobbled_petrified_chocolate_stairs",
+            () -> new StairBlock(() -> ModBlocks.COBBLED_PETRIFIED_CHOCOLATE.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> COBBLED_PETRIFIED_CHOCOLATE_SLAB = registerBlock("cobbled_petrified_chocolate_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> COBBLED_PETRIFIED_CHOCOLATE_WALL = registerBlock("cobbled_petrified_chocolate_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
+
+    public static final RegistryObject<Block> CHOCOLATE_BLOCK = registerBlock("chocolate_block",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public static final RegistryObject<Block> CHOCOLATE_GEYSER = registerBlock("chocolate_geyser",
+            () -> new ChocolateGeyserBlock(BlockBehaviour.Properties.copy(Blocks.STONE).randomTicks()));
+
+    public static final RegistryObject<Block> DECAYED_CLOCKWORK_BRASS_BLOCK = registerBlock("decayed_clockwork_brass_block",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK)));
+    public static final RegistryObject<Block> DECAYED_CUT_CLOCKWORK_BRASS = registerBlock("decayed_cut_clockwork_brass",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.CUT_COPPER)));
+
+    public static final RegistryObject<Block> CLOCKWORK_BRASS_BLOCK = registerBlock("clockwork_brass_block",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK)));
+    public static final RegistryObject<Block> CUT_CLOCKWORK_BRASS = registerBlock("cut_clockwork_brass",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.CUT_COPPER)));
+    public static final RegistryObject<Block> CUT_CLOCKWORK_BRASS_STAIRS = registerBlock("cut_clockwork_brass_stairs",
+            () -> new StairBlock(() -> ModBlocks.CUT_CLOCKWORK_BRASS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> CUT_CLOCKWORK_BRASS_SLAB = registerBlock("cut_clockwork_brass_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+
+    public static final RegistryObject<Block> SEA_SHELLS = registerBlock("sea_shells",
+            () -> new SeaShellsBlock(BlockBehaviour.Properties.copy(Blocks.SAND).sound(SoundType.STONE).noCollission().noOcclusion().instabreak()));
+
+    public static final RegistryObject<Block> SWEET_CORAL_SAND = registerBlock("sweet_coral_sand",
+            () -> new SandBlock(0xdaa3b0, BlockBehaviour.Properties.copy(Blocks.SAND)));
+
+    public static final RegistryObject<Block> SWEET_LIMESTONE = registerBlock("sweet_limestone",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SANDSTONE)));
+    public static final RegistryObject<Block> SWEET_LIMESTONE_STAIRS = registerBlock("sweet_limestone_stairs",
+            () -> new StairBlock(() -> ModBlocks.SWEET_LIMESTONE.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> SWEET_LIMESTONE_SLAB = registerBlock("sweet_limestone_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> SWEET_LIMESTONE_WALL = registerBlock("sweet_limestone_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
+    public static final RegistryObject<Block> SWEET_LIMESTONE_BRICKS = registerBlock("sweet_limestone_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SANDSTONE)));
+    public static final RegistryObject<Block> SWEET_LIMESTONE_BRICKS_STAIRS = registerBlock("sweet_limestone_bricks_stairs",
+            () -> new StairBlock(() -> ModBlocks.SWEET_LIMESTONE_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.SANDSTONE_STAIRS)));
+    public static final RegistryObject<Block> SWEET_LIMESTONE_BRICKS_SLAB = registerBlock("sweet_limestone_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+    public static final RegistryObject<Block> SWEET_LIMESTONE_BRICKS_WALL = registerBlock("sweet_limestone_bricks_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_WALL)));
+
+    public static final RegistryObject<Block> SWEET_CANDY_ROCK = registerBlock("sweet_candy_rock",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SWEET_CANDY_ROCK_STAIRS = registerBlock("sweet_candy_rock_stairs",
+            () -> new StairBlock(() -> ModBlocks.SWEET_CANDY_ROCK.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SWEET_CANDY_ROCK_SLAB = registerBlock("sweet_candy_rock_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SWEET_CANDY_ROCK_WALL = registerBlock("sweet_candy_rock_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SWEET_CANDY_BRICKS = registerBlock("sweet_candy_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SWEET_CANDY_BRICKS_STAIRS = registerBlock("sweet_candy_bricks_stairs",
+            () -> new StairBlock(() -> ModBlocks.SWEET_CANDY_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SWEET_CANDY_BRICKS_SLAB = registerBlock("sweet_candy_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SWEET_CANDY_BRICKS_WALL = registerBlock("sweet_candy_bricks_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+
+    public static final RegistryObject<Block> BITTER_CANDY_ROCK = registerBlock("bitter_candy_rock",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> BITTER_CANDY_ROCK_STAIRS = registerBlock("bitter_candy_rock_stairs",
+            () -> new StairBlock(() -> ModBlocks.BITTER_CANDY_ROCK.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> BITTER_CANDY_ROCK_SLAB = registerBlock("bitter_candy_rock_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> BITTER_CANDY_ROCK_WALL = registerBlock("bitter_candy_rock_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> BITTER_CANDY_BRICKS = registerBlock("bitter_candy_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> BITTER_CANDY_BRICKS_STAIRS = registerBlock("bitter_candy_bricks_stairs",
+            () -> new StairBlock(() -> ModBlocks.BITTER_CANDY_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> BITTER_CANDY_BRICKS_SLAB = registerBlock("bitter_candy_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> BITTER_CANDY_BRICKS_WALL = registerBlock("bitter_candy_bricks_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+
+    public static final RegistryObject<Block> SOUR_CANDY_ROCK = registerBlock("sour_candy_rock",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SOUR_CANDY_ROCK_STAIRS = registerBlock("sour_candy_rock_stairs",
+            () -> new StairBlock(() -> ModBlocks.SOUR_CANDY_ROCK.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SOUR_CANDY_ROCK_SLAB = registerBlock("sour_candy_rock_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SOUR_CANDY_ROCK_WALL = registerBlock("sour_candy_rock_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SOUR_CANDY_BRICKS = registerBlock("sour_candy_bricks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SOUR_CANDY_BRICKS_STAIRS = registerBlock("sour_candy_bricks_stairs",
+            () -> new StairBlock(() -> ModBlocks.SOUR_CANDY_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SOUR_CANDY_BRICKS_SLAB = registerBlock("sour_candy_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+    public static final RegistryObject<Block> SOUR_CANDY_BRICKS_WALL = registerBlock("sour_candy_bricks_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
 
     //Crops
     public static final RegistryObject<Block> WILD_STRAWBERRY = registerBlock("wild_strawberry",
@@ -126,24 +407,121 @@ public class ModBlocks {
     public static final RegistryObject<Block> HOOTNIP_CROP = registerBlock("hootnip_crop",
             () -> new HootnipCrop(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
 
-    //Biome plants
-    public static final RegistryObject<Block> PINK_CHARMIL_GRASS = registerBlock("pink_charmil_grass",
-            () -> new TallGrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
-    public static final RegistryObject<Block> BLUE_CHARMIL_GRASS = registerBlock("blue_charmil_grass",
-            () -> new TallGrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
+    //Biome decor
+    public static final RegistryObject<Block> HANGING_STRING = registerBlock("hanging_string",
+            () -> new HangingStringBlock(BlockBehaviour.Properties.copy(Blocks.TRIPWIRE).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> HANGING_CLOCKWORK = registerBlock("hanging_clockwork",
+            () -> new HangingObjectBlock(BlockBehaviour.Properties.copy(Blocks.TRIPWIRE).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> HANGING_LUMINUM = registerBlock("hanging_luminum",
+            () -> new HangingObjectBlock(BlockBehaviour.Properties.copy(Blocks.TRIPWIRE).noOcclusion().noCollission()){
 
+                @Override
+                public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+                    return 8;
+                }
+            });
+
+    //Biome plants
+    //Ocean
+    public static final RegistryObject<Block> CHARMING_LOTUS = registerBlock("charming_lotus",
+            () -> new LotusBlock(BlockBehaviour.Properties.copy(Blocks.LILY_PAD).noOcclusion()));
+    public static final RegistryObject<Block> BRAVE_LOTUS = registerBlock("brave_lotus",
+            () -> new LotusBlock(BlockBehaviour.Properties.copy(Blocks.LILY_PAD).noOcclusion()));
+    public static final RegistryObject<Block> MALIUM_LOTUS = registerBlock("malium_lotus",
+            () -> new LotusBlock(BlockBehaviour.Properties.copy(Blocks.LILY_PAD).noOcclusion()));
+
+    public static final RegistryObject<Block> SWEETGRASS = registerBlock("sweetgrass",
+            () -> new SweetgrassBlock(BlockBehaviour.Properties.copy(Blocks.SEAGRASS).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> TALL_SWEETGRASS = registerBlock("tall_sweetgrass",
+            () -> new TallSweetgrassBlock(BlockBehaviour.Properties.copy(Blocks.TALL_SEAGRASS).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> COTTON_VINE = registerBlock("cotton_vine",
+            () -> new CottonvineBlock(BlockBehaviour.Properties.copy(Blocks.KELP).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> COTTON_VINE_PLANT = registerBlock("cotton_vine_plant",
+            () -> new CottonvinePlantBlock(BlockBehaviour.Properties.copy(Blocks.KELP_PLANT).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> SWEET_PICKLE = registerBlock("sweet_pickle",
+            () -> new SweetPickleBlock(BlockBehaviour.Properties.copy(Blocks.SEA_PICKLE).noOcclusion().noCollission()));
+    //Corals
+    public static final RegistryObject<Block> DEAD_SWEET_CORAL_BLOCK = registerBlock("dead_sweet_coral_block",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.DEAD_FIRE_CORAL_BLOCK)));
+    public static final RegistryObject<Block> DEAD_SWEET_CORAL = registerBlock("dead_sweet_coral",
+            () -> new BaseCoralPlantBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().noCollission().instabreak()));
+    public static final RegistryObject<Block> DEAD_SWEET_CORAL_FAN = registerBlock("dead_sweet_coral_fan",
+            () -> new BaseCoralFanBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().noCollission().instabreak()));
+    public static final RegistryObject<Block> DEAD_SWEET_CORAL_WALL_FAN = registerBlock("dead_sweet_coral_wall_fan",
+            () -> new BaseCoralWallFanBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().noCollission().instabreak().dropsLike(DEAD_SWEET_CORAL_FAN.get())));
+    public static final RegistryObject<Block> SWEET_CORAL_BLOCK = registerBlock("sweet_coral_block",
+            () -> new CoralBlock(DEAD_SWEET_CORAL_BLOCK.get(), BlockBehaviour.Properties.copy(Blocks.FIRE_CORAL_BLOCK)));
+    public static final RegistryObject<Block> SWEET_CORAL = registerBlock("sweet_coral",
+            () -> new CoralPlantBlock(DEAD_SWEET_CORAL.get(), BlockBehaviour.Properties.copy(Blocks.FIRE_CORAL).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> SWEET_CORAL_FAN = registerBlock("sweet_coral_fan",
+            () -> new CoralFanBlock(DEAD_SWEET_CORAL_FAN.get(), BlockBehaviour.Properties.copy(Blocks.FIRE_CORAL_FAN).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> SWEET_CORAL_WALL_FAN = registerBlock("sweet_coral_wall_fan",
+            () -> new CoralWallFanBlock(DEAD_SWEET_CORAL_WALL_FAN.get(), BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).noCollission().instabreak().sound(SoundType.WET_GRASS).dropsLike(SWEET_CORAL_FAN.get()).pushReaction(PushReaction.DESTROY)));
+
+    public static final RegistryObject<Block> DEAD_BITTER_CORAL_BLOCK = registerBlock("dead_bitter_coral_block",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.DEAD_TUBE_CORAL_BLOCK)));
+    public static final RegistryObject<Block> DEAD_BITTER_CORAL = registerBlock("dead_bitter_coral",
+            () -> new BaseCoralPlantBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().noCollission().instabreak()));
+    public static final RegistryObject<Block> DEAD_BITTER_CORAL_FAN = registerBlock("dead_bitter_coral_fan",
+            () -> new BaseCoralFanBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().noCollission().instabreak()));
+    public static final RegistryObject<Block> DEAD_BITTER_CORAL_WALL_FAN = registerBlock("dead_bitter_coral_wall_fan",
+            () -> new BaseCoralWallFanBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().noCollission().instabreak().dropsLike(DEAD_BITTER_CORAL_FAN.get())));
+    public static final RegistryObject<Block> BITTER_CORAL_BLOCK = registerBlock("bitter_coral_block",
+            () -> new CoralBlock(DEAD_BITTER_CORAL_BLOCK.get(), BlockBehaviour.Properties.copy(Blocks.TUBE_CORAL_BLOCK)));
+    public static final RegistryObject<Block> BITTER_CORAL = registerBlock("bitter_coral",
+            () -> new CoralPlantBlock(DEAD_BITTER_CORAL.get(), BlockBehaviour.Properties.copy(Blocks.TUBE_CORAL).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> BITTER_CORAL_FAN = registerBlock("bitter_coral_fan",
+            () -> new CoralFanBlock(DEAD_BITTER_CORAL_FAN.get(), BlockBehaviour.Properties.copy(Blocks.TUBE_CORAL_FAN).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> BITTER_CORAL_WALL_FAN = registerBlock("bitter_coral_wall_fan",
+            () -> new CoralWallFanBlock(DEAD_BITTER_CORAL_WALL_FAN.get(), BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).noCollission().instabreak().sound(SoundType.WET_GRASS).dropsLike(BITTER_CORAL_FAN.get()).pushReaction(PushReaction.DESTROY)));
+
+
+    public static final RegistryObject<Block> PINK_CHARMIL_GRASS = registerBlock("pink_charmil_grass",
+            () -> new ModTallGrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> BLUE_CHARMIL_GRASS = registerBlock("blue_charmil_grass",
+            () -> new ModTallGrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> PALEGRASS = registerBlock("palegrass",
+            () -> new ModTallGrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> LUMINUM = registerBlock("luminum",
+            () -> new RotatedTallFlowerBlock(BlockBehaviour.Properties.copy(Blocks.SUNFLOWER).noOcclusion().noCollission()){
+                @Override
+                public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+                    return 8;
+                }
+            });
+    public static final RegistryObject<Block> FROZEN_GRASS = registerBlock("frozen_grass",
+            () -> new FrozenTallGrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
 
     public static final RegistryObject<Block> PINK_BLOOM = registerBlock("pink_bloom",
-            () -> new FlowerBlock(() -> MobEffects.DIG_SPEED, 20,
+            () -> new FlowerBlock(() -> MobEffects.MOVEMENT_SPEED, 20,
                     BlockBehaviour.Properties.copy(Blocks.PINK_TULIP).noOcclusion().noCollission()));
     public static final RegistryObject<Block> POTTED_PINK_BLOOM = BlocksRegister.register("potted_pink_bloom",
             () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, ModBlocks.PINK_BLOOM,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_PINK_TULIP).noOcclusion()));
     public static final RegistryObject<Block> BLUE_BLOOM = registerBlock("blue_bloom",
-            () -> new FlowerBlock(() -> MobEffects.DIG_SPEED, 20,
+            () -> new FlowerBlock(() -> MobEffects.DAMAGE_BOOST, 20,
                     BlockBehaviour.Properties.copy(Blocks.PINK_TULIP).noOcclusion().noCollission()));
     public static final RegistryObject<Block> POTTED_BLUE_BLOOM = BlocksRegister.register("potted_blue_bloom",
             () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, ModBlocks.PINK_BLOOM,
+                    BlockBehaviour.Properties.copy(Blocks.POTTED_PINK_TULIP).noOcclusion()));
+    public static final RegistryObject<Block> ABYSSAL_BLOOM = registerBlock("abyssal_bloom",
+            () -> new FlowerBlock(() -> MobEffects.WITHER, 10,
+                    BlockBehaviour.Properties.copy(Blocks.PINK_TULIP).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> POTTED_ABYSSAL_BLOOM = BlocksRegister.register("potted_abyssal_bloom",
+            () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, ModBlocks.ABYSSAL_BLOOM,
+                    BlockBehaviour.Properties.copy(Blocks.POTTED_PINK_TULIP).noOcclusion()));
+    public static final RegistryObject<Block> FROZEN_BLOOM = registerBlock("frozen_bloom",
+            () -> new FrozenFlowerBlock(() -> MobEffects.SATURATION, 1,
+                    BlockBehaviour.Properties.copy(Blocks.PINK_TULIP).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> POTTED_FROZEN_BLOOM = BlocksRegister.register("potted_frozen_bloom",
+            () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, ModBlocks.FROZEN_BLOOM,
+                    BlockBehaviour.Properties.copy(Blocks.POTTED_PINK_TULIP).noOcclusion()));
+
+    public static final RegistryObject<Block> ORIGAMI_FERN = registerBlock("origami_fern",
+            () -> new SandyFlowerBlock(() -> MobEffects.JUMP, 20,
+                    BlockBehaviour.Properties.copy(Blocks.PINK_TULIP).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> POTTED_ORIGAMI_FERN = BlocksRegister.register("potted_origami_fern",
+            () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, ModBlocks.ORIGAMI_FERN,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_PINK_TULIP).noOcclusion()));
 
     public static final RegistryObject<Block> LOVESHROOM = registerBlock("loveshroom",
@@ -173,6 +551,31 @@ public class ModBlocks {
                 }
             });
     public static final RegistryObject<Block> GLOWSHROOM_BLOCK = registerBlock("glowshroom_block",
+            () -> new HugeMushroomBlock(BlockBehaviour.Properties.copy(Blocks.RED_MUSHROOM_BLOCK)){
+                @Override
+                public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+                    return 8;
+                }
+            });
+
+    public static final RegistryObject<Block> PALESHROOM = registerBlock("paleshroom",
+            () -> new MushroomBlock(BlockBehaviour.Properties.copy(Blocks.RED_MUSHROOM).noOcclusion().noCollission(),
+                    ModConfiguredFeatures.GIANT_GLOWSHROOM_KEY){
+                @Override
+                public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+                    return 5;
+                }
+            });
+    public static final RegistryObject<Block> POTTED_PALESHROOM = BlocksRegister.register("potted_paleshroom",
+            () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, ModBlocks.PALESHROOM,
+                    BlockBehaviour.Properties.copy(Blocks.POTTED_PINK_TULIP).noOcclusion()){
+
+                @Override
+                public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+                    return 5;
+                }
+            });
+    public static final RegistryObject<Block> PALESHROOM_BLOCK = registerBlock("paleshroom_block",
             () -> new HugeMushroomBlock(BlockBehaviour.Properties.copy(Blocks.RED_MUSHROOM_BLOCK)){
                 @Override
                 public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
@@ -262,6 +665,24 @@ public class ModBlocks {
     public static final RegistryObject<Block> SMALL_DEBRIS_CRYSTAL_CLUSTER = registerBlock("small_debris_crystal_cluster",
             () -> new ModGrowableMineral((byte) 8, 0,3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
 
+    public static final RegistryObject<Block> QUARTZ_CRYSTAL_CLUSTER = registerBlock("quartz_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 9, 3,7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> LARGE_QUARTZ_CRYSTAL_CLUSTER = registerBlock("large_quartz_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 9, 2,5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> MEDIUM_QUARTZ_CRYSTAL_CLUSTER = registerBlock("medium_quartz_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 9, 1,4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> SMALL_QUARTZ_CRYSTAL_CLUSTER = registerBlock("small_quartz_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 9, 0,3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+
+    public static final RegistryObject<Block> GLOWSTONE_CRYSTAL_CLUSTER = registerBlock("glowstone_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 10, 3,7, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> LARGE_GLOWSTONE_CRYSTAL_CLUSTER = registerBlock("large_glowstone_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 10, 2,5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> MEDIUM_GLOWSTONE_CRYSTAL_CLUSTER = registerBlock("medium_glowstone_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 10, 1,4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+    public static final RegistryObject<Block> SMALL_GLOWSTONE_CRYSTAL_CLUSTER = registerBlock("small_glowstone_crystal_cluster",
+            () -> new ModGrowableMineral((byte) 10, 0,3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).noOcclusion()));
+
     //Block entities
     public static final RegistryObject<Block> FAIRY_OFFERING_BENCH = registerBlock("fairy_offering_bench",
             () -> new FairyOfferingBenchBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
@@ -275,6 +696,64 @@ public class ModBlocks {
             () -> new FairyInfusionBenchBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
     public static final RegistryObject<Block> MAGIC_CRYSTALIZER = registerBlock("magic_crystalizer",
             () -> new MagicCrystalizerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> FUME_DISTILLERY = registerBlock("fume_distillery",
+            () -> new FumeDistilleryBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> FUME_SPREADER = registerBlock("fume_spreader",
+            () -> new FumeSpreaderBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> INFUSION_PEDESTAL = registerBlock("infusion_pedestal",
+            () -> new InfusionPedestal(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
+    public static final RegistryObject<Block> FAIRY_POWER_RELAY = registerBlock("fairy_power_relay",
+            () -> new FairyPowerRelayBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> INFUSION_ALTAR_BASIC = registerBlock("infusion_altar_basic",
+            () -> new InfusionAltarBasic(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> INFUSION_ALTAR_ADVANCED = registerBlock("infusion_altar_advanced",
+            () -> new InfusionAltarAdvanced(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> GIANT_COCOON = registerBlock("giant_cocoon",
+            () -> new GiantCocoonBlock(BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL).noOcclusion()));
+    public static final RegistryObject<Block> MIXER_BLOCK = registerBlock("mixer_block",
+            () -> new MixerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+
+    public static final RegistryObject<Block> CLOCKWORK_SYRUP_EXTRACTOR = registerBlock("clockwork_syrup_extractor",
+            () -> new ClockworkSyrupExtractorBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> CLOCKWORK_GEYSER_COLLECTOR = registerBlock("clockwork_geyser_collector",
+            () -> new ClockworkGeyserCollectorBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> CLOCKWORK_POWDERED_SUGAR_COLLECTOR = registerBlock("clockwork_powdered_sugar_collector",
+            () -> new ClockworkPowderedSugarCollectorBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> CLOCKWORK_CRAFTER = registerBlock("clockwork_crafter",
+            () -> new ClockworkCrafterBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> CLOCKWORK_FAIRY_TERMINAL = registerBlock("clockwork_fairy_terminal",
+            () -> new ClockworkFairyTerminalBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+
+    public static final RegistryObject<Block> CLOCKWORK_MAIDEN_TERMINAL = registerBlock("clockwork_maiden_terminal",
+            () -> new ClockworkMaidenTerminalBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+
+    //Beacon
+    public static final RegistryObject<Block> PRISMATIC_BEACON = registerBlock("prismatic_beacon",
+            () -> new PrismaticBeaconBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> PRISMATIC_BEACON_BASE = registerBlock("prismatic_beacon_base",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> BEACON_HEALTH_BOOST_MODIFIER = registerBlock("beacon_health_boost_modifier",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> BEACON_SPEED_MODIFIER = registerBlock("beacon_speed_modifier",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> BEACON_HASTE_MODIFIER = registerBlock("beacon_haste_modifier",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> BEACON_STRENGTH_MODIFIER = registerBlock("beacon_strength_modifier",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> BEACON_JUMP_BOOST_MODIFIER = registerBlock("beacon_jump_boost_modifier",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> BEACON_REGENERATION_MODIFIER = registerBlock("beacon_regeneration_modifier",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> BEACON_RESISTANCE_MODIFIER = registerBlock("beacon_resistance_modifier",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> BEACON_FIRE_RESISTANCE_MODIFIER = registerBlock("beacon_fire_resistance_modifier",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+    public static final RegistryObject<Block> BEACON_WATER_BREATHING_MODIFIER = registerBlock("beacon_water_breathing_modifier",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+
+    public static final RegistryObject<LiquidBlock> HOT_CHOCOLATE_BLOCK = registerBlock("hot_chocolate_block",
+            () -> new ChocolateFluidBlock(ModFluids.SOURCE_HOT_CHOCOLATE, BlockBehaviour.Properties.copy(Blocks.WATER).noLootTable().noOcclusion().noCollission().randomTicks()));
+
 
     public static final RegistryObject<Block> SYRUP_EXTRACTOR = registerBlock("syrup_extractor",
             () -> new SyrupExtractorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));

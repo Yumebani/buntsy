@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "buntsy:ruined_house",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 22,
+    "separation": 12,
+    "spread_type": "linear",
+    "salt": 4136434
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "type": "buntsy:grinding_wheel",
+  "ingredients": [
+    {
+      "item": "minecraft:gold_ore"
+    },
+    {
+      "item": "minecraft:deepslate_gold_ore"
+    },
+    {
+      "item": "minecraft:nether_gold_ore"
+    }
+  ],
+  "output": [
+    {
+      "count": 2,
+      "chance": 1.0,
+      "item": "minecraft:raw_gold"
+    },
+    {
+      "count": 1,
+      "chance": 0.5,
+      "item": "minecraft:raw_gold"
+    },
+    {
+      "count": 1,
+      "chance": 0.05,
+      "item": "buntsy:pristine_gold_sample"
+    }
+  ]
+}

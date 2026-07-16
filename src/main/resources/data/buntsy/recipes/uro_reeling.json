@@ -1,0 +1,15 @@
+{
+  "type": "buntsy:thread_reeler",
+  "ingredients": [
+    {
+      "item": "buntsy:strange_cocoon"
+    }
+  ],
+  "output": [
+    {
+      "count": 2,
+      "chance": 1.0,
+      "item": "buntsy:uro"
+    }
+  ]
+}

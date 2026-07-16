@@ -1,0 +1,34 @@
+{
+  "type": "buntsy:mixer",
+  "inputs": [
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:spider_eye"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"minecraft:gunpowder"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 2,
+        "item":"minecraft:rotten_flesh"
+      },
+      "nbt": []
+    }
+  ],
+  "output":
+  {
+    "item": {
+      "count": 4,
+      "item":"buntsy:rotten_blend"
+    },
+    "nbt": []
+  }
+}

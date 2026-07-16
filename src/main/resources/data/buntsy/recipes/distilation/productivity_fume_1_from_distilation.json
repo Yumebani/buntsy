@@ -1,0 +1,52 @@
+{
+  "type": "buntsy:fume_distillery",
+  "inputs": [
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:iron_crystal"
+      },
+      "nbt": []
+    },
+    {
+      "item": {
+        "count": 1,
+        "item":"buntsy:catalyst"
+      },
+      "nbt": [
+        {
+          "field": "buntsy.fumeType",
+          "value": 0
+        },
+        {
+          "field": "buntsy.catalystType",
+          "value": "creation"
+        }
+      ]
+    },
+    {
+      "item": {
+        "count": 2,
+        "item":"minecraft:glass_bottle"
+      },
+      "nbt": []
+    }
+  ],
+  "output":
+    {
+      "item": {
+        "count": 2,
+        "item":"buntsy:fume_bottle"
+      },
+      "nbt": [
+         {
+          "field": "buntsy.fumeType",
+          "value": 0
+         },
+        {
+          "field": "buntsy.fumeLevel",
+          "value": 1
+        }
+      ]
+    }
+}
