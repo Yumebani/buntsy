@@ -1,17 +1,24 @@
 package net.sophiebun.buntsy.entity.animals;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.ByIdMap;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
@@ -34,17 +41,21 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.AmethystClusterBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyCollectionTrayBlockEntity;
@@ -54,12 +65,12 @@ import net.sophiebun.buntsy.blocks.entity.directfairy.FairyOfferingBenchBlockEnt
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
 import net.sophiebun.buntsy.entity.interfaces.IFumeAffectedEntity;
 import net.sophiebun.buntsy.recipe.FairyOfferingRecipe;
-import net.sophiebun.buntsy.screen.FumeSpreaderMenu;
 import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.IntFunction;
 
 public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedEntity {
 
@@ -71,7 +82,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
     private boolean hasTitular;
     private boolean hungry;
     private boolean updateBlocksFlag;
-    private ItemStack carriedItem;
+    private List<ItemStack> carriedItem = new ArrayList<>();
 
     BlockPos offeringBenchPos;
     private int food;
@@ -81,6 +92,9 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
 
     private final Map<Integer, List<Integer>> fumes = new HashMap<>();
     private int fumeTickCount = 0;
+
+    private static final EntityDataAccessor<Integer> DATA_TYPE_ID =
+            SynchedEntityData.defineId(Silkbun.class, EntityDataSerializers.INT);
 
     private boolean busy;
 
@@ -255,14 +269,33 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
     }
 
     public boolean hasCarriedItem(){
-        return this.carriedItem != null;
+        return !this.carriedItem.isEmpty();
     }
 
     public void setCarriedItem(ItemStack carriedItem) {
-        this.carriedItem = carriedItem;
+        this.clearCarriedItem();
+        this.carriedItem.add(carriedItem);
+    }
+
+    public void setCarriedItems(List<ItemStack> carriedItems) {
+        this.clearCarriedItem();
+        for (ItemStack stack : carriedItems){
+            this.carriedItem.add(stack);
+        }
+    }
+
+    public void clearCarriedItem() {
+        this.carriedItem.clear();
     }
 
     public ItemStack getCarriedItem() {
+        if (carriedItem.isEmpty()){
+            return ItemStack.EMPTY;
+        }
+        return carriedItem.get(0);
+    }
+
+    public List<ItemStack> getCarriedItems() {
         return carriedItem;
     }
 
@@ -310,6 +343,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
 
     protected void defineSynchedData() {
         super.defineSynchedData();
+        this.entityData.define(DATA_TYPE_ID, Variant.SWEET.id);
     }
 
     private boolean isInRangeOfOfferingBench(BlockPos pos){
@@ -334,6 +368,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
             }
             this.registeredUtilBlockEntityPos.clear();
         }
+        this.hasTitular = false;
 
         this.setUpdateBlocksFlag(true);
     }
@@ -410,6 +445,9 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
         if (this.getOwnerUUID() != null) {
             pCompound.putUUID("Owner", this.getOwnerUUID());
         }
+
+        pCompound.putInt("fairy.type", this.getVariant().id);
+
         pCompound.putBoolean("fairy.has_titular", this.hasTitular);
 
         pCompound.putInt("fairy.current_weight", this.currentWeight);
@@ -459,6 +497,10 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
             } catch (Throwable var4) {
                 this.setTame(false);
             }
+        }
+
+        if (pCompound.getAllKeys().contains("fairy.type")){
+            this.setVariant(Variant.byId(pCompound.getInt("fairy.type")));
         }
 
         this.hasTitular = pCompound.getBoolean("fairy.has_titular");
@@ -916,6 +958,16 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
                     1f, this.fairy.random.nextInt(8,12) * 0.1f);
         }
 
+        protected void playPlantBreakingSound() {
+            this.fairy.level().playSound(null, this.fairy.blockPosition(), SoundEvents.GRASS_BREAK, SoundSource.NEUTRAL,
+                    0.8f, this.fairy.random.nextInt(8,12) * 0.1f);
+        }
+
+        protected void playPlantBreakSound() {
+            this.fairy.level().playSound(null, this.fairy.blockPosition(), SoundEvents.GRASS_BREAK, SoundSource.NEUTRAL,
+                    1f, this.fairy.random.nextInt(8,12) * 0.1f);
+        }
+
         protected void playFlowerCopySound() {
             this.fairy.level().playSound(null, this.fairy.blockPosition(), SoundEvents.BEE_POLLINATE, SoundSource.NEUTRAL,
                     1f, this.fairy.random.nextInt(8,12) * 0.1f);
@@ -951,7 +1003,7 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
 
                 if (hasArrivedAtTray() && fairy.hasCarriedItem()){
                     playStoreSound();
-                    depositItem();
+                    depositItems();
                     this.hasDeposited = true;
                     this.fairy.setBusy(false);
                 }
@@ -964,12 +1016,16 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
                     hasReachedTarget = true;
                 }
 
-                if (hasReachedTarget && collectionTime < COLLECT_TIME){
+                if (hasReachedTarget && collectionTime <= COLLECT_TIME){
                     collectionTime++;
                     if (collectionTime % 5 == 0){
                         BlockState block = fairy.level().getBlockState(blockPos);
                         if (block.is(BlockTags.FLOWERS)){
                             makeSparkleParticle(3);
+                        }
+                        else if (block.getBlock() instanceof CropBlock){
+                            playPlantBreakingSound();
+                            makeBlockParticle(block, blockPos.getCenter(), 3);
                         }
                         else{
                             playMineralMiningSound();
@@ -981,6 +1037,10 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
                         if (block.is(BlockTags.FLOWERS)){
                             playFlowerCopySound();
                             makeSparkleParticle(25);
+                        }
+                        else if (block.getBlock() instanceof CropBlock){
+                            playPlantBreakSound();
+                            makeBlockParticle(block, blockPos.getCenter(), 25);
                         }
                         else{
                             playMineralBreakSound();
@@ -995,10 +1055,12 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
             }
         }
 
-        protected void depositItem(){
-            ((FairyCollectionTrayBlockEntity) this.fairy.level().getBlockEntity(this.fairy.getRegisteredBlockPosArray().get(0))).depositItem(
-                    this.fairy.getCarriedItem());
-            this.fairy.setCarriedItem(null);
+        protected void depositItems(){
+            FairyCollectionTrayBlockEntity trayEntity = (FairyCollectionTrayBlockEntity) this.fairy.level().getBlockEntity(this.fairy.getRegisteredBlockPosArray().get(0));
+            for (ItemStack stack : getCarriedItems()){
+                trayEntity.depositItem(stack);
+            }
+            this.fairy.clearCarriedItem();
         }
         protected void collectFromBlock(){
 
@@ -1006,6 +1068,16 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
 
             if (blockState.is(BlockTags.FLOWERS)){
                 this.fairy.setCarriedItem(new ItemStack(blockState.getBlock().asItem()));
+            }
+            else if (blockState.getBlock() instanceof CropBlock){
+                LootTable lootTable = fairy.level().getServer().getLootData().getLootTable(blockState.getBlock().getLootTable());
+                LootParams emptyParams = new LootParams.Builder(((ServerLevel) fairy.level()))
+                        .withParameter(LootContextParams.ORIGIN, blockPos.getCenter())
+                        .withParameter(LootContextParams.BLOCK_STATE, blockState)
+                        .withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
+                        .create(LootContextParamSets.BLOCK);
+                this.fairy.setCarriedItems(lootTable.getRandomItems(emptyParams));
+                fairy.level().setBlock(this.blockPos, blockState.getBlock().defaultBlockState(), 2);
             }
             else {
                 LootParams.Builder params = new LootParams.Builder(((ServerLevel) this.fairy.level()))
@@ -1027,11 +1099,15 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
         @Override
         protected boolean isValidTarget(LevelReader levelReader, BlockPos blockPos) {
             BlockState blockState = levelReader.getBlockState(blockPos);
-            if (blockState.is(VALID_BLOCK_TAG) && isInRangeOfOfferingBench(blockPos)){
-                if (blockState.is(BlockTags.FLOWERS)){
-                    return fairy.random.nextInt(32) == 0;
+            if (isInRangeOfOfferingBench(blockPos)){
+                if (blockState.is(VALID_BLOCK_TAG)){
+                    if (blockState.is(BlockTags.FLOWERS)){
+                        return fairy.random.nextInt(32) == 0;
+                    }
+                    return true;
+                } else if (blockState.getBlock() instanceof CropBlock){
+                    return ((CropBlock) blockState.getBlock()).isMaxAge(blockState);
                 }
-                return true;
             }
             return false;
         }
@@ -1175,6 +1251,72 @@ public class Fairy extends TamableAnimal implements FlyingAnimal, IFumeAffectedE
                 }
             }
             this.fairy.setConsumptionRate(finalConsumption);
+        }
+    }
+
+    public Variant getVariant() {
+        return Variant.byId(this.entityData.get(DATA_TYPE_ID));
+    }
+
+    public void setVariant(Variant pVariant) {
+        this.entityData.set(DATA_TYPE_ID, pVariant.id);
+    }
+
+    public static Variant getBiomeFairyVariant(LevelAccessor pLevel, BlockPos pPos) {
+        return Variant.byId(pLevel.getBiome(pPos).is(Tags.Biomes.IS_DESERT) ? 1 :
+                pLevel.getBiome(pPos).is(Tags.Biomes.IS_SNOWY) ? 2 : 0);
+    }
+
+    @Nullable
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
+
+        Variant fairyVariant = getBiomeFairyVariant(pLevel, this.blockPosition());
+
+        if (pSpawnData instanceof FairyGroupData) {
+            fairyVariant = ((FairyGroupData)pSpawnData).variant;
+        }
+        else {
+            pSpawnData = new FairyGroupData(fairyVariant);
+        }
+
+        this.setVariant(fairyVariant);
+        return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+    }
+
+    public static enum Variant implements StringRepresentable {
+        SWEET(0, "sweet"),
+        SUNNY(1, "sunny"),
+        ICE(2, "ice");
+
+        private static final IntFunction<Variant> BY_ID = ByIdMap.sparse(Variant::id, values(), SWEET);
+        public static final Codec<Variant> CODEC = StringRepresentable.fromEnum(Variant::values);
+        final int id;
+        private final String name;
+
+        private Variant(int pId, String pName) {
+            this.id = pId;
+            this.name = pName;
+        }
+
+        public @NotNull String getSerializedName() {
+            return this.name;
+        }
+
+        public int id() {
+            return this.id;
+        }
+
+        public static Variant byId(int pId) {
+            return (Variant)BY_ID.apply(pId);
+        }
+    }
+
+    public static class FairyGroupData extends AgeableMobGroupData {
+        public final Variant variant;
+
+        public FairyGroupData(Variant pVariant) {
+            super(1.0F);
+            this.variant = pVariant;
         }
     }
 }

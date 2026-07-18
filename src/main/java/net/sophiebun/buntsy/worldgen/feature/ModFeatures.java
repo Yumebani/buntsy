@@ -61,6 +61,10 @@ public class ModFeatures {
             featureRegister.register("chocolate_spring_feature", () -> new ChocolateSpringFeature(NoneFeatureConfiguration.CODEC));
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> CLOCKWORK_STRUCTURE_FEATURE =
             featureRegister.register("clockwork_structure_feature", () -> new ClockworkStructuresFeature(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> SWEEDS_FEATURE =
+            featureRegister.register("sweeds_feature", () -> new SweedFeature(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> CROCKTUS_FEATURE =
+            featureRegister.register("crocktus_feature", () -> new CrocktusFeature(NoneFeatureConfiguration.CODEC));
 
 
     public static void register(IEventBus eventBus){

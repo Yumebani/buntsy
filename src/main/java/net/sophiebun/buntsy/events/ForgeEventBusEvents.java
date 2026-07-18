@@ -29,25 +29,30 @@ public class ForgeEventBusEvents {
         ServerLevelAccessor level = event.getLevel();
         Entity entity = event.getEntity();
 
-        if (entity instanceof Fairy || entity instanceof Silkbun) {
+        if (entity instanceof Fairy) {
+            runCheck(event, level, 48, 16, 4);
+        } else if (entity instanceof Silkbun){
+            runCheck(event, level, 32, 16, 5);
+        }
+    }
 
-            double spawnX = event.getX();
-            double spawnY = event.getY();
-            double spawnZ = event.getZ();
+    private static void runCheck(MobSpawnEvent.FinalizeSpawn event, ServerLevelAccessor level, int size, int sizeY, int count){
+        double spawnX = event.getX();
+        double spawnY = event.getY();
+        double spawnZ = event.getZ();
 
-            AABB scanArea = new AABB(
-                    spawnX - 32, spawnY - 16, spawnZ - 32,
-                    spawnX + 32, spawnY + 16, spawnZ + 32
-            );
+        AABB scanArea = new AABB(
+                spawnX - size, spawnY - sizeY, spawnZ - size,
+                spawnX + size, spawnY + sizeY, spawnZ + size
+        );
 
-            if (level.getEntitiesOfClass(event.getEntity().getClass(), scanArea).size() >= 5) {
-                event.setSpawnCancelled(true);
-                return;
-            }
+        if (level.getEntitiesOfClass(event.getEntity().getClass(), scanArea).size() >= count) {
+            event.setSpawnCancelled(true);
+            return;
+        }
 
-            if (level.getRawBrightness(event.getEntity().blockPosition(), 0) < 4) {
-                event.setSpawnCancelled(true);
-            }
+        if (level.getRawBrightness(event.getEntity().blockPosition(), 0) < 4) {
+            event.setSpawnCancelled(true);
         }
     }
 }

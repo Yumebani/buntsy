@@ -1,4 +1,4 @@
-package net.sophiebun.buntsy.screen;
+package net.sophiebun.buntsy.screen.clockwork;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -9,38 +9,31 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
-import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkFairyTerminalEntity;
-import net.sophiebun.buntsy.blocks.entity.directfairy.FairyOfferingBenchBlockEntity;
-import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
+import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkGeyserCollectorEntity;
+import net.sophiebun.buntsy.screen.ModMenuTypes;
 
-public class ClockworkFairyTerminalMenu extends AbstractContainerMenu {
+public class ClockworkGeyserCollectorMenu extends AbstractContainerMenu {
 
-    private final ClockworkFairyTerminalEntity blockEntity;
+    private final ClockworkGeyserCollectorEntity blockEntity;
     private final Level level;
     private final ContainerData data;
 
-    protected ClockworkFairyTerminalMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
+    public ClockworkGeyserCollectorMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
         this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(1));
     }
 
-    public ClockworkFairyTerminalMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(ModMenuTypes.CLOCKWORK_FAIRY_TERMINAL_MENU.get(), pContainerId);
-        blockEntity = ((ClockworkFairyTerminalEntity) entity);
+    public ClockworkGeyserCollectorMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
+        super(ModMenuTypes.CLOCKWORK_GEYSER_COLLECTOR_MENU.get(), pContainerId);
+        blockEntity = ((ClockworkGeyserCollectorEntity) entity);
         this.level = inv.player.level();
         this.data = data;
 
         addPlayerHotbar(inv);
         addPlayerInventory(inv);
 
-        this.blockEntity.getInputLazyItemHandler().ifPresent(iItemHandler -> {
-            for (int i = 0; i < 4; i++){
-                this.addSlot(new SlotItemHandler(iItemHandler, i, 34 + (18 * (i % 2)), 25 + (18 * (i / 2))));
-            }
-        });
-
-        this.blockEntity.getOutputLazyItemHandler().ifPresent(iItemHandler -> {
-            for (int i = 0; i < 4; i++){
-                this.addSlot(new OutputSlot(iItemHandler, i, 93 + (18 * ((i) % 2)), 25 + (18 * ((i) / 2))));
+        this.blockEntity.getInventoryLazyItemHandler().ifPresent(iItemHandler -> {
+            for (int i = 0; i < 15; i++){
+                this.addSlot(new SlotItemHandler(iItemHandler, i, 44 + (18 * (i % 5)), 19 + (18 * (i / 5))));
             }
         });
 
@@ -65,7 +58,7 @@ public class ClockworkFairyTerminalMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 8;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 15;  // must be the number of slots you have!
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);
@@ -102,7 +95,7 @@ public class ClockworkFairyTerminalMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, ModBlocks.CLOCKWORK_FAIRY_TERMINAL.get());
+        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, ModBlocks.CLOCKWORK_GEYSER_COLLECTOR.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {
@@ -117,9 +110,5 @@ public class ClockworkFairyTerminalMenu extends AbstractContainerMenu {
         for (int i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
-    }
-
-    public boolean isFeeding() {
-        return this.data.get(0) > 0;
     }
 }

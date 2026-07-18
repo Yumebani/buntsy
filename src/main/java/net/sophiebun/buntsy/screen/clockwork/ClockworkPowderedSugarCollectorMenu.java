@@ -1,4 +1,4 @@
-package net.sophiebun.buntsy.screen;
+package net.sophiebun.buntsy.screen.clockwork;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -9,38 +9,31 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
-import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkGeyserCollectorEntity;
-import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkSyrupExtractorEntity;
-import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
+import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkPowderedSugarCollectorEntity;
+import net.sophiebun.buntsy.screen.ModMenuTypes;
 
-public class ClockworkSyrupExtractorMenu extends AbstractContainerMenu {
+public class ClockworkPowderedSugarCollectorMenu extends AbstractContainerMenu {
 
-    private final ClockworkSyrupExtractorEntity blockEntity;
+    private final ClockworkPowderedSugarCollectorEntity blockEntity;
     private final Level level;
     private final ContainerData data;
 
-    protected ClockworkSyrupExtractorMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+    public ClockworkPowderedSugarCollectorMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
+        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(1));
     }
 
-    public ClockworkSyrupExtractorMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(ModMenuTypes.CLOCKWORK_SYRUP_EXTRACTOR_MENU.get(), pContainerId);
-        blockEntity = ((ClockworkSyrupExtractorEntity) entity);
+    public ClockworkPowderedSugarCollectorMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
+        super(ModMenuTypes.CLOCKWORK_POWDERED_SUGAR_COLLECTOR_MENU.get(), pContainerId);
+        blockEntity = ((ClockworkPowderedSugarCollectorEntity) entity);
         this.level = inv.player.level();
         this.data = data;
 
         addPlayerHotbar(inv);
         addPlayerInventory(inv);
 
-        this.blockEntity.getInputLazyItemHandler().ifPresent(iItemHandler -> {
-            for (int i = 0; i < 9; i++){
-                this.addSlot(new SlotItemHandler(iItemHandler, i, 16 + (18 * (i % 3)), 27 + (18 * (i / 3))));
-            }
-        });
-
-        this.blockEntity.getOutputLazyItemHandler().ifPresent(iItemHandler -> {
-            for (int i = 0; i < 9; i++){
-                this.addSlot(new OutputSlot(iItemHandler, i, 108 + (18 * (i % 3)), 27 + (18 * (i / 3))));
+        this.blockEntity.getInventoryLazyItemHandler().ifPresent(iItemHandler -> {
+            for (int i = 0; i < 15; i++){
+                this.addSlot(new SlotItemHandler(iItemHandler, i, 44 + (18 * (i % 5)), 19 + (18 * (i / 5))));
             }
         });
 
@@ -65,7 +58,7 @@ public class ClockworkSyrupExtractorMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 8;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 15;  // must be the number of slots you have!
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);
@@ -102,28 +95,20 @@ public class ClockworkSyrupExtractorMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, ModBlocks.CLOCKWORK_SYRUP_EXTRACTOR.get());
+        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 92 + i * 18));
+                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
             }
         }
     }
 
     private void addPlayerHotbar(Inventory playerInventory) {
         for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 150));
+            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
-    }
-
-    public int getProgress() {
-        return this.data.get(0);
-    }
-
-    public int getMaxProgress() {
-        return this.data.get(1);
     }
 }

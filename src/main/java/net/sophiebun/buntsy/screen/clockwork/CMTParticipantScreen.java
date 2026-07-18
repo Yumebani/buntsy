@@ -1,4 +1,4 @@
-package net.sophiebun.buntsy.screen;
+package net.sophiebun.buntsy.screen.clockwork;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;

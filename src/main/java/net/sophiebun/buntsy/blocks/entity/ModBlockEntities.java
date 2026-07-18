@@ -103,6 +103,10 @@ public class ModBlockEntities {
             blockEntityRegister.register("clockwork_powdered_sugar_collector_entity",
                     () -> BlockEntityType.Builder.of(ClockworkPowderedSugarCollectorEntity::new,
                             ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ClockworkFisherEntity>> CLOCKWORK_FISHER_ENTITY =
+            blockEntityRegister.register("clockwork_fisher_entity",
+                    () -> BlockEntityType.Builder.of(ClockworkFisherEntity::new,
+                            ModBlocks.CLOCKWORK_FISHER.get()).build(null));
     public static final RegistryObject<BlockEntityType<ClockworkCrafterEntity>> CLOCKWORK_CRAFTER_ENTITY =
             blockEntityRegister.register("clockwork_crafter_entity",
                     () -> BlockEntityType.Builder.of(ClockworkCrafterEntity::new,

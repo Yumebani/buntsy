@@ -475,6 +475,10 @@ public class ModBlocks {
     public static final RegistryObject<Block> BITTER_CORAL_WALL_FAN = registerBlock("bitter_coral_wall_fan",
             () -> new CoralWallFanBlock(DEAD_BITTER_CORAL_WALL_FAN.get(), BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).noCollission().instabreak().sound(SoundType.WET_GRASS).dropsLike(BITTER_CORAL_FAN.get()).pushReaction(PushReaction.DESTROY)));
 
+    public static final RegistryObject<Block> SWEEDS = registerBlock("sweeds",
+            () -> new Sweeds(BlockBehaviour.Properties.copy(Blocks.SUGAR_CANE).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> CROCKTUS = registerBlock("crocktus",
+            () -> new CactusBlock(BlockBehaviour.Properties.copy(Blocks.CACTUS).noOcclusion().noCollission()));
 
     public static final RegistryObject<Block> PINK_CHARMIL_GRASS = registerBlock("pink_charmil_grass",
             () -> new ModTallGrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
@@ -719,6 +723,8 @@ public class ModBlocks {
             () -> new ClockworkGeyserCollectorBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
     public static final RegistryObject<Block> CLOCKWORK_POWDERED_SUGAR_COLLECTOR = registerBlock("clockwork_powdered_sugar_collector",
             () -> new ClockworkPowderedSugarCollectorBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> CLOCKWORK_FISHER = registerBlock("clockwork_fisher",
+            () -> new ClockworkFisherBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
     public static final RegistryObject<Block> CLOCKWORK_CRAFTER = registerBlock("clockwork_crafter",
             () -> new ClockworkCrafterBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
     public static final RegistryObject<Block> CLOCKWORK_FAIRY_TERMINAL = registerBlock("clockwork_fairy_terminal",

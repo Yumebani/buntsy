@@ -71,6 +71,8 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> SUNNY_LIMESTONE_KEY = registerKey("sunny_limestone_key");
     public static final ResourceKey<ConfiguredFeature<?, ?>> FROZEN_LIMESTONE_KEY = registerKey("frozen_limestone_key");
 
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SWEEDS_KEY = registerKey("sweeds_key");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CROCKTUS_KEY = registerKey("crocktus_key");
     public static final ResourceKey<ConfiguredFeature<?, ?>> WILD_STRAWBERRY_KEY = registerKey("wild_strawberry");
     public static final ResourceKey<ConfiguredFeature<?, ?>> WILD_HOOTNIP_KEY = registerKey("wild_hootnip");
     public static final ResourceKey<ConfiguredFeature<?, ?>> PINK_CHARMIL_GRASS_KEY = registerKey("pink_charmil_grass");
@@ -251,6 +253,9 @@ public class ModConfiguredFeatures {
                                 .build())))));
 
         //Plant Patches
+        register(context, SWEEDS_KEY, ModFeatures.SWEEDS_FEATURE.get(), new NoneFeatureConfiguration());
+        register(context, CROCKTUS_KEY, ModFeatures.CROCKTUS_FEATURE.get(), new NoneFeatureConfiguration());
+
         register(context, WILD_STRAWBERRY_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
                 16, 8, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.WILD_STRAWBERRY.get())))));
@@ -259,11 +264,11 @@ public class ModConfiguredFeatures {
                 16, 8, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.WILD_HOOTNIP.get())))));
 
-        register(context, PINK_CHARMIL_GRASS_KEY, Feature.FLOWER, new RandomPatchConfiguration(
+        register(context, PINK_CHARMIL_GRASS_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
                 48, 10, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.PINK_CHARMIL_GRASS.get())))));
 
-        register(context, BLUE_CHARMIL_GRASS_KEY, Feature.FLOWER, new RandomPatchConfiguration(
+        register(context, BLUE_CHARMIL_GRASS_KEY, ModFeatures.PATCH_FEATURE.get(), new RandomPatchConfiguration(
                 48, 10, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.BLUE_CHARMIL_GRASS.get())))));
 

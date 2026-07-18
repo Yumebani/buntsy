@@ -2,11 +2,9 @@ package net.sophiebun.buntsy.entity.clockwork_maiden;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.sophiebun.buntsy.screen.CMTParticipantScreen;
+import net.sophiebun.buntsy.screen.clockwork.CMTParticipantScreen;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class CMTParticipantData {

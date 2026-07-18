@@ -1,24 +1,15 @@
 package net.sophiebun.buntsy.server;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.PacketDistributor;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkMaidenTerminalEntity;
 import net.sophiebun.buntsy.entity.clockwork_maiden.CMTParticipantData;
-import net.sophiebun.buntsy.screen.CMTParticipantMenu;
-import net.sophiebun.buntsy.screen.CMTParticipantScreen;
-import org.checkerframework.checker.units.qual.C;
+import net.sophiebun.buntsy.screen.clockwork.CMTParticipantMenu;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.function.Supplier;
 
 public class CMTParticipantPacket {

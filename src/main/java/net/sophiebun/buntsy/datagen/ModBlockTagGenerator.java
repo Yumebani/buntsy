@@ -103,6 +103,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.CLOCKWORK_SYRUP_EXTRACTOR.get())
                 .add(ModBlocks.CLOCKWORK_GEYSER_COLLECTOR.get())
                 .add(ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get())
+                .add(ModBlocks.CLOCKWORK_FISHER.get())
                 .add(ModBlocks.CLOCKWORK_CRAFTER.get())
                 .add(ModBlocks.CLOCKWORK_FAIRY_TERMINAL.get())
                 .add(ModBlocks.DEAD_SWEET_CORAL_BLOCK.get())
@@ -357,6 +358,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get())
                 .add(ModBlocks.ODIATE_SOIL.get())
                 .add(ModBlocks.ODIATE_MUD.get())
+                .add(ModBlocks.FROZEN_POWDER_BLOCK.get())
+                .add(ModBlocks.FROZEN_POWDER_LAYER.get())
+                .add(ModBlocks.FROZEN_CORAL_SAND.get())
+                .add(ModBlocks.SUNNY_CORAL_SAND.get())
                 .add(ModBlocks.SWEET_CORAL_SAND.get());
 
         this.tag(BlockTags.VALID_SPAWN)
@@ -366,6 +371,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.ODIATE_SOIL.get())
                 .add(ModBlocks.ODIATE_MUD.get())
                 .add(ModBlocks.FROZEN_POWDER_BLOCK.get())
+                .add(ModBlocks.FROZEN_POWDER_LAYER.get())
                 .add(ModBlocks.FROZEN_CORAL_SAND.get())
                 .add(ModBlocks.SUNNY_CORAL_SAND.get())
                 .add(ModBlocks.SWEET_CORAL_SAND.get());

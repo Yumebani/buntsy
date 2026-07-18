@@ -34,6 +34,7 @@ import net.sophiebun.buntsy.item.CreativeModeTabs;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.recipe.ModRecipes;
 import net.sophiebun.buntsy.screen.*;
+import net.sophiebun.buntsy.screen.clockwork.*;
 import net.sophiebun.buntsy.server.ModPacketHandler;
 import net.sophiebun.buntsy.worldgen.biome.surface.ModSurfaceRules;
 import net.sophiebun.buntsy.worldgen.feature.ModFeatures;
@@ -139,6 +140,7 @@ public class BuntsyMod
             MenuScreens.register(ModMenuTypes.CLOCKWORK_SYRUP_EXTRACTOR_MENU.get(), ClockworkSyrupExtractorScreen::new);
             MenuScreens.register(ModMenuTypes.CLOCKWORK_GEYSER_COLLECTOR_MENU.get(), ClockworkGeyserCollectorScreen::new);
             MenuScreens.register(ModMenuTypes.CLOCKWORK_POWDERED_SUGAR_COLLECTOR_MENU.get(), ClockworkPowderedSugarCollectorScreen::new);
+            MenuScreens.register(ModMenuTypes.CLOCKWORK_FISHER_MENU.get(), ClockworkFisherScreen::new);
             MenuScreens.register(ModMenuTypes.CLOCKWORK_CRAFTER_MENU.get(), ClockworkCrafterScreen::new);
             MenuScreens.register(ModMenuTypes.CLOCKWORK_FAIRY_TERMINAL_MENU.get(), ClockworkFairyTerminalScreen::new);
 

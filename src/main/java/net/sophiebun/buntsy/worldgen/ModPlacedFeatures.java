@@ -55,6 +55,8 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> SWEET_LIMESTONE_PLACED_KEY = registerKey("sweet_limestone_placed_key");
     public static final ResourceKey<PlacedFeature> FROZEN_LIMESTONE_PLACED_KEY = registerKey("frozen_limestone_placed_key");
 
+    public static final ResourceKey<PlacedFeature> SWEEDS_PLACED_KEY = registerKey("sweeds_placed_key");
+    public static final ResourceKey<PlacedFeature> CROCKTUS_PLACED_KEY = registerKey("crocktus_placed_key");
     public static final ResourceKey<PlacedFeature> WILD_STRAWBERRY_PLACED_KEY = registerKey("wild_strawberry_placed");
     public static final ResourceKey<PlacedFeature> WILD_HOOTNIP_PLACED_KEY = registerKey("wild_hootnip_placed");
     public static final ResourceKey<PlacedFeature> PINK_CHARMIL_GRASS_PLACED_KEY = registerKey("pink_charmil_grass_placed");
@@ -189,15 +191,20 @@ public class ModPlacedFeatures {
                 List.of(CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
 
         //Plants
+        register(context, SWEEDS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SWEEDS_KEY),
+                List.of(CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+        register(context, CROCKTUS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.CROCKTUS_KEY),
+                List.of(PlacementUtils.countExtra(2, 0.5f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+
         register(context, WILD_STRAWBERRY_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.WILD_STRAWBERRY_KEY),
-                List.of(PlacementUtils.countExtra(0, 0.010f, 6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+                List.of(PlacementUtils.countExtra(0, 0.1f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
         register(context, WILD_HOOTNIP_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.WILD_HOOTNIP_KEY),
-                List.of(PlacementUtils.countExtra(0, 0.010f, 6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+                List.of(PlacementUtils.countExtra(0, 0.05f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
 
         register(context, PINK_CHARMIL_GRASS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.PINK_CHARMIL_GRASS_KEY),
-                List.of(CountPlacement.of(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+                List.of(CountPlacement.of(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
         register(context, BLUE_CHARMIL_GRASS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.BLUE_CHARMIL_GRASS_KEY),
-                List.of(CountPlacement.of(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
+                List.of(CountPlacement.of(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
         register(context, PALEGRASS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.PALEGRASS_KEY),
                 List.of(CountPlacement.of(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
         register(context, FROZEN_GRASS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.FROZEN_GRASS_KEY),

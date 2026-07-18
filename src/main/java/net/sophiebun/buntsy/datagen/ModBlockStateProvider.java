@@ -19,6 +19,7 @@ import net.sophiebun.buntsy.blocks.custom.SyrupExtractorBlock;
 import net.sophiebun.buntsy.blocks.custom.hanging_block.HangingStringBlock;
 import net.sophiebun.buntsy.blocks.custom.hanging_block.HangingStringEnding;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
+import net.sophiebun.buntsy.blocks.custom.plants.Sweeds;
 
 import java.util.List;
 
@@ -237,6 +238,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
 
         //Adding plants
+        sweedsCrossBlock(ModBlocks.SWEEDS);
         variedCross(ModBlocks.PINK_CHARMIL_GRASS);
         variedCross(ModBlocks.BLUE_CHARMIL_GRASS);
         variedCross(ModBlocks.PALEGRASS);
@@ -321,6 +323,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 new ModelFile.UncheckedModelFile(modLoc("block/clockwork_geyser_collector")));
         simpleBlockWithItem(ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/clockwork_powdered_sugar_collector")));
+        simpleBlockWithItem(ModBlocks.CLOCKWORK_FISHER.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/clockwork_fisher")));
         simpleBlockWithItem(ModBlocks.CLOCKWORK_FAIRY_TERMINAL.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/clockwork_fairy_terminal")));
 
@@ -631,5 +635,15 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     private void simpleCrossBlock(RegistryObject<Block> blockRegistry){
         simpleBlock(blockRegistry.get(),getCrossModel(blockRegistry, ""));
+    }
+
+    private void sweedsCrossBlock(RegistryObject<Block> blockRegistry){
+        BlockModelBuilder base = getCrossModel(blockRegistry, "");
+        BlockModelBuilder top = getCrossModel(blockRegistry, "_top");
+
+        getVariantBuilder(blockRegistry.get()).forAllStates(blockState -> {
+            return blockState.getValue(Sweeds.HEIGHT) == 4 ? ConfiguredModel.builder().modelFile(top).build() :
+                    ConfiguredModel.builder().modelFile(base).build();
+        });
     }
 }

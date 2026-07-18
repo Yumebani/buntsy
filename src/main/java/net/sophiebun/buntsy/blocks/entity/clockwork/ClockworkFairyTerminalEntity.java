@@ -3,13 +3,11 @@ package net.sophiebun.buntsy.blocks.entity.clockwork;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
-import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
@@ -18,47 +16,37 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.AmethystClusterBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.TreeFeature;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import net.sophiebun.buntsy.blocks.custom.entityblocks.ThreadReelerBlock;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
-import net.sophiebun.buntsy.blocks.entity.basicfairy.ThreadReelerBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyCollectionTrayBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyInfusionBenchBlockEntity;
-import net.sophiebun.buntsy.blocks.entity.directfairy.FairyOfferingBenchBlockEntity;
-import net.sophiebun.buntsy.entity.animals.Fairy;
-import net.sophiebun.buntsy.entity.interfaces.IFumeAffectedEntity;
 import net.sophiebun.buntsy.recipe.FairyOfferingRecipe;
-import net.sophiebun.buntsy.screen.ClockworkFairyTerminalMenu;
-import net.sophiebun.buntsy.screen.FairyOfferingBenchMenu;
+import net.sophiebun.buntsy.screen.clockwork.ClockworkFairyTerminalMenu;
 import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -69,7 +57,7 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.*;
-import java.util.stream.Stream;
+
 public class ClockworkFairyTerminalEntity extends ClockworkBlockEntity implements MenuProvider, GeoBlockEntity {
 
     private boolean isWatched = false;
@@ -860,7 +848,7 @@ public class ClockworkFairyTerminalEntity extends ClockworkBlockEntity implement
 
         @Override
         public boolean canContinueToUse(Level level) {
-            return (level.isLoaded(targetTray) && entity.getFood() > 0 && collectionTime < COLLECT_TIME && isValidTarget(level, blockPos));
+            return (level.isLoaded(targetTray) && entity.getFood() > 0 && hasStarted && isValidTarget(level, blockPos));
         }
 
         @Override
@@ -884,6 +872,17 @@ public class ClockworkFairyTerminalEntity extends ClockworkBlockEntity implement
             level.playSound(null, pos, SoundEvents.BEE_POLLINATE, SoundSource.NEUTRAL,
                     1f, level.random.nextInt(8,12) * 0.1f);
         }
+
+        protected void playPlantBreakingSound(Level level, BlockPos pos) {
+            level.playSound(null, pos, SoundEvents.GRASS_BREAK, SoundSource.NEUTRAL,
+                    0.8f, level.getRandom().nextInt(8,12) * 0.1f);
+        }
+
+        protected void playPlantBreakSound(Level level, BlockPos pos) {
+            level.playSound(null, pos, SoundEvents.GRASS_BREAK, SoundSource.NEUTRAL,
+                    1f, level.getRandom().nextInt(8,12) * 0.1f);
+        }
+
 
         protected void makeBlockParticle(Level level, BlockState block, Vec3 pos, int count){
             ((ServerLevel) level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, block), pos.x, pos.y, pos.z, level.random.nextInt(50,75),
@@ -913,12 +912,17 @@ public class ClockworkFairyTerminalEntity extends ClockworkBlockEntity implement
 
         @Override
         public void tick(Level level) {
-            if (collectionTime < COLLECT_TIME){
+            if (hasStarted){
                 collectionTime++;
                 if (collectionTime % 10 == 0){
                     BlockState block = level.getBlockState(blockPos);
                     if (block.is(BlockTags.FLOWERS)){
                         makeSparkleParticle(level, blockPos.getCenter(), 3);
+                        makeSparkleTrail(level, entity.getBlockPos().getCenter(), blockPos.getCenter());
+                    }
+                    else if (block.getBlock() instanceof CropBlock){
+                        playPlantBreakingSound(level, blockPos);
+                        makeBlockParticle(level, block, blockPos.getCenter(), 3);
                         makeSparkleTrail(level, entity.getBlockPos().getCenter(), blockPos.getCenter());
                     }
                     else{
@@ -931,6 +935,11 @@ public class ClockworkFairyTerminalEntity extends ClockworkBlockEntity implement
                     BlockState block = level.getBlockState(blockPos);
                     if (block.is(BlockTags.FLOWERS)){
                         playFlowerCopySound(level, blockPos);
+                        makeSparkleParticle(level, blockPos.getCenter(), 25);
+                        makeSparkleTrail(level, entity.getBlockPos().getCenter(), blockPos.getCenter());
+                    }
+                    else if (block.getBlock() instanceof CropBlock){
+                        playPlantBreakSound(level, blockPos);
                         makeSparkleParticle(level, blockPos.getCenter(), 25);
                         makeSparkleTrail(level, entity.getBlockPos().getCenter(), blockPos.getCenter());
                     }
@@ -955,6 +964,26 @@ public class ClockworkFairyTerminalEntity extends ClockworkBlockEntity implement
                 makeSparkleParticle(level, targetTray.getCenter().add(0, 0.5f, 0), 25);
                 ((FairyCollectionTrayBlockEntity) level.getBlockEntity(targetTray)).depositItem(new ItemStack(blockState.getBlock().asItem()));
             }
+            else if (blockState.getBlock() instanceof CropBlock){
+                makeSparkleTrail(level, entity.getBlockPos().getCenter(), targetTray.getCenter().add(0, 0.5f, 0));
+                makeSparkleParticle(level, targetTray.getCenter().add(0, 0.5f, 0), 25);
+
+                LootTable lootTable = level.getServer().getLootData().getLootTable(blockState.getBlock().getLootTable());
+                LootParams emptyParams = new LootParams.Builder(((ServerLevel) level))
+                        .withParameter(LootContextParams.ORIGIN, blockPos.getCenter())
+                        .withParameter(LootContextParams.BLOCK_STATE, blockState)
+                        .withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
+                        .create(LootContextParamSets.BLOCK);
+
+                FairyCollectionTrayBlockEntity trayEntity = ((FairyCollectionTrayBlockEntity) level.getBlockEntity(targetTray));
+                List<ItemStack> items = lootTable.getRandomItems(emptyParams);
+
+                for (ItemStack itemStack : items){
+                    trayEntity.depositItem(itemStack);
+                }
+
+                level.setBlock(this.blockPos, blockState.getBlock().defaultBlockState(), 2);
+            }
             else {
                 LootParams.Builder params = new LootParams.Builder(((ServerLevel) level))
                         .withParameter(LootContextParams.ORIGIN, new Vec3(this.blockPos.getX(), this.blockPos.getY(), this.blockPos.getZ()))
@@ -975,16 +1004,20 @@ public class ClockworkFairyTerminalEntity extends ClockworkBlockEntity implement
                         .setValue(AmethystClusterBlock.WATERLOGGED, blockState.getFluidState().getType() == Fluids.WATER));
             }
 
-            this.nextStartTick = 50 + level.random.nextInt(50);
+            this.nextStartTick = 50 + level.getRandom().nextInt(50);
         }
 
         protected boolean isValidTarget(Level level, BlockPos pos) {
             BlockState blockState = level.getBlockState(pos);
-            if (blockState.is(VALID_BLOCK_TAG)){
-                if (blockState.is(BlockTags.FLOWERS)){
-                    return entity.level.random.nextInt(32) == 0;
+            if (isInRange(pos)){
+                if (blockState.is(VALID_BLOCK_TAG)){
+                    if (blockState.is(BlockTags.FLOWERS)){
+                        return level.getRandom().nextInt(32) == 0;
+                    }
+                    return true;
+                } else if (blockState.getBlock() instanceof CropBlock){
+                    return ((CropBlock) blockState.getBlock()).isMaxAge(blockState);
                 }
-                return true;
             }
             return false;
         }

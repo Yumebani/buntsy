@@ -60,6 +60,11 @@ public class StrawberryCrop extends CropBlock {
     }
 
     @Override
+    public int getAge(BlockState pState) {
+        return pState.getValue(this.getAgeProperty());
+    }
+
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         pBuilder.add(AGE);
     }

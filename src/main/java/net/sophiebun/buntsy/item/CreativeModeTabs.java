@@ -144,6 +144,8 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.BRAVE_LOTUS.get());
                         pOutput.accept(ModBlocks.MALIUM_LOTUS.get());
 
+                        pOutput.accept(ModBlocks.SWEEDS.get());
+                        pOutput.accept(ModBlocks.CROCKTUS.get());
                         pOutput.accept(ModBlocks.PINK_CHARMIL_GRASS.get());
                         pOutput.accept(ModBlocks.BLUE_CHARMIL_GRASS.get());
                         pOutput.accept(ModBlocks.PALEGRASS.get());
@@ -332,6 +334,7 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.CLOCKWORK_SYRUP_EXTRACTOR.get());
                         pOutput.accept(ModBlocks.CLOCKWORK_GEYSER_COLLECTOR.get());
                         pOutput.accept(ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get());
+                        pOutput.accept(ModBlocks.CLOCKWORK_FISHER.get());
                         pOutput.accept(ModBlocks.CLOCKWORK_CRAFTER.get());
                         pOutput.accept(ModBlocks.CLOCKWORK_FAIRY_TERMINAL.get());
                         pOutput.accept(ModBlocks.CLOCKWORK_MAIDEN_TERMINAL.get());

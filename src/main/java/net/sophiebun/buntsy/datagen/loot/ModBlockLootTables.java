@@ -315,6 +315,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlocks.BLUE_CHARMIL_GRASS.get(), block -> createShearsOnlyDrop(block));
         this.add(ModBlocks.PALEGRASS.get(), block -> createShearsOnlyDrop(block));
         this.add(ModBlocks.FROZEN_GRASS.get(), block -> createShearsOnlyDrop(block));
+        this.dropSelf(ModBlocks.SWEEDS.get());
+        this.dropSelf(ModBlocks.CROCKTUS.get());
         this.dropSelf(ModBlocks.LUMINUM.get());
         this.dropSelf(ModBlocks.PINK_BLOOM.get());
         this.dropSelf(ModBlocks.BLUE_BLOOM.get());
@@ -408,6 +410,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.CLOCKWORK_SYRUP_EXTRACTOR.get());
         this.dropSelf(ModBlocks.CLOCKWORK_GEYSER_COLLECTOR.get());
         this.dropSelf(ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get());
+        this.dropSelf(ModBlocks.CLOCKWORK_FISHER.get());
         this.dropSelf(ModBlocks.CLOCKWORK_CRAFTER.get());
         this.dropSelf(ModBlocks.CLOCKWORK_FAIRY_TERMINAL.get());
         this.dropSelf(ModBlocks.CLOCKWORK_MAIDEN_TERMINAL.get());

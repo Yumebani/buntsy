@@ -219,6 +219,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_CLOCKWORK_BRASS_STAIRS.get(), ModBlocks.CLOCKWORK_BRASS_BLOCK.get());
         stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CUT_CLOCKWORK_BRASS_SLAB.get(), ModBlocks.CLOCKWORK_BRASS_BLOCK.get());
 
+        oneToOneConversionRecipe(consumer, Items.SUGAR, ModBlocks.SWEEDS.get(), null);
+        oneToOneConversionRecipe(consumer, Items.SUGAR, ModBlocks.CROCKTUS.get(), null);
+
+        smeltingRecipe(ModBlocks.CROCKTUS.get(), Items.CYAN_DYE, 0.5f, consumer);
+
         //Icy
         compact2By2(ModItems.COLD_POWDERED_SUGAR.get(), ModBlocks.FROZEN_POWDER_BLOCK.get(), 1, consumer);
         compact2By2(ModItems.SWICE_SHARDS.get(), ModBlocks.SWICE.get(), 1, consumer);
@@ -378,7 +383,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('E', ModItems.CLOCKWORK_GEAR.get())
                 .pattern("BEB")
                 .pattern("AAA")
-                .unlockedBy(getHasName(ModItems.CLOCKWORK_PROCESSOR.get()), has(ModItems.CLOCKWORK_PROCESSOR.get()))
+                .unlockedBy(getHasName(ModItems.CLOCKWORK_BRASS.get()), has(ModItems.CLOCKWORK_BRASS.get()))
                 .save(consumer);
 
         //Clockwork powder
@@ -388,7 +393,18 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('E', ModItems.CLOCKWORK_GEAR.get())
                 .pattern("AAA")
                 .pattern("BEB")
-                .unlockedBy(getHasName(ModItems.CLOCKWORK_PROCESSOR.get()), has(ModItems.CLOCKWORK_PROCESSOR.get()))
+                .unlockedBy(getHasName(ModItems.CLOCKWORK_BRASS.get()), has(ModItems.CLOCKWORK_BRASS.get()))
+                .save(consumer);
+
+        //Clockwork fisher
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CLOCKWORK_FISHER.get(), 1)
+                .define('A', ModItems.SILK_FABRIC.get())
+                .define('B', ModItems.CLOCKWORK_BRASS.get())
+                .define('C', Items.FISHING_ROD)
+                .define('E', ModItems.CLOCKWORK_GEAR.get())
+                .pattern("ECE")
+                .pattern("ABA")
+                .unlockedBy(getHasName(ModItems.CLOCKWORK_BRASS.get()), has(ModItems.CLOCKWORK_BRASS.get()))
                 .save(consumer);
 
         //Clockwork syrup extractor

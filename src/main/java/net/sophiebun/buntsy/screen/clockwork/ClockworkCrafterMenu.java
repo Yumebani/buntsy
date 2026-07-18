@@ -1,4 +1,4 @@
-package net.sophiebun.buntsy.screen;
+package net.sophiebun.buntsy.screen.clockwork;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -10,10 +10,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkCrafterEntity;
-import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkPowderedSugarCollectorEntity;
 import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
 import net.sophiebun.buntsy.blocks.inventory.PatternOutputSlot;
 import net.sophiebun.buntsy.blocks.inventory.PatternSlot;
+import net.sophiebun.buntsy.screen.ModMenuTypes;
 
 public class ClockworkCrafterMenu extends AbstractContainerMenu {
 
@@ -21,7 +21,7 @@ public class ClockworkCrafterMenu extends AbstractContainerMenu {
     private final Level level;
     private final ContainerData data;
 
-    protected ClockworkCrafterMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
+    public ClockworkCrafterMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
         this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
     }
 
@@ -76,6 +76,7 @@ public class ClockworkCrafterMenu extends AbstractContainerMenu {
 
     // THIS YOU HAVE TO DEFINE!
     private static final int TE_INVENTORY_SLOT_COUNT = 0;  // must be the number of slots you have!
+
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);

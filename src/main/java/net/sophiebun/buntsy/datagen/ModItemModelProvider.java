@@ -253,6 +253,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleCropBlockItem(ModBlocks.HOOTNIP_CROP, "hootnip_crop_stage6");
 
         //Adding plants
+        simpleBlockItem(ModBlocks.SWEEDS);
         specificCrossBlockItem(ModBlocks.PINK_CHARMIL_GRASS, "_3");
         specificCrossBlockItem(ModBlocks.BLUE_CHARMIL_GRASS, "_3");
         specificCrossBlockItem(ModBlocks.PALEGRASS, "_3");

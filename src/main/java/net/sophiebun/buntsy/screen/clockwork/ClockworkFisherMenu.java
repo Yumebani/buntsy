@@ -1,4 +1,4 @@
-package net.sophiebun.buntsy.screen;
+package net.sophiebun.buntsy.screen.clockwork;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -9,22 +9,23 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
-import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkGeyserCollectorEntity;
+import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkFisherEntity;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkPowderedSugarCollectorEntity;
+import net.sophiebun.buntsy.screen.ModMenuTypes;
 
-public class ClockworkPowderedSugarCollectorMenu extends AbstractContainerMenu {
+public class ClockworkFisherMenu extends AbstractContainerMenu {
 
-    private final ClockworkPowderedSugarCollectorEntity blockEntity;
+    private final ClockworkFisherEntity blockEntity;
     private final Level level;
     private final ContainerData data;
 
-    protected ClockworkPowderedSugarCollectorMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
+    public ClockworkFisherMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
         this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(1));
     }
 
-    public ClockworkPowderedSugarCollectorMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(ModMenuTypes.CLOCKWORK_POWDERED_SUGAR_COLLECTOR_MENU.get(), pContainerId);
-        blockEntity = ((ClockworkPowderedSugarCollectorEntity) entity);
+    public ClockworkFisherMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
+        super(ModMenuTypes.CLOCKWORK_FISHER_MENU.get(), pContainerId);
+        blockEntity = ((ClockworkFisherEntity) entity);
         this.level = inv.player.level();
         this.data = data;
 
@@ -58,7 +59,7 @@ public class ClockworkPowderedSugarCollectorMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 8;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 15;  // must be the number of slots you have!
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);
@@ -95,7 +96,7 @@ public class ClockworkPowderedSugarCollectorMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get());
+        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, ModBlocks.CLOCKWORK_FISHER.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {
