@@ -67,6 +67,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.HOOTNIP_SEEDS);
         simpleItem(ModItems.SUGARDEW_SEEDS);
         simpleItem(ModItems.SUGARDEW);
+        simpleItem(ModItems.ROOT_FLOUR);
+        simpleItem(ModItems.SUGARDEW_BALL);
+        simpleItem(ModItems.DEW_CRYSTALS);
         simpleItem(ModItems.WINTER_ROOT);
         simpleItem(ModItems.SPEED_BLEND);
         simpleItem(ModItems.EFFICIENCY_BLEND);
@@ -113,6 +116,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.TRIPLE_SHOT_ICECREAM);
         simpleItem(ModItems.GOLDEN_STRAWBERRY);
         simpleItem(ModItems.BOWL_OF_ROCKCANDY);
+        simpleItem(ModItems.ROOT_WAFFLE);
 
         evenSimplerBlockItem(ModBlocks.GENTLIT_LOG);
         evenSimplerBlockItem(ModBlocks.STRIPPED_GENTLIT_LOG);

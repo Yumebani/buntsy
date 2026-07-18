@@ -1,6 +1,7 @@
 package net.sophiebun.buntsy.item;
 
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -12,6 +13,7 @@ import net.sophiebun.buntsy.blocks.ModFoods;
 import net.sophiebun.buntsy.entity.ModEntities;
 import net.sophiebun.buntsy.fluids.ModFluids;
 import net.sophiebun.buntsy.item.custom.*;
+import org.jetbrains.annotations.Nullable;
 
 public class ModItems {
     public static final DeferredRegister<Item> ItemsRegister =
@@ -169,6 +171,18 @@ public class ModItems {
     public static final RegistryObject<Item> WINTER_ROOT = ItemsRegister.register(
             "winter_root", () -> new ItemNameBlockItem(ModBlocks.WINTER_ROOT_CROP.get(), new Item.Properties().food(ModFoods.WINTER_ROOT)));
 
+    public static final RegistryObject<Item> SUGARDEW_BALL = ItemsRegister.register(
+            "sugardew_ball", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> DEW_CRYSTALS = ItemsRegister.register(
+            "dew_crystals", () -> new Item(new Item.Properties()){
+                @Override
+                public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
+                    return 1600;
+                }
+            });
+    public static final RegistryObject<Item> ROOT_FLOUR = ItemsRegister.register(
+            "root_flour", () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> SPEED_BLEND = ItemsRegister.register(
             "speed_blend", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> EFFICIENCY_BLEND = ItemsRegister.register(
@@ -246,6 +260,8 @@ public class ModItems {
             "caramel_icecream", () -> new Item(new Item.Properties().food(ModFoods.CARAMEL_ICECREAM)));
     public static final RegistryObject<Item> TRIPLE_SHOT_ICECREAM = ItemsRegister.register(
             "triple_shot_icecream", () -> new Item(new Item.Properties().food(ModFoods.TRIPLE_SHOT_ICECREAM)));
+    public static final RegistryObject<Item> ROOT_WAFFLE = ItemsRegister.register(
+            "root_waffle", () -> new Item(new Item.Properties().food(ModFoods.ROOT_WAFFLE)));
 
     public static final RegistryObject<Item> FAIRY_IN_A_BOTTLE = ItemsRegister.register(
             "fairy_in_a_bottle", () -> new FairyBottle(new Item.Properties().stacksTo(1)));

@@ -204,6 +204,8 @@
   "block.buntsy.strawberry_crop": "Strawberry Crop",
   "block.buntsy.wild_hootnip": "Wild Hootnip",
   "block.buntsy.hootnip_crop": "Hootnip Crop",
+  "block.buntsy.winter_root_crop": "Winter Root Crop",
+  "block.buntsy.sugardew_crop": "Sugardew Crop",
 
   "block.buntsy.charming_lotus": "Charming Lotus",
   "block.buntsy.brave_lotus": "Brave Lotus",
@@ -402,7 +404,10 @@
   "item.buntsy.cold_powdered_sugar": "Cold Powdered Sugar",
   "item.buntsy.chocolate_flakes": "Chocolate Flakes",
   "item.buntsy.strawberry_seeds": "Strawberry Seeds",
+  "item.buntsy.sugardew_seeds": "Sugardew Seeds",
+  "item.buntsy.winter_root": "Winter Root",
   "item.buntsy.hootnip_seeds": "Hootnip Seeds",
+  "item.buntsy.sugardew": "Sugardew",
 
   "item.buntsy.speed_blend": "Speed Blend",
   "item.buntsy.efficiency_blend": "Efficiency Blend",
@@ -456,6 +461,9 @@
   "item.buntsy.cat_ears": "Cat Ears",
   "item.buntsy.gas_mask": "Gas Mask",
 
+  "item.buntsy.sugardew_ball": "Sugardew Ball",
+  "item.buntsy.dew_crystals": "Dew Crystals",
+  "item.buntsy.root_flour": "Root Flour",
   "item.buntsy.blazing_hootnip": "Blazing Hootnip",
   "item.buntsy.hootnip": "Hootnip",
   "item.buntsy.ground_hootnip": "Ground Hootnip",
@@ -466,6 +474,7 @@
   "item.buntsy.syrupy_mixture_bowl": "Syrupy Mixture Bowl",
   "item.buntsy.bowl_of_caramel": "Bowl of Caramel",
   "item.buntsy.strawberry": "Strawberry",
+  "item.buntsy.root_waffle": "Root Waffle",
   "item.buntsy.caramel_strawberries": "Caramel Strawberries",
   "item.buntsy.chocolate_strawberries": "Chocolate Strawberries",
   "item.buntsy.chocolate": "Chocolate",

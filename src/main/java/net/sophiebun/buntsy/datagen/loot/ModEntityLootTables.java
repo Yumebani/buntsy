@@ -45,10 +45,16 @@ public class ModEntityLootTables extends EntityLootSubProvider {
                         .add(LootItem.lootTableItem(ModItems.CLOCKWORK_PROCESSOR.get())
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
                                 .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))));
+
+        this.add(ModEntities.CLOCKWORK_MAIDEN_ENTITY.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(ModItems.CLOCKWORK_MAIDEN.get())
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))));
     }
 
     @Override
     protected Stream<EntityType<?>> getKnownEntityTypes() {
-        return Stream.of(ModEntities.MARIONETTE.get());
+        return Stream.of(ModEntities.MARIONETTE.get(), ModEntities.CLOCKWORK_MAIDEN_ENTITY.get());
     }
 }

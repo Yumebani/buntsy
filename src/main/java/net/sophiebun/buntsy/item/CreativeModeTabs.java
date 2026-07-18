@@ -28,9 +28,11 @@ public class CreativeModeTabs {
 
                         pOutput.accept(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get());
                         pOutput.accept(ModBlocks.CHARMIL_SOIL.get());
+                        pOutput.accept(ModBlocks.CHARMIL_FARMLAND.get());
 
                         pOutput.accept(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get());
                         pOutput.accept(ModBlocks.ODIATE_SOIL.get());
+                        pOutput.accept(ModBlocks.ODIATE_FARMLAND.get());
                         pOutput.accept(ModBlocks.ODIATE_MUD.get());
                         pOutput.accept(ModBlocks.PACKED_ODIATE_MUD.get());
                         pOutput.accept(ModBlocks.ODIATE_MUD_BRICKS.get());
@@ -482,10 +484,15 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.STRAWBERRY_SEEDS.get());
                         pOutput.accept(ModItems.SUGARDEW_SEEDS.get());
                         pOutput.accept(ModItems.SUGARDEW.get());
+                        pOutput.accept(ModItems.SUGARDEW_BALL.get());
+                        pOutput.accept(ModItems.DEW_CRYSTALS.get());
                         pOutput.accept(ModItems.WINTER_ROOT.get());
+                        pOutput.accept(ModItems.ROOT_FLOUR.get());
+                        pOutput.accept(ModItems.ROOT_WAFFLE.get());
                         pOutput.accept(ModItems.CARAMEL_STRAWBERRIES.get());
                         pOutput.accept(ModItems.CHOCOLATE.get());
                         pOutput.accept(ModItems.CHOCOLATE_STRAWBERRIES.get());
+                        pOutput.accept(ModItems.ROOT_WAFFLE.get());
                         pOutput.accept(ModItems.VANILLA_ICECREAM.get());
                         pOutput.accept(ModItems.CHOCOLATE_ICECREAM.get());
                         pOutput.accept(ModItems.CARAMEL_ICECREAM.get());

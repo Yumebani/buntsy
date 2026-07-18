@@ -255,6 +255,23 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         //Foods
         cookingFoodRecipe(ModItems.SUGAR_BOWL.get(), ModItems.BOWL_OF_CARAMEL.get(), consumer);
         cookingFoodRecipe(ModItems.SYRUPY_MIXTURE_BOWL.get(), ModItems.BOWL_OF_ROCKCANDY.get(), consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.SUGAR, 2)
+                .requires(ModItems.SUGARDEW.get(), 1)
+                .unlockedBy(getHasName(ModItems.SUGARDEW.get()), has(ModItems.SUGARDEW.get()))
+                .save(consumer, "buntsy:sugar_from_sugardew");
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.ROOT_WAFFLE.get(), 2)
+                .requires(ModItems.ROOT_FLOUR.get(), 4)
+                .requires(ModItems.SUGARDEW.get(), 1)
+                .unlockedBy(getHasName(ModItems.SUGARDEW.get()), has(ModItems.SUGARDEW.get()))
+                .unlockedBy(getHasName(ModItems.ROOT_FLOUR.get()), has(ModItems.ROOT_FLOUR.get()))
+                .save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.SUGARDEW_BALL.get(), 1)
+                .requires(ModItems.SUGARDEW.get(), 1)
+                .requires(Items.SUGAR, 3)
+                .unlockedBy(getHasName(ModItems.SUGARDEW.get()), has(ModItems.SUGARDEW.get()))
+                .save(consumer);
+        smeltingRecipe(ModItems.SUGARDEW_BALL.get(), ModItems.DEW_CRYSTALS.get(), 0.5f, consumer);
+
 
         //Clockwork processor
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.PACKED_ODIATE_MUD.get(), 1)
@@ -534,9 +551,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.VANILLA_ICECREAM.get(), 2)
                 .requires(ModItems.COLD_POWDERED_SUGAR.get(), 3)
                 .requires(ModItems.SWICE_SHARDS.get(), 2)
+                .requires(ModItems.SUGARDEW.get(), 1)
                 .requires(Ingredient.of(ModItems.GENTLIT_SYRUP.get(), Items.HONEY_BOTTLE, Items.MILK_BUCKET), 1)
                 .unlockedBy(getHasName(ModItems.COLD_POWDERED_SUGAR.get()), has(ModItems.COLD_POWDERED_SUGAR.get()))
                 .unlockedBy(getHasName(ModItems.SWICE_SHARDS.get()), has(ModItems.SWICE_SHARDS.get()))
+                .unlockedBy(getHasName(ModItems.SUGARDEW.get()), has(ModItems.SUGARDEW.get()))
                 .save(consumer);
 
         //Chocolate icecream
@@ -544,9 +563,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .requires(ModItems.COLD_POWDERED_SUGAR.get(), 3)
                 .requires(ModItems.SWICE_SHARDS.get(), 2)
                 .requires(ModItems.CHOCOLATE.get(), 1)
+                .requires(ModItems.SUGARDEW.get(), 1)
                 .requires(Ingredient.of(ModItems.GENTLIT_SYRUP.get(), Items.HONEY_BOTTLE, Items.MILK_BUCKET), 1)
                 .unlockedBy(getHasName(ModItems.COLD_POWDERED_SUGAR.get()), has(ModItems.COLD_POWDERED_SUGAR.get()))
                 .unlockedBy(getHasName(ModItems.SWICE_SHARDS.get()), has(ModItems.SWICE_SHARDS.get()))
+                .unlockedBy(getHasName(ModItems.SUGARDEW.get()), has(ModItems.SUGARDEW.get()))
                 .save(consumer);
 
         //Caramel icecream
@@ -554,9 +575,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .requires(ModItems.COLD_POWDERED_SUGAR.get(), 3)
                 .requires(ModItems.SWICE_SHARDS.get(), 2)
                 .requires(ModItems.BOWL_OF_CARAMEL.get(), 1)
+                .requires(ModItems.SUGARDEW.get(), 1)
                 .requires(Ingredient.of(ModItems.GENTLIT_SYRUP.get(), Items.HONEY_BOTTLE, Items.MILK_BUCKET), 1)
                 .unlockedBy(getHasName(ModItems.COLD_POWDERED_SUGAR.get()), has(ModItems.COLD_POWDERED_SUGAR.get()))
                 .unlockedBy(getHasName(ModItems.SWICE_SHARDS.get()), has(ModItems.SWICE_SHARDS.get()))
+                .unlockedBy(getHasName(ModItems.SUGARDEW.get()), has(ModItems.SUGARDEW.get()))
                 .save(consumer);
 
         //Triple shot icecream
@@ -564,9 +587,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .requires(ModItems.VANILLA_ICECREAM.get(), 1)
                 .requires(ModItems.CHOCOLATE_ICECREAM.get(), 1)
                 .requires(ModItems.CARAMEL_ICECREAM.get(), 1)
+                .requires(ModItems.ROOT_WAFFLE.get(), 1)
                 .unlockedBy(getHasName(ModItems.VANILLA_ICECREAM.get()), has(ModItems.VANILLA_ICECREAM.get()))
                 .unlockedBy(getHasName(ModItems.CHOCOLATE_ICECREAM.get()), has(ModItems.CHOCOLATE_ICECREAM.get()))
                 .unlockedBy(getHasName(ModItems.CARAMEL_ICECREAM.get()), has(ModItems.CARAMEL_ICECREAM.get()))
+                .unlockedBy(getHasName(ModItems.ROOT_WAFFLE.get()), has(ModItems.ROOT_WAFFLE.get()))
                 .save(consumer);
 
         //Chocolate
@@ -591,6 +616,24 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(Items.HONEY_BOTTLE), has(Items.HONEY_BOTTLE))
                 .unlockedBy(getHasName(ModItems.GENTLIT_SYRUP.get()), has(ModItems.GENTLIT_SYRUP.get()))
                 .save(consumer);
+
+        //Bread
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.BREAD, 2)
+                .define('F', ModItems.ROOT_FLOUR.get())
+                .pattern("FFF")
+                .unlockedBy(getHasName(ModItems.ROOT_FLOUR.get()), has(ModItems.ROOT_FLOUR.get()))
+                .save(consumer, "buntsy:syrupy_mixture_bowl_syrup");
+
+        //Syrupy bowl
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.SYRUPY_MIXTURE_BOWL.get(), 1)
+                .requires(Items.SUGAR, 4)
+                .requires(ModItems.SUGARDEW.get(), 2)
+                .requires(ModItems.GENTLIT_SYRUP.get(), 1)
+                .requires(Items.BOWL, 1)
+                .unlockedBy(getHasName(Items.SUGAR), has(Items.SUGAR))
+                .unlockedBy(getHasName(ModItems.SUGARDEW.get()), has(ModItems.SUGARDEW.get()))
+                .unlockedBy(getHasName(ModItems.GENTLIT_SYRUP.get()), has(ModItems.GENTLIT_SYRUP.get()))
+                .save(consumer, "buntsy:syrupy_mixture_bowl_dew");
 
         //Blazing hootnip
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.BLAZING_HOOTNIP.get(), 1)
