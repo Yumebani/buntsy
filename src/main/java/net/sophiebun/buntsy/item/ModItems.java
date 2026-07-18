@@ -157,10 +157,17 @@ public class ModItems {
             "emerald_shard", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> PRISTINE_EMERALD_SAMPLE = ItemsRegister.register(
             "pristine_emerald_sample", () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> STRAWBERRY_SEEDS = ItemsRegister.register(
             "strawberry_seeds", () -> new ItemNameBlockItem(ModBlocks.STRAWBERRY_CROP.get(), new Item.Properties()));
     public static final RegistryObject<Item> HOOTNIP_SEEDS = ItemsRegister.register(
             "hootnip_seeds", () -> new ItemNameBlockItem(ModBlocks.HOOTNIP_CROP.get(), new Item.Properties()));
+    public static final RegistryObject<Item> SUGARDEW_SEEDS = ItemsRegister.register(
+            "sugardew_seeds", () -> new ItemNameBlockItem(ModBlocks.SUGARDEW_CROP.get(), new Item.Properties()));
+    public static final RegistryObject<Item> SUGARDEW = ItemsRegister.register(
+            "sugardew", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> WINTER_ROOT = ItemsRegister.register(
+            "winter_root", () -> new ItemNameBlockItem(ModBlocks.WINTER_ROOT_CROP.get(), new Item.Properties().food(ModFoods.WINTER_ROOT)));
 
     public static final RegistryObject<Item> SPEED_BLEND = ItemsRegister.register(
             "speed_blend", () -> new Item(new Item.Properties()));

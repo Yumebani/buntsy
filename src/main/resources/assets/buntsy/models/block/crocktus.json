@@ -1,4 +1,5 @@
 {   "parent": "block/block",
+    "render_type": "minecraft:cutout",
     "textures": {
         "particle": "buntsy:block/crocktus_side",
         "bottom": "buntsy:block/crocktus_bottom",

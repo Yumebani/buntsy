@@ -406,6 +406,10 @@ public class ModBlocks {
             () -> new DoublePlantBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
     public static final RegistryObject<Block> HOOTNIP_CROP = registerBlock("hootnip_crop",
             () -> new HootnipCrop(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> SUGARDEW_CROP = registerBlock("sugardew_crop",
+            () -> new SugardewCrop(BlockBehaviour.Properties.copy(Blocks.WHEAT).noOcclusion().noCollission()));
+    public static final RegistryObject<Block> WINTER_ROOT_CROP = registerBlock("winter_root_crop",
+            () -> new WinterRootsCrop(BlockBehaviour.Properties.copy(Blocks.WHEAT).noOcclusion().noCollission()));
 
     //Biome decor
     public static final RegistryObject<Block> HANGING_STRING = registerBlock("hanging_string",
@@ -478,7 +482,7 @@ public class ModBlocks {
     public static final RegistryObject<Block> SWEEDS = registerBlock("sweeds",
             () -> new Sweeds(BlockBehaviour.Properties.copy(Blocks.SUGAR_CANE).noOcclusion().noCollission()));
     public static final RegistryObject<Block> CROCKTUS = registerBlock("crocktus",
-            () -> new CactusBlock(BlockBehaviour.Properties.copy(Blocks.CACTUS).noOcclusion().noCollission()));
+            () -> new CrocktusBlock(BlockBehaviour.Properties.copy(Blocks.CACTUS).noOcclusion().noCollission()));
 
     public static final RegistryObject<Block> PINK_CHARMIL_GRASS = registerBlock("pink_charmil_grass",
             () -> new ModTallGrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).noOcclusion().noCollission()));

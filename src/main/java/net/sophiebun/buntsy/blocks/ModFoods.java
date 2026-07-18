@@ -6,6 +6,9 @@ import net.minecraft.world.food.FoodProperties;
 
 public class ModFoods {
 
+    public static final FoodProperties WINTER_ROOT = new FoodProperties.Builder().nutrition(1).fast()
+            .saturationMod(0.5f)
+            .build();
     public static final FoodProperties BOWL_OF_CARAMEL = new FoodProperties.Builder().nutrition(3)
             .saturationMod(0.8f)
             .build();

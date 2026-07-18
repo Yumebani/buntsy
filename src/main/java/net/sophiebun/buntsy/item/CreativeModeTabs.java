@@ -480,6 +480,9 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.BOWL_OF_CARAMEL.get());
                         pOutput.accept(ModItems.STRAWBERRY.get());
                         pOutput.accept(ModItems.STRAWBERRY_SEEDS.get());
+                        pOutput.accept(ModItems.SUGARDEW_SEEDS.get());
+                        pOutput.accept(ModItems.SUGARDEW.get());
+                        pOutput.accept(ModItems.WINTER_ROOT.get());
                         pOutput.accept(ModItems.CARAMEL_STRAWBERRIES.get());
                         pOutput.accept(ModItems.CHOCOLATE.get());
                         pOutput.accept(ModItems.CHOCOLATE_STRAWBERRIES.get());

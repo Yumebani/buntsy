@@ -235,6 +235,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         strawberryCrop(ModBlocks.STRAWBERRY_CROP);
         wildHootnipBlock(ModBlocks.WILD_HOOTNIP);
         hootnipCrop(ModBlocks.HOOTNIP_CROP);
+        crossCropBlock(ModBlocks.SUGARDEW_CROP);
+        cropBlock(ModBlocks.WINTER_ROOT_CROP);
 
 
         //Adding plants
@@ -426,6 +428,22 @@ public class ModBlockStateProvider extends BlockStateProvider {
         getVariantBuilder(block.get()).forAllStates(blockState -> {
             String model_name = block.getId().getPath() + "_stage" + blockState.getValue(StrawberryCrop.AGE);
            return ConfiguredModel.builder().modelFile(models().crop(model_name,
+                   new ResourceLocation(BuntsyMod.MODID, "block/" + model_name)).renderType("cutout")).build();}
+        );
+    }
+
+    private void cropBlock(RegistryObject<Block> block){
+        getVariantBuilder(block.get()).forAllStates(blockState -> {
+            String model_name = block.getId().getPath() + "_stage" + blockState.getValue(CropBlock.AGE);
+           return ConfiguredModel.builder().modelFile(models().crop(model_name,
+                   new ResourceLocation(BuntsyMod.MODID, "block/" + model_name)).renderType("cutout")).build();}
+        );
+    }
+
+    private void crossCropBlock(RegistryObject<Block> block){
+        getVariantBuilder(block.get()).forAllStates(blockState -> {
+            String model_name = block.getId().getPath() + "_stage" + blockState.getValue(CropBlock.AGE);
+           return ConfiguredModel.builder().modelFile(models().cross(model_name,
                    new ResourceLocation(BuntsyMod.MODID, "block/" + model_name)).renderType("cutout")).build();}
         );
     }

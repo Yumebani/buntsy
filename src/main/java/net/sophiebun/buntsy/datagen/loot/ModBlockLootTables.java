@@ -4,9 +4,11 @@ import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.SeaPickleBlock;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -24,6 +26,8 @@ import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.custom.plants.HootnipCrop;
 import net.sophiebun.buntsy.blocks.custom.plants.StrawberryCrop;
 import net.sophiebun.buntsy.item.ModItems;
+import org.jetbrains.annotations.NotNull;
+import org.spongepowered.asm.util.IConsumer;
 
 import java.util.List;
 import java.util.Set;
@@ -255,11 +259,14 @@ public class ModBlockLootTables extends BlockLootSubProvider {
                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(StrawberryCrop.AGE, 5));
         this.add(ModBlocks.STRAWBERRY_CROP.get(), this.applyExplosionDecay(ModBlocks.STRAWBERRY_CROP.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
-                        .add((LootItem.lootTableItem(ModItems.STRAWBERRY.get()))
-                                .when(strawberryLootBuilder).otherwise(LootItem.lootTableItem(ModItems.STRAWBERRY_SEEDS.get())))
-                        .when(strawberryLootBuilder)
-                        .add(LootItem.lootTableItem(ModItems.STRAWBERRY.get()))
-                        .apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 3)))));
+                        .add((LootItem.lootTableItem(ModItems.STRAWBERRY.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F))))
+                                .when(strawberryLootBuilder)))
+                .withPool(LootPool.lootPool()
+                        .add((LootItem.lootTableItem(ModItems.STRAWBERRY_SEEDS.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
+                                .when(strawberryLootBuilder)
+                                .otherwise(LootItem.lootTableItem(ModItems.STRAWBERRY_SEEDS.get())))))));
 
         this.add(ModBlocks.WILD_HOOTNIP.get(), block -> createSingleItemTableWithSilkTouch(block, ModItems.HOOTNIP.get()));
         LootItemCondition.Builder hootnipCropCriteria = LootItemBlockStatePropertyCondition
@@ -267,11 +274,38 @@ public class ModBlockLootTables extends BlockLootSubProvider {
                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(HootnipCrop.AGE, 6));
         this.add(ModBlocks.HOOTNIP_CROP.get(), this.applyExplosionDecay(ModBlocks.HOOTNIP_CROP.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
-                        .add((LootItem.lootTableItem(ModItems.HOOTNIP.get()))
-                                .when(hootnipCropCriteria).otherwise(LootItem.lootTableItem(ModItems.HOOTNIP_SEEDS.get())))
-                        .when(hootnipCropCriteria)
-                        .add(LootItem.lootTableItem(ModItems.HOOTNIP.get()))
-                        .apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 3)))));
+                        .add((LootItem.lootTableItem(ModItems.HOOTNIP_SEEDS.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
+                                .when(hootnipCropCriteria)
+                                .otherwise(LootItem.lootTableItem(ModItems.HOOTNIP_SEEDS.get())))))
+                .withPool(LootPool.lootPool()
+                        .add((LootItem.lootTableItem(ModItems.HOOTNIP.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+                                .when(hootnipCropCriteria)))));
+
+        LootItemCondition.Builder sugarDewLootBuilder = LootItemBlockStatePropertyCondition
+                .hasBlockStateProperties(ModBlocks.SUGARDEW_CROP.get())
+                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, CropBlock.MAX_AGE));
+        this.add(ModBlocks.SUGARDEW_CROP.get(), this.applyExplosionDecay(ModBlocks.SUGARDEW_CROP.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .add((LootItem.lootTableItem(ModItems.SUGARDEW_SEEDS.get())
+                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
+                                .when(sugarDewLootBuilder)
+                            .otherwise(LootItem.lootTableItem(ModItems.SUGARDEW_SEEDS.get())))))
+                .withPool(LootPool.lootPool()
+                        .add((LootItem.lootTableItem(ModItems.SUGARDEW.get()))
+                                .when(sugarDewLootBuilder))
+                )));
+
+        LootItemCondition.Builder winterRootLootBuilder = LootItemBlockStatePropertyCondition
+                .hasBlockStateProperties(ModBlocks.WINTER_ROOT_CROP.get())
+                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, CropBlock.MAX_AGE));
+        this.add(ModBlocks.WINTER_ROOT_CROP.get(), this.applyExplosionDecay(ModBlocks.WINTER_ROOT_CROP.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .add((LootItem.lootTableItem(ModItems.WINTER_ROOT.get()).apply(
+                                SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F))))
+                            .when(winterRootLootBuilder)
+                            .otherwise(LootItem.lootTableItem(ModItems.WINTER_ROOT.get()))))));
 
         //Adding plants
         this.dropSelf(ModBlocks.CHARMING_LOTUS.get());
@@ -311,10 +345,10 @@ public class ModBlockLootTables extends BlockLootSubProvider {
             return this.createSingleItemTableWithSilkTouch(p_248608_, ModBlocks.DEAD_BITTER_CORAL_BLOCK.get());
         });
 
-        this.add(ModBlocks.PINK_CHARMIL_GRASS.get(), block -> createShearsOnlyDrop(block));
-        this.add(ModBlocks.BLUE_CHARMIL_GRASS.get(), block -> createShearsOnlyDrop(block));
-        this.add(ModBlocks.PALEGRASS.get(), block -> createShearsOnlyDrop(block));
-        this.add(ModBlocks.FROZEN_GRASS.get(), block -> createShearsOnlyDrop(block));
+        this.add(ModBlocks.PINK_CHARMIL_GRASS.get(), block -> makeGrassDrop(ModBlocks.PINK_CHARMIL_GRASS.get(), ModItems.SUGARDEW_SEEDS.get()));
+        this.add(ModBlocks.BLUE_CHARMIL_GRASS.get(), block -> makeGrassDrop(ModBlocks.BLUE_CHARMIL_GRASS.get(), ModItems.SUGARDEW_SEEDS.get()));
+        this.add(ModBlocks.PALEGRASS.get(), block -> makeGrassDrop(ModBlocks.PALEGRASS.get(), ModItems.SUGARDEW_SEEDS.get()));
+        this.add(ModBlocks.FROZEN_GRASS.get(), block -> makeGrassDrop(ModBlocks.FROZEN_GRASS.get(), ModItems.WINTER_ROOT.get()));
         this.dropSelf(ModBlocks.SWEEDS.get());
         this.dropSelf(ModBlocks.CROCKTUS.get());
         this.dropSelf(ModBlocks.LUMINUM.get());
@@ -430,6 +464,15 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
         //Others
         this.dropSelf(ModBlocks.SYRUP_EXTRACTOR.get());
+    }
+
+    private LootTable.Builder makeGrassDrop(@NotNull Block block, @NotNull Item item) {
+        return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                .add((LootItem.lootTableItem(block)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
+                        .when(HAS_SHEARS)
+                        .otherwise(LootItem.lootTableItem(item)
+                                .apply(SetItemCountFunction.setCount(BinomialDistributionGenerator.binomial(1, 0.05f)))))));
     }
 
     protected LootTable.Builder createSwiceDrops(Block pBlock) {

@@ -65,6 +65,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.CHOCOLATE_FLAKES);
         simpleItem(ModItems.STRAWBERRY_SEEDS);
         simpleItem(ModItems.HOOTNIP_SEEDS);
+        simpleItem(ModItems.SUGARDEW_SEEDS);
+        simpleItem(ModItems.SUGARDEW);
+        simpleItem(ModItems.WINTER_ROOT);
         simpleItem(ModItems.SPEED_BLEND);
         simpleItem(ModItems.EFFICIENCY_BLEND);
         simpleItem(ModItems.GROWTH_BLEND);
@@ -186,6 +189,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         evenSimplerBlockItem(ModBlocks.CRYSTALLIZED_LOG);
         evenSimplerBlockItem(ModBlocks.CRYSTALLIZED_LEAVES);
 
+        evenSimplerBlockItem(ModBlocks.CHARMIL_FARMLAND);
+        evenSimplerBlockItem(ModBlocks.ODIATE_FARMLAND);
+
         evenSimplerBlockItem(ModBlocks.SWEET_CANDY_ROCK_STAIRS);
         evenSimplerBlockItem(ModBlocks.SWEET_CANDY_ROCK_SLAB);
         wallItem(ModBlocks.SWEET_CANDY_ROCK_WALL, ModBlocks.SWEET_CANDY_ROCK);
@@ -251,6 +257,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleCropBlockItem(ModBlocks.STRAWBERRY_CROP, "strawberry_crop_stage5");
         simpleCropBlockItem(ModBlocks.WILD_HOOTNIP, "wild_hootnip_top");
         simpleCropBlockItem(ModBlocks.HOOTNIP_CROP, "hootnip_crop_stage6");
+        simpleCropBlockItem(ModBlocks.SUGARDEW_CROP, "sugardew_crop_stage5");
+        simpleCropBlockItem(ModBlocks.WINTER_ROOT_CROP, "winter_root_crop_stage5");
 
         //Adding plants
         simpleBlockItem(ModBlocks.SWEEDS);
