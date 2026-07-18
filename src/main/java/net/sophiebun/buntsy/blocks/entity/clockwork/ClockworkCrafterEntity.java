@@ -15,6 +15,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -31,7 +32,9 @@ import net.sophiebun.buntsy.screen.clockwork.ClockworkCrafterMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 public class ClockworkCrafterEntity extends ClockworkBlockEntity implements MenuProvider {
@@ -270,10 +273,16 @@ public class ClockworkCrafterEntity extends ClockworkBlockEntity implements Menu
                         int remainder = collector.get(key) - total;
                         if (remainder >= 0){
                             collector.put(key, remainder);
+                            if (!itemStack.getCraftingRemainingItem().isEmpty() && !canOutputRemainder(itemStack.getCraftingRemainingItem(), total)){
+                                return false;
+                            }
                             total = 0;
                             break;
                         } else {
                             total -= collector.get(key);
+                            if (!itemStack.getCraftingRemainingItem().isEmpty() && !canOutputRemainder(itemStack.getCraftingRemainingItem(), collector.get(key))){
+                                return false;
+                            }
                             collector.put(key, 0);
                         }
                     }
@@ -287,28 +296,71 @@ public class ClockworkCrafterEntity extends ClockworkBlockEntity implements Menu
         return true;
     }
 
+    private boolean canOutputRemainder(ItemStack remainingStack, int count){
+        int totalRemaining = count;
+        for (int i = 0; i < 18; i++){
+            ItemStack stack = inputItemHandler.getStackInSlot(i);
+            if (stack.isEmpty()){
+                inputItemHandler.setStackInSlot(i, remainingStack);
+            } else if (stack.is(remainingStack.getItem())){
+                int remainder = stack.getCount() + totalRemaining;
+                if (remainder > remainingStack.getMaxStackSize()){
+                    totalRemaining = remainder - remainingStack.getMaxStackSize();
+                } else {
+                    return true;
+                }
+            }
+        }
+        return totalRemaining == 0;
+    }
+
     public void takeFromInputs(NonNullList<Ingredient> ingredients){
 
         for (Ingredient ingredient : ingredients){
 
             if (!ingredient.isEmpty()){
                 int total = ingredient.getItems()[0].getCount();
-
                 for (ItemStack itemStack : ingredient.getItems()){
+
                     for (int i = 0; i < 18; i++){
                         ItemStack stack = inputItemHandler.getStackInSlot(i);
                         if (stack.is(itemStack.getItem())){
                             int remainder = stack.getCount() - total;
+                            ItemStack remainingStack = itemStack.getCraftingRemainingItem();
                             if (remainder >= 0){
                                 stack.setCount(remainder);
-                                total = 0;
+                                if (!remainingStack.isEmpty()){
+                                    outputRemainder(remainingStack, remainder);
+                                }
                                 break;
                             } else {
                                 total -= stack.getCount();
                                 stack.setCount(0);
+                                if (!remainingStack.isEmpty()){
+                                    outputRemainder(remainingStack, stack.getCount());
+                                }
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+
+    private void outputRemainder(ItemStack remainingStack, int count){
+        int totalRemaining = count;
+        for (int i = 0; i < 18; i++){
+            ItemStack stack = inputItemHandler.getStackInSlot(i);
+            if (stack.isEmpty()){
+                inputItemHandler.setStackInSlot(i, remainingStack);
+            } else if (stack.is(remainingStack.getItem())){
+                int remainder = stack.getCount() + totalRemaining;
+                if (remainder > remainingStack.getMaxStackSize()){
+                    totalRemaining = remainder - remainingStack.getMaxStackSize();
+                    stack.setCount(stack.getMaxStackSize());
+                } else {
+                    stack.setCount(remainder);
+                    break;
                 }
             }
         }

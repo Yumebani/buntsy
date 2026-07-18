@@ -45,7 +45,7 @@ public class ClockworkMaiden extends PathfinderMob {
     public AnimationState ItemCarryStanceAnimationState = new AnimationState();
 
     protected ClockworkTier clockworkTier = ClockworkTier.NONE;
-    private ItemStack upgradeItem = null;
+    private ItemStack upgradeItem = ItemStack.EMPTY;
 
     private final Map<MaidenTask, Pair<ItemStack, MaidenInteractionConfig>> carriedItems = new HashMap<>();
     private MaidenTask currentTask = null;
@@ -309,13 +309,15 @@ public class ClockworkMaiden extends PathfinderMob {
     }
 
     @Override
-    protected void dropCustomDeathLoot(DamageSource pSource, int pLooting, boolean pRecentlyHit) {
+    public void die(DamageSource pDamageSource) {
+        super.die(pDamageSource);
+
         Level level = level();
         this.clearBlockEntityData(level);
         if (!this.upgradeItem.isEmpty()){
-            level.addFreshEntity(new ItemEntity(level, this.position().x, this.position().y, this.position().z, this.upgradeItem));
+            this.spawnAtLocation(this.upgradeItem);
         }
-        level.addFreshEntity(new ItemEntity(level, this.position().x, this.position().y, this.position().z, new ItemStack(ModItems.CLOCKWORK_MAIDEN.get())));
+        this.spawnAtLocation(new ItemStack(ModItems.CLOCKWORK_MAIDEN.get()));
     }
 
     public boolean containsTerminal(ClockworkMaidenTerminalEntity blockEntity) {

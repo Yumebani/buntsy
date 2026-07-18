@@ -549,38 +549,58 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         //Icecream
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.VANILLA_ICECREAM.get(), 2)
-                .requires(ModItems.COLD_POWDERED_SUGAR.get(), 3)
-                .requires(ModItems.SWICE_SHARDS.get(), 2)
-                .requires(ModItems.SUGARDEW.get(), 1)
+                .requires(ModItems.COLD_POWDERED_SUGAR.get(), 4)
                 .requires(Ingredient.of(ModItems.GENTLIT_SYRUP.get(), Items.HONEY_BOTTLE, Items.MILK_BUCKET), 1)
                 .unlockedBy(getHasName(ModItems.COLD_POWDERED_SUGAR.get()), has(ModItems.COLD_POWDERED_SUGAR.get()))
                 .unlockedBy(getHasName(ModItems.SWICE_SHARDS.get()), has(ModItems.SWICE_SHARDS.get()))
                 .unlockedBy(getHasName(ModItems.SUGARDEW.get()), has(ModItems.SUGARDEW.get()))
                 .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.VANILLA_ICECREAM.get(), 2)
+                .requires(ModItems.COLD_POWDERED_SUGAR.get(), 4)
+                .requires(ModItems.SUGARDEW.get(), 2)
+                .unlockedBy(getHasName(ModItems.COLD_POWDERED_SUGAR.get()), has(ModItems.COLD_POWDERED_SUGAR.get()))
+                .unlockedBy(getHasName(ModItems.SWICE_SHARDS.get()), has(ModItems.SWICE_SHARDS.get()))
+                .unlockedBy(getHasName(ModItems.SUGARDEW.get()), has(ModItems.SUGARDEW.get()))
+                .save(consumer, "buntsy:vanilla_icecream_from_sugardew");
 
         //Chocolate icecream
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CHOCOLATE_ICECREAM.get(), 2)
-                .requires(ModItems.COLD_POWDERED_SUGAR.get(), 3)
-                .requires(ModItems.SWICE_SHARDS.get(), 2)
+                .requires(ModItems.COLD_POWDERED_SUGAR.get(), 4)
                 .requires(ModItems.CHOCOLATE.get(), 1)
-                .requires(ModItems.SUGARDEW.get(), 1)
                 .requires(Ingredient.of(ModItems.GENTLIT_SYRUP.get(), Items.HONEY_BOTTLE, Items.MILK_BUCKET), 1)
                 .unlockedBy(getHasName(ModItems.COLD_POWDERED_SUGAR.get()), has(ModItems.COLD_POWDERED_SUGAR.get()))
                 .unlockedBy(getHasName(ModItems.SWICE_SHARDS.get()), has(ModItems.SWICE_SHARDS.get()))
                 .unlockedBy(getHasName(ModItems.SUGARDEW.get()), has(ModItems.SUGARDEW.get()))
                 .save(consumer);
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CHOCOLATE_ICECREAM.get(), 2)
+                .requires(ModItems.COLD_POWDERED_SUGAR.get(), 4)
+                .requires(ModItems.CHOCOLATE.get(), 1)
+                .requires(ModItems.SUGARDEW.get(), 2)
+                .unlockedBy(getHasName(ModItems.COLD_POWDERED_SUGAR.get()), has(ModItems.COLD_POWDERED_SUGAR.get()))
+                .unlockedBy(getHasName(ModItems.SWICE_SHARDS.get()), has(ModItems.SWICE_SHARDS.get()))
+                .unlockedBy(getHasName(ModItems.SUGARDEW.get()), has(ModItems.SUGARDEW.get()))
+                .save(consumer, "buntsy:chocolate_icecream_from_sugardew");
+
         //Caramel icecream
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CARAMEL_ICECREAM.get(), 2)
-                .requires(ModItems.COLD_POWDERED_SUGAR.get(), 3)
-                .requires(ModItems.SWICE_SHARDS.get(), 2)
+                .requires(ModItems.COLD_POWDERED_SUGAR.get(), 4)
                 .requires(ModItems.BOWL_OF_CARAMEL.get(), 1)
-                .requires(ModItems.SUGARDEW.get(), 1)
                 .requires(Ingredient.of(ModItems.GENTLIT_SYRUP.get(), Items.HONEY_BOTTLE, Items.MILK_BUCKET), 1)
                 .unlockedBy(getHasName(ModItems.COLD_POWDERED_SUGAR.get()), has(ModItems.COLD_POWDERED_SUGAR.get()))
                 .unlockedBy(getHasName(ModItems.SWICE_SHARDS.get()), has(ModItems.SWICE_SHARDS.get()))
                 .unlockedBy(getHasName(ModItems.SUGARDEW.get()), has(ModItems.SUGARDEW.get()))
                 .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CARAMEL_ICECREAM.get(), 2)
+                .requires(ModItems.COLD_POWDERED_SUGAR.get(), 4)
+                .requires(ModItems.BOWL_OF_CARAMEL.get(), 1)
+                .requires(ModItems.SUGARDEW.get(), 2)
+                .unlockedBy(getHasName(ModItems.COLD_POWDERED_SUGAR.get()), has(ModItems.COLD_POWDERED_SUGAR.get()))
+                .unlockedBy(getHasName(ModItems.SWICE_SHARDS.get()), has(ModItems.SWICE_SHARDS.get()))
+                .unlockedBy(getHasName(ModItems.SUGARDEW.get()), has(ModItems.SUGARDEW.get()))
+                .save(consumer, "buntsy:caramel_icecream_from_sugardew");
 
         //Triple shot icecream
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.TRIPLE_SHOT_ICECREAM.get(), 2)

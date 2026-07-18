@@ -17,6 +17,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.phys.AABB;
+import net.sophiebun.buntsy.blocks.custom.entityblocks.ClockworkFisherBlock;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.screen.clockwork.ClockworkFisherMenu;
 import org.jetbrains.annotations.Nullable;
@@ -66,6 +67,9 @@ public class ClockworkFisherEntity extends ClockworkPassiveCollectorEntity imple
     protected boolean canWork(Level level, BlockPos pPos, BlockState pState) {
         lastCheckTick--;
         if (lastCheckTick <= 0){
+            if (!(pState.getBlock() instanceof ClockworkFisherBlock) || !pState.getValue(ClockworkFisherBlock.WATERLOGGED)){
+                return false;
+            }
             int x = pPos.getX();
             int y = pPos.getY();
             int z = pPos.getZ();
@@ -75,6 +79,7 @@ public class ClockworkFisherEntity extends ClockworkPassiveCollectorEntity imple
                     count++;
                 }
             }
+            if (count < 18){return false;}
             functionality = Math.floorDiv(count, 8);
             lastCheckTick = 20;
         }

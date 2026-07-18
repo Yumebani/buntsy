@@ -18,6 +18,7 @@ import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
 import net.sophiebun.buntsy.recipe.FumeDistilleryRecipe;
 import net.sophiebun.buntsy.recipe.MixerRecipe;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class MixerCategory implements IRecipeCategory<MixerRecipe> {
 
     @Override
     public Component getTitle() {
-        return Component.translatable("block.buntsy.mixer");
+        return Component.translatable("block.buntsy.mixer_block");
     }
 
     @Override
