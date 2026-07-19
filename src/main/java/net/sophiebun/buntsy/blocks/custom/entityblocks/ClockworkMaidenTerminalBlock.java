@@ -89,6 +89,6 @@ public class ClockworkMaidenTerminalBlock extends WindupClockworkBlock {
 
     @Override
     public RenderShape getRenderShape(BlockState pState) {
-        return RenderShape.MODEL;
+        return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 }

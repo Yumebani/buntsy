@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.sophiebun.buntsy.blocks.custom.entityblocks.WindupClockworkBlock;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.entity.clockwork_maiden.CMTParticipantData;
 import net.sophiebun.buntsy.entity.clockwork_maiden.MaidenInteractionConfig;
@@ -22,13 +23,19 @@ import net.sophiebun.buntsy.entity.clockwork_maiden.MaidenTask;
 import net.sophiebun.buntsy.screen.clockwork.CMTParticipantScreen;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoBlockEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ClockworkMaidenTerminalEntity extends WindupClockworkEntity {
+public class ClockworkMaidenTerminalEntity extends WindupClockworkEntity implements GeoBlockEntity {
 
     private final Map<BlockPos, CMTParticipantData> registeredConfigs = new HashMap<>();
     private final List<MaidenTask> maidenTasks = new ArrayList<>();
@@ -37,6 +44,25 @@ public class ClockworkMaidenTerminalEntity extends WindupClockworkEntity {
 
     private final int BASE_BLOCK_COUNT = 12;
     private final int BASE_RANGE_COUNT = 8;
+
+    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private AnimationController<ClockworkMaidenTerminalEntity> controller;
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controller = new AnimationController<>(this, "controller", 2, this::predicate);
+        controllers.add(controller);
+    }
+
+    private PlayState predicate(AnimationState<ClockworkMaidenTerminalEntity> clockworkFairyTerminalEntityAnimationState) {
+        clockworkFairyTerminalEntityAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.clockwork_windup.running", Animation.LoopType.LOOP));
+        return isWoundUp() ? PlayState.CONTINUE : PlayState.STOP;
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
 
     public ClockworkMaidenTerminalEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.CLOCKWORK_MAIDEN_TERMINAL_ENTITY.get(), pPos, pBlockState);

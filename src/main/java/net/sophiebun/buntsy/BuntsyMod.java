@@ -21,9 +21,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
-import net.sophiebun.buntsy.blocks.entity.client.ClockworkFairyTerminalRenderer;
-import net.sophiebun.buntsy.blocks.entity.client.GrindingWheelBlockRenderer;
-import net.sophiebun.buntsy.blocks.entity.client.ThreadReelerBlockRenderer;
+import net.sophiebun.buntsy.blocks.entity.client.*;
 import net.sophiebun.buntsy.client.particle.ModParticleTypes;
 import net.sophiebun.buntsy.dispenser.DispenserBehaviourAditions;
 import net.sophiebun.buntsy.entity.ModEntities;
@@ -157,6 +155,8 @@ public class BuntsyMod
             BlockEntityRenderers.register(ModBlockEntities.GRINDING_WHEEL_BLOCK_ENTITY.get(), GrindingWheelBlockRenderer::new);
 
             BlockEntityRenderers.register(ModBlockEntities.CLOCKWORK_FAIRY_TERMINAL_ENTITY.get(), ClockworkFairyTerminalRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.CLOCKWORK_MAIDEN_TERMINAL_ENTITY.get(), ClockworkMaidenTerminalRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.CLOCKWORK_WINDER_ENTITY.get(), ClockworkWinderRenderer::new);
 
             event.enqueueWork(() -> {
                 ItemBlockRenderTypes.setRenderLayer(ModBlocks.SWICE.get(), RenderType.translucent());

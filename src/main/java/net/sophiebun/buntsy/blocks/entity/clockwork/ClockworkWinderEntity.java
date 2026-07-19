@@ -28,16 +28,23 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.sophiebun.buntsy.blocks.custom.entityblocks.ClockworkWinderBlock;
+import net.sophiebun.buntsy.blocks.custom.entityblocks.WindupClockworkBlock;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.screen.clockwork.ClockworkCrafterMenu;
 import net.sophiebun.buntsy.screen.clockwork.ClockworkWinderMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoBlockEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuProvider {
+public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuProvider, GeoBlockEntity {
 
     protected final ItemStackHandler inventoryItemHandler = new ItemStackHandler(1) {
         @Override
@@ -66,6 +73,24 @@ public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuP
     private int nextCheckTick = 0;
     private int nextRegisterTick = 0;
 
+    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private AnimationController<ClockworkWinderEntity> controller;
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controller = new AnimationController<>(this, "controller", 2, this::predicate);
+        controllers.add(controller);
+    }
+
+    private PlayState predicate(AnimationState<ClockworkWinderEntity> clockworkFairyTerminalEntityAnimationState) {
+        clockworkFairyTerminalEntityAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.clockwork_winder.running", Animation.LoopType.LOOP));
+        return isBurning() ? PlayState.CONTINUE : PlayState.STOP;
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
 
     @Override
     public Component getDisplayName() {
@@ -183,7 +208,7 @@ public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuP
 
         if (this.maxBurnTicks == -1 && inventoryItemHandler.getStackInSlot(0).getBurnTime(RecipeType.SMELTING) != -1){
             consumeFuel();
-        } else if (this.maxBurnTicks > 0 && this.burnTicks < this.maxBurnTicks) {
+        } else if (this.burnTicks > 0) {
 
             this.burnTicks -= getBurn();
 
@@ -265,5 +290,9 @@ public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuP
             case INTRICATE -> 4;
             case COMPLEX -> 8;
         };
+    }
+
+    public boolean isBurning() {
+        return maxBurnTicks != -1 && burnTicks > maxBurnTicks;
     }
 }

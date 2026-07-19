@@ -40,6 +40,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.sophiebun.buntsy.blocks.custom.entityblocks.WindupClockworkBlock;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
@@ -659,17 +660,25 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
     }
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private AnimationController<ClockworkFairyTerminalEntity> controllerIdle;
     private AnimationController<ClockworkFairyTerminalEntity> controller;
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllerIdle = new AnimationController<>(this, "controllerIdle", 2, this::predicateIdle);
+        controllers.add(controllerIdle);
         controller = new AnimationController<>(this, "controller", 2, this::predicate);
         controllers.add(controller);
     }
 
-    private PlayState predicate(AnimationState<ClockworkFairyTerminalEntity> clockworkFairyTerminalEntityAnimationState) {
+    private PlayState predicateIdle(AnimationState<ClockworkFairyTerminalEntity> clockworkFairyTerminalEntityAnimationState) {
         clockworkFairyTerminalEntityAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.clockwork_fairy_terminal.idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
+    }
+
+    private PlayState predicate(AnimationState<ClockworkFairyTerminalEntity> clockworkFairyTerminalEntityAnimationState) {
+        clockworkFairyTerminalEntityAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.clockwork_windup.running", Animation.LoopType.LOOP));
+        return isWoundUp() ? PlayState.CONTINUE : PlayState.STOP;
     }
 
     @Override

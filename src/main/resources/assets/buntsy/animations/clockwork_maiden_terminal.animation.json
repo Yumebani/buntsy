@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"clockwork_windup.running": {
+		"animation.clockwork_windup.running": {
 			"loop": true,
 			"animation_length": 0.5,
 			"bones": {
