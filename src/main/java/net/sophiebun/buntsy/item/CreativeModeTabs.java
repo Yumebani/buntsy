@@ -338,6 +338,7 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get());
                         pOutput.accept(ModBlocks.CLOCKWORK_FISHER.get());
                         pOutput.accept(ModBlocks.CLOCKWORK_CRAFTER.get());
+                        pOutput.accept(ModBlocks.CLOCKWORK_WINDER.get());
                         pOutput.accept(ModBlocks.CLOCKWORK_FAIRY_TERMINAL.get());
                         pOutput.accept(ModBlocks.CLOCKWORK_MAIDEN_TERMINAL.get());
                         pOutput.accept(ModBlocks.GIANT_COCOON.get());

@@ -58,7 +58,7 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.*;
 
-public class ClockworkFairyTerminalEntity extends ClockworkBlockEntity implements MenuProvider, GeoBlockEntity {
+public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implements MenuProvider, GeoBlockEntity {
 
     private boolean isWatched = false;
     private boolean isEnchanted = false;
@@ -102,6 +102,7 @@ public class ClockworkFairyTerminalEntity extends ClockworkBlockEntity implement
             public int get(int i) {
                 return switch (i) {
                     case 0 -> ClockworkFairyTerminalEntity.this.isEnchanted() ? 1 : 0;
+                    case 1 -> ClockworkFairyTerminalEntity.this.isWoundUp() ? 1 : 0;
                     default -> 0;
                 };
             }
@@ -116,7 +117,7 @@ public class ClockworkFairyTerminalEntity extends ClockworkBlockEntity implement
 
             @Override
             public int getCount() {
-                return 1;
+                return 2;
             }
         };
     }
@@ -154,6 +155,11 @@ public class ClockworkFairyTerminalEntity extends ClockworkBlockEntity implement
         super.invalidateCaps();
         inputLazyItemHandler.invalidate();
         outputLazyItemHandler.invalidate();
+    }
+
+    @Override
+    public int getWindupWeight() {
+        return 2;
     }
 
     @Override
@@ -241,11 +247,15 @@ public class ClockworkFairyTerminalEntity extends ClockworkBlockEntity implement
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
 
-        this.generalTick(pLevel);
-        this.updateConsumptionRate(pLevel);
-        this.updateRegisteredBlocks(pLevel);
-        this.fairyEatFromOfferings(pLevel);
-        this.taskTick(pLevel);
+        if (this.isWoundUp()) {
+            this.tickWindup();
+
+            this.generalTick(pLevel);
+            this.updateConsumptionRate(pLevel);
+            this.updateRegisteredBlocks(pLevel);
+            this.fairyEatFromOfferings(pLevel);
+            this.taskTick(pLevel);
+        }
     }
 
     public void generalTick(Level level){

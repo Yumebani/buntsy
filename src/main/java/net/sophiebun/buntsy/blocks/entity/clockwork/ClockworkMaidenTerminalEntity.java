@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
+public class ClockworkMaidenTerminalEntity extends WindupClockworkEntity {
 
     private final Map<BlockPos, CMTParticipantData> registeredConfigs = new HashMap<>();
     private final List<MaidenTask> maidenTasks = new ArrayList<>();
@@ -119,26 +119,25 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
 
     public MaidenTask getTask(){
 
-        boolean recompile = false;
-        for (BlockPos pos : registeredConfigs.keySet().stream().toList()){
-            if (level.isLoaded(pos) && level.getBlockEntity(pos) == null){
-                registeredConfigs.remove(pos);
-                recompile = true;
+        if (isWoundUp()){
+            boolean recompile = false;
+            for (BlockPos pos : registeredConfigs.keySet().stream().toList()){
+                if (level.isLoaded(pos) && level.getBlockEntity(pos) == null){
+                    registeredConfigs.remove(pos);
+                    recompile = true;
+                }
             }
+            if (recompile) recompileTasks();
+
+            if (tasksRoundRobin >= maidenTasks.size()){
+                tasksRoundRobin = 0;
+            }
+
+            if (!this.maidenTasks.isEmpty()){
+                return this.maidenTasks.get(tasksRoundRobin++);
+            } else return null;
         }
-        if (recompile) recompileTasks();
-
-        if (tasksRoundRobin >= maidenTasks.size()){
-            tasksRoundRobin = 0;
-        }
-
-        if (!this.maidenTasks.isEmpty()){
-            return this.maidenTasks.get(tasksRoundRobin++);
-        } else return null;
-    }
-
-    public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-
+        else return null;
     }
 
     public void recompileTasks(){
@@ -249,5 +248,17 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
 
     public void removeBlock(BlockEntity blockEntity) {
         this.registeredConfigs.remove(blockEntity.getBlockPos());
+    }
+
+    public void tick(Level pLevel, BlockPos pPos, BlockState pState){
+
+        if (isWoundUp()){
+            tickWindup();
+        }
+    }
+
+    @Override
+    public int getWindupWeight() {
+        return 4;
     }
 }

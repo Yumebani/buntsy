@@ -385,6 +385,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(ModItems.CLOCKWORK_PROCESSOR.get()), has(ModItems.CLOCKWORK_PROCESSOR.get()))
                 .save(consumer);
 
+        //Clockwork winder
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CLOCKWORK_WINDER.get(), 1)
+                .define('A', Items.FURNACE)
+                .define('B', ModItems.CLOCKWORK_BRASS.get())
+                .define('E', ModItems.CLOCKWORK_GEAR.get())
+                .pattern("BEB")
+                .pattern("EAE")
+                .unlockedBy(getHasName(ModItems.CLOCKWORK_BRASS.get()), has(ModItems.CLOCKWORK_BRASS.get()))
+                .save(consumer);
+
         //Chocolate block
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CHOCOLATE_BLOCK.get(), 1)
                 .define('A', ModItems.CHOCOLATE.get())

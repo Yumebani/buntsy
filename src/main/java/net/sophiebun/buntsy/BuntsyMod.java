@@ -142,6 +142,7 @@ public class BuntsyMod
             MenuScreens.register(ModMenuTypes.CLOCKWORK_POWDERED_SUGAR_COLLECTOR_MENU.get(), ClockworkPowderedSugarCollectorScreen::new);
             MenuScreens.register(ModMenuTypes.CLOCKWORK_FISHER_MENU.get(), ClockworkFisherScreen::new);
             MenuScreens.register(ModMenuTypes.CLOCKWORK_CRAFTER_MENU.get(), ClockworkCrafterScreen::new);
+            MenuScreens.register(ModMenuTypes.CLOCKWORK_WINDER_MENU.get(), ClockworkWinderScreen::new);
             MenuScreens.register(ModMenuTypes.CLOCKWORK_FAIRY_TERMINAL_MENU.get(), ClockworkFairyTerminalScreen::new);
 
             MenuScreens.register(ModMenuTypes.CMT_PARTICIPANT_MENU.get(), CMTParticipantScreen::new);

@@ -729,6 +729,8 @@ public class ModBlocks {
             () -> new ClockworkPowderedSugarCollectorBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
     public static final RegistryObject<Block> CLOCKWORK_FISHER = registerBlock("clockwork_fisher",
             () -> new ClockworkFisherBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> CLOCKWORK_WINDER = registerBlock("clockwork_winder",
+            () -> new ClockworkWinderBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
     public static final RegistryObject<Block> CLOCKWORK_CRAFTER = registerBlock("clockwork_crafter",
             () -> new ClockworkCrafterBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
     public static final RegistryObject<Block> CLOCKWORK_FAIRY_TERMINAL = registerBlock("clockwork_fairy_terminal",

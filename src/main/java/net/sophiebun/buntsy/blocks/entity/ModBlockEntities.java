@@ -111,6 +111,10 @@ public class ModBlockEntities {
             blockEntityRegister.register("clockwork_crafter_entity",
                     () -> BlockEntityType.Builder.of(ClockworkCrafterEntity::new,
                             ModBlocks.CLOCKWORK_CRAFTER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ClockworkWinderEntity>> CLOCKWORK_WINDER_ENTITY =
+            blockEntityRegister.register("clockwork_winder_entity",
+                    () -> BlockEntityType.Builder.of(ClockworkWinderEntity::new,
+                            ModBlocks.CLOCKWORK_WINDER.get()).build(null));
     public static final RegistryObject<BlockEntityType<ClockworkFairyTerminalEntity>> CLOCKWORK_FAIRY_TERMINAL_ENTITY =
             blockEntityRegister.register("clockwork_fairy_terminal_entity",
                     () -> BlockEntityType.Builder.of(ClockworkFairyTerminalEntity::new,

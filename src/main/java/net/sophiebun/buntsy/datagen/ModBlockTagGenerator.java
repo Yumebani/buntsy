@@ -105,6 +105,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get())
                 .add(ModBlocks.CLOCKWORK_FISHER.get())
                 .add(ModBlocks.CLOCKWORK_CRAFTER.get())
+                .add(ModBlocks.CLOCKWORK_WINDER.get())
                 .add(ModBlocks.CLOCKWORK_FAIRY_TERMINAL.get())
                 .add(ModBlocks.DEAD_SWEET_CORAL_BLOCK.get())
                 .add(ModBlocks.SWEET_CORAL_BLOCK.get())

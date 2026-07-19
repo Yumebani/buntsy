@@ -319,8 +319,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         simpleBlockWithItem(ModBlocks.CLOCKWORK_CRAFTER.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/clockwork_crafter")));
+        simpleBlockWithItem(ModBlocks.CLOCKWORK_WINDER.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/clockwork_winder")));
         clockworkSyrupExtractorBlock(ModBlocks.CLOCKWORK_SYRUP_EXTRACTOR);
-        simpleBlockItem(ModBlocks.CLOCKWORK_SYRUP_EXTRACTOR.get(), new ModelFile.UncheckedModelFile(modLoc("block/clockwork_syrup_extractor")));
+        simpleBlockItem(ModBlocks.CLOCKWORK_SYRUP_EXTRACTOR.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/clockwork_syrup_extractor")));
         simpleBlockWithItem(ModBlocks.CLOCKWORK_GEYSER_COLLECTOR.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/clockwork_geyser_collector")));
         simpleBlockWithItem(ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get(),

@@ -15,37 +15,39 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
-import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkFairyTerminalEntity;
-import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkSyrupExtractorEntity;
+import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkCrafterEntity;
+import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkWinderEntity;
 import org.jetbrains.annotations.Nullable;
 
-public class ClockworkFairyTerminalBlock extends WindupClockworkBlock{
+public class ClockworkWinderBlock extends ClockworkBlock{
 
+    public static final BooleanProperty BURNING = BooleanProperty.create("burning");
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
+    public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 14, 16);
 
-    public ClockworkFairyTerminalBlock(Properties pProperties) {
+    public ClockworkWinderBlock(Properties pProperties) {
         super(pProperties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(BURNING, false));
     }
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new ClockworkFairyTerminalEntity(pPos, pState);
+        return new ClockworkWinderEntity(pPos, pState);
     }
 
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof ClockworkFairyTerminalEntity) {
-                ((ClockworkFairyTerminalEntity) blockEntity).drops(pLevel);
+            if (blockEntity instanceof ClockworkWinderEntity) {
+                ((ClockworkWinderEntity) blockEntity).drops();
             }
         }
 
@@ -56,8 +58,8 @@ public class ClockworkFairyTerminalBlock extends WindupClockworkBlock{
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide() && !pPlayer.isCrouching()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof ClockworkFairyTerminalEntity) {
-                NetworkHooks.openScreen((ServerPlayer) pPlayer,(ClockworkFairyTerminalEntity) blockEntity, pPos);
+            if (blockEntity instanceof ClockworkWinderEntity) {
+                NetworkHooks.openScreen((ServerPlayer) pPlayer,(ClockworkWinderEntity) blockEntity, pPos);
                 return InteractionResult.SUCCESS;
             }
             else {
@@ -76,7 +78,7 @@ public class ClockworkFairyTerminalBlock extends WindupClockworkBlock{
             return null;
         }
 
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.CLOCKWORK_FAIRY_TERMINAL_ENTITY.get(),
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.CLOCKWORK_WINDER_ENTITY.get(),
                 (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
     }
 
@@ -99,7 +101,7 @@ public class ClockworkFairyTerminalBlock extends WindupClockworkBlock{
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         super.createBlockStateDefinition(pBuilder);
-        pBuilder.add(FACING);
+        pBuilder.add(FACING, BURNING);
     }
 
     @Override
@@ -109,6 +111,6 @@ public class ClockworkFairyTerminalBlock extends WindupClockworkBlock{
 
     @Override
     public RenderShape getRenderShape(BlockState pState) {
-        return RenderShape.ENTITYBLOCK_ANIMATED;
+        return RenderShape.MODEL;
     }
 }

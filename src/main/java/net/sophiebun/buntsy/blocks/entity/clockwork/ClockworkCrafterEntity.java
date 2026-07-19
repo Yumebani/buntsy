@@ -37,7 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-public class ClockworkCrafterEntity extends ClockworkBlockEntity implements MenuProvider {
+public class ClockworkCrafterEntity extends WindupClockworkEntity implements MenuProvider {
 
     protected final ItemStackHandler inputItemHandler = new ItemStackHandler(18) {
         @Override
@@ -112,6 +112,7 @@ public class ClockworkCrafterEntity extends ClockworkBlockEntity implements Menu
                 return switch(i) {
                     case 0 -> ClockworkCrafterEntity.this.progress;
                     case 1 -> ClockworkCrafterEntity.this.maxProgress;
+                    case 2 -> ClockworkCrafterEntity.this.isWoundUp() ? 1 : 0;
                     default -> 0;
                 };
             }
@@ -126,7 +127,7 @@ public class ClockworkCrafterEntity extends ClockworkBlockEntity implements Menu
 
             @Override
             public int getCount() {
-                return 2;
+                return 3;
             }
         };
     }
@@ -406,16 +407,25 @@ public class ClockworkCrafterEntity extends ClockworkBlockEntity implements Menu
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
 
-        if (this.canCraft(level)){
-            this.progress += getClockworkProgressAmount();
+        if (this.isWoundUp()){
+            this.tickWindup();
 
-            if (this.progress > this.maxProgress){
-                this.craft(level);
+            if (this.canCraft(level)){
+                this.progress += getClockworkProgressAmount();
+
+                if (this.progress > this.maxProgress){
+                    this.craft(level);
+                    this.progress = 0;
+                }
+
+            } else {
                 this.progress = 0;
             }
-
-        } else {
-            this.progress = 0;
         }
+    }
+
+    @Override
+    public int getWindupWeight() {
+        return 1;
     }
 }
