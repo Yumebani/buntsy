@@ -3,9 +3,15 @@ package net.sophiebun.buntsy.recipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.SimpleContainer;
@@ -19,14 +25,16 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FairyInfusionRecipe implements Recipe<SimpleContainer> {
+public class FairyInfusionRecipe implements Recipe<FairyInfusionInput> {
     private final List<Ingredient> inputItems;
     private final ItemStack output;
-    private final ResourceLocation id;
-    public FairyInfusionRecipe(List<Ingredient> inputItems, ItemStack output, ResourceLocation id) {
+    public FairyInfusionRecipe(List<Ingredient> inputItems, ItemStack output) {
         this.inputItems = inputItems;
         this.output = output;
-        this.id = id;
+    }
+
+    public ItemStack getOutput() {
+        return output;
     }
 
     public List<Ingredient> getInputs() {
@@ -34,13 +42,13 @@ public class FairyInfusionRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public boolean matches(SimpleContainer pContainer, Level pLevel) {
-        if(pLevel.isClientSide()) {
+    public boolean matches(FairyInfusionInput fairyInfusionInput, Level level) {
+        if(level.isClientSide()) {
             return false;
         }
 
         for (int i = 0; i < 5; i++){
-            if (inputItems.get(0).test(pContainer.getItem(i))){
+            if (inputItems.get(0).test(fairyInfusionInput.getItem(i))){
                 return true;
             }
         }
@@ -48,7 +56,7 @@ public class FairyInfusionRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer pContainer, RegistryAccess pRegistryAccess) {
+    public ItemStack assemble(FairyInfusionInput fairyInfusionInput, HolderLookup.Provider provider) {
         return output.copy();
     }
 
@@ -58,13 +66,8 @@ public class FairyInfusionRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return output.copy();
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return id;
     }
 
     @Override
@@ -84,47 +87,24 @@ public class FairyInfusionRecipe implements Recipe<SimpleContainer> {
 
     public static class Serializer implements RecipeSerializer<FairyInfusionRecipe> {
         public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation(BuntsyMod.MODID, "fairy_infusion");
+        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "fairy_infusion");
 
         @Override
-        public FairyInfusionRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
-
-            //Inputs
-            JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients");
-            List<Ingredient> inputs = new ArrayList<>();
-            for(JsonElement entry : ingredients.asList()) {
-                inputs.add(Ingredient.fromJson(entry));
-            }
-
-            //Outputs
-            ItemStack output = new ItemStack(Blocks.AIR);
-            output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "output"));
-
-            return new FairyInfusionRecipe(inputs, output, pRecipeId);
+        public MapCodec<FairyInfusionRecipe> codec() {
+            return RecordCodecBuilder.mapCodec(instance -> {
+                return instance.group(
+                        Ingredient.LIST_CODEC.fieldOf("ingredients").forGetter(FairyInfusionRecipe::getInputs),
+                        ItemStack.STRICT_CODEC.fieldOf("output").forGetter(FairyInfusionRecipe::getOutput)
+                ).apply(instance, FairyInfusionRecipe::new);
+            });
         }
 
         @Override
-        public @Nullable FairyInfusionRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
-            NonNullList<Ingredient> inputs = NonNullList.withSize(pBuffer.readInt(), Ingredient.EMPTY);
-
-            for(int i = 0; i < inputs.size(); i++) {
-                inputs.set(i, Ingredient.fromNetwork(pBuffer));
-            }
-
-            ItemStack output = pBuffer.readItem();
-
-            return new FairyInfusionRecipe(inputs, output, pRecipeId);
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf pBuffer, FairyInfusionRecipe pRecipe) {
-            pBuffer.writeInt(pRecipe.inputItems.size());
-
-            for (Ingredient ingredient : pRecipe.getInputs()) {
-                ingredient.toNetwork(pBuffer);
-            }
-
-            pBuffer.writeItem(pRecipe.output);
+        public StreamCodec<RegistryFriendlyByteBuf, FairyInfusionRecipe> streamCodec() {
+            return StreamCodec.composite(
+                    Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), FairyInfusionRecipe::getInputs,
+                    ItemStack.STREAM_CODEC, FairyInfusionRecipe::getOutput,
+                    FairyInfusionRecipe::new);
         }
     }
 }

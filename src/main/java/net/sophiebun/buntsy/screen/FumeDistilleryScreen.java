@@ -12,7 +12,7 @@ import net.sophiebun.buntsy.BuntsyMod;
 public class FumeDistilleryScreen extends AbstractContainerScreen<FumeDistilleryMenu> {
 
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(BuntsyMod.MODID, "textures/gui/fume_distillery_gui.png");
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/gui/fume_distillery_gui.png");
 
     public FumeDistilleryScreen(FumeDistilleryMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -51,7 +51,7 @@ public class FumeDistilleryScreen extends AbstractContainerScreen<FumeDistillery
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
-        renderBackground(guiGraphics);
+        renderBackground(guiGraphics, mouseX, mouseY, delta);
         super.render(guiGraphics, mouseX, mouseY, delta);
         renderTooltip(guiGraphics, mouseX, mouseY);
     }

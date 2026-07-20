@@ -1,0 +1,70 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:fairy_dust"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:music_disc_11"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:music_disc_13"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:music_disc_5"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:music_disc_blocks"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:music_disc_cat"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:music_disc_chirp"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:music_disc_far"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:music_disc_mall"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:essence"
+      ,
+      "components": {
+        "buntsy:essence_type": "musician_1"
+      }
+    },
+  "max_progress": 1000
+}

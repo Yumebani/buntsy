@@ -1,10 +1,12 @@
 package net.sophiebun.buntsy.blocks.custom.entityblocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -17,17 +19,21 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.network.NetworkHooks;
-import net.sophiebun.buntsy.blocks.entity.directfairy.FairyCollectionTrayBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyOfferingBenchBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class FairyOfferingBenchBlock extends BaseEntityBlock {
 
+    public static final MapCodec<FairyOfferingBenchBlock> CODEC = simpleCodec(FairyOfferingBenchBlock::new);
     public static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 12, 15);
 
     public FairyOfferingBenchBlock(Properties pProperties) {
         super(pProperties);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Nullable
@@ -49,18 +55,26 @@ public class FairyOfferingBenchBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player pPlayer, BlockHitResult hitResult) {
+        return use(state, level, pos, pPlayer, pPlayer.swingingArm, hitResult);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        use(state, level, pos, player, hand, hitResult);
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+    }
+
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
             if (blockEntity instanceof FairyOfferingBenchBlockEntity) {
-                NetworkHooks.openScreen((ServerPlayer) pPlayer,(FairyOfferingBenchBlockEntity) blockEntity, pPos);
+                pPlayer.openMenu((FairyOfferingBenchBlockEntity) blockEntity, pPos);
             }
             else {
                 throw new IllegalStateException("No container provider.");
             }
         }
-
-        super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
         return InteractionResult.SUCCESS;
     }
 

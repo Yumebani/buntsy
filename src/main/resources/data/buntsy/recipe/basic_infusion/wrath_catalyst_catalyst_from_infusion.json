@@ -1,0 +1,55 @@
+{
+  "type": "buntsy:infusion_altar_basic",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:catalyst"
+      ,
+      "components": {
+        "buntsy:catalyst_type": {
+          "type": 6,
+          "function": "creation"
+        }
+      }
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:rotten_blend"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:rotten_blend"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:rotten_blend"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:ender_pearl"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:catalyst"
+      ,
+      "components": {
+        "buntsy:catalyst_type": {
+          "type": 9,
+          "function": "creation"
+        }
+      }
+    },
+  "max_progress": 1000
+}

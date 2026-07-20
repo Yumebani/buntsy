@@ -5,10 +5,10 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.data.BlockTagsProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
@@ -26,6 +26,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+
+        this.tag(ModTags.Blocks.NEEDS_SIlKY_TOOL)
+                .addTag(Tags.Blocks.NEEDS_NETHERITE_TOOL);
+
         this.tag(BlockTags.MINEABLE_WITH_AXE)
                 .add(ModBlocks.GENTLIT_LOG.get())
                 .add(ModBlocks.STRIPPED_GENTLIT_LOG.get())
@@ -198,8 +202,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.CRYSTALLIZED_LOG.get())
                 .add(ModBlocks.GRINDING_WHEEL.get());
 
-        for (List<RegistryObject<Block>> blocks : ModGrowableMineral.GROWABLE_MINERAL_STAGES){
-            for (RegistryObject<Block> block : blocks){
+        for (List<DeferredHolder<Block, Block>> blocks : ModGrowableMineral.GROWABLE_MINERAL_STAGES){
+            for (DeferredHolder<Block, Block> block : blocks){
                 this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block.get());
             }
         }
@@ -220,12 +224,12 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.SOUR_CANDY_BRICKS_WALL.get())
                 .add(ModBlocks.SOUR_CANDY_ROCK_WALL.get());
 
-        this.tag(Tags.Blocks.SAND)
+        this.tag(Tags.Blocks.SANDS)
                 .add(ModBlocks.SWEET_CORAL_SAND.get())
                 .add(ModBlocks.FROZEN_CORAL_SAND.get())
                 .add(ModBlocks.SUNNY_CORAL_SAND.get());
 
-        this.tag(Tags.Blocks.STONE)
+        this.tag(Tags.Blocks.STONES)
                 .add(ModBlocks.SWEET_LIMESTONE.get())
                 .add(ModBlocks.SUNNY_LIMESTONE.get())
                 .add(ModBlocks.FROZEN_LIMESTONE.get());

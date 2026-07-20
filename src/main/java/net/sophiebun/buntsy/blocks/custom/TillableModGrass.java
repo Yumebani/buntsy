@@ -40,12 +40,6 @@ public class TillableModGrass extends GrassBlock {
         this.BONEMEAL = bonemeal;
     }
 
-    @Override
-    public boolean isValidSpawn(BlockState state, BlockGetter level, BlockPos pos, SpawnPlacements.Type type, EntityType<?> entityType) {
-        return true;
-    }
-
-    @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (pPlayer.getItemInHand(pHand).is(ItemTags.HOES) && !pLevel.isClientSide()){
             pLevel.setBlock(pPos, FARMLAND.defaultBlockState(), 11);

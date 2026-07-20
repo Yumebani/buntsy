@@ -2,7 +2,7 @@ package net.sophiebun.buntsy.blocks.entity.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -15,19 +15,12 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
-import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyPowerRelayBlockEntity;
-import net.sophiebun.buntsy.recipe.InfusionAltarBasicRecipe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -54,8 +47,6 @@ public abstract class InfusionAltarBlockEntity extends BlockEntity {
     };
 
     private final Integer randomRotation;
-
-    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
     public Integer getRandomRotation() {
         return randomRotation;
@@ -90,26 +81,10 @@ public abstract class InfusionAltarBlockEntity extends BlockEntity {
     }
 
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            if (itemHandler.getStackInSlot(0).isEmpty()){
-                return lazyItemHandler.cast();
-            }
-        }
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        lazyItemHandler = LazyOptional.of((() -> itemHandler));
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        lazyItemHandler.invalidate();
+    public ItemStackHandler getItemHandler(Direction side) {
+        if (itemHandler.getStackInSlot(0).isEmpty()){
+            return itemHandler;
+        } else return null;
     }
 
     public void drops() {
@@ -120,8 +95,10 @@ public abstract class InfusionAltarBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("inventory", itemHandler.serializeNBT());
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.saveAdditional(pTag, registries);
+
+        pTag.put("inventory", itemHandler.serializeNBT(registries));
         pTag.putInt("infusion_altar.progress", this.progress);
         pTag.putInt("infusion_altar.max_progress", this.maxProgress);
 
@@ -138,28 +115,26 @@ public abstract class InfusionAltarBlockEntity extends BlockEntity {
             BlockPos pos = this.infusionPedestals.get(i);
             pTag.put("infusion_altar.infusion_pedestal_" + i, NbtUtils.writeBlockPos(pos));
         }
-
-        super.saveAdditional(pTag);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.loadAdditional(pTag, registries);
 
-        this.itemHandler.deserializeNBT(pTag.getCompound("inventory"));
+        this.itemHandler.deserializeNBT(registries, pTag.getCompound("inventory"));
         this.progress = pTag.getInt("infusion_altar.progress");
         this.maxProgress = pTag.getInt("infusion_altar.max_progress");
 
         int loopCount = pTag.getInt("infusion_altar.linked_relays_count");
 
         for (int i = 0; i < loopCount; i++){
-            this.linkedRelays.add(NbtUtils.readBlockPos(pTag.getCompound("infusion_altar.linked_relay_" + i)));
+            this.linkedRelays.add(NbtUtils.readBlockPos(pTag, "infusion_altar.linked_relay_" + i).get());
         }
 
         loopCount = pTag.getInt("infusion_altar.infusion_pedestals_count");
 
         for (int i = 0; i < loopCount; i++){
-            this.infusionPedestals.add(NbtUtils.readBlockPos(pTag.getCompound("infusion_altar.infusion_pedestal_" + i)));
+            this.infusionPedestals.add(NbtUtils.readBlockPos(pTag, "infusion_altar.infusion_pedestal_" + i).get());
         }
     }
 
@@ -280,7 +255,7 @@ public abstract class InfusionAltarBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 }

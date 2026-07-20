@@ -17,8 +17,8 @@ import net.sophiebun.buntsy.blocks.ModBlocks;
 
 public class ClockworkCollectorCategory implements IRecipeCategory<ClockworkCollectorRecipe> {
 
-    public static final ResourceLocation UID = new ResourceLocation(BuntsyMod.MODID, "clockwork_fisher");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(BuntsyMod.MODID,
+    public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "clockwork_fisher");
+    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,
             "textures/gui/jei_clockwork_collector_gui.png");
 
     public static final RecipeType<ClockworkCollectorRecipe> CLOCKWORK_COLLECTOR_RECIPE_TYPE =
@@ -60,7 +60,7 @@ public class ClockworkCollectorCategory implements IRecipeCategory<ClockworkColl
 
         iRecipeLayoutBuilder.addSlot(RecipeIngredientRole.INPUT, 40, 49)
                 .addItemStack(clockworkCollectorRecipe.getExtra())
-                .addTooltipCallback((iRecipeSlotView, list) -> {
+                .addRichTooltipCallback((iRecipeSlotView, list) -> {
                     if (clockworkCollectorRecipe.getCondition() != null){
                         for (String string : clockworkCollectorRecipe.getCondition()){
                             list.add(Component.literal(string));
@@ -77,7 +77,7 @@ public class ClockworkCollectorCategory implements IRecipeCategory<ClockworkColl
             int finalI = i;
             iRecipeLayoutBuilder.addSlot(RecipeIngredientRole.OUTPUT, 63 + (18 * (i % 5)), 19 + (18 * (i / 5)))
                     .addIngredients(clockworkCollectorRecipe.getItem(i))
-                    .addTooltipCallback((iRecipeSlotView, list) -> {
+                    .addRichTooltipCallback((iRecipeSlotView, list) -> {
                         for (Component component : clockworkCollectorRecipe.getText(finalI)){
                             list.add(component);
                         }

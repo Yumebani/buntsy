@@ -1,7 +1,7 @@
 package net.sophiebun.buntsy.dispenser;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockSource;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
@@ -15,10 +15,10 @@ import net.sophiebun.buntsy.item.ModItems;
 
 public class DispenserBehaviourAditions {
 
-    public static ItemStack interactWithSExtractor(BlockSource pSource,ItemStack pStack){
+    public static ItemStack interactWithSExtractor(BlockSource pSource, ItemStack pStack){
 
-        ServerLevel level = pSource.getLevel();
-        BlockPos pos = pSource.getPos().relative(pSource.getEntity().getBlockState().getValue(DispenserBlock.FACING), 1);
+        ServerLevel level = pSource.level();
+        BlockPos pos = pSource.pos().relative(pSource.blockEntity().getBlockState().getValue(DispenserBlock.FACING), 1);
         BlockState targetBlock = level.getBlockState(pos);
 
         if (targetBlock.is(ModBlocks.SYRUP_EXTRACTOR.get()) &&

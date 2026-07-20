@@ -1,6 +1,6 @@
 package net.sophiebun.buntsy.worldgen.tree.bravot;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
@@ -12,7 +12,7 @@ import net.sophiebun.buntsy.worldgen.tree.ModFoliagePlacers;
 
 public class BravotFoliagePlacer extends FoliagePlacer {
 
-    public static final Codec<BravotFoliagePlacer> CODEC = RecordCodecBuilder.create(squishedBlobFoliagePlacerInstance ->
+    public static final MapCodec<BravotFoliagePlacer> CODEC = RecordCodecBuilder.mapCodec(squishedBlobFoliagePlacerInstance ->
             foliagePlacerParts(squishedBlobFoliagePlacerInstance).apply(squishedBlobFoliagePlacerInstance, BravotFoliagePlacer::new));
 
     public BravotFoliagePlacer(IntProvider pRadius, IntProvider pOffset) {

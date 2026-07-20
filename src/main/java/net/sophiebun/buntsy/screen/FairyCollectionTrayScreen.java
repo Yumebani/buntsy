@@ -12,7 +12,7 @@ import net.sophiebun.buntsy.BuntsyMod;
 public class FairyCollectionTrayScreen extends AbstractContainerScreen<FairyCollectionTrayMenu> {
 
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(BuntsyMod.MODID, "textures/gui/fairy_collection_tray_gui.png");
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/gui/fairy_collection_tray_gui.png");
 
     public FairyCollectionTrayScreen(FairyCollectionTrayMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -37,7 +37,7 @@ public class FairyCollectionTrayScreen extends AbstractContainerScreen<FairyColl
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
-        renderBackground(guiGraphics);
+        renderBackground(guiGraphics, mouseX, mouseY, delta);
         super.render(guiGraphics, mouseX, mouseY, delta);
         renderTooltip(guiGraphics, mouseX, mouseY);
     }

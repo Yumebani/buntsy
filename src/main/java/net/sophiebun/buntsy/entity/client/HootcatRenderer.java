@@ -12,8 +12,8 @@ import net.sophiebun.buntsy.entity.animals.Hootcat;
 
 public class HootcatRenderer extends MobRenderer<Hootcat, HootCatModel<Hootcat>> {
 
-    private static final ResourceLocation HOOTCAT_TEXTURE = new ResourceLocation(BuntsyMod.MODID, "textures/entity/hootcat.png");
-    private static final ResourceLocation PHELINIX_TEXTURE = new ResourceLocation(BuntsyMod.MODID, "textures/entity/phelinix.png");
+    private static final ResourceLocation HOOTCAT_TEXTURE = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/entity/hootcat.png");
+    private static final ResourceLocation PHELINIX_TEXTURE = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/entity/phelinix.png");
 
     public HootcatRenderer(EntityRendererProvider.Context pContext) {
         super(pContext, new HootCatModel<>(pContext.bakeLayer(ModModelLayers.HOOTCAT_LAYER)), 0.0f);

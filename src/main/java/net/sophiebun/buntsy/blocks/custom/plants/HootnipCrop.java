@@ -1,5 +1,6 @@
 package net.sophiebun.buntsy.blocks.custom.plants;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -24,6 +25,8 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.event.EventHooks;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.item.ModItems;
 
@@ -31,6 +34,7 @@ import javax.annotation.Nullable;
 
 public class HootnipCrop extends BushBlock implements BonemealableBlock {
 
+    public static final MapCodec<HootnipCrop> CODEC = simpleCodec(HootnipCrop::new);
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
     public static final int MAX_AGE_BOTTOM = 4;
     public static final int MAX_AGE_TOP = 3;
@@ -50,6 +54,11 @@ public class HootnipCrop extends BushBlock implements BonemealableBlock {
         super(pProperties);
         this.registerDefaultState(this.stateDefinition.any().setValue(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER)
                 .setValue(this.getAgeProperty(), Integer.valueOf(0)));
+    }
+
+    @Override
+    protected MapCodec<? extends BushBlock> codec() {
+        return CODEC;
     }
 
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
@@ -93,7 +102,7 @@ public class HootnipCrop extends BushBlock implements BonemealableBlock {
         if (!pLevel.isAreaLoaded(pPos, 1)) return;
         if (pLevel.getRawBrightness(pPos, 0) >= 9) {
             float f = getGrowthSpeed(this, pLevel, pPos);
-            if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(pLevel, pPos, pState, pRandom.nextInt((int)(25.0F / f) + 1) == 0)){
+            if (CommonHooks.canCropGrow(pLevel, pPos, pState, pRandom.nextInt((int)(25.0F / f) + 1) == 0)){
                 growCrop(pState, pLevel, pPos);
             }
         }
@@ -113,7 +122,7 @@ public class HootnipCrop extends BushBlock implements BonemealableBlock {
         if (isLower(pState)){
             if (!isMaxAge(pState)){
                 pLevel.setBlock(pPos, this.getStateForAge(i + 1), 2);
-                net.minecraftforge.common.ForgeHooks.onCropsGrowPost(pLevel, pPos, pState);
+                CommonHooks.fireCropGrowPost(pLevel, pPos, pState);
             }
             else if (isMaxAge(pState) && !pLevel.getBlockState(pPos.relative(Direction.UP, 1)).is(ModBlocks.HOOTNIP_CROP.get())){
                 pLevel.setBlock(pPos.relative(Direction.UP, 1), this.getStateForAge(i + 1), 2);
@@ -121,7 +130,7 @@ public class HootnipCrop extends BushBlock implements BonemealableBlock {
         }
         else if (i < this.getMaxAge() - 1) {
             pLevel.setBlock(pPos, this.getStateForAge(i + 1), 2);
-            net.minecraftforge.common.ForgeHooks.onCropsGrowPost(pLevel, pPos, pState);
+            CommonHooks.fireCropGrowPost(pLevel, pPos, pState);
         }
     }
 
@@ -140,7 +149,7 @@ public class HootnipCrop extends BushBlock implements BonemealableBlock {
             for(int j = -1; j <= 1; ++j) {
                 float f1 = 0.0F;
                 BlockState blockstate = pLevel.getBlockState(blockpos.offset(i, 0, j));
-                if (blockstate.canSustainPlant(pLevel, blockpos.offset(i, 0, j), net.minecraft.core.Direction.UP, (net.minecraftforge.common.IPlantable) pBlock)) {
+                if (blockstate.canSustainPlant(pLevel, blockpos.offset(i, 0, j), net.minecraft.core.Direction.UP, pLevel.getBlockState(pPos)).isTrue()) {
                     f1 = 1.0F;
                     if (blockstate.isFertile(pLevel, pPos.offset(i, 0, j))) {
                         f1 = 3.0F;
@@ -173,7 +182,7 @@ public class HootnipCrop extends BushBlock implements BonemealableBlock {
         return f;
     }
 
-    public void playerWillDestroy(Level pLevel, BlockPos pPos, BlockState pState, Player pPlayer) {
+    public BlockState playerWillDestroy(Level pLevel, BlockPos pPos, BlockState pState, Player pPlayer) {
         if (!pLevel.isClientSide) {
             if (pPlayer.isCreative()) {
                 preventCreativeDropFromBottomPart(pLevel, pPos, pState, pPlayer);
@@ -182,7 +191,7 @@ public class HootnipCrop extends BushBlock implements BonemealableBlock {
             }
         }
 
-        super.playerWillDestroy(pLevel, pPos, pState, pPlayer);
+        return super.playerWillDestroy(pLevel, pPos, pState, pPlayer);
     }
 
     public void playerDestroy(Level pLevel, Player pPlayer, BlockPos pPos, BlockState pState, @Nullable BlockEntity pTe, ItemStack pStack) {
@@ -220,7 +229,7 @@ public class HootnipCrop extends BushBlock implements BonemealableBlock {
     }
 
     public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
-        if (pEntity instanceof Ravager && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(pLevel, pEntity)) {
+        if (pEntity instanceof Ravager && EventHooks.canEntityGrief(pLevel, pEntity)) {
             pLevel.destroyBlock(pPos, true, pEntity);
         }
 
@@ -237,6 +246,11 @@ public class HootnipCrop extends BushBlock implements BonemealableBlock {
 
     public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
         return this.getAge(pState) != this.getMaxAge();
+    }
+
+    @Override
+    public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState) {
+        return isValidBonemealTarget(levelReader, blockPos, blockState, levelReader.isClientSide());
     }
 
     public boolean isBonemealSuccess(Level pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {

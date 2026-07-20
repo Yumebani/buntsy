@@ -7,11 +7,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.SimpleWeightedRandomList;
-import net.minecraft.util.random.WeightedEntry;
-import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
@@ -20,35 +17,31 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
-import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 public class ClockworkStructuresFeature extends Feature<NoneFeatureConfiguration> {
 
     private final SimpleWeightedRandomList<Pair<ResourceLocation, ClockworkStructureConfig>> list = new SimpleWeightedRandomList.Builder<Pair<ResourceLocation, ClockworkStructureConfig>>()
-            .add(Pair.of(new ResourceLocation(BuntsyMod.MODID, "thing_1"), new ClockworkStructureConfig(-2, 0, 1f, 0.9f)), 120)
-            .add(Pair.of(new ResourceLocation(BuntsyMod.MODID, "thing_2"), new ClockworkStructureConfig(-2, 0, 1f, 0.9f)), 80)
-            .add(Pair.of(new ResourceLocation(BuntsyMod.MODID, "thing_3"), new ClockworkStructureConfig(0, 0, 1f, 0.9f)), 40)
-            .add(Pair.of(new ResourceLocation(BuntsyMod.MODID, "small_gear"), new ClockworkStructureConfig(-3, -2, 1f, 0.9f)), 80)
-            .add(Pair.of(new ResourceLocation(BuntsyMod.MODID, "medium_gear"), new ClockworkStructureConfig(-4, -2, 1f, 0.9f)), 50)
-            .add(Pair.of(new ResourceLocation(BuntsyMod.MODID, "large_gear"), new ClockworkStructureConfig(-6, -3, 1f, 0.9f)), 30)
-            .add(Pair.of(new ResourceLocation(BuntsyMod.MODID, "small_gear_grounded"), new ClockworkStructureConfig(-1, 0, 1f, 0.9f)), 15)
-            .add(Pair.of(new ResourceLocation(BuntsyMod.MODID, "medium_gear_grounded"), new ClockworkStructureConfig(-1, 0, 1f, 0.9f)), 10)
-            .add(Pair.of(new ResourceLocation(BuntsyMod.MODID, "silo"), new ClockworkStructureConfig(-5, -2, 0.9f, 0.8f)), 50)
-            .add(Pair.of(new ResourceLocation(BuntsyMod.MODID, "windup_platform"), new ClockworkStructureConfig(-3, -1, 1f, 0.8f)), 40)
-            .add(Pair.of(new ResourceLocation(BuntsyMod.MODID, "small_pipe"), new ClockworkStructureConfig(-2, -1, 1f, 0.75f)), 20)
-            .add(Pair.of(new ResourceLocation(BuntsyMod.MODID, "medium_pipe"), new ClockworkStructureConfig(-3, -1, 1f, 0.75f)), 10)
-            .add(Pair.of(new ResourceLocation(BuntsyMod.MODID, "large_pipe"), new ClockworkStructureConfig(-4, -1, 1f, 0.75f)), 5)
-            .add(Pair.of(new ResourceLocation(BuntsyMod.MODID, "small_ruins"), new ClockworkStructureConfig(-2, -1, 1f, 0.85f)), 60)
-            .add(Pair.of(new ResourceLocation(BuntsyMod.MODID, "medium_ruins"), new ClockworkStructureConfig(-2, -1, 1f, 0.85f)), 40)
-            .add(Pair.of(new ResourceLocation(BuntsyMod.MODID, "storage_container"), new ClockworkStructureConfig(-5, -2, 1f, 0.75f)), 10)
+            .add(Pair.of(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "thing_1"), new ClockworkStructureConfig(-2, 0, 1f, 0.9f)), 120)
+            .add(Pair.of(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "thing_2"), new ClockworkStructureConfig(-2, 0, 1f, 0.9f)), 80)
+            .add(Pair.of(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "thing_3"), new ClockworkStructureConfig(0, 0, 1f, 0.9f)), 40)
+            .add(Pair.of(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "small_gear"), new ClockworkStructureConfig(-3, -2, 1f, 0.9f)), 80)
+            .add(Pair.of(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "medium_gear"), new ClockworkStructureConfig(-4, -2, 1f, 0.9f)), 50)
+            .add(Pair.of(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "large_gear"), new ClockworkStructureConfig(-6, -3, 1f, 0.9f)), 30)
+            .add(Pair.of(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "small_gear_grounded"), new ClockworkStructureConfig(-1, 0, 1f, 0.9f)), 15)
+            .add(Pair.of(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "medium_gear_grounded"), new ClockworkStructureConfig(-1, 0, 1f, 0.9f)), 10)
+            .add(Pair.of(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "silo"), new ClockworkStructureConfig(-5, -2, 0.9f, 0.8f)), 50)
+            .add(Pair.of(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "windup_platform"), new ClockworkStructureConfig(-3, -1, 1f, 0.8f)), 40)
+            .add(Pair.of(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "small_pipe"), new ClockworkStructureConfig(-2, -1, 1f, 0.75f)), 20)
+            .add(Pair.of(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "medium_pipe"), new ClockworkStructureConfig(-3, -1, 1f, 0.75f)), 10)
+            .add(Pair.of(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "large_pipe"), new ClockworkStructureConfig(-4, -1, 1f, 0.75f)), 5)
+            .add(Pair.of(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "small_ruins"), new ClockworkStructureConfig(-2, -1, 1f, 0.85f)), 60)
+            .add(Pair.of(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "medium_ruins"), new ClockworkStructureConfig(-2, -1, 1f, 0.85f)), 40)
+            .add(Pair.of(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "storage_container"), new ClockworkStructureConfig(-5, -2, 1f, 0.75f)), 10)
             .build();
 
 
@@ -87,7 +80,7 @@ public class ClockworkStructuresFeature extends Feature<NoneFeatureConfiguration
                 .setMirror(mirror)
                 .setIgnoreEntities(true);
 
-        settings.addProcessor(new ClockworkStructureProcessor(new ResourceLocation(BuntsyMod.MODID, "chests/clockwork_ruins"), targetDecay));
+        settings.addProcessor(new ClockworkStructureProcessor(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "chests/clockwork_ruins"), targetDecay));
         settings.addProcessor(BlockIgnoreProcessor.AIR);
 
         BlockPos finalPos = template.getZeroPositionWithTransform(pos.offset(0, targetHeightMod, 0), mirror, rotation);

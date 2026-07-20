@@ -12,7 +12,7 @@ import net.sophiebun.buntsy.BuntsyMod;
 public class ClockworkFairyTerminalScreen extends AbstractContainerScreen<ClockworkFairyTerminalMenu> {
 
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(BuntsyMod.MODID, "textures/gui/fairy_offering_bench_gui.png");
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/gui/fairy_offering_bench_gui.png");
 
     public ClockworkFairyTerminalScreen(ClockworkFairyTerminalMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -46,7 +46,7 @@ public class ClockworkFairyTerminalScreen extends AbstractContainerScreen<Clockw
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
-        renderBackground(guiGraphics);
+        renderBackground(guiGraphics, mouseX, mouseY, delta);
         super.render(guiGraphics, mouseX, mouseY, delta);
         renderTooltip(guiGraphics, mouseX, mouseY);
     }

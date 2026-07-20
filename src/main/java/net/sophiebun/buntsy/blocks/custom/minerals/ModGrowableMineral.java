@@ -1,22 +1,20 @@
 package net.sophiebun.buntsy.blocks.custom.minerals;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.AmethystClusterBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 
 import java.util.List;
-import java.util.Map;
 
 public class ModGrowableMineral extends AmethystClusterBlock {
 
-    public static final List<List<RegistryObject<Block>>> GROWABLE_MINERAL_STAGES = List.of(
+    public static final List<List<DeferredHolder<Block, Block>>> GROWABLE_MINERAL_STAGES = List.of(
             List.of(ModBlocks.SMALL_GROWABLE_AMETHYST_CLUSTER,
                     ModBlocks.MEDIUM_GROWABLE_AMETHYST_CLUSTER,
                     ModBlocks.LARGE_GROWABLE_AMETHYST_CLUSTER,
@@ -76,7 +74,7 @@ public class ModGrowableMineral extends AmethystClusterBlock {
         return stage;
     }
 
-    public List<RegistryObject<Block>> getStages() {
+    public List<DeferredHolder<Block, Block>> getStages() {
         return GROWABLE_MINERAL_STAGES.get(id);
     }
 

@@ -11,9 +11,6 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CandyBoulderFeature extends Feature<NoneFeatureConfiguration> {
 
     private static final BlockState SWEET = ModBlocks.SWEET_CANDY_ROCK.get().defaultBlockState();

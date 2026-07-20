@@ -1,0 +1,58 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+        "count": 1,
+        "id":"buntsy:fairy_dust"
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:diamond"
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:diamond_shard"
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:emerald"
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:emerald_shard"
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:netherite_scrap"
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:quartz"
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:quartz_block"
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:glowstone_crystal"
+    }
+  ],
+  "output":
+    {
+      "count": 1,
+      "id":"buntsy:essence",
+      "components": {
+        "buntsy:essence_type": "valuable"
+      }
+    },
+  "max_progress": 1000
+}

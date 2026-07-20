@@ -9,11 +9,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.sophiebun.buntsy.blocks.custom.entityblocks.ClockworkMaidenTerminalBlock;
 import net.sophiebun.buntsy.entity.ModEntities;
-import net.sophiebun.buntsy.server.ClockworkCardPuncherPacket;
 import net.sophiebun.buntsy.server.ConfigureStaffOperationType;
 import net.sophiebun.buntsy.server.ModPacketHandler;
+import net.sophiebun.buntsy.server.packets.ClockworkCardPuncherPacket;
+
+import java.util.Optional;
 
 public class ClockworkCardPuncher extends Item {
 
@@ -35,15 +38,15 @@ public class ClockworkCardPuncher extends Item {
 
         if (pContext.getLevel().isClientSide()){
             if (this.selectedMaidenId != null){
-                ModPacketHandler.INSTANCE.sendToServer(new ClockworkCardPuncherPacket(this.selectedMaidenId, pContext.getClickedPos(), ConfigureStaffOperationType.SET_BLOCK));
+                PacketDistributor.sendToServer(new ClockworkCardPuncherPacket(this.selectedMaidenId, Optional.of(pContext.getClickedPos()), Optional.empty(), ConfigureStaffOperationType.SET_BLOCK));
                 this.selectedMaidenId = null;
                 return InteractionResult.SUCCESS;
             } else if (this.selectedMaidenTerminal != null && !(pContext.getLevel().getBlockState(pContext.getClickedPos()).getBlock() instanceof ClockworkMaidenTerminalBlock) && pContext.getLevel().getBlockEntity(pContext.getClickedPos()) != null){
 
                 if (editingMode){
-                    ModPacketHandler.INSTANCE.sendToServer(new ClockworkCardPuncherPacket(this.selectedMaidenTerminal, pContext.getClickedPos(), ConfigureStaffOperationType.EDIT_DATA));
+                    PacketDistributor.sendToServer(new ClockworkCardPuncherPacket(-1, Optional.of(this.selectedMaidenTerminal), Optional.of(pContext.getClickedPos()), ConfigureStaffOperationType.EDIT_DATA));
                 } else {
-                    ModPacketHandler.INSTANCE.sendToServer(new ClockworkCardPuncherPacket(this.selectedMaidenTerminal, pContext.getClickedPos(), ConfigureStaffOperationType.SET_BLOCK));
+                    PacketDistributor.sendToServer(new ClockworkCardPuncherPacket(-1, Optional.of(this.selectedMaidenTerminal), Optional.of(pContext.getClickedPos()), ConfigureStaffOperationType.SET_BLOCK));
                 }
                 return InteractionResult.SUCCESS;
 
@@ -75,7 +78,7 @@ public class ClockworkCardPuncher extends Item {
         if (pPlayer.level().isClientSide() && pInteractionTarget.getType() == ModEntities.CLOCKWORK_MAIDEN_ENTITY.get()){
             int maidenId = pInteractionTarget.getId();
             if (this.selectedMaidenId != null && this.selectedMaidenId == maidenId){
-                ModPacketHandler.INSTANCE.sendToServer(new ClockworkCardPuncherPacket(this.selectedMaidenId, null, ConfigureStaffOperationType.CLEAR_DATA));
+                PacketDistributor.sendToServer(new ClockworkCardPuncherPacket(this.selectedMaidenId, Optional.empty(), Optional.empty(), ConfigureStaffOperationType.CLEAR_DATA));
                 this.selectedMaidenId = null;
             }
             else if (this.selectedMaidenTerminal == null){

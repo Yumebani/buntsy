@@ -36,45 +36,10 @@ public class CandyCragPileFeature extends Feature<NoneFeatureConfiguration> {
 
         if (pLevel.getBlockState(pPos).isAir()){
 
-            /*
-            int count = pRandom.nextInt(1, 3);
-
-            List<BlockPos> placements = new ArrayList<>();
-
-            int tries = 20;
-            while (placements.size() <= count && tries > 0){
-                int newX = pRandom.nextInt(4, 8);
-                int newZ = pRandom.nextInt(4, 8);
-                boolean valid = true;
-                for (BlockPos placement : placements){
-                    valid &= !isInRadius(6, placement.getX() - newX, placement.getZ() - newZ);
-                }
-                if (valid) placements.add(pPos.offset(newX, 0, newZ));
-                tries--;
-            }
-            */
             int initDistance = pRandom.nextInt(3, 10);
             int divDistance = (int)Math.max(1, Math.pow(initDistance, 2) / 10);
             int height = pRandom.nextInt(20 / divDistance, 40 / divDistance);
             generatePillar(pLevel, pRandom, pPos.offset(0, 0,0), height, initDistance);
-            /*
-            List<BlockPos> peaks = new ArrayList<>();
-
-            for (BlockPos newPos : placements){
-                peaks.add(generatePillar(pLevel, pRandom, newPos, height, initDistance));
-            }
-
-            while (placements.size() > 1){
-                BlockPos origin = peaks.get(0);
-                BlockPos end = peaks.get(1);
-
-                float calculatedDistance = initDistance * 0.05f * (height - 10);
-
-                generateBridge(pLevel, pRandom, origin, end, calculatedDistance, initDistance);
-
-                placements.remove(0);
-            }
-            */
 
             return true;
         }

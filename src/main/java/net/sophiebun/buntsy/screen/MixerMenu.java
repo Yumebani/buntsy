@@ -7,9 +7,8 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
-import net.sophiebun.buntsy.blocks.entity.advancedfairy.FumeDistilleryBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.advancedfairy.MixerBlockEntity;
 import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
 
@@ -32,15 +31,15 @@ public class MixerMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
         addPlayerInventory(inv);
 
-        this.blockEntity.getInputLazyItemHandler().ifPresent(iItemHandler -> {
+        if (this.blockEntity.inputItemHandler != null){
             for (int i = 0; i < 6; i++){
-                this.addSlot(new SlotItemHandler(iItemHandler, i, 29 + (i % 3) * 18, 20 + (i / 3) * 18));
+                this.addSlot(new SlotItemHandler(this.blockEntity.inputItemHandler, i, 29 + (i % 3) * 18, 20 + (i / 3) * 18));
             }
-        });
+        }
 
-        this.blockEntity.getOutputLazyItemHandler().ifPresent(iItemHandler -> {
-            this.addSlot(new OutputSlot(iItemHandler, 0, 122, 30));
-        });
+        if (this.blockEntity.outputItemHandler != null){
+            this.addSlot(new OutputSlot(this.blockEntity.outputItemHandler, 0, 122, 30));
+        }
 
         addDataSlots(data);
     }

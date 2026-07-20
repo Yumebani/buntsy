@@ -2,14 +2,14 @@ package net.sophiebun.buntsy.entity.clockwork_maiden;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -52,12 +52,11 @@ public class MaidenTask {
         if (level.isLoaded(extractBlock.getPos())){
 
             BlockEntity entity = level.getBlockEntity(extractBlock.getPos());
-            LazyOptional<IItemHandler> capability = entity.getCapability(ForgeCapabilities.ITEM_HANDLER, extractBlock.getSide());
-
+            IItemHandler itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, extractBlock.getPos(), extractBlock.getSide());
+            
             List<ItemStack> extractableSpace = new ArrayList<>();
 
-            capability.ifPresent(itemHandler -> {
-
+            if (itemHandler != null){
                 ItemStack target = null;
                 int total = 0;
 
@@ -72,7 +71,7 @@ public class MaidenTask {
 
                             if (possibleTotal > 0){
                                 ItemStack test = new ItemStack(content.getItem(), possibleTotal);
-                                if (content.hasTag()){test.setTag(content.getTag());}
+                                test.applyComponents(content.getComponents());
                                 int remainder = tryPlace(level, nextConfig, test, true).getCount();
 
                                 if (remainder == 0){
@@ -97,12 +96,11 @@ public class MaidenTask {
                 }
 
                 if (target != null){
-                    extractableSpace.add(
-                            target.hasTag() ? new ItemStack(target.getItem(), total, target.getTag()):
-                                    new ItemStack(target.getItem(), total));
+                    ItemStack stack = target.copy();
+                    stack.setCount(total);
+                    extractableSpace.add(stack);
                 }
-
-            });
+            }
 
             if (extractableSpace.isEmpty()){
                 return ItemStack.EMPTY;
@@ -122,38 +120,36 @@ public class MaidenTask {
 
     private int getCountInStorage(Level level, MaidenInteractionConfig config, ItemStack itemStack) {
         BlockEntity entity = level.getBlockEntity(config.getPos());
-        LazyOptional<IItemHandler> capability = entity.getCapability(ForgeCapabilities.ITEM_HANDLER, config.getSide());
+        IItemHandler itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, extractBlock.getPos(), extractBlock.getSide());
 
         List<Integer> count = new ArrayList<>();
         count.add(0);
 
-        capability.ifPresent(itemHandler -> {
+        if (itemHandler != null){
             for (int i = 0; i < itemHandler.getSlots(); i++){
                 ItemStack content = itemHandler.getStackInSlot(i);
                 if (MaidenInteractionConfig.matchExactly(content, itemStack)){
                     count.set(0, content.getCount() + count.get(0));
                 }
             }
-        });
+        }
 
         return count.get(0);
     }
 
     public static ItemStack tryPlace(Level level, MaidenInteractionConfig config, ItemStack itemStack, boolean simulated){
 
-        BlockEntity entity = level.getBlockEntity(config.getPos());
-        LazyOptional<IItemHandler> capability = entity.getCapability(ForgeCapabilities.ITEM_HANDLER, config.getSide());
+        IItemHandler itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, config.getPos(), config.getSide());
 
-        ItemStack localStack = new ItemStack(itemStack.getItem(), itemStack.getCount());
-        if (itemStack.hasTag()){localStack.setTag(itemStack.getTag());}
+        ItemStack localStack = itemStack.copy();
         List<ItemStack> stackHolder = new ArrayList<>();
         stackHolder.add(localStack);
 
-        capability.ifPresent(itemHandler -> {
+        if (itemHandler != null){
             for (int i = 0; i < itemHandler.getSlots(); i++){
                 stackHolder.set(0, itemHandler.insertItem(i, stackHolder.get(0), simulated));
             }
-        });
+        }
 
         return stackHolder.get(0);
     }
@@ -179,12 +175,10 @@ public class MaidenTask {
 
         if (!nextStack.isEmpty()){
 
-            BlockEntity entity = level.getBlockEntity(extractBlock.getPos());
-            LazyOptional<IItemHandler> capability = entity.getCapability(ForgeCapabilities.ITEM_HANDLER, extractBlock.getSide());
-
-
+            IItemHandler itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, extractBlock.getPos(), extractBlock.getSide());
             ItemStack finalNextStack = nextStack;
-            capability.ifPresent(itemHandler -> {
+
+            if (itemHandler != null){
                 int total = 0;
                 for (int ii = 0; ii < itemHandler.getSlots(); ii++){
                     if (MaidenInteractionConfig.matchExactly(itemHandler.getStackInSlot(ii), finalNextStack)){
@@ -198,7 +192,7 @@ public class MaidenTask {
                         }
                     }
                 }
-            });
+            }
 
             return Pair.of(nextStack, config);
         }
@@ -218,30 +212,30 @@ public class MaidenTask {
         return 0;
     }
 
-    public CompoundTag getCompound() {
+    public CompoundTag getCompound(HolderLookup.Provider registries) {
         CompoundTag tag = new CompoundTag();
 
         tag.putInt("maiden_task.id", this.id);
         tag.put("maiden_task.terminal_loc", NbtUtils.writeBlockPos(this.terminalLoc));
-        tag.put("maiden_task.extract_config", this.extractBlock.getCompound());
+        tag.put("maiden_task.extract_config", this.extractBlock.getCompound(registries));
         tag.putInt("maiden_task.insert_config_count", this.insertBlocks.size());
         for (int i = 0; i < this.insertBlocks.size(); i++){
-            tag.put("maiden_task.insert_config_" + i, this.insertBlocks.get(i).getCompound());
+            tag.put("maiden_task.insert_config_" + i, this.insertBlocks.get(i).getCompound(registries));
         }
         tag.putInt("maiden_task.round_robin", this.roundRobinSelector);
 
         return tag;
     }
 
-    public static MaidenTask parseCompound(CompoundTag tag) {
+    public static MaidenTask parseCompound(CompoundTag tag, HolderLookup.Provider registries) {
 
         int id = tag.getInt("maiden_task.id");
-        BlockPos terminalLoc = NbtUtils.readBlockPos(tag.getCompound("maiden_task.terminal_loc"));
-        MaidenInteractionConfig extractBlock = MaidenInteractionConfig.parseCompound(tag.getCompound("maiden_task.extract_config"));
+        BlockPos terminalLoc = NbtUtils.readBlockPos(tag, "maiden_task.terminal_loc").get();
+        MaidenInteractionConfig extractBlock = MaidenInteractionConfig.parseCompound(tag.getCompound("maiden_task.extract_config"), registries);
         List<MaidenInteractionConfig> insertBlocks = new ArrayList<>();
         int configCount = tag.getInt("maiden_task.insert_config_count");
         for (int i = 0; i < configCount; i++){
-            insertBlocks.add(MaidenInteractionConfig.parseCompound(tag.getCompound("maiden_task.insert_config_" + i)));
+            insertBlocks.add(MaidenInteractionConfig.parseCompound(tag.getCompound("maiden_task.insert_config_" + i), registries));
         }
         int roundRobinSelector = tag.getInt("maiden_task.round_robin");
 

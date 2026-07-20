@@ -12,7 +12,7 @@ import net.sophiebun.buntsy.BuntsyMod;
 public class ClockworkCrafterScreen extends AbstractContainerScreen<ClockworkCrafterMenu> {
 
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(BuntsyMod.MODID, "textures/gui/clockwork_crafter_gui.png");
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/gui/clockwork_crafter_gui.png");
 
     public ClockworkCrafterScreen(ClockworkCrafterMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -44,7 +44,7 @@ public class ClockworkCrafterScreen extends AbstractContainerScreen<ClockworkCra
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
-        renderBackground(guiGraphics);
+        renderBackground(guiGraphics, mouseX, mouseY, delta);
         super.render(guiGraphics, mouseX, mouseY, delta);
         renderTooltip(guiGraphics, mouseX, mouseY);
     }

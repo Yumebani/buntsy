@@ -1,23 +1,16 @@
 package net.sophiebun.buntsy.blocks.entity;
 
-import net.minecraft.client.particle.Particle;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.sophiebun.buntsy.blocks.custom.entityblocks.ChocolateGeyserBlock;
 import net.sophiebun.buntsy.client.particle.ModParticleTypes;
-import org.joml.Random;
-import org.joml.Vector3f;
 
 public class ChocolateGeyserBlockEntity extends BlockEntity {
 
@@ -43,7 +36,7 @@ public class ChocolateGeyserBlockEntity extends BlockEntity {
                         random.nextInt(-6, 7) / 100f);
             } else if (pState.getValue(ChocolateGeyserBlock.STAGE) == 2){
                 RandomSource random = pLevel.getRandom();
-                if (clientTicker % 3 == 0) pLevel.playLocalSound(pPos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.7f, 0.6f, false);
+                if (clientTicker % 9 == 0) pLevel.playLocalSound(pPos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.7f, 0.6f, false);
                 for (int x = 0; x < 5; x++){
                     pLevel.addParticle(ModParticleTypes.CHOCOLATE_DUST_PARTICLE.get(),
                             pPos.getX() + 0.5f, pPos.getY() + 1f, pPos.getZ() + 0.5f,
@@ -77,14 +70,16 @@ public class ChocolateGeyserBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        pTag.putInt("cooldown", geyserCooldown);
-        super.saveAdditional(pTag);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+
+        tag.putInt("cooldown", geyserCooldown);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
-        this.geyserCooldown = pTag.getInt("cooldown");
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+
+        this.geyserCooldown = tag.getInt("cooldown");
     }
 }

@@ -7,19 +7,13 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.LootDataResolver;
-import net.minecraft.world.level.storage.loot.LootTable;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
-import net.sophiebun.buntsy.blocks.custom.entityblocks.InfusionAltarAdvanced;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.recipe.*;
 import net.sophiebun.buntsy.screen.*;
@@ -31,7 +25,7 @@ import java.util.List;
 public class JEIBuntsyPlugin implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
-        return new ResourceLocation(BuntsyMod.MODID, "jei_plugin");
+        return ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "jei_plugin");
     }
 
     @Override
@@ -71,31 +65,31 @@ public class JEIBuntsyPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
 
-        List<GrindingWheelRecipe> grindingWheelRecipes = recipeManager.getAllRecipesFor(GrindingWheelRecipe.Type.INSTANCE);
+        List<GrindingWheelRecipe> grindingWheelRecipes = recipeManager.getAllRecipesFor(GrindingWheelRecipe.Type.INSTANCE).stream().map(entry -> entry.value()).toList();
         registration.addRecipes(GrindingWheelCategory.GRINDING_WHEEL_RECIPE_TYPE, grindingWheelRecipes);
 
-        List<ThreadReelerRecipe> threadReelerRecipes = recipeManager.getAllRecipesFor(ThreadReelerRecipe.Type.INSTANCE);
+        List<ThreadReelerRecipe> threadReelerRecipes = recipeManager.getAllRecipesFor(ThreadReelerRecipe.Type.INSTANCE).stream().map(entry -> entry.value()).toList();
         registration.addRecipes(ThreadReelerCategory.THREAD_REELER_RECIPE_TYPE, threadReelerRecipes);
 
-        List<FairyOfferingRecipe> fairyOfferingRecipes = recipeManager.getAllRecipesFor(FairyOfferingRecipe.Type.INSTANCE);
+        List<FairyOfferingRecipe> fairyOfferingRecipes = recipeManager.getAllRecipesFor(FairyOfferingRecipe.Type.INSTANCE).stream().map(entry -> entry.value()).toList();
         registration.addRecipes(FairyOfferingCategory.FAIRY_OFFERING_RECIPE_TYPE, fairyOfferingRecipes);
 
-        List<FairyInfusionRecipe> fairyInfusionRecipes = recipeManager.getAllRecipesFor(FairyInfusionRecipe.Type.INSTANCE);
+        List<FairyInfusionRecipe> fairyInfusionRecipes = recipeManager.getAllRecipesFor(FairyInfusionRecipe.Type.INSTANCE).stream().map(entry -> entry.value()).toList();
         registration.addRecipes(FairyInfusionCategory.FAIRY_INFUSION_RECIPE_TYPE, fairyInfusionRecipes);
 
-        List<MagicCrystalizerRecipe> magicCrystalizerRecipes = recipeManager.getAllRecipesFor(MagicCrystalizerRecipe.Type.INSTANCE);
+        List<MagicCrystalizerRecipe> magicCrystalizerRecipes = recipeManager.getAllRecipesFor(MagicCrystalizerRecipe.Type.INSTANCE).stream().map(entry -> entry.value()).toList();
         registration.addRecipes(MagicCrystalizerCategory.MAGIC_CRYSTALIZER_RECIPE_TYPE, magicCrystalizerRecipes);
 
-        List<FumeDistilleryRecipe> fumeDistilleryRecipes = recipeManager.getAllRecipesFor(FumeDistilleryRecipe.Type.INSTANCE);
+        List<FumeDistilleryRecipe> fumeDistilleryRecipes = recipeManager.getAllRecipesFor(FumeDistilleryRecipe.Type.INSTANCE).stream().map(entry -> entry.value()).toList();
         registration.addRecipes(FumeDistilleryCategory.FUME_DISTILLERY_RECIPE_TYPE, fumeDistilleryRecipes);
 
-        List<InfusionAltarBasicRecipe> infusionAltarBasicCategories = recipeManager.getAllRecipesFor(InfusionAltarBasicRecipe.Type.INSTANCE);
+        List<InfusionAltarBasicRecipe> infusionAltarBasicCategories = recipeManager.getAllRecipesFor(InfusionAltarBasicRecipe.Type.INSTANCE).stream().map(entry -> entry.value()).toList();
         registration.addRecipes(InfusionAltarBasicCategory.INFUSION_ALTAR_BASIC_RECIPE_TYPE, infusionAltarBasicCategories);
 
-        List<InfusionAltarAdvancedRecipe> infusionAltarAdvancedRecipes = recipeManager.getAllRecipesFor(InfusionAltarAdvancedRecipe.Type.INSTANCE);
+        List<InfusionAltarAdvancedRecipe> infusionAltarAdvancedRecipes = recipeManager.getAllRecipesFor(InfusionAltarAdvancedRecipe.Type.INSTANCE).stream().map(entry -> entry.value()).toList();
         registration.addRecipes(InfusionAltarAdvancedCategory.INFUSION_ALTAR_ADVANCED_RECIPE_TYPE, infusionAltarAdvancedRecipes);
 
-        List<MixerRecipe> mixerRecipes = recipeManager.getAllRecipesFor(MixerRecipe.Type.INSTANCE);
+        List<MixerRecipe> mixerRecipes = recipeManager.getAllRecipesFor(MixerRecipe.Type.INSTANCE).stream().map(entry -> entry.value()).toList();
         registration.addRecipes(MixerCategory.MIXER_RECIPE_TYPE, mixerRecipes);
 
         registration.addRecipes(ClockworkCollectorCategory.CLOCKWORK_COLLECTOR_RECIPE_TYPE, getCollectorRecipes());

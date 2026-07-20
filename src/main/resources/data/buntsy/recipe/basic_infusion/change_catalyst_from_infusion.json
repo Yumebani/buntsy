@@ -1,0 +1,49 @@
+{
+  "type": "buntsy:infusion_altar_basic",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:empty_catalyst"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:fairy_dust"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:fairy_dust"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:gold_crystal"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:amethyst_shard"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:catalyst"
+      ,
+      "components": {
+        "buntsy:catalyst_type": {
+          "type": 4,
+          "function": "creation"
+        }
+      }
+    },
+  "max_progress": 1000
+}

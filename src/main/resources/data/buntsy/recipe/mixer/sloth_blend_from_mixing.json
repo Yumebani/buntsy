@@ -1,0 +1,18 @@
+{
+  "type": "buntsy:mixer",
+  "inputs": [
+    {
+        "count": 1,
+        "id":"minecraft:cookie"
+    },
+    {
+        "count": 1,
+        "id":"minecraft:lapis_lazuli"
+    }
+  ],
+  "output":
+  {
+      "count": 2,
+      "id":"buntsy:sloth_blend"
+  }
+}

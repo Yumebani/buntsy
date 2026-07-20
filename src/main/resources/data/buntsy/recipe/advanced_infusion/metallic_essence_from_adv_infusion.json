@@ -1,0 +1,70 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:fairy_dust"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:copper_ingot"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:copper_ingot"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:iron_ingot"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:iron_ingot"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:gold_ingot"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:gold_ingot"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:netherite_ingot"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:silky_ingot"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:essence"
+      ,
+      "components": {
+        "buntsy:essence_type": "metallic"
+      }
+    },
+  "max_progress": 1000
+}

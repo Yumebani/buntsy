@@ -2,6 +2,7 @@ package net.sophiebun.buntsy.blocks.entity.directfairy;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -15,11 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
 import net.sophiebun.buntsy.screen.FairyCollectionTrayMenu;
@@ -33,7 +30,7 @@ import java.util.Random;
 
 public class FairyCollectionTrayBlockEntity extends FairyInteractBlockEntity implements MenuProvider {
 
-    private final ItemStackHandler itemHandler = new ItemStackHandler(15) {
+    public final ItemStackHandler itemHandler = new ItemStackHandler(15) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -47,8 +44,6 @@ public class FairyCollectionTrayBlockEntity extends FairyInteractBlockEntity imp
     private static final int OUTPUT_SLOT_COUNT = 15;
 
     private final List<Integer> randomRotations;
-
-    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
     public List<Integer> getRandomRotations() {
         return randomRotations;
@@ -76,24 +71,8 @@ public class FairyCollectionTrayBlockEntity extends FairyInteractBlockEntity imp
         return 4;
     }
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            return lazyItemHandler.cast();
-        }
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        lazyItemHandler = LazyOptional.of((() -> itemHandler));
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        lazyItemHandler.invalidate();
+    public ItemStackHandler getItemHandler(Direction side) {
+         return itemHandler;
     }
 
     public void drops() {
@@ -117,17 +96,17 @@ public class FairyCollectionTrayBlockEntity extends FairyInteractBlockEntity imp
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("inventory", itemHandler.serializeNBT());
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
 
-        super.saveAdditional(pTag);
+        tag.put("inventory", itemHandler.serializeNBT(registries));
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
 
-        this.itemHandler.deserializeNBT(pTag.getCompound("inventory"));
+        this.itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
     }
 
     public List<ItemStack> getRenderItems(){
@@ -171,31 +150,6 @@ public class FairyCollectionTrayBlockEntity extends FairyInteractBlockEntity imp
         }
     }
 
-    /*
-    private boolean hasFlowers(Level pLevel, BlockPos pPos) {
-        return getFlowerList(pLevel, pPos).size() >= VALID_FLOWER_COUNT;
-    }
-
-    private List<Item> getFlowerList(Level pLevel, BlockPos pPos){
-        List<Item> flowers = new ArrayList<>();
-
-        for (int x = pPos.getX() + 4; x >= pPos.getX() - 4; x--){
-            for (int z = pPos.getZ() + 4; z >= pPos.getZ() - 4; z--){
-                for (int y = pPos.getY() + 2; y >= pPos.getY() - 2; y--){
-
-                    BlockState block = pLevel.getBlockState(new BlockPos(x, y, z));
-                    if (block.is(BlockTags.FLOWERS)){
-                        flowers.add(block.getBlock().asItem());
-                    }
-
-                }
-            }
-        }
-
-        return flowers;
-    }
-    */
-
     private Integer getClearOutput(ItemStack result) {
         for (int i = OUTPUT_SLOT_START; i < OUTPUT_SLOT_START + OUTPUT_SLOT_COUNT; i++){
             if ((itemHandler.getStackInSlot(i).isEmpty() || this.itemHandler.getStackInSlot(i).getItem() == result.getItem())
@@ -213,7 +167,7 @@ public class FairyCollectionTrayBlockEntity extends FairyInteractBlockEntity imp
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 }

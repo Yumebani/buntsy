@@ -1,12 +1,15 @@
 package net.sophiebun.buntsy.blocks.custom.entityblocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -16,18 +19,22 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.network.NetworkHooks;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
-import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkGeyserCollectorEntity;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkPowderedSugarCollectorEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class ClockworkPowderedSugarCollectorBlock extends ClockworkBlock{
 
+    public static final MapCodec<ClockworkPowderedSugarCollectorBlock> CODEC = simpleCodec(ClockworkPowderedSugarCollectorBlock::new);
     public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 12, 16);
 
     public ClockworkPowderedSugarCollectorBlock(Properties pProperties) {
         super(pProperties);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -48,11 +55,22 @@ public class ClockworkPowderedSugarCollectorBlock extends ClockworkBlock{
     }
 
     @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player pPlayer, BlockHitResult hitResult) {
+        return use(state, level, pos, pPlayer, pPlayer.swingingArm, hitResult);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        use(state, level, pos, player, hand, hitResult);
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+    }
+
+    @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide() && !pPlayer.isCrouching()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
             if (blockEntity instanceof ClockworkPowderedSugarCollectorEntity) {
-                NetworkHooks.openScreen((ServerPlayer) pPlayer,(ClockworkPowderedSugarCollectorEntity) blockEntity, pPos);
+                pPlayer.openMenu((ClockworkPowderedSugarCollectorEntity) blockEntity, pPos);
                 return InteractionResult.SUCCESS;
             }
             else {

@@ -1,0 +1,70 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:fairy_dust"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:shulker_shell"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:shulker_shell"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:shulker_shell"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:ender_pearl"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:ender_pearl"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:dragon_breath"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:dragon_breath"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:dragon_breath"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:essence"
+      ,
+      "components": {
+        "buntsy:essence_type": "end_creature"
+      }
+    },
+  "max_progress": 1000
+}

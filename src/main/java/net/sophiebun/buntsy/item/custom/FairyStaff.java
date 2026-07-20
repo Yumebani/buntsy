@@ -9,11 +9,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.sophiebun.buntsy.blocks.custom.entityblocks.ClockworkFairyTerminalBlock;
 import net.sophiebun.buntsy.entity.ModEntities;
 import net.sophiebun.buntsy.server.ConfigureStaffOperationType;
-import net.sophiebun.buntsy.server.ModFairyStaffPacket;
-import net.sophiebun.buntsy.server.ModPacketHandler;
+import net.sophiebun.buntsy.server.packets.FairyStaffPacket;
+
+import java.util.Optional;
 
 public class FairyStaff extends Item {
 
@@ -34,18 +36,18 @@ public class FairyStaff extends Item {
 
         if (pContext.getLevel().isClientSide()){
             if (this.selectedFairyId != null){
-                ModPacketHandler.INSTANCE.sendToServer(new ModFairyStaffPacket(this.selectedFairyId, pContext.getClickedPos(), ConfigureStaffOperationType.SET_BLOCK));
+                PacketDistributor.sendToServer(new FairyStaffPacket(this.selectedFairyId, Optional.empty(), Optional.of(pContext.getClickedPos()), ConfigureStaffOperationType.SET_BLOCK));
                 this.selectedFairyId = null;
                 return InteractionResult.SUCCESS;
             } else if (this.selectedFairyTerminal != null && !(pContext.getLevel().getBlockState(pContext.getClickedPos()).getBlock() instanceof ClockworkFairyTerminalBlock) && pContext.getLevel().getBlockEntity(pContext.getClickedPos()) != null){
-                ModPacketHandler.INSTANCE.sendToServer(new ModFairyStaffPacket(this.selectedFairyTerminal, pContext.getClickedPos(), ConfigureStaffOperationType.SET_BLOCK));
+                PacketDistributor.sendToServer(new FairyStaffPacket(-1, Optional.of(this.selectedFairyTerminal), Optional.of(pContext.getClickedPos()), ConfigureStaffOperationType.SET_BLOCK));
                 this.selectedFairyTerminal = null;
                 return InteractionResult.SUCCESS;
             } else if (this.selectedFairyTerminal == null && pContext.getLevel().getBlockState(pContext.getClickedPos()).getBlock() instanceof ClockworkFairyTerminalBlock) {
                 this.selectedFairyTerminal = pContext.getClickedPos();
                 pContext.getPlayer().displayClientMessage(Component.literal("§aSelected fairy terminal"), true);
             } else if (this.selectedFairyTerminal != null  && pContext.getLevel().getBlockState(pContext.getClickedPos()).getBlock() instanceof ClockworkFairyTerminalBlock){
-                ModPacketHandler.INSTANCE.sendToServer(new ModFairyStaffPacket(this.selectedFairyTerminal, null, ConfigureStaffOperationType.CLEAR_DATA));
+                PacketDistributor.sendToServer(new FairyStaffPacket(-1, Optional.of(this.selectedFairyTerminal), Optional.empty(), ConfigureStaffOperationType.CLEAR_DATA));
                 this.selectedFairyTerminal = null;
             } else {
                 this.selectedFairyTerminal = null;
@@ -63,7 +65,7 @@ public class FairyStaff extends Item {
         if (pPlayer.level().isClientSide() && pInteractionTarget.getType() == ModEntities.FAIRY_ENTITY.get()){
             int fairyID = pInteractionTarget.getId();
             if (this.selectedFairyId != null && this.selectedFairyId == fairyID){
-                ModPacketHandler.INSTANCE.sendToServer(new ModFairyStaffPacket(this.selectedFairyId, null, ConfigureStaffOperationType.CLEAR_DATA));
+                PacketDistributor.sendToServer(new FairyStaffPacket(this.selectedFairyId, Optional.empty(), Optional.empty(), ConfigureStaffOperationType.CLEAR_DATA));
                 this.selectedFairyId = null;
             }
             else if (this.selectedFairyTerminal == null){

@@ -1,6 +1,7 @@
 package net.sophiebun.buntsy.worldgen.tree.origami_palm;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,7 +26,7 @@ import java.util.function.Function;
 
 public class OrigamiPalmTrunkPlacer extends TrunkPlacer {
 
-    public static final Codec<OrigamiPalmTrunkPlacer> CODEC = RecordCodecBuilder.create(origamiPalmTrunkPlacerInstance ->
+    public static final MapCodec<OrigamiPalmTrunkPlacer> CODEC = RecordCodecBuilder.mapCodec(origamiPalmTrunkPlacerInstance ->
             trunkPlacerParts(origamiPalmTrunkPlacerInstance).apply(origamiPalmTrunkPlacerInstance, OrigamiPalmTrunkPlacer::new));
 
     public OrigamiPalmTrunkPlacer(int pBaseHeight, int pHeightRandA, int pHeightRandB) {

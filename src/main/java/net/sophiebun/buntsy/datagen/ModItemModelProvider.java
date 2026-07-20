@@ -4,11 +4,10 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.model.generators.ItemModelBuilder;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
@@ -291,8 +290,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemNonBlockDependent(ModBlocks.PALESHROOM_BLOCK);
 
         //Adding mineral blocks
-        for (List<RegistryObject<Block>> minerals : ModGrowableMineral.GROWABLE_MINERAL_STAGES){
-            for (RegistryObject<Block> mineral : minerals){
+        for (List<DeferredHolder<Block, Block>> minerals : ModGrowableMineral.GROWABLE_MINERAL_STAGES){
+            for (DeferredHolder<Block, Block> mineral : minerals){
                 simpleCrossBlockItem(mineral);
             }
         }
@@ -353,97 +352,97 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.PRISM);
     }
 
-    private ItemModelBuilder simpleCrossBlockItem (RegistryObject<Block> block){
+    private ItemModelBuilder simpleCrossBlockItem (DeferredHolder<Block, Block> block){
         return withExistingParent(block.getId().getPath(),
-                new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(BuntsyMod.MODID,"block/" + block.getId().getPath()));
+                ResourceLocation.fromNamespaceAndPath("minecraft", "item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"block/" + block.getId().getPath()));
     }
 
-    private ItemModelBuilder simpleCropBlockItem (RegistryObject<Block> block, String path){
+    private ItemModelBuilder simpleCropBlockItem (DeferredHolder<Block, Block> block, String path){
         return withExistingParent(block.getId().getPath(),
-                new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(BuntsyMod.MODID,"block/" + path));
+                ResourceLocation.fromNamespaceAndPath("minecraft", "item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"block/" + path));
     }
 
-    private ItemModelBuilder specificCrossBlockItem (RegistryObject<Block> block, String extra){
+    private ItemModelBuilder specificCrossBlockItem (DeferredHolder<Block, Block> block, String extra){
         return withExistingParent(block.getId().getPath(),
-                new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(BuntsyMod.MODID,"block/" + block.getId().getPath() + extra));
+                ResourceLocation.fromNamespaceAndPath("minecraft", "item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"block/" + block.getId().getPath() + extra));
     }
 
 
-    private ItemModelBuilder simpleItem (RegistryObject<Item> item){
+    private ItemModelBuilder simpleItem (DeferredHolder<Item, Item> item){
         return withExistingParent(item.getId().getPath(),
-                new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(BuntsyMod.MODID,"item/" + item.getId().getPath()));
+                ResourceLocation.fromNamespaceAndPath("minecraft", "item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"item/" + item.getId().getPath()));
     }
 
-    private ItemModelBuilder simpleItemSpecific (RegistryObject<?> item, String string){
+    private ItemModelBuilder simpleItemSpecific (DeferredHolder<?, ?> item, String string){
         return withExistingParent(item.getId().getPath(),
-                new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(BuntsyMod.MODID,"item/" + string));
+                ResourceLocation.fromNamespaceAndPath("minecraft", "item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"item/" + string));
     }
 
-    private ItemModelBuilder simpleBlockItemSpecific (RegistryObject<?> item, String string){
+    private ItemModelBuilder simpleBlockItemSpecific (DeferredHolder<?, ?> item, String string){
         return withExistingParent(item.getId().getPath(),
-                new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(BuntsyMod.MODID,"block/" + string));
+                ResourceLocation.fromNamespaceAndPath("minecraft", "item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"block/" + string));
     }
 
-    private ItemModelBuilder fumeBottleItem (RegistryObject<Item> item){
+    private ItemModelBuilder fumeBottleItem (DeferredHolder<Item, Item> item){
         return withExistingParent(item.getId().getPath(),
-                new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(BuntsyMod.MODID,"item/fume_bottle_fume")).texture("layer1",
-                new ResourceLocation(BuntsyMod.MODID,"item/fume_bottle"));
+                ResourceLocation.fromNamespaceAndPath("minecraft", "item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"item/fume_bottle_fume")).texture("layer1",
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"item/fume_bottle"));
     }
 
-    private ItemModelBuilder catalystItem (RegistryObject<Item> item){
+    private ItemModelBuilder catalystItem (DeferredHolder<Item, Item> item){
         return withExistingParent(item.getId().getPath(),
-                new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(BuntsyMod.MODID,"item/catalyst_shine")).texture("layer1",
-                new ResourceLocation(BuntsyMod.MODID,"item/catalyst"));
+                ResourceLocation.fromNamespaceAndPath("minecraft", "item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"item/catalyst_shine")).texture("layer1",
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"item/catalyst"));
     }
 
-    private ItemModelBuilder simpleBlockItem (RegistryObject<Block> block){
+    private ItemModelBuilder simpleBlockItem (DeferredHolder<Block, Block> block){
         return withExistingParent(block.getId().getPath(),
-                new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(BuntsyMod.MODID,"item/" + block.getId().getPath()));
+                ResourceLocation.fromNamespaceAndPath("minecraft", "item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"item/" + block.getId().getPath()));
     }
 
-    private ItemModelBuilder handheldItem (RegistryObject<Item> item){
+    private ItemModelBuilder handheldItem (DeferredHolder<Item, Item> item){
         return withExistingParent(item.getId().getPath(),
-                new ResourceLocation("item/handheld")).texture("layer0",
-                new ResourceLocation(BuntsyMod.MODID,"item/" + item.getId().getPath()));
+                ResourceLocation.fromNamespaceAndPath("minecraft", "item/handheld")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"item/" + item.getId().getPath()));
     }
 
-    public void trapdoorItem(RegistryObject<Block> block) {
-        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(),
-                modLoc("block/" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath() + "_bottom"));
+    public void trapdoorItem(DeferredHolder<Block, Block> block) {
+        this.withExistingParent(block.getId().getPath(),
+                modLoc("block/" + block.getId().getPath() + "_bottom"));
     }
 
-    public void fenceItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock) {
-        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/fence_inventory"))
-                .texture("texture",  new ResourceLocation(BuntsyMod.MODID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
+    public void fenceItem(DeferredHolder<Block, Block> block, DeferredHolder<Block, Block> baseBlock) {
+        this.withExistingParent(block.getId().getPath(), mcLoc("block/fence_inventory"))
+                .texture("texture",  ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/" + baseBlock.getId().getPath()));
     }
 
-    public void buttonItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock) {
-        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/button_inventory"))
-                .texture("texture",  new ResourceLocation(BuntsyMod.MODID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
+    public void buttonItem(DeferredHolder<Block, Block> block, DeferredHolder<Block, Block> baseBlock) {
+        this.withExistingParent(block.getId().getPath(), mcLoc("block/button_inventory"))
+                .texture("texture",  ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/" + baseBlock.getId().getPath()));
     }
 
-    public void wallItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock) {
-        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/wall_inventory"))
-                .texture("wall",  new ResourceLocation(BuntsyMod.MODID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
+    public void wallItem(DeferredHolder<Block, Block> block, DeferredHolder<Block, Block> baseBlock) {
+        this.withExistingParent(block.getId().getPath(), mcLoc("block/wall_inventory"))
+                .texture("wall",  ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/" + baseBlock.getId().getPath()));
     }
 
-    public void evenSimplerBlockItem(RegistryObject<Block> block) {
-        this.withExistingParent(BuntsyMod.MODID + ":" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath(),
-                modLoc("block/" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath()));
+    public void evenSimplerBlockItem(DeferredHolder<Block, Block> block) {
+        this.withExistingParent(BuntsyMod.MODID + ":" + block.getId().getPath(),
+                modLoc("block/" + block.getId().getPath()));
     }
 
-    public void blockItemNonBlockDependent(RegistryObject<Block> block) {
-        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(),
+    public void blockItemNonBlockDependent(DeferredHolder<Block, Block> block) {
+        this.withExistingParent(block.getId().getPath(),
                 mcLoc("block/cube_all")).texture("all",
-                modLoc("block/" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath()));
+                modLoc("block/" + block.getId().getPath()));
     }
 }

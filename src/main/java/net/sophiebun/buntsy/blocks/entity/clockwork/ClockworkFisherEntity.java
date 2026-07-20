@@ -49,7 +49,7 @@ public class ClockworkFisherEntity extends ClockworkPassiveCollectorEntity imple
 
     @Override
     protected ItemStack generateOutput(RandomSource random) {
-        LootTable lootTable = level.getServer().getLootData().getLootTable(BuiltInLootTables.FISHING);
+        LootTable lootTable = level.getServer().reloadableRegistries().getLootTable(BuiltInLootTables.FISHING);
 
         LootParams emptyParams = new LootParams.Builder(((ServerLevel) level))
                 .create(LootContextParamSets.EMPTY);

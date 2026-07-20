@@ -12,7 +12,7 @@ import net.sophiebun.buntsy.BuntsyMod;
 public class GrindingWheelScreen extends AbstractContainerScreen<GrindingWheelMenu> {
 
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(BuntsyMod.MODID, "textures/gui/grinding_wheel_gui.png");
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/gui/grinding_wheel_gui.png");
 
     public GrindingWheelScreen(GrindingWheelMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -51,7 +51,7 @@ public class GrindingWheelScreen extends AbstractContainerScreen<GrindingWheelMe
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
-        renderBackground(guiGraphics);
+        renderBackground(guiGraphics, mouseX, mouseY, delta);
         super.render(guiGraphics, mouseX, mouseY, delta);
         renderTooltip(guiGraphics, mouseX, mouseY);
     }

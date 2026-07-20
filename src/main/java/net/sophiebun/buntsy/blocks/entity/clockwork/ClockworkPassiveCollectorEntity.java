@@ -2,38 +2,27 @@ package net.sophiebun.buntsy.blocks.entity.clockwork;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.BottleItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
-import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
-import net.sophiebun.buntsy.item.ModItems;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class ClockworkPassiveCollectorEntity extends ClockworkBlockEntity {
 
-    protected final ItemStackHandler inventoryItemHandler = new ItemStackHandler(15) {
+    public final ItemStackHandler inventoryItemHandler = new ItemStackHandler(15) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -42,9 +31,6 @@ public abstract class ClockworkPassiveCollectorEntity extends ClockworkBlockEnti
             }
         }
     };
-    private LazyOptional<IItemHandler> inventoryLazyItemHandler = LazyOptional.of(() -> this.inventoryItemHandler);
-    public LazyOptional<IItemHandler> getInventoryLazyItemHandler() {return inventoryLazyItemHandler;}
-
     protected final ContainerData data;
 
     private int progress = 0;
@@ -75,24 +61,8 @@ public abstract class ClockworkPassiveCollectorEntity extends ClockworkBlockEnti
         };
     }
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            return inventoryLazyItemHandler.cast();
-        }
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        inventoryLazyItemHandler = LazyOptional.of((() -> this.inventoryItemHandler));
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        inventoryLazyItemHandler.invalidate();
+    public ItemStackHandler getItemHandler(Direction side) {
+        return inventoryItemHandler;
     }
 
     public void drops() {
@@ -106,18 +76,18 @@ public abstract class ClockworkPassiveCollectorEntity extends ClockworkBlockEnti
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("clockwork_passive_collector.inputInventory", inventoryItemHandler.serializeNBT());
-        pTag.putInt("clockwork_passive_collector.progress", this.progress);
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.saveAdditional(pTag, registries);
 
-        super.saveAdditional(pTag);
+        pTag.put("clockwork_passive_collector.inputInventory", inventoryItemHandler.serializeNBT(registries));
+        pTag.putInt("clockwork_passive_collector.progress", this.progress);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.loadAdditional(pTag, registries);
 
-        this.inventoryItemHandler.deserializeNBT(pTag.getCompound("clockwork_passive_collector.inputInventory"));
+        this.inventoryItemHandler.deserializeNBT(registries, pTag.getCompound("clockwork_passive_collector.inputInventory"));
         this.progress = pTag.getInt("clockwork_passive_collector.progress");
     }
 
@@ -128,13 +98,8 @@ public abstract class ClockworkPassiveCollectorEntity extends ClockworkBlockEnti
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     public boolean isSlotClear(int slot, ItemStack item){
@@ -151,7 +116,7 @@ public abstract class ClockworkPassiveCollectorEntity extends ClockworkBlockEnti
             inserted = new ItemStack(item.getItem(),
                     this.inventoryItemHandler.getStackInSlot(slot).getCount() + item.getCount());
         }
-        if (item.hasTag()) inserted.setTag(item.getTag());
+        inserted.applyComponents(item.getComponents());
         this.inventoryItemHandler.setStackInSlot(slot, inserted);
     }
 

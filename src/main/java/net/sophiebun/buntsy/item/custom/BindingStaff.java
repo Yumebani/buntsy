@@ -6,7 +6,8 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
-import net.sophiebun.buntsy.server.ModBindingStaffPacket;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.sophiebun.buntsy.server.packets.BindingStaffPacket;
 import net.sophiebun.buntsy.server.ModPacketHandler;
 
 public class BindingStaff extends Item {
@@ -26,7 +27,7 @@ public class BindingStaff extends Item {
     public InteractionResult useOn(UseOnContext pContext) {
 
         if (pContext.getLevel().isClientSide() && this.selectedBinding != null){
-            ModPacketHandler.INSTANCE.sendToServer(new ModBindingStaffPacket(this.selectedBinding, pContext.getClickedPos()));
+            PacketDistributor.sendToServer(new BindingStaffPacket(this.selectedBinding, pContext.getClickedPos()));
             this.selectedBinding = null;
             return InteractionResult.SUCCESS;
         }

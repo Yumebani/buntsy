@@ -5,7 +5,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -31,7 +30,7 @@ public class SweedFeature extends Feature<NoneFeatureConfiguration> {
 
         for (BlockPos pos : BlockPos.withinManhattan(pPos, 3, 1, 3)){
 
-            if (pLevel.getBlockState(pos).isAir() && ModBlocks.SWEEDS.get().canSurvive(pLevel.getBlockState(pos), pLevel, pos)){
+            if (pLevel.getBlockState(pos).isAir() && ((Sweeds) ModBlocks.SWEEDS.get()).canSurvive(pLevel.getBlockState(pos), pLevel, pos)){
                 int startHeight = pRandom.nextInt(0, 3);
                 for (int height = startHeight; height <= 4; height++){
                     pLevel.setBlock(pos.offset(0, height - startHeight, 0), ModBlocks.SWEEDS.get().defaultBlockState().setValue(Sweeds.HEIGHT, height), 2);

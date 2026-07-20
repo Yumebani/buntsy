@@ -2,6 +2,7 @@ package net.sophiebun.buntsy.blocks.entity.clockwork;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
@@ -19,11 +20,7 @@ import net.minecraft.world.item.BottleItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.custom.entityblocks.ClockworkSyrupExtractorBlock;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.item.ModItems;
@@ -34,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class ClockworkSyrupExtractorEntity extends ClockworkBlockEntity implements MenuProvider {
 
-    protected final ItemStackHandler inputItemHandler = new ItemStackHandler(9) {
+    public final ItemStackHandler inputItemHandler = new ItemStackHandler(9) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -43,10 +40,8 @@ public class ClockworkSyrupExtractorEntity extends ClockworkBlockEntity implemen
             }
         }
     };
-    private LazyOptional<IItemHandler> inputLazyItemHandler = LazyOptional.of(() -> this.inputItemHandler);
-    public LazyOptional<IItemHandler> getInputLazyItemHandler() {return inputLazyItemHandler;}
 
-    protected final ItemStackHandler outputItemHandler = new ItemStackHandler(9) {
+    public final ItemStackHandler outputItemHandler = new ItemStackHandler(9) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -55,8 +50,6 @@ public class ClockworkSyrupExtractorEntity extends ClockworkBlockEntity implemen
             }
         }
     };
-    private LazyOptional<IItemHandler> outputLazyItemHandler = LazyOptional.of(() -> this.outputItemHandler);
-    public LazyOptional<IItemHandler> getOutputLazyItemHandler() {return outputLazyItemHandler;}
 
     private final ContainerData data;
 
@@ -102,31 +95,13 @@ public class ClockworkSyrupExtractorEntity extends ClockworkBlockEntity implemen
         };
     }
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            if (side.equals(Direction.DOWN)){
-                return outputLazyItemHandler.cast();
-            }
-            else {
-                return inputLazyItemHandler.cast();
-            }
+    public ItemStackHandler getItemHandler(Direction side) {
+        if (side.equals(Direction.DOWN)){
+            return outputItemHandler;
         }
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        inputLazyItemHandler = LazyOptional.of((() -> this.inputItemHandler));
-        outputLazyItemHandler = LazyOptional.of((() -> this.outputItemHandler));
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        inputLazyItemHandler.invalidate();
-        outputLazyItemHandler.invalidate();
+        else {
+            return inputItemHandler;
+        }
     }
 
     public void drops() {
@@ -144,21 +119,21 @@ public class ClockworkSyrupExtractorEntity extends ClockworkBlockEntity implemen
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("clockwork_syrup_extractor.inputInventory", inputItemHandler.serializeNBT());
-        pTag.put("clockwork_syrup_extractor.outputInventory", outputItemHandler.serializeNBT());
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.saveAdditional(pTag, registries);
+
+        pTag.put("clockwork_syrup_extractor.inputInventory", inputItemHandler.serializeNBT(registries));
+        pTag.put("clockwork_syrup_extractor.outputInventory", outputItemHandler.serializeNBT(registries));
         pTag.putInt("clockwork_syrup_extractor.progress", this.progress);
         pTag.putInt("clockwork_syrup_extractor.max_progress", this.maxProgress);
-
-        super.saveAdditional(pTag);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.loadAdditional(pTag, registries);
 
-        this.inputItemHandler.deserializeNBT(pTag.getCompound("clockwork_syrup_extractor.inputInventory"));
-        this.outputItemHandler.deserializeNBT(pTag.getCompound("clockwork_syrup_extractor.outputInventory"));
+        this.inputItemHandler.deserializeNBT(registries, pTag.getCompound("clockwork_syrup_extractor.inputInventory"));
+        this.outputItemHandler.deserializeNBT(registries, pTag.getCompound("clockwork_syrup_extractor.outputInventory"));
         this.progress = pTag.getInt("clockwork_syrup_extractor.progress");
         this.maxProgress = pTag.getInt("clockwork_syrup_extractor.max_progress");
     }
@@ -170,13 +145,8 @@ public class ClockworkSyrupExtractorEntity extends ClockworkBlockEntity implemen
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     public boolean isSlotClear(int slot, ItemStack item){
@@ -193,7 +163,7 @@ public class ClockworkSyrupExtractorEntity extends ClockworkBlockEntity implemen
             inserted = new ItemStack(item.getItem(),
                     this.outputItemHandler.getStackInSlot(slot).getCount() + item.getCount());
         }
-        if (item.hasTag()) inserted.setTag(item.getTag());
+        inserted.applyComponents(item.getComponents());
         this.outputItemHandler.setStackInSlot(slot, inserted);
     }
 

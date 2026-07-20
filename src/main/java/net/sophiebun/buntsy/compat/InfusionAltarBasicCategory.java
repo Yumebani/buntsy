@@ -20,8 +20,8 @@ import java.util.List;
 
 public class InfusionAltarBasicCategory implements IRecipeCategory<InfusionAltarBasicRecipe> {
 
-    public static final ResourceLocation UID = new ResourceLocation(BuntsyMod.MODID, "infusion_altar_basic");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(BuntsyMod.MODID,
+    public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "infusion_altar_basic");
+    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,
             "textures/gui/jei_infusion_altar_basic.png");
 
     public static final RecipeType<InfusionAltarBasicRecipe> INFUSION_ALTAR_BASIC_RECIPE_TYPE =

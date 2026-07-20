@@ -1,0 +1,94 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"minecraft:amethyst_shard"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:essence"
+      ,
+      "components": {
+        "buntsy:essence_type": "oceanic"
+      }
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:essence"
+      ,
+      "components": {
+        "buntsy:essence_type": "oceanic"
+      }
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:essence"
+      ,
+      "components": {
+        "buntsy:essence_type": "coral"
+      }
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:essence"
+      ,
+      "components": {
+        "buntsy:essence_type": "coral"
+      }
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:essence"
+      ,
+      "components": {
+        "buntsy:essence_type": "overworld_creature"
+      }
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:essence"
+      ,
+      "components": {
+        "buntsy:essence_type": "overworld_creature"
+      }
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:essence"
+      ,
+      "components": {
+        "buntsy:essence_type": "overworld_sapling"
+      }
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:essence"
+      ,
+      "components": {
+        "buntsy:essence_type": "overworld_sapling"
+      }
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:prism"
+      ,
+      "components": {
+        "buntsy:prism_type": "overworld"
+      }
+    },
+  "max_progress": 1000
+}

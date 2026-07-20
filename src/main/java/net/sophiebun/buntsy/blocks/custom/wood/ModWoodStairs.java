@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 
 public class ModWoodStairs extends StairBlock {
 
-    public ModWoodStairs(Supplier<BlockState> state, Properties properties) {
+    public ModWoodStairs(BlockState state, Properties properties) {
         super(state, properties);
     }
 

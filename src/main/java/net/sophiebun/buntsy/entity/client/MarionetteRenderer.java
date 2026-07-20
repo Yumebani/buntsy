@@ -16,7 +16,7 @@ public class MarionetteRenderer extends MobRenderer<Marionette, MarionetteModel<
 
     @Override
     public ResourceLocation getTextureLocation(Marionette maiden) {
-        return new ResourceLocation(BuntsyMod.MODID, "textures/entity/marionette.png");
+        return ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/entity/marionette.png");
     }
 
     @Override

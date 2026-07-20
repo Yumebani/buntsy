@@ -1,10 +1,9 @@
 package net.sophiebun.buntsy.worldgen.tree.gentlit;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
@@ -20,7 +19,7 @@ import java.util.function.BiConsumer;
 
 public class GentlitTrunkPlacer extends TrunkPlacer {
 
-    public static final Codec<GentlitTrunkPlacer> CODEC = RecordCodecBuilder.create(gentlitTrunkPlacerInstance ->
+    public static final MapCodec<GentlitTrunkPlacer> CODEC = RecordCodecBuilder.mapCodec(gentlitTrunkPlacerInstance ->
             trunkPlacerParts(gentlitTrunkPlacerInstance).apply(gentlitTrunkPlacerInstance, GentlitTrunkPlacer::new));
 
     public GentlitTrunkPlacer(int pBaseHeight, int pHeightRandA, int pHeightRandB) {

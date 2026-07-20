@@ -11,17 +11,14 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
-import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
-import net.sophiebun.buntsy.recipe.FairyInfusionRecipe;
 import net.sophiebun.buntsy.recipe.MagicCrystalizerRecipe;
 
 public class MagicCrystalizerCategory implements IRecipeCategory<MagicCrystalizerRecipe> {
 
-    public static final ResourceLocation UID = new ResourceLocation(BuntsyMod.MODID, "magic_crystalizer");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(BuntsyMod.MODID,
+    public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "magic_crystalizer");
+    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,
             "textures/gui/jei_magic_crystalizer_gui.png");
 
     public static final RecipeType<MagicCrystalizerRecipe> MAGIC_CRYSTALIZER_RECIPE_TYPE =

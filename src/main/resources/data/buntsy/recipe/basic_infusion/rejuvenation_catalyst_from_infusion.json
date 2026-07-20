@@ -1,0 +1,55 @@
+{
+  "type": "buntsy:infusion_altar_basic",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:catalyst"
+      ,
+      "components": {
+        "buntsy:catalyst_type": {
+          "type": 4,
+          "function": "creation"
+        }
+      }
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:molted_moth_wings"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:molted_moth_wings"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:turtle_scute"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:fairy_dust"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:catalyst"
+      ,
+      "components": {
+        "buntsy:catalyst_type": {
+          "type": 5,
+          "function": "creation"
+        }
+      }
+    },
+  "max_progress": 1000
+}

@@ -1,34 +1,38 @@
 package net.sophiebun.buntsy.screen;
 
+import com.mojang.datafixers.util.Pair;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.sophiebun.buntsy.blocks.inventory.InvDisplaySlot;
+import net.sophiebun.buntsy.codec.UroContent;
+import net.sophiebun.buntsy.components.ModDataComponents;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.item.custom.CocoonBag;
-import net.sophiebun.buntsy.server.ModCocoonBagServerPacket;
-import net.sophiebun.buntsy.server.ModPacketHandler;
+import net.sophiebun.buntsy.server.packets.CocoonBagServerPacket;
+
+import java.util.Optional;
 
 public class CocoonBagMenu extends AbstractContainerMenu {
 
     private final ItemStack cocoonBag;
     private ItemStackHandler handler;
-    private LazyOptional<IItemHandler> handlerLazyOptional = LazyOptional.of(() -> handler);
 
     protected CocoonBagMenu(int pContainerId, Inventory inv, FriendlyByteBuf buf) {
         this(pContainerId, inv, inv.player);
     }
 
     public void updateNbt(CompoundTag tag){
-        handler.deserializeNBT(tag);
+        handler.deserializeNBT(Minecraft.getInstance().level.registryAccess(), tag);
     }
 
     public ItemStack getCocoonBag(){
@@ -40,29 +44,23 @@ public class CocoonBagMenu extends AbstractContainerMenu {
         this.cocoonBag = pPlayer.getItemBySlot(EquipmentSlot.MAINHAND).is(ModItems.COCOON_BAG.get()) ?
                 pPlayer.getItemBySlot(EquipmentSlot.MAINHAND) : pPlayer.getItemBySlot(EquipmentSlot.OFFHAND);
 
-        if (!this.cocoonBag.hasTag() || !this.cocoonBag.getTag().contains("buntsy.uro_id")){
+        if (!this.cocoonBag.has(ModDataComponents.URO_ID)){
             handler = new ItemStackHandler(27){
                 @Override
                 protected void onContentsChanged(int slot) {
-                    CompoundTag tag = new CompoundTag();
-                    tag.put("contents" ,this.serializeNBT());
-                    cocoonBag.setTag(tag);
+                    cocoonBag.set(ModDataComponents.URO_CONTENT, new UroContent(this.serializeNBT(Minecraft.getInstance().level.registryAccess()), false, true));
                 }
             };
 
-            if (this.cocoonBag.hasTag()) handler.deserializeNBT(this.cocoonBag.getTag().getCompound("contents"));
+            if (this.cocoonBag.has(ModDataComponents.URO_ID)) handler.deserializeNBT(Minecraft.getInstance().level.registryAccess(), this.cocoonBag.get(ModDataComponents.URO_CONTENT).content());
         }
         else {
-            ModPacketHandler.INSTANCE.sendToServer( new ModCocoonBagServerPacket(CocoonBag.getUroId(getCocoonBag()),
-                    getCocoonBag().getTag().getCompound("uro_contents"), true, false));
+            PacketDistributor.sendToServer( new CocoonBagServerPacket(Optional.of(getCocoonBag().get(ModDataComponents.URO_CONTENT).content()),
+                    CocoonBag.getUroId(getCocoonBag()), true, false));
             handler = new ItemStackHandler(27){
                 @Override
                 protected void onContentsChanged(int slot) {
-                    CompoundTag tag = new CompoundTag();
-                    tag.putInt("buntsy.uro_id", cocoonBag.getTag().getInt("buntsy.uro_id"));
-                    tag.put("uro_contents" ,this.serializeNBT());
-                    tag.putBoolean("out_update", true);
-                    cocoonBag.setTag(tag);
+                    cocoonBag.set(ModDataComponents.URO_CONTENT, new UroContent(this.serializeNBT(Minecraft.getInstance().level.registryAccess()), false, true));
                 }
 
                 @Override
@@ -72,24 +70,20 @@ public class CocoonBagMenu extends AbstractContainerMenu {
                 }
             };
 
-            if (this.cocoonBag.getTag().contains("uro_contents")) handler.deserializeNBT(this.cocoonBag.getTag().getCompound("uro_contents"));
+            if (this.cocoonBag.has(ModDataComponents.URO_CONTENT)) handler.deserializeNBT(Minecraft.getInstance().level.registryAccess(), this.cocoonBag.get(ModDataComponents.URO_CONTENT).content());
         }
 
         addPlayerHotbar(inv);
         addPlayerInventory(inv);
-        addBlockInventory(handlerLazyOptional);
-
-        ///give @s buntsy:uro{buntsy.uro_id: 0} 2
+        addBlockInventory();
     }
 
-    private void addBlockInventory(LazyOptional<IItemHandler> contentLazyItemHandler) {
-        contentLazyItemHandler.ifPresent(iItemHandler -> {
-            for (int i = 0; i < 3; ++i) {
-                for (int l = 0; l < 9; ++l) {
-                    this.addSlot(new SlotItemHandler(iItemHandler, l + i * 9, 8 + l * 18, 18 + i * 18));
-                }
+    private void addBlockInventory() {
+        for (int i = 0; i < 3; ++i) {
+            for (int l = 0; l < 9; ++l) {
+                this.addSlot(new SlotItemHandler(handler, l + i * 9, 8 + l * 18, 18 + i * 18));
             }
-        });
+        }
     }
 
 
@@ -152,7 +146,7 @@ public class CocoonBagMenu extends AbstractContainerMenu {
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
-                if (playerInventory.getItem(l + i * 9 + 9).equals(this.cocoonBag, false)){
+                if (playerInventory.getItem(l + i * 9 + 9).equals(this.cocoonBag)){
                     this.addSlot(new InvDisplaySlot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
                 }
                 else {
@@ -164,7 +158,7 @@ public class CocoonBagMenu extends AbstractContainerMenu {
 
     private void addPlayerHotbar(Inventory playerInventory) {
         for (int i = 0; i < 9; ++i) {
-            if (playerInventory.getItem(i).equals(this.cocoonBag, false)){
+            if (playerInventory.getItem(i).equals(this.cocoonBag)){
                 this.addSlot(new InvDisplaySlot(playerInventory, i, 8 + i * 18, 142));
             }
             else {

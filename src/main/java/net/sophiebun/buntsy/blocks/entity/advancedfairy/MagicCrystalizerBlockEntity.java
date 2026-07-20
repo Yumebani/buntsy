@@ -2,6 +2,7 @@ package net.sophiebun.buntsy.blocks.entity.advancedfairy;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -16,25 +17,25 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
 import net.sophiebun.buntsy.recipe.MagicCrystalizerRecipe;
+import net.sophiebun.buntsy.recipe.MagicCrystallizerInput;
 import net.sophiebun.buntsy.screen.MagicCrystalizerMenu;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class MagicCrystalizerBlockEntity extends FairyInteractBlockEntity implements MenuProvider {
 
-    private final ItemStackHandler sampleItemHandler = new ItemStackHandler(1) {
+    public final ItemStackHandler sampleItemHandler = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -44,7 +45,7 @@ public class MagicCrystalizerBlockEntity extends FairyInteractBlockEntity implem
         }
     };
 
-    private final ItemStackHandler dustItemHandler = new ItemStackHandler(7) {
+    public final ItemStackHandler dustItemHandler = new ItemStackHandler(7) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -54,7 +55,7 @@ public class MagicCrystalizerBlockEntity extends FairyInteractBlockEntity implem
         }
     };
 
-    private final ItemStackHandler outputItemHandler = new ItemStackHandler(1) {
+    public final ItemStackHandler outputItemHandler = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -71,22 +72,6 @@ public class MagicCrystalizerBlockEntity extends FairyInteractBlockEntity implem
     protected final ContainerData data;
     private int progress = 0;
     private int maxProgress = 1000;
-
-    private LazyOptional<IItemHandler> sampleLazyItemHandler = LazyOptional.of(() -> sampleItemHandler);
-    private LazyOptional<IItemHandler> dustLazyItemHandler = LazyOptional.of(() -> dustItemHandler);
-    private LazyOptional<IItemHandler> outputLazyItemHandler = LazyOptional.of(() -> outputItemHandler);
-
-    public LazyOptional<IItemHandler> getSampleLazyItemHandler() {
-        return sampleLazyItemHandler;
-    }
-
-    public LazyOptional<IItemHandler> getDustLazyItemHandler() {
-        return dustLazyItemHandler;
-    }
-
-    public LazyOptional<IItemHandler> getOutputLazyItemHandler() {
-        return outputLazyItemHandler;
-    }
 
     public MagicCrystalizerBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.MAGIC_CRYSTALIZER_BLOCK_ENTITY.get(), pPos, pBlockState);
@@ -130,36 +115,16 @@ public class MagicCrystalizerBlockEntity extends FairyInteractBlockEntity implem
         return new MagicCrystalizerMenu(i, inventory, this, this.data);
     }
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            if (side.equals(Direction.DOWN)){
-                return outputLazyItemHandler.cast();
-            }
-            else if (side.equals(Direction.UP)){
-                return sampleLazyItemHandler.cast();
-            }
-            else{
-                return dustLazyItemHandler.cast();
-            }
+    public ItemStackHandler getItemHandler(Direction side) {
+        if (side.equals(Direction.DOWN)){
+            return outputItemHandler;
         }
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        sampleLazyItemHandler = LazyOptional.of((() -> sampleItemHandler));
-        dustLazyItemHandler = LazyOptional.of((() -> dustItemHandler));
-        outputLazyItemHandler = LazyOptional.of((() -> outputItemHandler));
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        sampleLazyItemHandler.invalidate();
-        dustLazyItemHandler.invalidate();
-        outputLazyItemHandler.invalidate();
+        else if (side.equals(Direction.UP)){
+            return sampleItemHandler;
+        }
+        else{
+            return dustItemHandler;
+        }
     }
 
     public void drops() {
@@ -174,23 +139,23 @@ public class MagicCrystalizerBlockEntity extends FairyInteractBlockEntity implem
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("sampleInventory", sampleItemHandler.serializeNBT());
-        pTag.put("dustInventory", dustItemHandler.serializeNBT());
-        pTag.put("outputInventory", outputItemHandler.serializeNBT());
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.saveAdditional(pTag, registries);
+
+        pTag.put("sampleInventory", sampleItemHandler.serializeNBT(registries));
+        pTag.put("dustInventory", dustItemHandler.serializeNBT(registries));
+        pTag.put("outputInventory", outputItemHandler.serializeNBT(registries));
         pTag.putInt("magic_crystalizer.progress", this.progress);
         pTag.putInt("magic_crystalizer.max_progress", this.maxProgress);
-
-        super.saveAdditional(pTag);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.loadAdditional(pTag, registries);
 
-        this.sampleItemHandler.deserializeNBT(pTag.getCompound("sampleInventory"));
-        this.dustItemHandler.deserializeNBT(pTag.getCompound("dustInventory"));
-        this.outputItemHandler.deserializeNBT(pTag.getCompound("outputInventory"));
+        this.sampleItemHandler.deserializeNBT(registries, pTag.getCompound("sampleInventory"));
+        this.dustItemHandler.deserializeNBT(registries, pTag.getCompound("dustInventory"));
+        this.outputItemHandler.deserializeNBT(registries, pTag.getCompound("outputInventory"));
         this.progress = pTag.getInt("magic_crystalizer.progress");
         this.maxProgress = pTag.getInt("magic_crystalizer.max_progress");
     }
@@ -246,7 +211,7 @@ public class MagicCrystalizerBlockEntity extends FairyInteractBlockEntity implem
     }
 
     public void craftItem() {
-        MagicCrystalizerRecipe recipe = getCurrentRecipe().get();
+        MagicCrystalizerRecipe recipe = getCurrentRecipe().get().value();
         ItemStack result = recipe.getResultItem(null);
 
         this.sampleItemHandler.extractItem(0, 1, false);
@@ -258,25 +223,24 @@ public class MagicCrystalizerBlockEntity extends FairyInteractBlockEntity implem
     }
 
     public boolean hasRecipe() {
-        Optional<MagicCrystalizerRecipe> recipe = getCurrentRecipe();
+        Optional<RecipeHolder<MagicCrystalizerRecipe>> recipe = getCurrentRecipe();
 
         if (recipe.isEmpty()){
             return false;
         }
 
-        ItemStack result = recipe.get().getResultItem(null);
+        ItemStack result = recipe.get().value().getResultItem(null);
         return isOutputClear(result);
     }
 
-    public Optional<MagicCrystalizerRecipe> getCurrentRecipe() {
-        SimpleContainer inventory = new SimpleContainer(9);
-        inventory.setItem(0, sampleItemHandler.getStackInSlot(0));
-        inventory.setItem(8, outputItemHandler.getStackInSlot(0));
-        for (int i = 1; i < 8; i++) {
-            inventory.setItem(i, dustItemHandler.getStackInSlot(i - 1));
+    public Optional<RecipeHolder<MagicCrystalizerRecipe>> getCurrentRecipe() {
+        List<Ingredient> list = new ArrayList<>();
+        list.add(Ingredient.of(sampleItemHandler.getStackInSlot(0)));
+        for (int i = 0; i < 7; i++) {
+            list.add(Ingredient.of(dustItemHandler.getStackInSlot(i)));
         }
 
-        return this.level.getRecipeManager().getRecipeFor(MagicCrystalizerRecipe.Type.INSTANCE, inventory, level);
+        return this.level.getRecipeManager().getRecipeFor(MagicCrystalizerRecipe.Type.INSTANCE, new MagicCrystallizerInput(list), level);
     }
 
     private boolean hasProgressFinished() {
@@ -298,7 +262,7 @@ public class MagicCrystalizerBlockEntity extends FairyInteractBlockEntity implem
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 }

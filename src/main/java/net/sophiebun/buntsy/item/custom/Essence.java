@@ -6,6 +6,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.sophiebun.buntsy.components.ModDataComponents;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -37,45 +38,45 @@ public class Essence extends Item {
     public static ItemColor getTint(){
 
         return ((pStack, pTintIndex) -> {
-            if (!pStack.hasTag()) return 0xFFFFFFFF;
-            switch (pStack.getTag().getString("buntsy.essenceType")) {
-                case "crystalline" -> {return 0x5cf1ff;
+            if (!pStack.has(ModDataComponents.ESSENCE_TYPE)) return 0xFFFFFFFF;
+            switch (pStack.get(ModDataComponents.ESSENCE_TYPE)) {
+                case "crystalline" -> {return 0xFF5cf1ff;
                 }
-                case "metallic" -> {return 0xd9dbde;
+                case "metallic" -> {return 0xFFd9dbde;
                 }
-                case "valuable" -> {return 0xffef5c;
+                case "valuable" -> {return 0xFFffef5c;
                 }
-                case "fauna_sustenance" -> {return 0xff7e73;
+                case "fauna_sustenance" -> {return 0xFFff7e73;
                 }
                 case "fauna" -> {return 0xFFFFFFFF;
                 }
-                case "flora_sustenance" -> {return 0xffaf2e;
+                case "flora_sustenance" -> {return 0xFFffaf2e;
                 }
-                case "flora" -> {return 0xa3f03e;
+                case "flora" -> {return 0xFFa3f03e;
                 }
-                case "musician_1" -> {return 0xfca71e;
+                case "musician_1" -> {return 0xFFfca71e;
                 }
-                case "musician_2" -> {return 0x1ee3fc;
+                case "musician_2" -> {return 0xFF1ee3fc;
                 }
-                case "coral" -> {return 0xf9a1ff;
+                case "coral" -> {return 0xFFf9a1ff;
                 }
-                case "oceanic" -> {return 0x00c8ff;
+                case "oceanic" -> {return 0xFF00c8ff;
                 }
-                case "overworld_sapling" -> {return 0x25b827;
+                case "overworld_sapling" -> {return 0xFF25b827;
                 }
-                case "overworld_creature" -> {return 0x90ab90;
+                case "overworld_creature" -> {return 0xFF90ab90;
                 }
-                case "nether_creature" -> {return 0xf54242;
+                case "nether_creature" -> {return 0xFFf54242;
                 }
-                case "nether_flora" -> {return 0xe9f542;
+                case "nether_flora" -> {return 0xFFe9f542;
                 }
-                case "nether_valuables" -> {return 0xe86b23;
+                case "nether_valuables" -> {return 0xFFe86b23;
                 }
-                case "end_creature" -> {return 0xed82f5;
+                case "end_creature" -> {return 0xFFed82f5;
                 }
-                case "end_flora" -> {return 0x85228c;
+                case "end_flora" -> {return 0xFF85228c;
                 }
-                case "dense_matter" -> {return 0x220f24;
+                case "dense_matter" -> {return 0xFF220f24;
                 }
             }
 
@@ -88,13 +89,12 @@ public class Essence extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
 
-        if (pStack.hasTag()){
-            String essenceType = pStack.getTag().getString("buntsy.essenceType");
-            pTooltipComponents.add(Component.translatable("essence.buntsy." + essenceType));
+        if (stack.has(ModDataComponents.ESSENCE_TYPE)){
+            tooltipComponents.add(Component.translatable("essence.buntsy." + stack.get(ModDataComponents.ESSENCE_TYPE)));
         }
 
-        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 }

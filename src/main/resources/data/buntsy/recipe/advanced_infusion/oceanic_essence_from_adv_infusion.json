@@ -1,0 +1,70 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:fairy_dust"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:seagrass"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:kelp"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:prismarine_shard"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:prismarine_shard"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:prismarine_crystals"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:prismarine_crystals"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:nautilus_shell"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:heart_of_the_sea"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:essence"
+      ,
+      "components": {
+        "buntsy:essence_type": "oceanic"
+      }
+    },
+  "max_progress": 1000
+}

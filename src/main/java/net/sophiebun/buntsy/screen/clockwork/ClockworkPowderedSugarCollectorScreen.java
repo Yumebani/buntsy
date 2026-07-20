@@ -12,7 +12,7 @@ import net.sophiebun.buntsy.BuntsyMod;
 public class ClockworkPowderedSugarCollectorScreen extends AbstractContainerScreen<ClockworkPowderedSugarCollectorMenu> {
 
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(BuntsyMod.MODID, "textures/gui/clockwork_passive_collector_gui.png");
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/gui/clockwork_passive_collector_gui.png");
 
     public ClockworkPowderedSugarCollectorScreen(ClockworkPowderedSugarCollectorMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, Component.translatable("screen.buntsy.clockwork_powdered_sugar_collector"));
@@ -40,7 +40,7 @@ public class ClockworkPowderedSugarCollectorScreen extends AbstractContainerScre
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
-        renderBackground(guiGraphics);
+        renderBackground(guiGraphics, mouseX, mouseY, delta);
         super.render(guiGraphics, mouseX, mouseY, delta);
         renderTooltip(guiGraphics, mouseX, mouseY);
     }

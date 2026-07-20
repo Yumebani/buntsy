@@ -1,6 +1,7 @@
 package net.sophiebun.buntsy.blocks.entity.clockwork;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -28,20 +29,21 @@ public abstract class WindupClockworkEntity extends ClockworkBlockEntity{
     public abstract int getWindupWeight();
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.saveAdditional(pTag, registries);
+
         pTag.putBoolean("windup_clockwork_entity.has_winder", this.winder != null);
         if (this.winder != null){
             pTag.put("windup_clockwork_entity.winder", NbtUtils.writeBlockPos(this.winder));
         }
-        super.saveAdditional(pTag);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.loadAdditional(pTag, registries);
 
         if (pTag.getBoolean("windup_clockwork_entity.has_winder")){
-            this.winder = NbtUtils.readBlockPos(pTag.getCompound("windup_clockwork_entity.winder"));
+            this.winder = NbtUtils.readBlockPos(pTag, "windup_clockwork_entity.winder").get();
         }
     }
 

@@ -2,6 +2,7 @@ package net.sophiebun.buntsy.blocks.entity.clockwork;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -14,19 +15,16 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.*;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.screen.clockwork.ClockworkCrafterMenu;
 import org.jetbrains.annotations.NotNull;
@@ -39,7 +37,7 @@ import java.util.Optional;
 
 public class ClockworkCrafterEntity extends WindupClockworkEntity implements MenuProvider {
 
-    protected final ItemStackHandler inputItemHandler = new ItemStackHandler(18) {
+    public final ItemStackHandler inputItemHandler = new ItemStackHandler(18) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -48,10 +46,8 @@ public class ClockworkCrafterEntity extends WindupClockworkEntity implements Men
             }
         }
     };
-    private LazyOptional<IItemHandler> inputLazyItemHandler = LazyOptional.of(() -> this.inputItemHandler);
-    public LazyOptional<IItemHandler> getInputLazyItemHandler() {return inputLazyItemHandler;}
 
-    protected final ItemStackHandler outputItemHandler = new ItemStackHandler(1) {
+    public final ItemStackHandler outputItemHandler = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -60,10 +56,8 @@ public class ClockworkCrafterEntity extends WindupClockworkEntity implements Men
             }
         }
     };
-    private LazyOptional<IItemHandler> outputLazyItemHandler = LazyOptional.of(() -> this.outputItemHandler);
-    public LazyOptional<IItemHandler> getOutputLazyItemHandler() {return outputLazyItemHandler;}
 
-    protected final ItemStackHandler patternItemHandler = new ItemStackHandler(9) {
+    public final ItemStackHandler patternItemHandler = new ItemStackHandler(9) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -72,10 +66,8 @@ public class ClockworkCrafterEntity extends WindupClockworkEntity implements Men
             }
         }
     };
-    private LazyOptional<IItemHandler> patternLazyItemHandler = LazyOptional.of(() -> this.patternItemHandler);
-    public LazyOptional<IItemHandler> getPatternLazyItemHandler() {return patternLazyItemHandler;}
 
-    protected final ItemStackHandler resultItemHandler = new ItemStackHandler(1) {
+    public final ItemStackHandler resultItemHandler = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -84,8 +76,6 @@ public class ClockworkCrafterEntity extends WindupClockworkEntity implements Men
             }
         }
     };
-    private LazyOptional<IItemHandler> resultLazyItemHandler = LazyOptional.of(() -> this.resultItemHandler);
-    public LazyOptional<IItemHandler> getResultLazyItemHandler() {return resultLazyItemHandler;}
 
     private final ContainerData data;
 
@@ -133,35 +123,13 @@ public class ClockworkCrafterEntity extends WindupClockworkEntity implements Men
         };
     }
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            if (side.equals(Direction.DOWN)){
-                return outputLazyItemHandler.cast();
-            }
-            else {
-                return inputLazyItemHandler.cast();
-            }
+    public ItemStackHandler getItemHandler(Direction side) {
+        if (side.equals(Direction.DOWN)){
+            return outputItemHandler;
         }
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        inputLazyItemHandler = LazyOptional.of((() -> this.inputItemHandler));
-        outputLazyItemHandler = LazyOptional.of((() -> this.outputItemHandler));
-        patternLazyItemHandler = LazyOptional.of((() -> this.patternItemHandler));
-        resultLazyItemHandler = LazyOptional.of((() -> this.resultItemHandler));
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        inputLazyItemHandler.invalidate();
-        outputLazyItemHandler.invalidate();
-        patternLazyItemHandler.invalidate();
-        resultLazyItemHandler.invalidate();
+        else {
+            return inputItemHandler;
+        }
     }
 
     public void drops() {
@@ -177,23 +145,23 @@ public class ClockworkCrafterEntity extends WindupClockworkEntity implements Men
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("clockwork_syrup_extractor.inputInventory", inputItemHandler.serializeNBT());
-        pTag.put("clockwork_syrup_extractor.outputInventory", outputItemHandler.serializeNBT());
-        pTag.put("clockwork_syrup_extractor.patternInventory", patternItemHandler.serializeNBT());
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.saveAdditional(pTag, registries);
+
+        pTag.put("clockwork_syrup_extractor.inputInventory", inputItemHandler.serializeNBT(registries));
+        pTag.put("clockwork_syrup_extractor.outputInventory", outputItemHandler.serializeNBT(registries));
+        pTag.put("clockwork_syrup_extractor.patternInventory", patternItemHandler.serializeNBT(registries));
         pTag.putInt("clockwork_syrup_extractor.progress", this.progress);
         pTag.putInt("clockwork_syrup_extractor.max_progress", this.maxProgress);
-
-        super.saveAdditional(pTag);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.loadAdditional(pTag, registries);
 
-        this.inputItemHandler.deserializeNBT(pTag.getCompound("clockwork_syrup_extractor.inputInventory"));
-        this.outputItemHandler.deserializeNBT(pTag.getCompound("clockwork_syrup_extractor.outputInventory"));
-        this.patternItemHandler.deserializeNBT(pTag.getCompound("clockwork_syrup_extractor.patternInventory"));
+        this.inputItemHandler.deserializeNBT(registries, pTag.getCompound("clockwork_syrup_extractor.inputInventory"));
+        this.outputItemHandler.deserializeNBT(registries, pTag.getCompound("clockwork_syrup_extractor.outputInventory"));
+        this.patternItemHandler.deserializeNBT(registries, pTag.getCompound("clockwork_syrup_extractor.patternInventory"));
         this.progress = pTag.getInt("clockwork_syrup_extractor.progress");
         this.maxProgress = pTag.getInt("clockwork_syrup_extractor.max_progress");
     }
@@ -205,13 +173,8 @@ public class ClockworkCrafterEntity extends WindupClockworkEntity implements Men
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     public boolean isSlotClear(int slot, ItemStack item){
@@ -228,7 +191,7 @@ public class ClockworkCrafterEntity extends WindupClockworkEntity implements Men
             inserted = new ItemStack(item.getItem(),
                     this.outputItemHandler.getStackInSlot(slot).getCount() + item.getCount());
         }
-        if (item.hasTag()) inserted.setTag(item.getTag());
+        inserted.applyComponents(item.getComponents());
         this.outputItemHandler.setStackInSlot(slot, inserted);
     }
 
@@ -369,23 +332,18 @@ public class ClockworkCrafterEntity extends WindupClockworkEntity implements Men
         }
     }
 
-    public Optional<CraftingRecipe> getCurrentRecipe() {
-        CraftingContainer inventory = new TransientCraftingContainer(new AbstractContainerMenu(null, -1) {
-            @Override
-            public ItemStack quickMoveStack(Player player, int slot) { return ItemStack.EMPTY; }
-            @Override
-            public boolean stillValid(Player player) { return true; }
-        }, 3, 3);
-
+    public Optional<RecipeHolder<CraftingRecipe>> getCurrentRecipe() {
+        List<ItemStack> items = new ArrayList<>();
         for (int i = 0; i < patternItemHandler.getSlots(); i++) {
-            inventory.setItem(i, patternItemHandler.getStackInSlot(i));
+            items.add(patternItemHandler.getStackInSlot(i));
         }
+        CraftingInput input = CraftingInput.of(3, 3, items);
 
-        return this.level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, inventory, level);
+        return this.level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, input, level);
     }
 
     public boolean canCraft(Level level) {
-        Optional<CraftingRecipe> recipe = getCurrentRecipe();
+        Optional<RecipeHolder<CraftingRecipe>> recipe = getCurrentRecipe();
 
         if (recipe.isEmpty()){
             if (resultItemHandler.getStackInSlot(0).getCount() > 0 || !resultItemHandler.getStackInSlot(0).isEmpty()){
@@ -394,17 +352,17 @@ public class ClockworkCrafterEntity extends WindupClockworkEntity implements Men
             return false;
         }
 
-        ItemStack result = recipe.get().getResultItem(level.registryAccess());
+        ItemStack result = recipe.get().value().getResultItem(level.registryAccess());
         resultItemHandler.setStackInSlot(0, new ItemStack(result.getItem()));
 
-        return isOutputClear(result) && hasInputStacks(recipe.get().getIngredients());
+        return isOutputClear(result) && hasInputStacks(recipe.get().value().getIngredients());
     }
 
     public void craft(Level level) {
-        Optional<CraftingRecipe> recipe = getCurrentRecipe();
-        ItemStack result = recipe.get().getResultItem(level.registryAccess());
+        Optional<RecipeHolder<CraftingRecipe>> recipe = getCurrentRecipe();
+        ItemStack result = recipe.get().value().getResultItem(level.registryAccess());
         outputItems(new ItemStack(result.getItem(), result.getCount()));
-        takeFromInputs(recipe.get().getIngredients());
+        takeFromInputs(recipe.get().value().getIngredients());
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {

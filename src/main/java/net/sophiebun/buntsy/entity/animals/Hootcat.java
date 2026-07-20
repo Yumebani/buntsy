@@ -2,6 +2,7 @@ package net.sophiebun.buntsy.entity.animals;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -49,6 +50,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.event.EventHooks;
 import net.sophiebun.buntsy.entity.ModEntities;
 import net.sophiebun.buntsy.entity.client.HootcatRenderer;
 import net.sophiebun.buntsy.item.ModItems;
@@ -63,10 +65,10 @@ public class Hootcat extends TamableAnimal {
 
     private static final Ingredient TEMPT_INGREDIENT = Ingredient.of(ModItems.HOOTNIP.get());
     private static final Ingredient TEMPT_INGREDIENT_PHELINIX = Ingredient.of(ModItems.BLAZING_HOOTNIP.get());
-    private static final EntityDataAccessor<Boolean> RELAX_STATE_ONE = SynchedEntityData.defineId(Silkbun.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Integer> DATA_COLLAR_COLOR = SynchedEntityData.defineId(Silkbun.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> FEATHER_DROP_COOLDOWN = SynchedEntityData.defineId(Silkbun.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Boolean> IS_PHELINIX = SynchedEntityData.defineId(Silkbun.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> RELAX_STATE_ONE = SynchedEntityData.defineId(Hootcat.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> DATA_COLLAR_COLOR = SynchedEntityData.defineId(Hootcat.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> FEATHER_DROP_COOLDOWN = SynchedEntityData.defineId(Hootcat.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> IS_PHELINIX = SynchedEntityData.defineId(Hootcat.class, EntityDataSerializers.BOOLEAN);
     @javax.annotation.Nullable
     private TemptGoal temptGoal;
     private float relaxStateOneAmount;
@@ -88,7 +90,7 @@ public class Hootcat extends TamableAnimal {
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.5D));
         this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         this.goalSelector.addGoal(4, this.temptGoal);
-        this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.0D, 10.0F, 5.0F, false));
+        this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.0D, 10.0F, 5.0F));
         this.goalSelector.addGoal(8, new LeapAtTargetGoal(this, 0.3F));
         this.goalSelector.addGoal(10, new BreedGoal(this, 0.8D));
         this.goalSelector.addGoal(11, new WaterAvoidingRandomStrollGoal(this, 0.8D, 1.0000001E-5F));
@@ -135,12 +137,13 @@ public class Hootcat extends TamableAnimal {
         this.entityData.set(IS_PHELINIX, bool);
     }
 
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(RELAX_STATE_ONE, false);
-        this.entityData.define(DATA_COLLAR_COLOR, DyeColor.RED.getId());
-        this.entityData.define(FEATHER_DROP_COOLDOWN, this.random.nextInt(1600, 6400));
-        this.entityData.define(IS_PHELINIX, false);
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(RELAX_STATE_ONE, false);
+        builder.define(DATA_COLLAR_COLOR, DyeColor.RED.getId());
+        builder.define(FEATHER_DROP_COOLDOWN, this.random.nextInt(1600, 6400));
+        builder.define(IS_PHELINIX, false);
     }
 
     public void addAdditionalSaveData(CompoundTag pCompound) {
@@ -295,7 +298,7 @@ public class Hootcat extends TamableAnimal {
 
             if (this.isTame()) {
                 hootcat.setOwnerUUID(this.getOwnerUUID());
-                hootcat.setTame(true);
+                hootcat.setTame(true, true);
                 if (this.random.nextBoolean()) {
                     hootcat.setCollarColor(this.getCollarColor());
                 } else {
@@ -325,10 +328,10 @@ public class Hootcat extends TamableAnimal {
         }
     }
 
-    @javax.annotation.Nullable
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @javax.annotation.Nullable SpawnGroupData pSpawnData, @javax.annotation.Nullable CompoundTag pDataTag) {
-        pSpawnData = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
-        return pSpawnData;
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @org.jetbrains.annotations.Nullable SpawnGroupData spawnGroupData) {
+        spawnGroupData = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+        return spawnGroupData;
     }
 
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
@@ -344,8 +347,8 @@ public class Hootcat extends TamableAnimal {
             if (this.isTame()) {
                 if (this.isOwnedBy(pPlayer)) {
                     if (!(item instanceof DyeItem)) {
-                        if (item.isEdible() && this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
-                            this.heal((float)itemstack.getFoodProperties(this).getNutrition());
+                        if (itemstack.has(DataComponents.FOOD) && this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
+                            this.heal((float)itemstack.getFoodProperties(this).nutrition());
                             this.usePlayerItem(pPlayer, pHand, itemstack);
                             return InteractionResult.CONSUME;
                         }
@@ -371,7 +374,7 @@ public class Hootcat extends TamableAnimal {
                 }
             } else if (this.isFood(itemstack)) {
                 this.usePlayerItem(pPlayer, pHand, itemstack);
-                if (this.random.nextInt(3) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, pPlayer)) {
+                if (this.random.nextInt(3) == 0 && !EventHooks.onAnimalTame(this, pPlayer)) {
                     this.tame(pPlayer);
                     this.setOrderedToSit(true);
                     this.level().broadcastEntityEvent(this, (byte)7);
@@ -398,10 +401,6 @@ public class Hootcat extends TamableAnimal {
      */
     public boolean isFood(ItemStack pStack) {
         return this.isPhelinix() ? TEMPT_INGREDIENT_PHELINIX.test(pStack) : TEMPT_INGREDIENT.test(pStack);
-    }
-
-    protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
-        return pSize.height * 0.5F;
     }
 
     public boolean removeWhenFarAway(double pDistanceToClosestPlayer) {

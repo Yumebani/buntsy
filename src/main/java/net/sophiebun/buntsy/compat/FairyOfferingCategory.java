@@ -27,8 +27,8 @@ import java.util.Map;
 
 public class FairyOfferingCategory implements IRecipeCategory<FairyOfferingRecipe> {
 
-    public static final ResourceLocation UID = new ResourceLocation(BuntsyMod.MODID, "fairy_offering");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(BuntsyMod.MODID,
+    public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "fairy_offering");
+    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,
             "textures/gui/jei_fairy_offering_bench_gui.png");
 
     public static final RecipeType<FairyOfferingRecipe> FAIRY_OFFERING_RECIPE_TYPE =
@@ -67,8 +67,8 @@ public class FairyOfferingCategory implements IRecipeCategory<FairyOfferingRecip
 
         iRecipeLayoutBuilder.addSlot(RecipeIngredientRole.INPUT,34, 25)
                 .addIngredients(fairyOfferingRecipe.getInputs().get(0))
-                .addTooltipCallback((iRecipeSlotView, list) -> list.add(Component.literal(fairyOfferingRecipe.getFoodTick() + " Food ticks")))
-                .addTooltipCallback((iRecipeSlotView, list) -> list.add(Component.literal(fairyOfferingRecipe.getChanceModifier() + " Chance multiplier")));
+                .addRichTooltipCallback((iRecipeSlotView, list) -> list.add(Component.literal(fairyOfferingRecipe.getFoodTick() + " Food ticks")))
+                .addRichTooltipCallback((iRecipeSlotView, list) -> list.add(Component.literal(fairyOfferingRecipe.getChanceModifier() + " Chance multiplier")));
 
         iRecipeLayoutBuilder.addSlot(RecipeIngredientRole.OUTPUT,93, 25)
                 .addItemStack(fairyOfferingRecipe.getResultItem(null));

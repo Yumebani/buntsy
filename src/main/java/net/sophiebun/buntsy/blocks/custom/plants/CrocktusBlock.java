@@ -6,7 +6,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.CactusBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 
 public class CrocktusBlock extends CactusBlock {
@@ -24,6 +24,6 @@ public class CrocktusBlock extends CactusBlock {
         }
 
         BlockState blockstate1 = pLevel.getBlockState(pPos.below());
-        return (blockstate1.is(Tags.Blocks.SAND) || blockstate1.is(ModBlocks.CROCKTUS.get())) && !pLevel.getBlockState(pPos.above()).liquid();
+        return (blockstate1.is(Tags.Blocks.SANDS) || blockstate1.is(ModBlocks.CROCKTUS.get())) && !pLevel.getBlockState(pPos.above()).liquid();
     }
 }

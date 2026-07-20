@@ -2,7 +2,6 @@ package net.sophiebun.buntsy.entity.animals;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -16,10 +15,8 @@ import net.minecraft.util.ByIdMap;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -28,22 +25,15 @@ import net.minecraft.world.entity.ai.control.JumpControl;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.pathfinder.Path;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.sophiebun.buntsy.entity.ModEntities;
 import net.sophiebun.buntsy.entity.interfaces.IFumeAffectedEntity;
 import net.sophiebun.buntsy.item.ModItems;
-import net.sophiebun.buntsy.server.PersistantAmbientMobSavedData;
-import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -53,7 +43,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
-import java.util.logging.Logger;
 
 public class Silkbun extends Animal implements IFumeAffectedEntity {
 
@@ -267,7 +256,7 @@ public class Silkbun extends Animal implements IFumeAffectedEntity {
         return f + this.getJumpBoostPower();
     }
 
-    protected void jumpFromGround() {
+    public void jumpFromGround() {
         super.jumpFromGround();
         double d0 = this.moveControl.getSpeedModifier();
         if (d0 > 0.0) {
@@ -301,12 +290,13 @@ public class Silkbun extends Animal implements IFumeAffectedEntity {
         this.jumpTicks = 0;
     }
 
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_TYPE_ID, Variant.WHITE.id);
-        this.entityData.define(DATA_IS_SLEEPING, false);
-        this.entityData.define(DATA_IS_WAKING_UP, false);
-        this.entityData.define(DATA_IS_JUMPING, this.jumping);
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_TYPE_ID, Variant.WHITE.id);
+        builder.define(DATA_IS_SLEEPING, false);
+        builder.define(DATA_IS_WAKING_UP, false);
+        builder.define(DATA_IS_JUMPING, this.jumping);
     }
 
     public boolean getIsSleeping(){
@@ -349,7 +339,7 @@ public class Silkbun extends Animal implements IFumeAffectedEntity {
             if (this.nextSleepShift > 0){
                 this.nextSleepShift -= (this.fumes.containsKey(8) ? this.fumes.get(8).get(0) + 1 : 1);
             }
-            else if (goalSelector.getRunningGoals().count() <= 0 && !this.moveControl.hasWanted()){
+            else if (goalSelector.getAvailableGoals().stream().filter(goal -> goal.isRunning()).count() <= 0 && !this.moveControl.hasWanted()){
                 this.nextSleepShift = this.random.nextInt(10000,14000);
                 setSleeping(!this.getIsSleeping());
 
@@ -561,16 +551,16 @@ public class Silkbun extends Animal implements IFumeAffectedEntity {
             return Silkbun.Variant.byId(pLevel.getRandom().nextInt(0,3));
     }
 
-    @Nullable
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
 
-        Silkbun.Variant silkbunVariant = getRandomSilkbunVariant(pLevel, this.blockPosition());
+        Silkbun.Variant silkbunVariant = getRandomSilkbunVariant(level, this.blockPosition());
 
-        if (pSpawnData instanceof Silkbun.SilkbunGroupData) {
-            silkbunVariant = ((Silkbun.SilkbunGroupData)pSpawnData).variant;
+        if (spawnGroupData instanceof Silkbun.SilkbunGroupData) {
+            silkbunVariant = ((Silkbun.SilkbunGroupData)spawnGroupData).variant;
         }
         else {
-            pSpawnData = new Silkbun.SilkbunGroupData(silkbunVariant);
+            spawnGroupData = new Silkbun.SilkbunGroupData(silkbunVariant);
         }
 
         this.setVariant(silkbunVariant);
@@ -578,7 +568,8 @@ public class Silkbun extends Animal implements IFumeAffectedEntity {
         this.setDataIsJumping(false);
         this.setSleeping(false);
         this.nextSleepShift = this.random.nextInt(14000,18000);
-        return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+
+        return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
     }
 
     public void handleEntityEvent(byte pId) {

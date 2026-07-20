@@ -1,0 +1,34 @@
+{
+  "type": "buntsy:grinding_wheel",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ore"
+    },
+    {
+      "item": "minecraft:deepslate_iron_ore"
+    }
+  ],
+  "output": [
+    {
+      "chance": 1.0,
+      "item": {
+        "count": 2,
+        "id": "minecraft:raw_iron"
+      }
+    },
+    {
+      "chance": 0.5,
+      "item": {
+        "count": 1,
+        "id": "minecraft:raw_iron"
+      }
+    },
+    {
+      "chance": 0.05,
+      "item": {
+        "count": 1,
+        "id": "buntsy:pristine_iron_sample"
+      }
+    }
+  ]
+}

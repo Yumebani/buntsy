@@ -1,40 +1,37 @@
 package net.sophiebun.buntsy.datagen.loot;
 
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.SeaPickleBlock;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.providers.number.BinomialDistributionGenerator;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.custom.plants.HootnipCrop;
 import net.sophiebun.buntsy.blocks.custom.plants.StrawberryCrop;
 import net.sophiebun.buntsy.item.ModItems;
 import org.jetbrains.annotations.NotNull;
-import org.spongepowered.asm.util.IConsumer;
 
 import java.util.List;
 import java.util.Set;
 
 public class ModBlockLootTables extends BlockLootSubProvider {
-    public ModBlockLootTables() {
-        super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+    public ModBlockLootTables(HolderLookup.Provider registries) {
+        super(Set.of(), FeatureFlags.REGISTRY.allFlags(), registries);
     }
 
     @Override
@@ -122,7 +119,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(ModItems.COLD_POWDERED_SUGAR.get())
                                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly(4f))))));
-        this.add(ModBlocks.FROZEN_POWDER_LAYER.get(), LootTable.lootTable().setRandomSequence(new ResourceLocation(BuntsyMod.MODID, "blocks" + ModBlocks.FROZEN_POWDER_LAYER.getId().getPath() + "_loot")));
+        this.add(ModBlocks.FROZEN_POWDER_LAYER.get(), LootTable.lootTable().setRandomSequence(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "blocks" + ModBlocks.FROZEN_POWDER_LAYER.getId().getPath() + "_loot")));
 
         //Adding soil
         this.add(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get(), block -> createSingleItemTableWithSilkTouch(block, ModBlocks.CHARMIL_SOIL.get()));
@@ -477,11 +474,11 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     }
 
     protected LootTable.Builder createSwiceDrops(Block pBlock) {
-        return createSilkTouchDispatchTable(pBlock, this.applyExplosionDecay(pBlock, LootItem.lootTableItem(ModItems.SWICE_SHARDS.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 5.0F))).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
+        return createSilkTouchDispatchTable(pBlock, this.applyExplosionDecay(pBlock, LootItem.lootTableItem(ModItems.SWICE_SHARDS.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 5.0F)))));
     }
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-        return ModBlocks.BlocksRegister.getEntries().stream().map(RegistryObject::get)::iterator;
+        return ModBlocks.BlocksRegister.getEntries().stream().map(entry -> {return ((Block) entry.get());})::iterator;
     }
 }

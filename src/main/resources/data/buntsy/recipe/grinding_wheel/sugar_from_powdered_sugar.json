@@ -1,0 +1,24 @@
+{
+  "type": "buntsy:grinding_wheel",
+  "ingredients": [
+    {
+      "item": "buntsy:frozen_powder_block"
+    }
+  ],
+  "output": [
+    {
+      "chance": 1.0,
+      "item": {
+        "count": 1,
+        "id": "minecraft:sugar"
+      }
+    },
+    {
+      "chance": 0.1,
+      "item": {
+        "count": 1,
+        "id": "minecraft:sugar"
+      }
+    }
+  ]
+}

@@ -25,8 +25,8 @@ import java.util.Map;
 
 public class FumeDistilleryCategory implements IRecipeCategory<FumeDistilleryRecipe> {
 
-    public static final ResourceLocation UID = new ResourceLocation(BuntsyMod.MODID, "fume_distillery");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(BuntsyMod.MODID,
+    public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "fume_distillery");
+    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,
             "textures/gui/jei_fume_distillery_gui.png");
 
     public static final RecipeType<FumeDistilleryRecipe> FUME_DISTILLERY_RECIPE_TYPE =

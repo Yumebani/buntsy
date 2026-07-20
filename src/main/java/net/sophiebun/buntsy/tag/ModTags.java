@@ -17,7 +17,7 @@ public class ModTags {
 
         public static final TagKey<Block> VANILLA_WALLS = TagKey.create(
                 Registries.BLOCK,
-                new ResourceLocation("minecraft", "walls")
+                ResourceLocation.fromNamespaceAndPath("minecraft", "walls")
         );
 
         public static final TagKey<Block> BUNTSY_CORAL_BLOCKS = tag("buntsy_coral_blocks");
@@ -44,7 +44,7 @@ public class ModTags {
         public static final TagKey<Block> NO_SNOW = tag("no_snow");
 
         private static TagKey<Block> tag(String name) {
-            return BlockTags.create(new ResourceLocation(BuntsyMod.MODID, name));
+            return BlockTags.create(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, name));
         }
     }
 
@@ -61,7 +61,7 @@ public class ModTags {
         public static final TagKey<Item> BOWL_ITEM = tag("bowl_item");
 
         private static TagKey<Item> tag(String name) {
-            return ItemTags.create(new ResourceLocation(BuntsyMod.MODID, name));
+            return ItemTags.create(ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, name));
         }
     }
     
@@ -74,7 +74,7 @@ public class ModTags {
         public static final TagKey<Biome> FAIRY_SPAWN = tag("fairy_spawn");
 
         private static TagKey<Biome> tag(String name) {
-            return TagKey.create(Registries.BIOME, new ResourceLocation(BuntsyMod.MODID, name));
+            return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, name));
         }
     }
 }

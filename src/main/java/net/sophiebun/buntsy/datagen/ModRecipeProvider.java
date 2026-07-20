@@ -1,5 +1,6 @@
 package net.sophiebun.buntsy.datagen;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.TagKey;
@@ -9,23 +10,23 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
-    public ModRecipeProvider(PackOutput pOutput) {
-        super(pOutput);
+    public ModRecipeProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> registries) {
+        super(pOutput, registries);
     }
 
     @Override
-    protected void buildRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(RecipeOutput consumer) {
 
         //Book
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.FAIRY_TALE_BOOK.get(), 1)
@@ -1046,52 +1047,52 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer);
     }
 
-    private void cookingFoodRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+    private void cookingFoodRecipe(ItemLike material, ItemLike result, RecipeOutput consumer) {
         smeltingFoodRecipe(material, result, consumer);
         smokingFoodRecipe(material, result, consumer);
         campfireFoodRecipe(material, result, consumer);
     }
 
-    private void smeltingFoodRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
-        SimpleCookingRecipeBuilder.generic(Ingredient.of(material),
-                        RecipeCategory.FOOD, result, (float) 0.35, 200, RecipeSerializer.SMELTING_RECIPE)
+    private void smeltingFoodRecipe(ItemLike material, ItemLike result, RecipeOutput consumer) {
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(material),
+                        RecipeCategory.FOOD, result, (float) 0.35, 200)
                 .unlockedBy(getHasName(material), has(material))
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_from_smelting");
     }
 
-    private void smokingFoodRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
-        SimpleCookingRecipeBuilder.generic(Ingredient.of(material),
-                        RecipeCategory.FOOD, result, (float) 0.35, 100, RecipeSerializer.SMOKING_RECIPE)
+    private void smokingFoodRecipe(ItemLike material, ItemLike result, RecipeOutput consumer) {
+        SimpleCookingRecipeBuilder.smoking(Ingredient.of(material),
+                        RecipeCategory.FOOD, result, (float) 0.35, 100)
                 .unlockedBy(getHasName(material), has(material))
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_from_smoking");
     }
 
-    private void campfireFoodRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
-        SimpleCookingRecipeBuilder.generic(Ingredient.of(material),
-                        RecipeCategory.FOOD, result, (float) 0.35, 600, RecipeSerializer.CAMPFIRE_COOKING_RECIPE)
+    private void campfireFoodRecipe(ItemLike material, ItemLike result, RecipeOutput consumer) {
+        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(material),
+                        RecipeCategory.FOOD, result, (float) 0.35, 600)
                 .unlockedBy(getHasName(material), has(material))
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_from_campfire_cooking");
     }
 
-    private void smeltingRecipe(ItemLike material, ItemLike result, float experience, Consumer<FinishedRecipe> consumer) {
-        SimpleCookingRecipeBuilder.generic(Ingredient.of(material),
-                        RecipeCategory.MISC, result, experience, 200, RecipeSerializer.SMELTING_RECIPE)
+    private void smeltingRecipe(ItemLike material, ItemLike result, float experience, RecipeOutput consumer) {
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(material),
+                        RecipeCategory.MISC, result, experience, 200)
                 .unlockedBy(getHasName(material), has(material))
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_from_smelting_" + getItemName(material));
     }
 
-    private void oreSmeltingRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
-        SimpleCookingRecipeBuilder.generic(Ingredient.of(material),
-                        RecipeCategory.MISC, result, (float) 0.35, 200, RecipeSerializer.BLASTING_RECIPE)
+    private void oreSmeltingRecipe(ItemLike material, ItemLike result, RecipeOutput consumer) {
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(material),
+                RecipeCategory.MISC, result, (float) 0.35, 200)
                 .unlockedBy(getHasName(material), has(material))
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_from_blasting");
-        SimpleCookingRecipeBuilder.generic(Ingredient.of(material),
-                        RecipeCategory.MISC, result, (float) 0.35, 200, RecipeSerializer.SMELTING_RECIPE)
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(material),
+                        RecipeCategory.MISC, result, (float) 0.35, 200)
                 .unlockedBy(getHasName(material), has(material))
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_from_smelting");
     }
 
-    private void compact2By2(ItemLike material, ItemLike result, int count, Consumer<FinishedRecipe> consumer) {
+    private void compact2By2(ItemLike material, ItemLike result, int count, RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, count)
                 .define('#', material)
                 .pattern("##")
@@ -1100,7 +1101,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(material) + "_compacting");
     }
 
-    private void brickBlock(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+    private void brickBlock(ItemLike material, ItemLike result, RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 4)
                 .define('#', material)
                 .pattern("##")
@@ -1109,7 +1110,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(material) + "_bricking");
     }
 
-    private void compact3By3(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+    private void compact3By3(ItemLike material, ItemLike result, RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 1)
                 .define('#', material)
                 .pattern("###")
@@ -1119,14 +1120,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(material) + "_compacting");
     }
 
-    private void uncompact(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+    private void uncompact(ItemLike material, ItemLike result, RecipeOutput consumer) {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, result, 9)
                 .requires(material, 1)
                 .unlockedBy(getHasName(material), has(material))
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_uncompacting");
     }
 
-    private void upgradeSmithing(ItemLike template, ItemLike upgradable, ItemLike material, Item result, Consumer<FinishedRecipe> consumer) {
+    private void upgradeSmithing(ItemLike template, ItemLike upgradable, ItemLike material, Item result, RecipeOutput consumer) {
         SmithingTransformRecipeBuilder.smithing(
                         Ingredient.of(template),
                         Ingredient.of(upgradable),
@@ -1137,14 +1138,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer, BuntsyMod.MODID + ":" + getItemName(result) + "_smithing");
     }
 
-    private void planksRecipe(TagKey<Item> tags, ItemLike result, Consumer<FinishedRecipe> consumer) {
+    private void planksRecipe(TagKey<Item> tags, ItemLike result, RecipeOutput consumer) {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, result, 4)
                 .requires(Ingredient.of(tags), 1)
                 .unlockedBy(tags.toString(), has(tags))
                 .save(consumer);
     }
 
-    private void trapdoorRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+    private void trapdoorRecipe(ItemLike material, ItemLike result, RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 2)
                 .define('#', material)
                 .pattern("###")
@@ -1153,7 +1154,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer);
     }
 
-    private void slabRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+    private void slabRecipe(ItemLike material, ItemLike result, RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 6)
                 .define('#', material)
                 .pattern("###")
@@ -1161,7 +1162,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer);
     }
 
-    private void wallRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+    private void wallRecipe(ItemLike material, ItemLike result, RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 6)
                 .define('#', material)
                 .pattern("###")
@@ -1170,7 +1171,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer);
     }
 
-    private void stairsRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+    private void stairsRecipe(ItemLike material, ItemLike result, RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 4)
                 .define('#', material)
                 .pattern("#  ")
@@ -1180,7 +1181,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer);
     }
 
-    private void doorRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+    private void doorRecipe(ItemLike material, ItemLike result, RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 3)
                 .define('#', material)
                 .pattern("##")
@@ -1190,7 +1191,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer);
     }
 
-    private void fenceRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+    private void fenceRecipe(ItemLike material, ItemLike result, RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 3)
                 .define('#', material)
                 .define('S', Items.STICK)
@@ -1200,7 +1201,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer);
     }
 
-    private void fencegateRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+    private void fencegateRecipe(ItemLike material, ItemLike result, RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 3)
                 .define('#', material)
                 .define('S', Items.STICK)
@@ -1210,7 +1211,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer);
     }
 
-    private void pressurePlateRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+    private void pressurePlateRecipe(ItemLike material, ItemLike result, RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, 3)
                 .define('#', material)
                 .pattern("##")
@@ -1218,7 +1219,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer);
     }
 
-    private void buttonRecipe(ItemLike material, ItemLike result, Consumer<FinishedRecipe> consumer) {
+    private void buttonRecipe(ItemLike material, ItemLike result, RecipeOutput consumer) {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, result, 1)
                 .requires(Ingredient.of(material), 1)
                 .unlockedBy(material.toString(), has(material))

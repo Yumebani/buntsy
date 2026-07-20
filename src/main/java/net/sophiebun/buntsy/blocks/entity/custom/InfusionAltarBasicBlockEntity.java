@@ -4,11 +4,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.recipe.InfusionAltarBasicRecipe;
+import net.sophiebun.buntsy.recipe.InfusionAltarInput;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class InfusionAltarBasicBlockEntity extends InfusionAltarBlockEntity {
@@ -25,7 +29,7 @@ public class InfusionAltarBasicBlockEntity extends InfusionAltarBlockEntity {
 
         if (canRun(pLevel)){
 
-            maxProgress = getCurrentRecipe(pLevel).get().getMaxProgress();
+            maxProgress = getCurrentRecipe(pLevel).get().value().getMaxProgress();
             animateParticles(pLevel, pPos);
             increaseProgress(pLevel);
 
@@ -41,7 +45,7 @@ public class InfusionAltarBasicBlockEntity extends InfusionAltarBlockEntity {
     }
 
     public void craftItem(Level pLevel) {
-        InfusionAltarBasicRecipe recipe = getCurrentRecipe(pLevel).get();
+        InfusionAltarBasicRecipe recipe = getCurrentRecipe(pLevel).get().value();
         ItemStack result = recipe.getResultItem(null);
 
         this.itemHandler.extractItem(0, 1, false);
@@ -53,19 +57,20 @@ public class InfusionAltarBasicBlockEntity extends InfusionAltarBlockEntity {
     }
 
     public boolean hasRecipe(Level pLevel) {
-        Optional<InfusionAltarBasicRecipe> recipe = getCurrentRecipe(pLevel);
+        Optional<RecipeHolder<InfusionAltarBasicRecipe>> recipe = getCurrentRecipe(pLevel);
 
         return !recipe.isEmpty();
     }
 
-    public Optional<InfusionAltarBasicRecipe> getCurrentRecipe(Level pLevel) {
-        SimpleContainer inventory = new SimpleContainer(5);
-        inventory.setItem(0, itemHandler.getStackInSlot(0));
+    public Optional<RecipeHolder<InfusionAltarBasicRecipe>> getCurrentRecipe(Level pLevel) {
+        List<ItemStack> items = new ArrayList<>();
+        items.add(itemHandler.getStackInSlot(0));
         for (int i = 1; i <= 4; i++){
-            inventory.setItem(i, getItemFromPedestal(pLevel, infusionPedestals.get(i - 1)));
+            items.add(getItemFromPedestal(pLevel, infusionPedestals.get(i - 1)));
         }
+        InfusionAltarInput input = new InfusionAltarInput(items);
 
-        return this.level.getRecipeManager().getRecipeFor(InfusionAltarBasicRecipe.Type.INSTANCE, inventory, level);
+        return this.level.getRecipeManager().getRecipeFor(InfusionAltarBasicRecipe.Type.INSTANCE, input, level);
     }
 
     protected void checkAltarValidity(Level level, BlockPos pos) {

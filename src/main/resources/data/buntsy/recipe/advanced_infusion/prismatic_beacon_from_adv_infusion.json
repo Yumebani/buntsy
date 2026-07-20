@@ -1,0 +1,71 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+        "count": 1,
+        "id":"minecraft:beacon"
+    },
+    {
+        "count": 1,
+        "id":"buntsy:prism",
+      "components": {
+        "buntsy:prism_type": "mineral"
+      }
+    },
+    {
+        "count": 1,
+        "id":"buntsy:prism",
+      "components": {
+        "buntsy:prism_type": "fauna"
+      }
+    },
+    {
+        "count": 1,
+        "id":"buntsy:prism",
+      "components": {
+        "buntsy:prism_type": "flora"
+      }
+    },
+    {
+        "count": 1,
+        "id":"buntsy:prism",
+      "components": {
+        "buntsy:prism_type": "collectors"
+      }
+    },
+    {
+        "count": 1,
+        "id":"buntsy:prism",
+      "components": {
+        "buntsy:prism_type": "overworld"
+      }
+    },
+    {
+        "count": 1,
+        "id":"buntsy:prism",
+      "components": {
+        "buntsy:prism_type": "nether"
+      }
+    },
+    {
+        "count": 1,
+        "id":"buntsy:prism",
+      "components": {
+        "buntsy:prism_type": "end"
+      }
+    },
+    {
+        "count": 1,
+        "id":"buntsy:prism",
+      "components": {
+        "buntsy:prism_type": "dense_matter"
+      }
+    }
+  ],
+  "output":
+    {
+        "count": 1,
+        "id":"buntsy:prismatic_beacon"
+    },
+  "max_progress": 1000
+}

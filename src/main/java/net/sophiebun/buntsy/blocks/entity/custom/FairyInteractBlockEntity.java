@@ -1,6 +1,7 @@
 package net.sophiebun.buntsy.blocks.entity.custom;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -20,23 +21,23 @@ public class FairyInteractBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        pTag.putFloat("fairy_interaction_block.consumption", this.consumption);
-        pTag.putInt("fairy_interaction_block.speedUp", this.speedUp);
-        pTag.putBoolean("fairy_interaction_block.is_enchanted", this.isEnchanted);
-        pTag.putBoolean("fairy_interaction_block.is_watched", this.isWatched);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
 
-        super.saveAdditional(pTag);
+        tag.putFloat("fairy_interaction_block.consumption", this.consumption);
+        tag.putInt("fairy_interaction_block.speedUp", this.speedUp);
+        tag.putBoolean("fairy_interaction_block.is_enchanted", this.isEnchanted);
+        tag.putBoolean("fairy_interaction_block.is_watched", this.isWatched);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
 
-        this.consumption = pTag.getFloat("fairy_interaction_block.consumption");
-        this.speedUp = pTag.getInt("fairy_interaction_block.speedUp");
-        this.isEnchanted = pTag.getBoolean("fairy_interaction_block.is_enchanted");
-        this.isWatched = pTag.getBoolean("fairy_interaction_block.is_watched");
+        this.consumption = tag.getFloat("fairy_interaction_block.consumption");
+        this.speedUp = tag.getInt("fairy_interaction_block.speedUp");
+        this.isEnchanted = tag.getBoolean("fairy_interaction_block.is_enchanted");
+        this.isWatched = tag.getBoolean("fairy_interaction_block.is_watched");
     }
 
     public void setSpeedUp(int speed){

@@ -3,9 +3,15 @@ package net.sophiebun.buntsy.recipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.Tuple;
@@ -17,66 +23,62 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.crafting.CraftingHelper;
 import net.sophiebun.buntsy.BuntsyMod;
+import net.sophiebun.buntsy.codec.ChanceItemEntry;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class ThreadReelerRecipe implements Recipe<SimpleContainer> {
+public class ThreadReelerRecipe implements Recipe<SingleItemInput> {
     private final List<Ingredient> inputItems;
-    private final HashMap<Item, List<Tuple<Integer, Float>>> output;
-    private final ResourceLocation id;
+    private final List<ChanceItemEntry> output;
 
-    public ThreadReelerRecipe(List<Ingredient> inputItems, HashMap<Item, List<Tuple<Integer, Float>>> output, ResourceLocation id) {
+    public ThreadReelerRecipe(List<Ingredient> inputItems, List<ChanceItemEntry> output) {
         this.inputItems = inputItems;
         this.output = output;
-        this.id = id;
-    }
-
-    @Override
-    public boolean matches(SimpleContainer pContainer, Level pLevel) {
-        if(pLevel.isClientSide()) {
-            return false;
-        }
-
-        for (Ingredient ing : inputItems){
-            if (ing.test(pContainer.getItem(0))){
-                return true;
-            }
-        }
-        return false;
     }
 
     public List<Ingredient> getInputs() {
         return inputItems;
     }
 
-    public HashMap<Item, List<Tuple<Integer, Float>>> getOutput() {
+    public List<ChanceItemEntry> getOutputs() {
         return output;
     }
 
     public List<ItemStack> getResults(int rollChance) {
         List<ItemStack> items = new ArrayList<>();
-        for (Item key : output.keySet()){
-            int finalCount = 0;
-            List<Tuple<Integer, Float>> entryCounts = output.get(key);
-            for (Tuple<Integer, Float> entry : entryCounts){
-                float chance = entry.getB();
-                if (chance >= rollChance / 100f){
-                    finalCount += entry.getA();
+        for (ChanceItemEntry entry : output){
+            if (entry.left() >= rollChance / 100f){
+                for (ItemStack itemStack : items){
+                    if (ItemStack.isSameItemSameComponents(itemStack, entry.right())){
+                        itemStack.grow(entry.right().getCount());
+                        break;
+                    }
                 }
-            }
-            if (finalCount > 0){
-                items.add(new ItemStack(key, finalCount));
+                items.add(entry.right().copy());
             }
         }
         return items;
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer pContainer, RegistryAccess pRegistryAccess) {
-        return new ItemStack(output.keySet().stream().limit(1).toList().get(0));
+    public boolean matches(SingleItemInput singleItemInput, Level level) {
+        if(level.isClientSide()) {
+            return false;
+        }
+
+        for (Ingredient ing : inputItems){
+            if (ing.test(singleItemInput.getItem(0))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public ItemStack assemble(SingleItemInput singleItemInput, HolderLookup.Provider provider) {
+        return output.getFirst().right();
     }
 
     @Override
@@ -85,13 +87,8 @@ public class ThreadReelerRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
-        return new ItemStack(output.keySet().stream().limit(1).toList().get(0));
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return id;
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
+        return output.getFirst().right();
     }
 
     @Override
@@ -111,84 +108,24 @@ public class ThreadReelerRecipe implements Recipe<SimpleContainer> {
 
     public static class Serializer implements RecipeSerializer<ThreadReelerRecipe> {
         public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation(BuntsyMod.MODID, "thread_reeler");
+        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "thread_reeler");
 
         @Override
-        public ThreadReelerRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
-
-            //Inputs
-            JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients");
-            List<Ingredient> inputs = new ArrayList<>();
-            for(JsonElement entry : ingredients.asList()) {
-                inputs.add(Ingredient.fromJson(entry));
-            }
-
-            //Outputs
-            JsonArray outputs = GsonHelper.getAsJsonArray(pSerializedRecipe, "output");
-            HashMap<Item, List<Tuple<Integer, Float>>> results = new HashMap<>();
-            for (JsonElement entry : outputs.asList()){
-                JsonObject entryObj = entry.getAsJsonObject();
-                int count = entryObj.get("count").getAsInt();
-                float chance = entryObj.get("chance").getAsFloat();
-                String itemId = entryObj.get("item").getAsString();
-
-                List<Tuple<Integer, Float>> result;
-                Item resultItem = CraftingHelper.getItem(itemId, true);
-                if (!results.containsKey(resultItem)){
-                    result = new ArrayList<>();
-                    results.put(resultItem, result);
-                }
-                else result = results.get(resultItem);
-
-                result.add(new Tuple<>(count, chance));
-            }
-
-            return new ThreadReelerRecipe(inputs, results, pRecipeId);
+        public MapCodec<ThreadReelerRecipe> codec() {
+            return RecordCodecBuilder.mapCodec(instance -> {
+                return instance.group(
+                        Ingredient.LIST_CODEC.fieldOf("ingredients").forGetter(ThreadReelerRecipe::getInputs),
+                        ChanceItemEntry.CODEC.codec().listOf().fieldOf("output").forGetter(ThreadReelerRecipe::getOutputs)
+                ).apply(instance, ThreadReelerRecipe::new);
+            });
         }
 
         @Override
-        public @Nullable ThreadReelerRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
-            NonNullList<Ingredient> inputs = NonNullList.withSize(pBuffer.readInt(), Ingredient.EMPTY);
-
-            for(int i = 0; i < inputs.size(); i++) {
-                inputs.set(i, Ingredient.fromNetwork(pBuffer));
-            }
-
-            HashMap<Item, List<Tuple<Integer, Float>>> results = new HashMap<>();
-            int loopCount = pBuffer.readInt();
-            for (int i = 0; i < loopCount; i++){
-                List<Tuple<Integer, Float>> result = new ArrayList<>();
-                results.put(pBuffer.readItem().getItem(), result);
-                int loopCount2 = pBuffer.readInt();
-                for (int j = 0; j < loopCount2; j++){
-                    int count = pBuffer.readInt();
-                    float chance = pBuffer.readFloat();
-                    result.add(new Tuple<>(count, chance));
-                }
-            }
-
-            return new ThreadReelerRecipe(inputs, results, pRecipeId);
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf pBuffer, ThreadReelerRecipe pRecipe) {
-            pBuffer.writeInt(pRecipe.getInputs().size());
-
-            for (Ingredient ingredient : pRecipe.getInputs()) {
-                ingredient.toNetwork(pBuffer);
-            }
-
-            HashMap<Item, List<Tuple<Integer, Float>>> output = pRecipe.getOutput();
-
-            pBuffer.writeInt(output.size());
-            for (Item item : output.keySet()){
-                pBuffer.writeItem(new ItemStack(item));
-                pBuffer.writeInt(output.get(item).size());
-                for (Tuple<Integer, Float> tuple : output.get(item)){
-                    pBuffer.writeInt(tuple.getA());
-                    pBuffer.writeFloat(tuple.getB());
-                }
-            }
+        public StreamCodec<RegistryFriendlyByteBuf, ThreadReelerRecipe> streamCodec() {
+            return StreamCodec.composite(
+                    Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), ThreadReelerRecipe::getInputs,
+                    ChanceItemEntry.STREAM_CODEC.apply(ByteBufCodecs.list()), ThreadReelerRecipe::getOutputs,
+                    ThreadReelerRecipe::new);
         }
     }
 }

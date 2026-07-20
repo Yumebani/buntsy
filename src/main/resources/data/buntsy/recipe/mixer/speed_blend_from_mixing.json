@@ -1,0 +1,18 @@
+{
+  "type": "buntsy:mixer",
+  "inputs": [
+    {
+        "count": 1,
+        "id":"minecraft:redstone"
+    },
+    {
+        "count": 1,
+        "id":"minecraft:sugar"
+    }
+  ],
+  "output":
+  {
+      "count": 2,
+      "id":"buntsy:speed_blend"
+  }
+}

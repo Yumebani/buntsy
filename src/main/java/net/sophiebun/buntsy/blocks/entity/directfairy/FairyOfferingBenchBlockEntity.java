@@ -1,9 +1,8 @@
 package net.sophiebun.buntsy.blocks.entity.directfairy;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -16,31 +15,28 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
-import net.sophiebun.buntsy.item.custom.FairyFoodItem;
+import net.sophiebun.buntsy.recipe.FairyOfferingInput;
 import net.sophiebun.buntsy.recipe.FairyOfferingRecipe;
-import net.sophiebun.buntsy.recipe.GrindingWheelRecipe;
 import net.sophiebun.buntsy.screen.FairyOfferingBenchMenu;
 import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity implements MenuProvider {
 
-    private final ItemStackHandler inputItemHandler = new ItemStackHandler(4) {
+    public final ItemStackHandler inputItemHandler = new ItemStackHandler(4) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -49,7 +45,7 @@ public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity impl
             }
         }
     };
-    private final ItemStackHandler outputItemHandler = new ItemStackHandler(4) {
+    public final ItemStackHandler outputItemHandler = new ItemStackHandler(4) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -66,9 +62,6 @@ public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity impl
 
     public final ContainerData data;
     private final List<Integer> randomRotations;
-
-    private LazyOptional<IItemHandler> inputLazyItemHandler = LazyOptional.of(() -> inputItemHandler);
-    private LazyOptional<IItemHandler> outputLazyItemHandler = LazyOptional.of(() -> outputItemHandler);
 
     public List<Integer> getRandomRotations() {
         return randomRotations;
@@ -108,39 +101,13 @@ public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity impl
         };
     }
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            if (side.equals(Direction.DOWN)){
-                return outputLazyItemHandler.cast();
-            }
-            else{
-                return inputLazyItemHandler.cast();
-            }
+    public ItemStackHandler getItemHandler(Direction side) {
+        if (side.equals(Direction.DOWN)){
+            return outputItemHandler;
         }
-        return super.getCapability(cap, side);
-    }
-
-    public LazyOptional<IItemHandler> getInputLazyItemHandler() {
-        return inputLazyItemHandler;
-    }
-
-    public LazyOptional<IItemHandler> getOutputLazyItemHandler() {
-        return outputLazyItemHandler;
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        inputLazyItemHandler = LazyOptional.of((() -> inputItemHandler));
-        outputLazyItemHandler = LazyOptional.of((() -> outputItemHandler));
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        inputLazyItemHandler.invalidate();
-        outputLazyItemHandler.invalidate();
+        else{
+            return inputItemHandler;
+        }
     }
 
     public void drops() {
@@ -167,17 +134,19 @@ public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity impl
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("inputInventory", inputItemHandler.serializeNBT());
-        pTag.put("outputInventory", outputItemHandler.serializeNBT());
-        super.saveAdditional(pTag);
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.saveAdditional(pTag, registries);
+
+        pTag.put("inputInventory", inputItemHandler.serializeNBT(registries));
+        pTag.put("outputInventory", outputItemHandler.serializeNBT(registries));
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
-        this.inputItemHandler.deserializeNBT(pTag.getCompound("inputInventory"));
-        this.outputItemHandler.deserializeNBT(pTag.getCompound("outputInventory"));
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.loadAdditional(pTag, registries);
+
+        this.inputItemHandler.deserializeNBT(registries, pTag.getCompound("inputInventory"));
+        this.outputItemHandler.deserializeNBT(registries, pTag.getCompound("outputInventory"));
     }
 
     public List<ItemStack> getRenderItems(){
@@ -206,20 +175,18 @@ public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity impl
         return getFirstValidInputSlot() != null;
     }
 
-    public Optional<FairyOfferingRecipe> getCurrentRecipe() {
-        SimpleContainer inventory = new SimpleContainer(FAIRY_FOOD_SLOT_COUNT + FAIRY_FOOD_OUTPUT_SLOT_COUNT);
+    public Optional<RecipeHolder<FairyOfferingRecipe>> getCurrentRecipe() {
+        List<ItemStack> list = new ArrayList<>();
         for (int i = 0; i < inputItemHandler.getSlots(); i++) {
-            inventory.setItem(i, inputItemHandler.getStackInSlot(i));
+            list.add(inputItemHandler.getStackInSlot(i));
         }
-        for (int i = 0; i < FAIRY_FOOD_SLOT_COUNT; i++) {
-            inventory.setItem(i + FAIRY_FOOD_OUTPUT_SLOT_COUNT, outputItemHandler.getStackInSlot(i));
-        }
+        FairyOfferingInput input = new FairyOfferingInput(list);
 
-        return this.level.getRecipeManager().getRecipeFor(FairyOfferingRecipe.Type.INSTANCE, inventory, level);
+        return this.level.getRecipeManager().getRecipeFor(FairyOfferingRecipe.Type.INSTANCE, input, level);
     }
 
     public void consumeFood() {
-        outputFoodItem(getCurrentRecipe().get().getResultItem(null));
+        outputFoodItem(getCurrentRecipe().get().value().getResultItem(null));
         int slot = getFirstValidInputSlot();
         this.inputItemHandler.extractItem(slot, 1, false);
     }
@@ -260,7 +227,7 @@ public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity impl
     }
 
     private boolean isOutputClear() {
-        ItemStack output = getCurrentRecipe().get().getResultItem(null);
+        ItemStack output = getCurrentRecipe().get().value().getResultItem(null);
         return output.is(Blocks.AIR.asItem()) || getClearOutput(output) != null;
     }
 
@@ -281,7 +248,7 @@ public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity impl
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 }

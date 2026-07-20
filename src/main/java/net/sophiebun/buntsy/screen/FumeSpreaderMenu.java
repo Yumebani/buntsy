@@ -7,7 +7,7 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.advancedfairy.FumeSpreaderBlockEntity;
 import net.sophiebun.buntsy.blocks.inventory.DisplaySlot;
@@ -32,17 +32,17 @@ public class FumeSpreaderMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
         addPlayerInventory(inv);
 
-        this.blockEntity.getInputLazyItemHandler().ifPresent(iItemHandler -> {
-            this.addSlot(new SlotItemHandler(iItemHandler, 0, 18, 47));
-        });
+        if (this.blockEntity.inputItemHandler != null){
+            this.addSlot(new SlotItemHandler(this.blockEntity.inputItemHandler, 0, 18, 47));
+        }
 
-        this.blockEntity.getDisplayLazyItemHandler().ifPresent(iItemHandler -> {
-            this.addSlot(new DisplaySlot(iItemHandler, 0, 80, 47));
-        });
+        if (this.blockEntity.displayItemHandler != null){
+            this.addSlot(new DisplaySlot(this.blockEntity.displayItemHandler, 0, 80, 47));
+        }
 
-        this.blockEntity.getOutputLazyItemHandler().ifPresent(iItemHandler -> {
-            this.addSlot(new OutputSlot(iItemHandler, 0, 141, 47));
-        });
+        if (this.blockEntity.outputItemHandler != null){
+            this.addSlot(new OutputSlot(this.blockEntity.outputItemHandler, 0, 141, 47));
+        }
 
         addDataSlots(data);
     }

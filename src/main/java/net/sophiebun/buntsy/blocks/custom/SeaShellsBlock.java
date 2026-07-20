@@ -29,7 +29,7 @@ public class SeaShellsBlock extends Block {
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext pContext) {
 
         BlockState state =  pContext.getLevel().getBlockState(pContext.getClickedPos().below());
-        if (!state.getBlock().isCollisionShapeFullBlock(state, pContext.getLevel(), pContext.getClickedPos().below())){
+        if (!state.getBlock().isShapeFullBlock(state.getShape(pContext.getLevel(), pContext.getClickedPos().below()))){
             return null;
         }
         return super.getStateForPlacement(pContext);

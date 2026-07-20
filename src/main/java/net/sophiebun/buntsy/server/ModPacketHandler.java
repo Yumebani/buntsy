@@ -1,60 +1,66 @@
 package net.sophiebun.buntsy.server;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.sophiebun.buntsy.BuntsyMod;
+import net.sophiebun.buntsy.server.packets.*;
 
+@EventBusSubscriber(modid = BuntsyMod.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class ModPacketHandler {
-    private static final String PROTOCOL_VERSION = "1";
-    public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
-            new ResourceLocation(BuntsyMod.MODID, "main"),
-            () -> PROTOCOL_VERSION,
-            PROTOCOL_VERSION::equals,
-            PROTOCOL_VERSION::equals
-    );
 
-    public static void register(){
+    @SubscribeEvent
+    public static void register(RegisterPayloadHandlersEvent event) {
+        PayloadRegistrar registrar = event.registrar("1.0.0");
 
-        INSTANCE.registerMessage(0, ModFairyStaffPacket.class,
-                ModFairyStaffPacket::write,
-                ModFairyStaffPacket::read,
-                ModFairyStaffPacket::handle);
+        registrar.playToServer(
+                ClockworkCardPuncherPacket.TYPE,
+                ClockworkCardPuncherPacket.STREAM_CODEC,
+                ClockworkCardPuncherPacket::handle
+        );
 
-        INSTANCE.registerMessage(1, ModBindingStaffPacket.class,
-                ModBindingStaffPacket::write,
-                ModBindingStaffPacket::read,
-                ModBindingStaffPacket::handle);
+        registrar.playToServer(
+                FairyStaffPacket.TYPE,
+                FairyStaffPacket.STREAM_CODEC,
+                FairyStaffPacket::handle
+        );
 
-        INSTANCE.registerMessage(2, ModGiantCocoonClientPacket.class,
-                ModGiantCocoonClientPacket::write,
-                ModGiantCocoonClientPacket::read,
-                ModGiantCocoonClientPacket::handle);
+        registrar.playToServer(
+                BindingStaffPacket.TYPE,
+                BindingStaffPacket.STREAM_CODEC,
+                BindingStaffPacket::handle
+        );
 
-        INSTANCE.registerMessage(3, ModGiantCocoonServerPacket.class,
-                ModGiantCocoonServerPacket::write,
-                ModGiantCocoonServerPacket::read,
-                ModGiantCocoonServerPacket::handle);
+        registrar.playToServer(
+                GiantCocoonServerPacket.TYPE,
+                GiantCocoonServerPacket.STREAM_CODEC,
+                GiantCocoonServerPacket::handle
+        );
 
-        INSTANCE.registerMessage(4, ModCocoonBagClientPacket.class,
-                ModCocoonBagClientPacket::write,
-                ModCocoonBagClientPacket::read,
-                ModCocoonBagClientPacket::handle);
+        registrar.playToServer(
+                CocoonBagServerPacket.TYPE,
+                CocoonBagServerPacket.STREAM_CODEC,
+                CocoonBagServerPacket::handle
+        );
 
-        INSTANCE.registerMessage(5, ModCocoonBagServerPacket.class,
-                ModCocoonBagServerPacket::write,
-                ModCocoonBagServerPacket::read,
-                ModCocoonBagServerPacket::handle);
+        registrar.playToServer(
+                CMTParticipantPacket.TYPE,
+                CMTParticipantPacket.STREAM_CODEC,
+                CMTParticipantPacket::handle
+        );
 
-        INSTANCE.registerMessage(6, ClockworkCardPuncherPacket.class,
-                ClockworkCardPuncherPacket::write,
-                ClockworkCardPuncherPacket::read,
-                ClockworkCardPuncherPacket::handle);
 
-        INSTANCE.registerMessage(7, CMTParticipantPacket.class,
-                CMTParticipantPacket::write,
-                CMTParticipantPacket::read,
-                CMTParticipantPacket::handle);
+        registrar.playToClient(
+                GiantCocoonClientPacket.TYPE,
+                GiantCocoonClientPacket.STREAM_CODEC,
+                GiantCocoonClientPacket::handle
+        );
+
+        registrar.playToClient(
+                CocoonBagClientPacket.TYPE,
+                CocoonBagClientPacket.STREAM_CODEC,
+                CocoonBagClientPacket::handle
+        );
     }
 }

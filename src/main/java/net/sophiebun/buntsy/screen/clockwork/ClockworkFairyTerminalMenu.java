@@ -7,7 +7,7 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkFairyTerminalEntity;
 import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
@@ -32,17 +32,17 @@ public class ClockworkFairyTerminalMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
         addPlayerInventory(inv);
 
-        this.blockEntity.getInputLazyItemHandler().ifPresent(iItemHandler -> {
+        if (this.blockEntity.inputItemHandler != null){
             for (int i = 0; i < 4; i++){
-                this.addSlot(new SlotItemHandler(iItemHandler, i, 34 + (18 * (i % 2)), 25 + (18 * (i / 2))));
+                this.addSlot(new SlotItemHandler(this.blockEntity.inputItemHandler, i, 34 + (18 * (i % 2)), 25 + (18 * (i / 2))));
             }
-        });
+        }
 
-        this.blockEntity.getOutputLazyItemHandler().ifPresent(iItemHandler -> {
+        if (this.blockEntity.outputItemHandler != null){
             for (int i = 0; i < 4; i++){
-                this.addSlot(new OutputSlot(iItemHandler, i, 93 + (18 * ((i) % 2)), 25 + (18 * ((i) / 2))));
+                this.addSlot(new OutputSlot(this.blockEntity.outputItemHandler, i, 93 + (18 * ((i) % 2)), 25 + (18 * ((i) / 2))));
             }
-        });
+        }
 
         addDataSlots(data);
     }

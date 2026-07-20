@@ -8,9 +8,12 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.IPlantable;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.FarmlandWaterManager;
+import net.neoforged.neoforge.common.util.TriState;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 
 import javax.annotation.Nullable;
@@ -30,8 +33,8 @@ public class ModFarmland extends FarmBlock {
     }
 
     @Override
-    public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
-        return true;
+    public TriState canSustainPlant(BlockState state, BlockGetter level, BlockPos soilPosition, Direction facing, BlockState plant) {
+        return TriState.TRUE;
     }
 
     @Override
@@ -51,7 +54,7 @@ public class ModFarmland extends FarmBlock {
 
     @Override
     public void fallOn(Level pLevel, BlockState pState, BlockPos pPos, Entity pEntity, float pFallDistance) {
-        if (!pLevel.isClientSide && net.minecraftforge.common.ForgeHooks.onFarmlandTrample(pLevel, pPos, ModBlocks.CHARMIL_SOIL.get().defaultBlockState(), pFallDistance, pEntity)) { // Forge: Move logic to Entity#canTrample
+        if (!pLevel.isClientSide && CommonHooks.onFarmlandTrample(pLevel, pPos, ModBlocks.CHARMIL_SOIL.get().defaultBlockState(), pFallDistance, pEntity)) { // Forge: Move logic to Entity#canTrample
             turnToDirt(pEntity, pState, pLevel, pPos);
         }
 
@@ -63,7 +66,7 @@ public class ModFarmland extends FarmBlock {
     private static boolean shouldMaintainFarmland(BlockGetter pLevel, BlockPos pPos) {
         BlockState plant = pLevel.getBlockState(pPos.above());
         BlockState state = pLevel.getBlockState(pPos);
-        return plant.getBlock() instanceof net.minecraftforge.common.IPlantable && state.canSustainPlant(pLevel, pPos, Direction.UP, (net.minecraftforge.common.IPlantable)plant.getBlock());
+        return plant.getBlock() instanceof BushBlock && state.canSustainPlant(pLevel, pPos, Direction.UP, plant).isTrue();
     }
 
     private static boolean isNearWater(LevelReader pLevel, BlockPos pPos) {
@@ -74,6 +77,6 @@ public class ModFarmland extends FarmBlock {
             }
         }
 
-        return net.minecraftforge.common.FarmlandWaterManager.hasBlockWaterTicket(pLevel, pPos);
+        return FarmlandWaterManager.hasBlockWaterTicket(pLevel, pPos);
     }
 }

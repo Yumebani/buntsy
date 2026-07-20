@@ -1,0 +1,55 @@
+{
+  "type": "buntsy:infusion_altar_basic",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:catalyst"
+      ,
+      "components": {
+        "buntsy:catalyst_type": {
+          "type": 0,
+          "function": "creation"
+        }
+      }
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:redstone_block"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:redstone_block"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:sugar_bowl"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:gentlit_syrup"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:catalyst"
+      ,
+      "components": {
+        "buntsy:catalyst_type": {
+          "type": 2,
+          "function": "creation"
+        }
+      }
+    },
+  "max_progress": 1000
+}

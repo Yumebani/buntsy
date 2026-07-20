@@ -6,6 +6,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.sophiebun.buntsy.components.ModDataComponents;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -26,23 +27,23 @@ public class Prism extends Item {
     public static ItemColor getTint(){
 
         return ((pStack, pTintIndex) -> {
-            if (!pStack.hasTag()) return 0xFFFFFFFF;
-            switch (pStack.getTag().getString("buntsy.prismType")) {
-                case "mineral" -> {return 0x7bede7;
+            if (!pStack.has(ModDataComponents.PRISM_TYPE)) return 0xFFFFFFFF;
+            switch (pStack.get(ModDataComponents.PRISM_TYPE)) {
+                case "mineral" -> {return 0xFF7bede7;
                 }
-                case "fauna" -> {return 0xffaf2e;
+                case "fauna" -> {return 0xFFffaf2e;
                 }
-                case "flora" -> {return 0xa3f03e;
+                case "flora" -> {return 0xFFa3f03e;
                 }
-                case "collectors" -> {return 0x1e3cfc;
+                case "collectors" -> {return 0xFF1e3cfc;
                 }
-                case "overworld" -> {return 0x66ff66;
+                case "overworld" -> {return 0xFF66ff66;
                 }
-                case "nether" -> {return 0xbf1d1d;
+                case "nether" -> {return 0xFFbf1d1d;
                 }
-                case "end" -> {return 0xbf26c9;
+                case "end" -> {return 0xFFbf26c9;
                 }
-                case "dense_matter" -> {return 0x220f24;
+                case "dense_matter" -> {return 0xFF220f24;
                 }
             }
 
@@ -55,13 +56,12 @@ public class Prism extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
 
-        if (pStack.hasTag()){
-            String prismType = pStack.getTag().getString("buntsy.prismType");
-            pTooltipComponents.add(Component.translatable("prism.buntsy." + prismType));
+        if (stack.has(ModDataComponents.PRISM_TYPE)){
+            tooltipComponents.add(Component.translatable("prism.buntsy." + stack.get(ModDataComponents.PRISM_TYPE)));
         }
 
-        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 }

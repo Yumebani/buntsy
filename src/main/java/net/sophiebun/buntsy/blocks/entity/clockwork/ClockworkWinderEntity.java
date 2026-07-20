@@ -1,8 +1,8 @@
 package net.sophiebun.buntsy.blocks.entity.clockwork;
 
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.Connection;
@@ -10,7 +10,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -21,32 +20,24 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.custom.entityblocks.ClockworkWinderBlock;
-import net.sophiebun.buntsy.blocks.custom.entityblocks.WindupClockworkBlock;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
-import net.sophiebun.buntsy.screen.clockwork.ClockworkCrafterMenu;
 import net.sophiebun.buntsy.screen.clockwork.ClockworkWinderMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.animation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuProvider, GeoBlockEntity {
 
-    protected final ItemStackHandler inventoryItemHandler = new ItemStackHandler(1) {
+    public final ItemStackHandler inventoryItemHandler = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -55,9 +46,6 @@ public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuP
             }
         }
     };
-    private LazyOptional<IItemHandler> inventoryLazyItemHandler = LazyOptional.of(() -> this.inventoryItemHandler);
-    public LazyOptional<IItemHandler> getInventoryLazyItemHandler() {return inventoryLazyItemHandler;}
-
     protected final ContainerData data;
 
     private int burnTicks = 0;
@@ -76,15 +64,15 @@ public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuP
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private AnimationController<ClockworkWinderEntity> controller;
 
+    private PlayState predicate(AnimationState<ClockworkWinderEntity> clockworkFairyTerminalEntityAnimationState) {
+        clockworkFairyTerminalEntityAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.clockwork_winder.running", Animation.LoopType.LOOP));
+        return getBlockState().getValue(ClockworkWinderBlock.BURNING) ? PlayState.CONTINUE : PlayState.STOP;
+    }
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controller = new AnimationController<>(this, "controller", 2, this::predicate);
         controllers.add(controller);
-    }
-
-    private PlayState predicate(AnimationState<ClockworkWinderEntity> clockworkFairyTerminalEntityAnimationState) {
-        clockworkFairyTerminalEntityAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.clockwork_winder.running", Animation.LoopType.LOOP));
-        return getBlockState().getValue(ClockworkWinderBlock.BURNING) ? PlayState.CONTINUE : PlayState.STOP;
     }
 
     @Override
@@ -129,24 +117,8 @@ public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuP
         };
     }
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            return inventoryLazyItemHandler.cast();
-        }
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        inventoryLazyItemHandler = LazyOptional.of((() -> this.inventoryItemHandler));
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        inventoryLazyItemHandler.invalidate();
+    public ItemStackHandler getItemHandler(Direction side) {
+        return inventoryItemHandler;
     }
 
     public void drops() {
@@ -157,8 +129,10 @@ public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuP
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("clockwork_winder.inputInventory", inventoryItemHandler.serializeNBT());
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.saveAdditional(pTag, registries);
+
+        pTag.put("clockwork_winder.inputInventory", inventoryItemHandler.serializeNBT(registries));
         pTag.putInt("clockwork_winder.burn_ticks", this.burnTicks);
         pTag.putInt("clockwork_winder.max_burn_ticks", this.maxBurnTicks);
 
@@ -168,21 +142,19 @@ public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuP
         }
 
         pTag.putInt("clockwork_winder.total_weight", this.totalWeight);
-
-        super.saveAdditional(pTag);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.loadAdditional(pTag, registries);
 
-        this.inventoryItemHandler.deserializeNBT(pTag.getCompound("clockwork_winder.inputInventory"));
+        this.inventoryItemHandler.deserializeNBT(registries, pTag.getCompound("clockwork_winder.inputInventory"));
         this.burnTicks = pTag.getInt("clockwork_winder.burn_ticks");
         this.maxBurnTicks = pTag.getInt("clockwork_winder.max_burn_ticks");
 
         int size = pTag.getInt("clockwork_winder.registered_block_count");
         for (int i = 0; i < size; i++){
-            this.registeredBlocks.add(NbtUtils.readBlockPos(pTag.getCompound("clockwork_winder.registered_block_" + i)));
+            this.registeredBlocks.add(NbtUtils.readBlockPos(pTag, "clockwork_winder.registered_block_" + i).get());
         }
 
         this.totalWeight = pTag.getInt("clockwork_winder.total_weight");
@@ -195,13 +167,8 @@ public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuP
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
@@ -227,7 +194,7 @@ public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuP
             this.maxBurnTicks = -1;
         }
 
-        if (this.maxBurnTicks == -1 && inventoryItemHandler.getStackInSlot(0).getBurnTime(RecipeType.SMELTING) != -1) {
+        if (this.maxBurnTicks == -1 && inventoryItemHandler.getStackInSlot(0).getBurnTime(RecipeType.SMELTING) > 0) {
             level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(ClockworkWinderBlock.BURNING, true));
             consumeFuel();
         }

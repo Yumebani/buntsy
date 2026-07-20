@@ -11,21 +11,16 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
-import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
-import net.sophiebun.buntsy.recipe.FumeDistilleryRecipe;
 import net.sophiebun.buntsy.recipe.MixerRecipe;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class MixerCategory implements IRecipeCategory<MixerRecipe> {
 
-    public static final ResourceLocation UID = new ResourceLocation(BuntsyMod.MODID, "mixer");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(BuntsyMod.MODID,
+    public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "mixer");
+    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,
             "textures/gui/jei_mixer_gui.png");
 
     public static final RecipeType<MixerRecipe> MIXER_RECIPE_TYPE =

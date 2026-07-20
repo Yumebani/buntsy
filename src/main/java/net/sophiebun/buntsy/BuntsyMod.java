@@ -1,7 +1,6 @@
 package net.sophiebun.buntsy;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -10,39 +9,37 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.FlowerPotBlock;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.client.*;
 import net.sophiebun.buntsy.client.particle.ModParticleTypes;
+import net.sophiebun.buntsy.components.ModDataComponents;
 import net.sophiebun.buntsy.dispenser.DispenserBehaviourAditions;
 import net.sophiebun.buntsy.entity.ModEntities;
 import net.sophiebun.buntsy.entity.client.*;
 import net.sophiebun.buntsy.fluids.ModFluidTypes;
 import net.sophiebun.buntsy.fluids.ModFluids;
 import net.sophiebun.buntsy.item.CreativeModeTabs;
+import net.sophiebun.buntsy.item.ModArmorMats;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.recipe.ModRecipes;
 import net.sophiebun.buntsy.screen.*;
 import net.sophiebun.buntsy.screen.clockwork.*;
-import net.sophiebun.buntsy.server.ModPacketHandler;
 import net.sophiebun.buntsy.worldgen.biome.surface.ModSurfaceRules;
 import net.sophiebun.buntsy.worldgen.feature.ModFeatures;
 import net.sophiebun.buntsy.worldgen.tree.ModFoliagePlacers;
 import net.sophiebun.buntsy.worldgen.tree.ModTrunkPlacerTypes;
 import org.slf4j.Logger;
-import software.bernie.geckolib.GeckoLib;
 import terrablender.api.SurfaceRuleManager;
 
-// The value here should match an entry in the META-INF/mods.toml file
+// The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(BuntsyMod.MODID)
 public class BuntsyMod
 {
@@ -50,15 +47,13 @@ public class BuntsyMod
     public static final String MODID = "buntsy";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
-    public BuntsyMod()
+    public BuntsyMod(IEventBus modEventBus)
     {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
-        GeckoLib.initialize();
 
         DispenserBlock.registerBehavior(Items.GLASS_BOTTLE, (pSource, pStack) -> DispenserBehaviourAditions.interactWithSExtractor(pSource, pStack));
 
-        ModPacketHandler.register();
+        ModArmorMats.register(modEventBus);
+        ModDataComponents.register(modEventBus);
 
         ModParticleTypes.register(modEventBus);
 
@@ -85,13 +80,12 @@ public class BuntsyMod
 
         modEventBus.addListener(this::commonSetup);
 
-        MinecraftForge.EVENT_BUS.register(this);
+        //modEventBus.register(this);
 
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-
         event.enqueueWork(() -> {
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.PINK_BLOOM.getId(), ModBlocks.POTTED_PINK_BLOOM);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.BLUE_BLOOM.getId(), ModBlocks.POTTED_BLUE_BLOOM);
@@ -109,42 +103,12 @@ public class BuntsyMod
         });
     }
 
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event)
-    {
-        // Do something when the server starts
-    }
-
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
     {
+
         @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
-            MenuScreens.register(ModMenuTypes.FAIRY_OFFERING_BENCH_MENU.get(), FairyOfferingBenchScreen::new);
-            MenuScreens.register(ModMenuTypes.GRINDING_WHEEL_MENU.get(), GrindingWheelScreen::new);
-            MenuScreens.register(ModMenuTypes.THREAD_REELER_MENU.get(), ThreadReelerScreen::new);
-            MenuScreens.register(ModMenuTypes.FAIRY_COLLECTION_TRAY_MENU.get(), FairyCollectionTrayScreen::new);
-            MenuScreens.register(ModMenuTypes.FAIRY_INFUSION_BENCH_MENU.get(), FairyInfusionBenchScreen::new);
-            MenuScreens.register(ModMenuTypes.MAGIC_CRYSTALIZER_MENU.get(), MagicCrystalizerScreen::new);
-            MenuScreens.register(ModMenuTypes.FUME_DISTILLERY_MENU.get(), FumeDistilleryScreen::new);
-            MenuScreens.register(ModMenuTypes.FUME_SPREADER_MENU.get(), FumeSpreaderScreen::new);
-            MenuScreens.register(ModMenuTypes.GIANT_COCOON_MENU.get(), GiantCocoonScreen::new);
-            MenuScreens.register(ModMenuTypes.COCOON_BAG_MENU.get(), CocoonBagScreen::new);
-            MenuScreens.register(ModMenuTypes.MIXER_MENU.get(), MixerScreen::new);
-
-            MenuScreens.register(ModMenuTypes.CLOCKWORK_SYRUP_EXTRACTOR_MENU.get(), ClockworkSyrupExtractorScreen::new);
-            MenuScreens.register(ModMenuTypes.CLOCKWORK_GEYSER_COLLECTOR_MENU.get(), ClockworkGeyserCollectorScreen::new);
-            MenuScreens.register(ModMenuTypes.CLOCKWORK_POWDERED_SUGAR_COLLECTOR_MENU.get(), ClockworkPowderedSugarCollectorScreen::new);
-            MenuScreens.register(ModMenuTypes.CLOCKWORK_FISHER_MENU.get(), ClockworkFisherScreen::new);
-            MenuScreens.register(ModMenuTypes.CLOCKWORK_CRAFTER_MENU.get(), ClockworkCrafterScreen::new);
-            MenuScreens.register(ModMenuTypes.CLOCKWORK_WINDER_MENU.get(), ClockworkWinderScreen::new);
-            MenuScreens.register(ModMenuTypes.CLOCKWORK_FAIRY_TERMINAL_MENU.get(), ClockworkFairyTerminalScreen::new);
-
-            MenuScreens.register(ModMenuTypes.CMT_PARTICIPANT_MENU.get(), CMTParticipantScreen::new);
-
+        public static void commonSetup(final FMLCommonSetupEvent event){
             EntityRenderers.register(ModEntities.SILKBUN_ENTITY.get(), SilkbunRenderer::new);
             EntityRenderers.register(ModEntities.FAIRY_ENTITY.get(), FairyRenderer::new);
             EntityRenderers.register(ModEntities.HOOTCAT_ENTITY.get(), HootcatRenderer::new);
@@ -161,6 +125,32 @@ public class BuntsyMod
             event.enqueueWork(() -> {
                 ItemBlockRenderTypes.setRenderLayer(ModBlocks.SWICE.get(), RenderType.translucent());
             });
+        }
+
+        @SubscribeEvent
+        public static void menuScreensEvent(RegisterMenuScreensEvent event)
+        {
+            event.register(ModMenuTypes.FAIRY_OFFERING_BENCH_MENU.get(), FairyOfferingBenchScreen::new);
+            event.register(ModMenuTypes.GRINDING_WHEEL_MENU.get(), GrindingWheelScreen::new);
+            event.register(ModMenuTypes.THREAD_REELER_MENU.get(), ThreadReelerScreen::new);
+            event.register(ModMenuTypes.FAIRY_COLLECTION_TRAY_MENU.get(), FairyCollectionTrayScreen::new);
+            event.register(ModMenuTypes.FAIRY_INFUSION_BENCH_MENU.get(), FairyInfusionBenchScreen::new);
+            event.register(ModMenuTypes.MAGIC_CRYSTALIZER_MENU.get(), MagicCrystalizerScreen::new);
+            event.register(ModMenuTypes.FUME_DISTILLERY_MENU.get(), FumeDistilleryScreen::new);
+            event.register(ModMenuTypes.FUME_SPREADER_MENU.get(), FumeSpreaderScreen::new);
+            event.register(ModMenuTypes.GIANT_COCOON_MENU.get(), GiantCocoonScreen::new);
+            event.register(ModMenuTypes.COCOON_BAG_MENU.get(), CocoonBagScreen::new);
+            event.register(ModMenuTypes.MIXER_MENU.get(), MixerScreen::new);
+
+            event.register(ModMenuTypes.CLOCKWORK_SYRUP_EXTRACTOR_MENU.get(), ClockworkSyrupExtractorScreen::new);
+            event.register(ModMenuTypes.CLOCKWORK_GEYSER_COLLECTOR_MENU.get(), ClockworkGeyserCollectorScreen::new);
+            event.register(ModMenuTypes.CLOCKWORK_POWDERED_SUGAR_COLLECTOR_MENU.get(), ClockworkPowderedSugarCollectorScreen::new);
+            event.register(ModMenuTypes.CLOCKWORK_FISHER_MENU.get(), ClockworkFisherScreen::new);
+            event.register(ModMenuTypes.CLOCKWORK_CRAFTER_MENU.get(), ClockworkCrafterScreen::new);
+            event.register(ModMenuTypes.CLOCKWORK_WINDER_MENU.get(), ClockworkWinderScreen::new);
+            event.register(ModMenuTypes.CLOCKWORK_FAIRY_TERMINAL_MENU.get(), ClockworkFairyTerminalScreen::new);
+
+            event.register(ModMenuTypes.CMT_PARTICIPANT_MENU.get(), CMTParticipantScreen::new);
         }
     }
 }

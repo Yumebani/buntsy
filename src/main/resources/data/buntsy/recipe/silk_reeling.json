@@ -1,0 +1,17 @@
+{
+  "type": "buntsy:thread_reeler",
+  "ingredients": [
+    {
+      "item": "buntsy:cocoon"
+    }
+  ],
+  "output": [
+    {
+      "chance": 1.0,
+      "item": {
+        "count": 3,
+        "id": "buntsy:silk"
+      }
+    }
+  ]
+}

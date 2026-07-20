@@ -1,6 +1,7 @@
 package net.sophiebun.buntsy.worldgen.tree.grounded_trunk;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,7 +23,7 @@ import java.util.function.Function;
 
 public class GroundedTrunkPlacer extends TrunkPlacer {
 
-    public static final Codec<GroundedTrunkPlacer> CODEC = RecordCodecBuilder.create(groundedTrunkPlacerInstance ->
+    public static final MapCodec<GroundedTrunkPlacer> CODEC = RecordCodecBuilder.mapCodec(groundedTrunkPlacerInstance ->
             trunkPlacerParts(groundedTrunkPlacerInstance).apply(groundedTrunkPlacerInstance, GroundedTrunkPlacer::new));
 
     private static final Direction.Axis[] validAxis = new Direction.Axis[]{

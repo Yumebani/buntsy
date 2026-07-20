@@ -10,9 +10,9 @@ import net.sophiebun.buntsy.entity.animals.Silkbun;
 
 public class SilkbunRenderer extends MobRenderer<Silkbun, SilkbunModel<Silkbun>> {
 
-    public static final ResourceLocation WHITE_SILKBUN = new ResourceLocation(BuntsyMod.MODID, "textures/entity/white_silkbun.png");
-    public static final ResourceLocation PINK_SILKBUN = new ResourceLocation(BuntsyMod.MODID, "textures/entity/pink_silkbun.png");
-    public static final ResourceLocation BLUE_SILKBUN = new ResourceLocation(BuntsyMod.MODID, "textures/entity/blue_silkbun.png");
+    public static final ResourceLocation WHITE_SILKBUN = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/entity/white_silkbun.png");
+    public static final ResourceLocation PINK_SILKBUN = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/entity/pink_silkbun.png");
+    public static final ResourceLocation BLUE_SILKBUN = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/entity/blue_silkbun.png");
     public SilkbunRenderer(EntityRendererProvider.Context pContext) {
         super(pContext, new SilkbunModel<>(pContext.bakeLayer(ModModelLayers.SILKBUN_LOCATION)), 0.5f);
     }

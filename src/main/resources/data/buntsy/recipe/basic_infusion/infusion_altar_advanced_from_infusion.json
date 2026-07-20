@@ -1,0 +1,43 @@
+{
+  "type": "buntsy:infusion_altar_basic",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:infusion_altar_basic"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:silky_ingot"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:silky_ingot"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:fairy_power_receptor"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:diamond_block"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:infusion_altar_advanced"
+
+    },
+  "max_progress": 1000
+}

@@ -16,9 +16,9 @@ public abstract class ClockworkBlock  extends BaseEntityBlock {
         super(pProperties);
     }
 
-    @Override
+
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        
+
         if (pPlayer.getItemInHand(pHand).isEmpty()){
             ((ClockworkBlockEntity) pLevel.getBlockEntity(pPos)).ejectItem(pLevel, pPlayer);
             return InteractionResult.SUCCESS;

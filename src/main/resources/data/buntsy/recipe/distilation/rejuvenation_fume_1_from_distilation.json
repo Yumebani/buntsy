@@ -1,0 +1,48 @@
+{
+  "type": "buntsy:fume_distillery",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:molted_moth_wings"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:catalyst"
+      ,
+      "components": {
+        "buntsy:catalyst_type": {
+          "type": 5,
+          "function": "creation"
+        }
+      }
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:fume_bottle"
+      ,
+      "components": {
+        "buntsy:fume_type": {
+          "type": 4,
+          "level": 1
+        }
+      }
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:fume_bottle"
+      ,
+      "components": {
+        "buntsy:fume_type": {
+          "type": 5,
+          "level": 1
+        }
+      }
+    }
+}

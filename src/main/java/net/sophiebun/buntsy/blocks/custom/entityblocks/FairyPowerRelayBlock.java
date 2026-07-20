@@ -1,5 +1,6 @@
 package net.sophiebun.buntsy.blocks.custom.entityblocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -17,10 +18,16 @@ import org.jetbrains.annotations.Nullable;
 
 public class FairyPowerRelayBlock extends BaseEntityBlock {
 
+    public static final MapCodec<FairyPowerRelayBlock> CODEC = simpleCodec(FairyPowerRelayBlock::new);
     public static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 12, 15);
 
     public FairyPowerRelayBlock(Properties pProperties) {
         super(pProperties);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Nullable

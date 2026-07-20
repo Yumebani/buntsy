@@ -1,8 +1,10 @@
 package net.sophiebun.buntsy.blocks.custom.entityblocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -23,10 +25,16 @@ import org.jetbrains.annotations.Nullable;
 
 public class InfusionAltarAdvanced extends BaseEntityBlock {
 
+    public static final MapCodec<InfusionAltarAdvanced> CODEC = simpleCodec(InfusionAltarAdvanced::new);
     public static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 12, 15);
 
     public InfusionAltarAdvanced(Properties pProperties) {
         super(pProperties);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Nullable
@@ -49,6 +57,16 @@ public class InfusionAltarAdvanced extends BaseEntityBlock {
     }
 
     @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player pPlayer, BlockHitResult hitResult) {
+        return use(state, level, pos, pPlayer, pPlayer.swingingArm, hitResult);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        use(state, level, pos, player, hand, hitResult);
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+    }
+
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
@@ -73,7 +91,6 @@ public class InfusionAltarAdvanced extends BaseEntityBlock {
             }
         }
 
-        super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
         return InteractionResult.SUCCESS;
     }
 

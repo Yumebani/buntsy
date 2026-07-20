@@ -1,11 +1,13 @@
 package net.sophiebun.buntsy.blocks.custom.entityblocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -20,13 +22,13 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.network.NetworkHooks;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.basicfairy.ThreadReelerBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class ThreadReelerBlock extends BaseEntityBlock {
 
+    public static final MapCodec<ThreadReelerBlock> CODEC = simpleCodec(ThreadReelerBlock::new);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty RUNNING = BooleanProperty.create("running");
     public static final BooleanProperty SPECIAL_PROCESS = BooleanProperty.create("special_process");
@@ -36,6 +38,11 @@ public class ThreadReelerBlock extends BaseEntityBlock {
     public ThreadReelerBlock(Properties pProperties) {
         super(pProperties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(RUNNING, Boolean.valueOf(false)).setValue(SPECIAL_PROCESS, Boolean.valueOf(false)));
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Nullable
@@ -57,18 +64,27 @@ public class ThreadReelerBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player pPlayer, BlockHitResult hitResult) {
+        return use(state, level, pos, pPlayer, pPlayer.swingingArm, hitResult);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        use(state, level, pos, player, hand, hitResult);
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+    }
+
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
             if (blockEntity instanceof ThreadReelerBlockEntity) {
-                NetworkHooks.openScreen((ServerPlayer) pPlayer,(ThreadReelerBlockEntity) blockEntity, pPos);
+                pPlayer.openMenu((ThreadReelerBlockEntity) blockEntity, pPos);
             }
             else {
                 throw new IllegalStateException("No container provider.");
             }
         }
 
-        super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
         return InteractionResult.SUCCESS;
     }
 

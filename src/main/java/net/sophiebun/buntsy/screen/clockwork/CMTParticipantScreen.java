@@ -1,6 +1,7 @@
 package net.sophiebun.buntsy.screen.clockwork;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
@@ -13,17 +14,19 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.inventory.FilterSlot;
 import net.sophiebun.buntsy.entity.clockwork_maiden.CMTParticipantData;
 import net.sophiebun.buntsy.entity.clockwork_maiden.MaidenInteractionConfig;
-import net.sophiebun.buntsy.server.CMTParticipantPacket;
+import net.sophiebun.buntsy.server.packets.CMTParticipantPacket;
 import net.sophiebun.buntsy.server.CMTParticipantPacketOperation;
 import net.sophiebun.buntsy.server.ModPacketHandler;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipantMenu> {
 
@@ -63,7 +66,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
     private int yGlobal;
 
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(BuntsyMod.MODID, "textures/gui/clockwork_maiden_terminal_gui.png");
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/gui/clockwork_maiden_terminal_gui.png");
 
     public CMTParticipantScreen(CMTParticipantMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -81,7 +84,12 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
     @Override
     public void onClose() {
         saveCurrentWhiteList();
-        ModPacketHandler.INSTANCE.sendToServer(new CMTParticipantPacket(CMTParticipantPacketOperation.SET_DATA, this.data, this.terminal, this.pos));
+        PacketDistributor.sendToServer(new CMTParticipantPacket(
+                Optional.of(this.data.getCompound(Minecraft.getInstance().level.registryAccess())),
+                Optional.of(this.terminal),
+                Optional.of(this.pos),
+                Optional.empty(),
+                CMTParticipantPacketOperation.SET_DATA));
         super.onClose();
     }
 
@@ -160,8 +168,11 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
     private void loadWhiteList(){
 
         if (this.data.isEnabled(editingInsert, channelEdit)){
-            ModPacketHandler.INSTANCE.sendToServer(new CMTParticipantPacket(CMTParticipantPacketOperation.LOAD_FILTER,
-                    data.getConfig(editingInsert, channelEdit).getFilter()));
+            PacketDistributor.sendToServer(new CMTParticipantPacket(Optional.empty(),
+                            Optional.empty(),
+                            Optional.empty(),
+                            Optional.of(data.getConfig(editingInsert, channelEdit).getFilter()),
+                            CMTParticipantPacketOperation.LOAD_FILTER));
         }
     }
 
@@ -179,7 +190,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
                 if (this.menu.slots.get(36 + i).hasItem()){
                     ItemStack toCopy = this.menu.slots.get(36 + i).getItem();
                     ItemStack entry = new ItemStack(toCopy.getItem(), 1);
-                    if (toCopy.hasTag()) entry.setTag(toCopy.getTag());
+                    entry.applyComponents(toCopy.getComponents());
                     filter.set(i, entry);
                 }
             }
@@ -669,7 +680,7 @@ public class CMTParticipantScreen extends AbstractContainerScreen<CMTParticipant
 
         updateSlots();
 
-        renderBackground(guiGraphics);
+        renderBackground(guiGraphics, mouseX, mouseY, delta);
         super.render(guiGraphics, mouseX, mouseY, delta);
 
         renderSideConfigButtonsIcons(guiGraphics);

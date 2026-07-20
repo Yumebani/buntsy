@@ -7,10 +7,9 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.advancedfairy.FumeDistilleryBlockEntity;
-import net.sophiebun.buntsy.blocks.entity.basicfairy.GrindingWheelBlockEntity;
 import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
 
 public class FumeDistilleryMenu extends AbstractContainerMenu {
@@ -32,18 +31,18 @@ public class FumeDistilleryMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
         addPlayerInventory(inv);
 
-        this.blockEntity.getInputLazyItemHandler().ifPresent(iItemHandler -> {
-            this.addSlot(new SlotItemHandler(iItemHandler, 0, 56, 35));
-            this.addSlot(new SlotItemHandler(iItemHandler, 1, 32, 35));
-        });
+        if (this.blockEntity.inputItemHandler != null){
+            this.addSlot(new SlotItemHandler(this.blockEntity.inputItemHandler, 0, 56, 35));
+            this.addSlot(new SlotItemHandler(this.blockEntity.inputItemHandler, 1, 32, 35));
+        }
 
-        this.blockEntity.getBottleLazyItemHandler().ifPresent(iItemHandler -> {
-            this.addSlot(new SlotItemHandler(iItemHandler, 0, 56, 17));
-        });
+        if (this.blockEntity.bottleItemHandler != null){
+            this.addSlot(new SlotItemHandler(this.blockEntity.bottleItemHandler, 0, 56, 17));
+        }
 
-        this.blockEntity.getOutputLazyItemHandler().ifPresent(iItemHandler -> {
-            this.addSlot(new OutputSlot(iItemHandler, 0, 116, 35));
-        });
+        if (this.blockEntity.outputItemHandler != null){
+            this.addSlot(new OutputSlot(this.blockEntity.outputItemHandler, 0, 116, 35));
+        }
 
         addDataSlots(data);
     }

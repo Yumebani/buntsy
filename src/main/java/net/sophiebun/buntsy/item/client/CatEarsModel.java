@@ -8,8 +8,8 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class CatEarsModel extends GeoModel<CatEarsItem> {
 
-    private ResourceLocation model = new ResourceLocation(BuntsyMod.MODID, "geo/cat_ears.geo.json");
-    private ResourceLocation texture = new ResourceLocation(BuntsyMod.MODID, "textures/armor/cat_ears.png");
+    private ResourceLocation model = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "geo/cat_ears.geo.json");
+    private ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/armor/cat_ears.png");
 
     @Override
     public ResourceLocation getModelResource(CatEarsItem animatable) {

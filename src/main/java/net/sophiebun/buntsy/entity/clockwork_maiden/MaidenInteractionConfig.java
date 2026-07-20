@@ -2,6 +2,7 @@ package net.sophiebun.buntsy.entity.clockwork_maiden;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
@@ -149,7 +150,7 @@ public class MaidenInteractionConfig {
 
     public boolean matchItems(ItemStack stack1, ItemStack stack2) {
         if (stack1.is(stack2.getItem())){
-            if (!exact || (exact && !stack1.hasTag() && !stack2.hasTag()) || (stack1.hasTag() && stack2.hasTag() && (exact && stack1.getTag().equals(stack2.getTag())))){
+            if (!exact || (exact && ItemStack.isSameItemSameComponents(stack1, stack2))){
                 return true;
             }
         }
@@ -158,22 +159,20 @@ public class MaidenInteractionConfig {
 
     public static boolean matchExactly(ItemStack stack1, ItemStack stack2) {
         if (stack1.is(stack2.getItem())){
-            if ((!stack1.hasTag() && !stack2.hasTag()) || (stack1.hasTag() && stack2.hasTag() && (stack1.getTag().equals(stack2.getTag())))){
+            if (ItemStack.isSameItemSameComponents(stack1, stack2)){
                 return true;
             }
         }
         return false;
     }
 
-    public CompoundTag getCompound() {
+    public CompoundTag getCompound(HolderLookup.Provider registries) {
         CompoundTag tag = new CompoundTag();
 
         tag.put("maiden_config.pos", NbtUtils.writeBlockPos(pos));
         tag.putInt("maiden_config.direction", side.ordinal());
         for (int i = 0; i < 12; i++){
-            CompoundTag tag2 = new CompoundTag();
-            filter.get(i).save(tag2);
-            tag.put("maiden_config.filter_item_" + i, tag2);
+            tag.put("maiden_config.filter_item_" + i, filter.get(i).save(registries));
         }
         tag.putBoolean("maiden_config.whitelist", whiteList);
         tag.putBoolean("maiden_config.exact", exact);
@@ -201,12 +200,12 @@ public class MaidenInteractionConfig {
         return tag;
     }
 
-    public static MaidenInteractionConfig parseCompound(CompoundTag tag) {
-        BlockPos pos = NbtUtils.readBlockPos(tag.getCompound("maiden_config.pos"));
+    public static MaidenInteractionConfig parseCompound(CompoundTag tag, HolderLookup.Provider registries) {
+        BlockPos pos = NbtUtils.readBlockPos(tag, "maiden_config.pos").get();
         Direction side = Direction.values()[tag.getInt("maiden_config.direction")];
         List<ItemStack> filter = new ArrayList<>();
         for (int i = 0; i < 12; i++){
-            filter.add(ItemStack.of(tag.getCompound("maiden_config.filter_item_" + i)));
+            filter.add(ItemStack.parse(registries, tag.getCompound("maiden_config.filter_item_" + i)).get());
         }
         boolean whiteList = tag.getBoolean("maiden_config.whitelist");
         boolean exact = tag.getBoolean("maiden_config.exact");

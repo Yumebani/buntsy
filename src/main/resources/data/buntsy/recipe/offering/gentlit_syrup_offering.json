@@ -1,0 +1,18 @@
+{
+  "type": "buntsy:fairy_offering",
+  "ingredients": [
+    {
+      "item": "buntsy:gentlit_syrup"
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"minecraft:glass_bottle"
+
+    },
+  "has_output": true,
+  "food_tick": 800,
+  "chance_modifier": 1
+}

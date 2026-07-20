@@ -1,6 +1,7 @@
 package net.sophiebun.buntsy.blocks.entity.clockwork;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -24,25 +25,25 @@ public class ClockworkBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.saveAdditional(pTag, registries);
+
         pTag.putInt("clockwork_base.clockwork_tier", this.clockworkTier.ordinal());
         pTag.putBoolean("clockwork_base.has_upgrade_item", upgradeItem != null);
         if (upgradeItem != null){
             CompoundTag tag = new CompoundTag();
-            upgradeItem.save(tag);
+            upgradeItem.save(registries, tag);
             pTag.put("clockwork_base.upgrade_item", tag);
         }
-
-        super.saveAdditional(pTag);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.loadAdditional(pTag, registries);
 
         this.clockworkTier = ClockworkTier.values()[pTag.getInt("clockwork_base.clockwork_tier")];
         if (pTag.getBoolean("clockwork_base.has_upgrade_item")){
-            this.upgradeItem = ItemStack.of(pTag.getCompound("clockwork_base.upgrade_item"));
+            this.upgradeItem = ItemStack.parseOptional(registries, pTag.getCompound("clockwork_base.upgrade_item"));
         } else {
             this.upgradeItem = null;
         }

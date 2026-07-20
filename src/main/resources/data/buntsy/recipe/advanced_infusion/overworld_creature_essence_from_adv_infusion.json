@@ -1,0 +1,70 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:fairy_dust"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:gunpowder"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:bone"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:rotten_flesh"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:spider_eye"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:string"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:glass_bottle"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:emerald"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:totem_of_undying"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:essence"
+      ,
+      "components": {
+        "buntsy:essence_type": "overworld_creature"
+      }
+    },
+  "max_progress": 1000
+}

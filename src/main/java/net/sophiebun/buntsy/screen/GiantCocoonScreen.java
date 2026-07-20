@@ -17,7 +17,7 @@ import net.sophiebun.buntsy.BuntsyMod;
 public class GiantCocoonScreen extends AbstractContainerScreen<GiantCocoonMenu> {
 
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(BuntsyMod.MODID, "textures/gui/giant_cocoon_gui.png");
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/gui/giant_cocoon_gui.png");
 
     public GiantCocoonScreen(GiantCocoonMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -47,7 +47,7 @@ public class GiantCocoonScreen extends AbstractContainerScreen<GiantCocoonMenu> 
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
-        renderBackground(guiGraphics);
+        renderBackground(guiGraphics, mouseX, mouseY, delta);
         super.render(guiGraphics, mouseX, mouseY, delta);
         renderTooltip(guiGraphics, mouseX, mouseY);
     }

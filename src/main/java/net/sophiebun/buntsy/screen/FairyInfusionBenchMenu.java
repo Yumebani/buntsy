@@ -9,10 +9,8 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
-import net.sophiebun.buntsy.blocks.entity.directfairy.FairyCollectionTrayBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyInfusionBenchBlockEntity;
 import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
 
@@ -34,17 +32,17 @@ public class FairyInfusionBenchMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
         addPlayerInventory(inv);
 
-        this.blockEntity.getInputLazyItemHandler().ifPresent(iItemHandler -> {
+        if (this.blockEntity.inputItemHandler != null){
             for (int i = 0; i < 5; i++){
-                this.addSlot(new SlotItemHandler(iItemHandler, i, 44 + (18 * i), 17));
+                this.addSlot(new SlotItemHandler(this.blockEntity.inputItemHandler, i, 44 + (18 * i), 17));
             }
-        });
+        }
 
-        this.blockEntity.getOutputLazyItemHandler().ifPresent(iItemHandler -> {
+        if (this.blockEntity.outputItemHandler != null){
             for (int i = 0; i < 5; i++){
-                this.addSlot(new OutputSlot(iItemHandler, i, 44 + (18 * (i)), 53));
+                this.addSlot(new OutputSlot(this.blockEntity.outputItemHandler, i, 44 + (18 * (i)), 53));
             }
-        });
+        }
     }
 
 

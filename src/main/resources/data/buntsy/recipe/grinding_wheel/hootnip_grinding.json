@@ -1,0 +1,17 @@
+{
+  "type": "buntsy:grinding_wheel",
+  "ingredients": [
+    {
+      "item": "buntsy:hootnip"
+    }
+  ],
+  "output": [
+    {
+      "chance": 1.0,
+      "item": {
+        "count": 1,
+        "id": "buntsy:ground_hootnip"
+      }
+    }
+  ]
+}

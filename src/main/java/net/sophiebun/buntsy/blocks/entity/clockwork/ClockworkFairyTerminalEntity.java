@@ -2,6 +2,7 @@ package net.sophiebun.buntsy.blocks.entity.clockwork;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -22,6 +23,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AmethystClusterBlock;
 import net.minecraft.world.level.block.Block;
@@ -35,27 +37,22 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.custom.entityblocks.WindupClockworkBlock;
 import net.sophiebun.buntsy.blocks.custom.minerals.ModGrowableMineral;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyCollectionTrayBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.directfairy.FairyInfusionBenchBlockEntity;
+import net.sophiebun.buntsy.recipe.FairyOfferingInput;
 import net.sophiebun.buntsy.recipe.FairyOfferingRecipe;
 import net.sophiebun.buntsy.screen.clockwork.ClockworkFairyTerminalMenu;
 import net.sophiebun.buntsy.tag.ModTags;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.animation.*;
 
 import java.util.*;
 
@@ -66,7 +63,7 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
     private int speedUp = 1;
     private float consumption;
 
-    private final ItemStackHandler inputItemHandler = new ItemStackHandler(4) {
+    public final ItemStackHandler inputItemHandler = new ItemStackHandler(4) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -75,7 +72,7 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
             }
         }
     };
-    private final ItemStackHandler outputItemHandler = new ItemStackHandler(4) {
+    public final ItemStackHandler outputItemHandler = new ItemStackHandler(4) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -91,9 +88,6 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
     private static final int FAIRY_FOOD_OUTPUT_SLOT_COUNT = 4;
 
     public final ContainerData data;
-
-    private LazyOptional<IItemHandler> inputLazyItemHandler = LazyOptional.of(() -> inputItemHandler);
-    private LazyOptional<IItemHandler> outputLazyItemHandler = LazyOptional.of(() -> outputItemHandler);
 
     public ClockworkFairyTerminalEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.CLOCKWORK_FAIRY_TERMINAL_ENTITY.get(), pPos, pBlockState);
@@ -123,39 +117,13 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
         };
     }
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            if (side.equals(Direction.DOWN)){
-                return outputLazyItemHandler.cast();
-            }
-            else{
-                return inputLazyItemHandler.cast();
-            }
+    public ItemStackHandler getItemHandler(Direction side) {
+        if (side.equals(Direction.DOWN)){
+            return outputItemHandler;
         }
-        return super.getCapability(cap, side);
-    }
-
-    public LazyOptional<IItemHandler> getInputLazyItemHandler() {
-        return inputLazyItemHandler;
-    }
-
-    public LazyOptional<IItemHandler> getOutputLazyItemHandler() {
-        return outputLazyItemHandler;
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        inputLazyItemHandler = LazyOptional.of((() -> inputItemHandler));
-        outputLazyItemHandler = LazyOptional.of((() -> outputItemHandler));
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        inputLazyItemHandler.invalidate();
-        outputLazyItemHandler.invalidate();
+        else{
+            return inputItemHandler;
+        }
     }
 
     @Override
@@ -178,20 +146,18 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
         return getFirstValidInputSlot() != null;
     }
 
-    public Optional<FairyOfferingRecipe> getCurrentRecipe() {
-        SimpleContainer inventory = new SimpleContainer(FAIRY_FOOD_SLOT_COUNT + FAIRY_FOOD_OUTPUT_SLOT_COUNT);
+    public Optional<RecipeHolder<FairyOfferingRecipe>> getCurrentRecipe() {
+        List<ItemStack> list = new ArrayList<>();
         for (int i = 0; i < inputItemHandler.getSlots(); i++) {
-            inventory.setItem(i, inputItemHandler.getStackInSlot(i));
+            list.add(inputItemHandler.getStackInSlot(i));
         }
-        for (int i = 0; i < FAIRY_FOOD_SLOT_COUNT; i++) {
-            inventory.setItem(i + FAIRY_FOOD_OUTPUT_SLOT_COUNT, outputItemHandler.getStackInSlot(i));
-        }
+        FairyOfferingInput input = new FairyOfferingInput(list);
 
-        return this.level.getRecipeManager().getRecipeFor(FairyOfferingRecipe.Type.INSTANCE, inventory, level);
+        return this.level.getRecipeManager().getRecipeFor(FairyOfferingRecipe.Type.INSTANCE, input, level);
     }
 
     public void consumeFood() {
-        outputFoodItem(getCurrentRecipe().get().getResultItem(null));
+        outputFoodItem(getCurrentRecipe().get().value().getResultItem(null));
         int slot = getFirstValidInputSlot();
         this.inputItemHandler.extractItem(slot, 1, false);
     }
@@ -232,7 +198,7 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
     }
 
     private boolean isOutputClear() {
-        ItemStack output = getCurrentRecipe().get().getResultItem(null);
+        ItemStack output = getCurrentRecipe().get().value().getResultItem(null);
         return output.is(Blocks.AIR.asItem()) || getClearOutput(output) != null;
     }
 
@@ -302,7 +268,7 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
         if (this.getFood() <= 0) {
             for (int i = 0; i < (this.fumes.containsKey(7) ? this.fumes.get(7).get(0) + 1 : 1); i++){
                 if (this.hasFood()){
-                    FairyOfferingRecipe recipe = this.getCurrentRecipe().get();
+                    FairyOfferingRecipe recipe = this.getCurrentRecipe().get().value();
                     this.consumeFood();
 
                     this.addFood(recipe.getFoodTick());
@@ -533,20 +499,20 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
     }
 
     @Override
-    public void load( CompoundTag pCompound) {
-        super.load(pCompound);
+    protected void loadAdditional(CompoundTag pCompound, HolderLookup.Provider registries) {
+        super.loadAdditional(pCompound, registries);
 
         this.consumption = pCompound.getFloat("clockwork_fairy_terminal.consumption");
         this.speedUp = pCompound.getInt("clockwork_fairy_terminal.speedUp");
         this.isEnchanted = pCompound.getBoolean("clockwork_fairy_terminal.is_enchanted");
         this.isWatched = pCompound.getBoolean("clockwork_fairy_terminal.is_watched");
 
-        this.inputItemHandler.deserializeNBT(pCompound.getCompound("clockwork_fairy_terminal.inputInventory"));
-        this.outputItemHandler.deserializeNBT(pCompound.getCompound("clockwork_fairy_terminal.outputInventory"));
+        this.inputItemHandler.deserializeNBT(registries, pCompound.getCompound("clockwork_fairy_terminal.inputInventory"));
+        this.outputItemHandler.deserializeNBT(registries, pCompound.getCompound("clockwork_fairy_terminal.outputInventory"));
 
         this.hasTitular = pCompound.getBoolean("clockwork_fairy_terminal.has_titular");
         if (hasTitular){
-            titularBlockPos = NbtUtils.readBlockPos(pCompound.getCompound("clockwork_fairy_terminal.titular_block_pos"));
+            titularBlockPos = NbtUtils.readBlockPos(pCompound, "clockwork_fairy_terminal.titular_block_pos").get();
             task = (pCompound.getString("clockwork_fairy_terminal.titular_task")).equals("collect") ?
                     new FairyCollectResources(this, titularBlockPos, 55) : new FairyEnchantResources(this, titularBlockPos, 30);
         }
@@ -559,7 +525,7 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
 
         for (int i = 0; i < loopCount; i++){
             this.registeredUtilBlockEntityPos.put(
-                    NbtUtils.readBlockPos(pCompound.getCompound("clockwork_fairy_terminal.registered_block_entity_pos_" + i)),
+                    NbtUtils.readBlockPos(pCompound, "clockwork_fairy_terminal.registered_block_entity_pos_" + i).get(),
                     pCompound.getInt("clockwork_fairy_terminal.registered_block_entity_weight_" + i));
         }
 
@@ -574,20 +540,19 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
         }
 
         this.fumeTickCount = pCompound.getInt("clockwork_fairy_terminal.fume_tick_count");
-
-
     }
 
     @Override
-    public void saveAdditional(CompoundTag pCompound) {
+    protected void saveAdditional(CompoundTag pCompound, HolderLookup.Provider registries) {
+        super.saveAdditional(pCompound, registries);
 
         pCompound.putFloat("clockwork_fairy_terminal.consumption", this.consumption);
         pCompound.putInt("clockwork_fairy_terminal.speedUp", this.speedUp);
         pCompound.putBoolean("clockwork_fairy_terminal.is_enchanted", this.isEnchanted);
         pCompound.putBoolean("clockwork_fairy_terminal.is_watched", this.isWatched);
 
-        pCompound.put("clockwork_fairy_terminal.inputInventory", inputItemHandler.serializeNBT());
-        pCompound.put("clockwork_fairy_terminal.outputInventory", outputItemHandler.serializeNBT());
+        pCompound.put("clockwork_fairy_terminal.inputInventory", inputItemHandler.serializeNBT(registries));
+        pCompound.put("clockwork_fairy_terminal.outputInventory", outputItemHandler.serializeNBT(registries));
 
         pCompound.putBoolean("clockwork_fairy_terminal.has_titular", hasTitular);
         if (hasTitular){
@@ -620,8 +585,6 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
         }
 
         pCompound.putInt("clockwork_fairy_terminal.fume_tick_count", this.fumeTickCount);
-
-        super.saveAdditional(pCompound);
     }
 
     public void addFume(int fumeType, int level, int duration){
@@ -663,14 +626,6 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
     private AnimationController<ClockworkFairyTerminalEntity> controllerIdle;
     private AnimationController<ClockworkFairyTerminalEntity> controller;
 
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllerIdle = new AnimationController<>(this, "controllerIdle", 2, this::predicateIdle);
-        controllers.add(controllerIdle);
-        controller = new AnimationController<>(this, "controller", 2, this::predicate);
-        controllers.add(controller);
-    }
-
     private PlayState predicateIdle(AnimationState<ClockworkFairyTerminalEntity> clockworkFairyTerminalEntityAnimationState) {
         clockworkFairyTerminalEntityAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.clockwork_fairy_terminal.idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
@@ -679,6 +634,14 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
     private PlayState predicate(AnimationState<ClockworkFairyTerminalEntity> clockworkFairyTerminalEntityAnimationState) {
         clockworkFairyTerminalEntityAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.clockwork_windup.running", Animation.LoopType.LOOP));
         return getBlockState().getValue(WindupClockworkBlock.RUNNING) ? PlayState.CONTINUE : PlayState.STOP;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllerIdle = new AnimationController<>(this, "controllerIdle", 2, this::predicateIdle);
+        controllers.add(controllerIdle);
+        controller = new AnimationController<>(this, "controller", 2, this::predicate);
+        controllers.add(controller);
     }
 
     @Override
@@ -987,7 +950,7 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
                 makeSparkleTrail(level, entity.getBlockPos().getCenter(), targetTray.getCenter().add(0, 0.5f, 0));
                 makeSparkleParticle(level, targetTray.getCenter().add(0, 0.5f, 0), 25);
 
-                LootTable lootTable = level.getServer().getLootData().getLootTable(blockState.getBlock().getLootTable());
+                LootTable lootTable = level.getServer().reloadableRegistries().getLootTable(blockState.getBlock().getLootTable());
                 LootParams emptyParams = new LootParams.Builder(((ServerLevel) level))
                         .withParameter(LootContextParams.ORIGIN, blockPos.getCenter())
                         .withParameter(LootContextParams.BLOCK_STATE, blockState)

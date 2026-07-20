@@ -9,7 +9,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.sophiebun.buntsy.blocks.ModBlocks;
-import net.sophiebun.buntsy.blocks.custom.plants.Sweeds;
+import net.sophiebun.buntsy.blocks.custom.plants.CrocktusBlock;
 
 public class CrocktusFeature extends Feature<NoneFeatureConfiguration> {
 
@@ -28,7 +28,7 @@ public class CrocktusFeature extends Feature<NoneFeatureConfiguration> {
 
         int i = 0;
         while (pRandom.nextInt(0, (i + 1)) <= 5 - i){
-            if (pLevel.getBlockState(pPos.above(i)).isAir() && ModBlocks.CROCKTUS.get().canSurvive(pLevel.getBlockState(pPos.above(i)), pLevel, pPos.above(i))){
+            if (pLevel.getBlockState(pPos.above(i)).isAir() && ((CrocktusBlock) ModBlocks.CROCKTUS.get()).canSurvive(pLevel.getBlockState(pPos.above(i)), pLevel, pPos.above(i))){
                 pLevel.setBlock(pPos.above(i), ModBlocks.CROCKTUS.get().defaultBlockState(), 2);
                 i++;
             } else {

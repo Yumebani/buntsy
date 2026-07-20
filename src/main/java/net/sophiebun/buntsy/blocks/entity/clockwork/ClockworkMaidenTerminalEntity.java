@@ -2,6 +2,7 @@ package net.sophiebun.buntsy.blocks.entity.clockwork;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.Connection;
@@ -13,8 +14,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
 import net.sophiebun.buntsy.blocks.custom.entityblocks.WindupClockworkBlock;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.entity.clockwork_maiden.CMTParticipantData;
@@ -24,11 +23,9 @@ import net.sophiebun.buntsy.screen.clockwork.CMTParticipantScreen;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.animation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,15 +45,15 @@ public class ClockworkMaidenTerminalEntity extends WindupClockworkEntity impleme
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private AnimationController<ClockworkMaidenTerminalEntity> controller;
 
+    private PlayState predicate(AnimationState<ClockworkMaidenTerminalEntity> clockworkFairyTerminalEntityAnimationState) {
+        clockworkFairyTerminalEntityAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.clockwork_windup.running", Animation.LoopType.LOOP));
+        return getBlockState().getValue(WindupClockworkBlock.RUNNING)  ? PlayState.CONTINUE : PlayState.STOP;
+    }
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controller = new AnimationController<>(this, "controller", 2, this::predicate);
         controllers.add(controller);
-    }
-
-    private PlayState predicate(AnimationState<ClockworkMaidenTerminalEntity> clockworkFairyTerminalEntityAnimationState) {
-        clockworkFairyTerminalEntityAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.clockwork_windup.running", Animation.LoopType.LOOP));
-        return getBlockState().getValue(WindupClockworkBlock.RUNNING)  ? PlayState.CONTINUE : PlayState.STOP;
     }
 
     @Override
@@ -69,53 +66,38 @@ public class ClockworkMaidenTerminalEntity extends WindupClockworkEntity impleme
     }
 
     @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-    }
-
-    @Override
-    protected void saveAdditional(CompoundTag pTag) {
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.saveAdditional(pTag, registries);
 
         pTag.putInt("clockwork_maiden_terminal.data_count", registeredConfigs.size());
         for (int i = 0; i < registeredConfigs.size(); i++){
             pTag.put("clockwork_maiden_terminal.data_pos_" + i, NbtUtils.writeBlockPos(((BlockPos) registeredConfigs.keySet().toArray()[i])));
-            pTag.put("clockwork_maiden_terminal.data_" + i, registeredConfigs.get(registeredConfigs.keySet().toArray()[i]).getCompound());
+            pTag.put("clockwork_maiden_terminal.data_" + i, registeredConfigs.get(registeredConfigs.keySet().toArray()[i]).getCompound(registries));
         }
 
         pTag.putInt("clockwork_maiden_terminal.task_count", maidenTasks.size());
         for (int i = 0; i < maidenTasks.size(); i++){
-            pTag.put("clockwork_maiden_terminal.task_" + i, maidenTasks.get(i).getCompound());
+            pTag.put("clockwork_maiden_terminal.task_" + i, maidenTasks.get(i).getCompound(registries));
         }
 
         pTag.putInt("clockwork_maiden_terminal.task_round_robin", tasksRoundRobin);
 
-        super.saveAdditional(pTag);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.loadAdditional(pTag, registries);
 
         int regCount = pTag.getInt("clockwork_maiden_terminal.data_count");
         for (int i = 0; i < regCount; i++){
             this.registeredConfigs.put(
-                    NbtUtils.readBlockPos(pTag.getCompound("clockwork_maiden_terminal.data_pos_" + i)),
-                    CMTParticipantData.parseCompound(pTag.getCompound("clockwork_maiden_terminal.data_" + i)));
+                    NbtUtils.readBlockPos(pTag, "clockwork_maiden_terminal.data_pos_" + i).get(),
+                    CMTParticipantData.parseCompound(pTag.getCompound("clockwork_maiden_terminal.data_" + i), registries));
         }
 
         int taskCount = pTag.getInt("clockwork_maiden_terminal.task_count");
         for (int i = 0; i < taskCount; i++){
-            maidenTasks.add(MaidenTask.parseCompound(pTag.getCompound("clockwork_maiden_terminal.task_" + i)));
+            maidenTasks.add(MaidenTask.parseCompound(pTag.getCompound("clockwork_maiden_terminal.task_" + i), registries));
         }
 
         this.tasksRoundRobin = pTag.getInt("clockwork_maiden_terminal.task_round_robin");
@@ -128,13 +110,8 @@ public class ClockworkMaidenTerminalEntity extends WindupClockworkEntity impleme
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     public void addNewBlock(BlockEntity block){

@@ -3,9 +3,15 @@ package net.sophiebun.buntsy.recipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.SimpleContainer;
@@ -19,28 +25,30 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MagicCrystalizerRecipe implements Recipe<SimpleContainer> {
+public class MagicCrystalizerRecipe implements Recipe<MagicCrystallizerInput> {
     private final List<Ingredient> inputItems;
     private final ItemStack output;
-    private final ResourceLocation id;
-    public MagicCrystalizerRecipe(List<Ingredient> inputItems, ItemStack output, ResourceLocation id) {
+    public MagicCrystalizerRecipe(List<Ingredient> inputItems, ItemStack output) {
         this.inputItems = inputItems;
         this.output = output;
-        this.id = id;
     }
 
     public List<Ingredient> getInputs() {
         return inputItems;
     }
 
+    public ItemStack getOutput() {
+        return output.copy();
+    }
+
     @Override
-    public boolean matches(SimpleContainer pContainer, Level pLevel) {
+    public boolean matches(MagicCrystallizerInput magicCrystallizerInput, Level pLevel) {
         if(pLevel.isClientSide()) {
             return false;
         }
 
         for (int i = 0; i < 7; i++){
-            if (!inputItems.get(i).test(pContainer.getItem(i))){
+            if (!inputItems.get(i).test(magicCrystallizerInput.getItem(i))){
                 return false;
             }
         }
@@ -48,7 +56,7 @@ public class MagicCrystalizerRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer pContainer, RegistryAccess pRegistryAccess) {
+    public ItemStack assemble(MagicCrystallizerInput magicCrystallizerInput, HolderLookup.Provider provider) {
         return output.copy();
     }
 
@@ -58,14 +66,10 @@ public class MagicCrystalizerRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return output.copy();
     }
 
-    @Override
-    public ResourceLocation getId() {
-        return id;
-    }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
@@ -84,47 +88,24 @@ public class MagicCrystalizerRecipe implements Recipe<SimpleContainer> {
 
     public static class Serializer implements RecipeSerializer<MagicCrystalizerRecipe> {
         public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation(BuntsyMod.MODID, "magic_crystalizer");
+        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "magic_crystalizer");
 
         @Override
-        public MagicCrystalizerRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
-
-            //Inputs
-            JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients");
-            List<Ingredient> inputs = new ArrayList<>();
-            for(JsonElement entry : ingredients.asList()) {
-                inputs.add(Ingredient.fromJson(entry));
-            }
-
-            //Outputs
-            ItemStack output = new ItemStack(Blocks.AIR);
-            output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "output"));
-
-            return new MagicCrystalizerRecipe(inputs, output, pRecipeId);
+        public MapCodec<MagicCrystalizerRecipe> codec() {
+            return RecordCodecBuilder.mapCodec(instance -> {
+                return instance.group(
+                        Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").forGetter(MagicCrystalizerRecipe::getInputs),
+                        ItemStack.STRICT_CODEC.fieldOf("output").forGetter(MagicCrystalizerRecipe::getOutput)
+                ).apply(instance, MagicCrystalizerRecipe::new);
+            });
         }
 
         @Override
-        public @Nullable MagicCrystalizerRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
-            NonNullList<Ingredient> inputs = NonNullList.withSize(pBuffer.readInt(), Ingredient.EMPTY);
-
-            for(int i = 0; i < inputs.size(); i++) {
-                inputs.set(i, Ingredient.fromNetwork(pBuffer));
-            }
-
-            ItemStack output = pBuffer.readItem();
-
-            return new MagicCrystalizerRecipe(inputs, output, pRecipeId);
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf pBuffer, MagicCrystalizerRecipe pRecipe) {
-            pBuffer.writeInt(pRecipe.inputItems.size());
-
-            for (Ingredient ingredient : pRecipe.getInputs()) {
-                ingredient.toNetwork(pBuffer);
-            }
-
-            pBuffer.writeItem(pRecipe.output);
+        public StreamCodec<RegistryFriendlyByteBuf, MagicCrystalizerRecipe> streamCodec() {
+            return StreamCodec.composite(
+                    Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), MagicCrystalizerRecipe::getInputs,
+                    ItemStack.STREAM_CODEC, MagicCrystalizerRecipe::getOutput,
+                    MagicCrystalizerRecipe::new);
         }
     }
 }

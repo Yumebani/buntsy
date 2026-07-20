@@ -1,20 +1,16 @@
 package net.sophiebun.buntsy.screen;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
-import net.sophiebun.buntsy.blocks.entity.basicfairy.GrindingWheelBlockEntity;
 import net.sophiebun.buntsy.blocks.entity.custom.GiantCocoonBlockEntity;
-import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
 
 public class GiantCocoonMenu extends AbstractContainerMenu {
 
@@ -34,21 +30,21 @@ public class GiantCocoonMenu extends AbstractContainerMenu {
 
         addPlayerHotbar(inv);
         addPlayerInventory(inv);
-        addBlockInventory(blockEntity.getContentLazyItemHandler(level));
+        addBlockInventory(blockEntity.getContentItemHandler());
 
         addDataSlots(data);
 
         ///give @s buntsy:uro{buntsy.uro_id: 0} 2
     }
 
-    private void addBlockInventory(LazyOptional<IItemHandler> contentLazyItemHandler) {
-        contentLazyItemHandler.ifPresent(iItemHandler -> {
+    private void addBlockInventory(IItemHandler contentItemHandler) {
+        if (contentItemHandler != null){
             for (int i = 0; i < 3; ++i) {
                 for (int l = 0; l < 9; ++l) {
-                    this.addSlot(new SlotItemHandler(iItemHandler, l + i * 9, 8 + l * 18, 18 + i * 18));
+                    this.addSlot(new SlotItemHandler(contentItemHandler, l + i * 9, 8 + l * 18, 18 + i * 18));
                 }
             }
-        });
+        }
     }
 
 

@@ -41,7 +41,6 @@ public class SyrupExtractorBlock extends Block{
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LEVEL, Integer.valueOf(0)));
     }
 
-    @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             if (pPlayer.getItemInHand(pHand).is(Items.GLASS_BOTTLE) && pState.getValue(SyrupExtractorBlock.LEVEL) == 3){
@@ -55,7 +54,6 @@ public class SyrupExtractorBlock extends Block{
             return InteractionResult.FAIL;
         }
 
-        super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
         return InteractionResult.SUCCESS;
     }
 

@@ -8,12 +8,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.common.Tags;
-import net.sophiebun.buntsy.blocks.ModBlocks;
-import net.sophiebun.buntsy.tag.ModTags;
+import net.neoforged.neoforge.common.Tags;
 
 public class BeachLimstoneFeature extends Feature<BlockStateConfiguration> {
 
@@ -46,7 +42,7 @@ public class BeachLimstoneFeature extends Feature<BlockStateConfiguration> {
                     BlockState check = worldgenlevel.getBlockState(blockpos.offset(Math.round(xAlong / 10f), Math.round(y / 10f), Math.round(zAlong / 10f)));
                     FluidState checkFluid = check.getFluidState();
 
-                    if (isInRadius(size, x, Math.round(y / alongation), z) && (check.is(Tags.Blocks.SAND) || check.isAir() || !checkFluid.isEmpty())) {
+                    if (isInRadius(size, x, Math.round(y / alongation), z) && (check.is(Tags.Blocks.SANDS) || check.isAir() || !checkFluid.isEmpty())) {
                         worldgenlevel.setBlock(blockpos.offset(Math.round(xAlong / 10f), Math.round(y / 10f), Math.round(zAlong / 10f)), state, 2);
                     }
                 }

@@ -2,11 +2,11 @@ package net.sophiebun.buntsy.blocks.inventory;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class PatternSlot extends SlotItemHandler  implements IHideableSlot {
+public class PatternSlot extends SlotItemHandler implements IHideableSlot {
 
     private final int itemHandlerIndex;
 

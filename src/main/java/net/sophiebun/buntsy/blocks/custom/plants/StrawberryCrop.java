@@ -31,7 +31,6 @@ public class StrawberryCrop extends CropBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(AGE, 0));
     }
 
-    @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (pState.getValue(AGE) == 5 && !pPlayer.getItemInHand(pHand).is(Items.BONE_MEAL) && !pLevel.isClientSide()){
             popResource(pLevel, pPos, new ItemStack(ModItems.STRAWBERRY.get(), pLevel.random.nextInt(1, 3)));

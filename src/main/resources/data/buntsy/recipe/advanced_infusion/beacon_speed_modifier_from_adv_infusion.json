@@ -1,0 +1,67 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:prismatic_beacon_base"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:sugar"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:sugar"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:speed_blend"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:speed_blend"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:silky_ingot"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:silky_ingot"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:fairy_dust"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:fairy_dust"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:beacon_speed_modifier"
+
+    },
+  "max_progress": 1000
+}

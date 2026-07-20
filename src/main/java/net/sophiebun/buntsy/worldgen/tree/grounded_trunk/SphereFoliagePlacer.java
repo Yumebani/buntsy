@@ -1,6 +1,7 @@
 package net.sophiebun.buntsy.worldgen.tree.grounded_trunk;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
@@ -12,7 +13,7 @@ import net.sophiebun.buntsy.worldgen.tree.ModFoliagePlacers;
 
 public class SphereFoliagePlacer extends FoliagePlacer {
 
-    public static final Codec<SphereFoliagePlacer> CODEC = RecordCodecBuilder.create(sphereFoliagePlacerInstance ->
+    public static final MapCodec<SphereFoliagePlacer> CODEC = RecordCodecBuilder.mapCodec(sphereFoliagePlacerInstance ->
             foliagePlacerParts(sphereFoliagePlacerInstance).apply(sphereFoliagePlacerInstance, SphereFoliagePlacer::new));
 
     public SphereFoliagePlacer(IntProvider pRadius, IntProvider pOffset) {

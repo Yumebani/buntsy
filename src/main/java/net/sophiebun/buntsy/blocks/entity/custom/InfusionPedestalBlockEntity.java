@@ -2,33 +2,20 @@ package net.sophiebun.buntsy.blocks.entity.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Containers;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
-import net.sophiebun.buntsy.screen.FairyCollectionTrayMenu;
-import net.sophiebun.buntsy.tag.ModTags;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class InfusionPedestalBlockEntity extends BlockEntity {
@@ -45,8 +32,6 @@ public class InfusionPedestalBlockEntity extends BlockEntity {
 
     private final Integer randomRotation;
 
-    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.of(() -> itemHandler);
-
     public Integer getRandomRotation() {
         return randomRotation;
     }
@@ -59,26 +44,10 @@ public class InfusionPedestalBlockEntity extends BlockEntity {
     }
 
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
+    public ItemStackHandler getItemHandler(Direction side) {
             if (itemHandler.getStackInSlot(0).isEmpty()){
-                return lazyItemHandler.cast();
-            }
-        }
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        lazyItemHandler = LazyOptional.of((() -> itemHandler));
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        lazyItemHandler.invalidate();
+                return itemHandler;
+            } else return null;
     }
 
     public void drops() {
@@ -89,17 +58,17 @@ public class InfusionPedestalBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("inventory", itemHandler.serializeNBT());
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
 
-        super.saveAdditional(pTag);
+        tag.put("inventory", itemHandler.serializeNBT(registries));
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
 
-        this.itemHandler.deserializeNBT(pTag.getCompound("inventory"));
+        this.itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
     }
 
     public ItemStack getItem(){
@@ -123,11 +92,7 @@ public class InfusionPedestalBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
-    }
-
-    public void animateParticles() {
-
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 }

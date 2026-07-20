@@ -1,7 +1,9 @@
 package net.sophiebun.buntsy.blocks.entity.advancedfairy;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -24,27 +26,22 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
-import net.sophiebun.buntsy.entity.ModEntities;
+import net.sophiebun.buntsy.codec.FumeType;
+import net.sophiebun.buntsy.components.ModDataComponents;
 import net.sophiebun.buntsy.entity.animals.Fairy;
 import net.sophiebun.buntsy.entity.animals.Silkbun;
 import net.sophiebun.buntsy.entity.interfaces.IFumeAffectedEntity;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.screen.FumeSpreaderMenu;
 import net.sophiebun.buntsy.tag.ModTags;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -72,7 +69,7 @@ public class FumeSpreaderBlockEntity extends BlockEntity implements MenuProvider
     private static final int GROWTH_RANGE_X = 4;
     private static final int GROWTH_RANGE_Y = 1;
 
-    private final ItemStackHandler inputItemHandler = new ItemStackHandler(1) {
+    public final ItemStackHandler inputItemHandler = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -82,7 +79,7 @@ public class FumeSpreaderBlockEntity extends BlockEntity implements MenuProvider
         }
     };
 
-    private final ItemStackHandler displayItemHandler = new ItemStackHandler(1) {
+    public final ItemStackHandler displayItemHandler = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -92,7 +89,7 @@ public class FumeSpreaderBlockEntity extends BlockEntity implements MenuProvider
         }
     };
 
-    private final ItemStackHandler outputItemHandler = new ItemStackHandler(1) {
+    public final ItemStackHandler outputItemHandler = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -109,22 +106,6 @@ public class FumeSpreaderBlockEntity extends BlockEntity implements MenuProvider
     private int fumeTickPeriod = 0;
     private int fumeId = 0;
     private int fumeLevel = 0;
-
-    private LazyOptional<IItemHandler> inputLazyItemHandler = LazyOptional.of(() -> inputItemHandler);
-    private LazyOptional<IItemHandler> displayLazyItemHandler = LazyOptional.of(() -> displayItemHandler);
-    private LazyOptional<IItemHandler> outputLazyItemHandler = LazyOptional.of(() -> outputItemHandler);
-
-    public LazyOptional<IItemHandler> getInputLazyItemHandler() {
-        return inputLazyItemHandler;
-    }
-
-    public LazyOptional<IItemHandler> getDisplayLazyItemHandler() {
-        return displayLazyItemHandler;
-    }
-
-    public LazyOptional<IItemHandler> getOutputLazyItemHandler() {
-        return outputLazyItemHandler;
-    }
 
     public FumeSpreaderBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.FUME_SPREADER_BLOCK_ENTITY.get(), pPos, pBlockState);
@@ -172,33 +153,13 @@ public class FumeSpreaderBlockEntity extends BlockEntity implements MenuProvider
         return new FumeSpreaderMenu(i, inventory, this, this.data);
     }
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
+    public ItemStackHandler getItemHandler(Direction side) {
             if (side.equals(Direction.DOWN)){
-                return outputLazyItemHandler.cast();
+                return outputItemHandler;
             }
             else{
-                return inputLazyItemHandler.cast();
+                return inputItemHandler;
             }
-        }
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        inputLazyItemHandler = LazyOptional.of((() -> inputItemHandler));
-        displayLazyItemHandler = LazyOptional.of((() -> displayItemHandler));
-        outputLazyItemHandler = LazyOptional.of((() -> outputItemHandler));
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        inputLazyItemHandler.invalidate();
-        displayLazyItemHandler.invalidate();
-        outputLazyItemHandler.invalidate();
     }
 
     public void drops() {
@@ -210,27 +171,27 @@ public class FumeSpreaderBlockEntity extends BlockEntity implements MenuProvider
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("inputInventory", inputItemHandler.serializeNBT());
-        pTag.put("displayInventory", displayItemHandler.serializeNBT());
-        pTag.put("outputInventory", outputItemHandler.serializeNBT());
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.saveAdditional(pTag, registries);
+
+        pTag.put("inputInventory", inputItemHandler.serializeNBT(registries));
+        pTag.put("displayInventory", displayItemHandler.serializeNBT(registries));
+        pTag.put("outputInventory", outputItemHandler.serializeNBT(registries));
         pTag.putInt("fume_spreader.fumeLeftMax", this.fumeLeftMax);
         pTag.putInt("fume_spreader.fumeLeft", this.fumeLeft);
         pTag.putInt("fume_spreader.fumeId", this.fumeId);
         pTag.putInt("fume_spreader.fumeLevel", this.fumeLevel);
         pTag.putInt("fume_spreader.fumeTick", this.fumeTick);
         pTag.putInt("fume_spreader.fumeTickPeriod", this.fumeTickPeriod);
-
-        super.saveAdditional(pTag);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.loadAdditional(pTag, registries);
 
-        this.inputItemHandler.deserializeNBT(pTag.getCompound("inputInventory"));
-        this.displayItemHandler.deserializeNBT(pTag.getCompound("displayInventory"));
-        this.outputItemHandler.deserializeNBT(pTag.getCompound("outputInventory"));
+        this.inputItemHandler.deserializeNBT(registries, pTag.getCompound("inputInventory"));
+        this.displayItemHandler.deserializeNBT(registries, pTag.getCompound("displayInventory"));
+        this.outputItemHandler.deserializeNBT(registries, pTag.getCompound("outputInventory"));
         this.fumeLeftMax = pTag.getInt("fume_spreader.fumeLeftMax");
         this.fumeLeft = pTag.getInt("fume_spreader.fumeLeft");
         this.fumeId = pTag.getInt("fume_spreader.fumeId");
@@ -238,6 +199,7 @@ public class FumeSpreaderBlockEntity extends BlockEntity implements MenuProvider
         this.fumeTick = pTag.getInt("fume_spreader.fumeTick");
         this.fumeTickPeriod = pTag.getInt("fume_spreader.fumeTickPeriod");
     }
+
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
 
         if (canRun()){
@@ -313,7 +275,7 @@ public class FumeSpreaderBlockEntity extends BlockEntity implements MenuProvider
         BuiltInRegistries.CAT_VARIANT.getTag(tagkey).flatMap((p_289435_) -> {
             return p_289435_.getRandomElement(pLevel.getRandom());
         }).ifPresent((p_262565_) -> {
-            cat.setVariant(p_262565_.value());
+            cat.setVariant(p_262565_);
         });
     }
 
@@ -375,33 +337,34 @@ public class FumeSpreaderBlockEntity extends BlockEntity implements MenuProvider
 
     private List<Fairy> getFairiesInRadius (Level pLevel, BlockPos pPos){
         return pLevel.getEntitiesOfClass(Fairy.class,
-                new AABB(pPos.relative(Direction.DOWN, RANGE_Y_DOWN).relative(Direction.EAST, RANGE_X).relative(Direction.NORTH, RANGE_X),
-                        pPos.relative(Direction.UP, RANGE_Y).relative(Direction.WEST, RANGE_X).relative(Direction.SOUTH, RANGE_X)));
+                new AABB(pPos.relative(Direction.DOWN, RANGE_Y_DOWN).relative(Direction.EAST, RANGE_X).relative(Direction.NORTH, RANGE_X).getCenter(),
+                        pPos.relative(Direction.UP, RANGE_Y).relative(Direction.WEST, RANGE_X).relative(Direction.SOUTH, RANGE_X).getCenter()));
     }
 
     private List<Silkbun> getSilkbunsInRadius (Level pLevel, BlockPos pPos){
         return pLevel.getEntitiesOfClass(Silkbun.class,
-                new AABB(pPos.relative(Direction.DOWN, RANGE_Y_DOWN).relative(Direction.EAST, RANGE_X).relative(Direction.NORTH, RANGE_X),
-                        pPos.relative(Direction.UP, RANGE_Y).relative(Direction.WEST, RANGE_X).relative(Direction.SOUTH, RANGE_X)));
+                new AABB(pPos.relative(Direction.DOWN, RANGE_Y_DOWN).relative(Direction.EAST, RANGE_X).relative(Direction.NORTH, RANGE_X).getCenter(),
+                        pPos.relative(Direction.UP, RANGE_Y).relative(Direction.WEST, RANGE_X).relative(Direction.SOUTH, RANGE_X).getCenter()));
     }
 
     private List<AgeableMob> getAgeableMobsInRadius (Level pLevel, BlockPos pPos){
         return pLevel.getEntitiesOfClass(AgeableMob.class,
-                new AABB(pPos.relative(Direction.DOWN, RANGE_Y_DOWN).relative(Direction.EAST, RANGE_X).relative(Direction.NORTH, RANGE_X),
-                        pPos.relative(Direction.UP, RANGE_Y).relative(Direction.WEST, RANGE_X).relative(Direction.SOUTH, RANGE_X)));
+                new AABB(pPos.relative(Direction.DOWN, RANGE_Y_DOWN).relative(Direction.EAST, RANGE_X).relative(Direction.NORTH, RANGE_X).getCenter(),
+                        pPos.relative(Direction.UP, RANGE_Y).relative(Direction.WEST, RANGE_X).relative(Direction.SOUTH, RANGE_X).getCenter()));
     }
 
     private List<LivingEntity> getAnyEntities(Level pLevel, BlockPos pPos){
         return pLevel.getEntitiesOfClass(LivingEntity.class,
-                new AABB(pPos.relative(Direction.DOWN, RANGE_Y_DOWN).relative(Direction.EAST, RANGE_X).relative(Direction.NORTH, RANGE_X),
-                        pPos.relative(Direction.UP, RANGE_Y).relative(Direction.WEST, RANGE_X).relative(Direction.SOUTH, RANGE_X)));
+                new AABB(pPos.relative(Direction.DOWN, RANGE_Y_DOWN).relative(Direction.EAST, RANGE_X).relative(Direction.NORTH, RANGE_X).getCenter(),
+                        pPos.relative(Direction.UP, RANGE_Y).relative(Direction.WEST, RANGE_X).relative(Direction.SOUTH, RANGE_X).getCenter()));
     }
 
     private void consumeFume(){
         ItemStack item = this.inputItemHandler.extractItem(0, 1, false);
         this.displayItemHandler.setStackInSlot(0, item.copy());
-        this.fumeId = item.getTag().getInt("buntsy.fumeType");
-        this.fumeLevel = item.getTag().getInt("buntsy.fumeLevel");
+        FumeType vals = item.get(ModDataComponents.FUME_TYPE);
+        this.fumeId = vals.type();
+        this.fumeLevel = vals.level();
         this.fumeLeftMax = FUME_CONSUMPTION_DETAILS.get(this.fumeId).get(0);
         this.fumeLeft = this.fumeLeftMax;
         this.fumeTick = 0;
@@ -435,7 +398,7 @@ public class FumeSpreaderBlockEntity extends BlockEntity implements MenuProvider
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 }

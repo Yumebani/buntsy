@@ -1,6 +1,7 @@
 package net.sophiebun.buntsy.worldgen.tree.origami_palm;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,7 +22,7 @@ import java.util.Queue;
 
 public class OrigamiPalmFoliagePlacer extends FoliagePlacer {
 
-    public static final Codec<OrigamiPalmFoliagePlacer> CODEC = RecordCodecBuilder.create(origamiPalmFoliagePlacerInstance ->
+    public static final MapCodec<OrigamiPalmFoliagePlacer> CODEC = RecordCodecBuilder.mapCodec(origamiPalmFoliagePlacerInstance ->
             foliagePlacerParts(origamiPalmFoliagePlacerInstance).apply(origamiPalmFoliagePlacerInstance, OrigamiPalmFoliagePlacer::new));
 
     public OrigamiPalmFoliagePlacer(IntProvider pRadius, IntProvider pOffset) {

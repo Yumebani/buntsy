@@ -7,8 +7,8 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class HootcatArmorModel extends GeoModel<HootcatArmorItem> {
 
-    private ResourceLocation model = new ResourceLocation(BuntsyMod.MODID, "geo/hootcat_armor.geo.json");
-    private ResourceLocation texture = new ResourceLocation(BuntsyMod.MODID, "textures/armor/hootcat_armor.png");
+    private ResourceLocation model = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "geo/hootcat_armor.geo.json");
+    private ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/armor/hootcat_armor.png");
 
     @Override
     public ResourceLocation getModelResource(HootcatArmorItem animatable) {

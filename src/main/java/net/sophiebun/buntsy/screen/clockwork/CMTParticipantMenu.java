@@ -1,5 +1,6 @@
 package net.sophiebun.buntsy.screen.clockwork;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
@@ -8,8 +9,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.inventory.FilterSlot;
 import net.sophiebun.buntsy.entity.clockwork_maiden.CMTParticipantData;
 import net.sophiebun.buntsy.screen.ModMenuTypes;
@@ -31,7 +32,7 @@ public class CMTParticipantMenu extends AbstractContainerMenu {
 
     public CMTParticipantMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
         this(pContainerId, inv, new ItemStackHandler(12), extraData.readBlockPos(), extraData.readBlockPos(),
-                CMTParticipantData.parseCompound(extraData.readNbt()), getSidesList(extraData));
+                CMTParticipantData.parseCompound(extraData.readNbt(), Minecraft.getInstance().level.registryAccess()), getSidesList(extraData));
     }
 
     private static List<Direction> getSidesList(FriendlyByteBuf extraData){

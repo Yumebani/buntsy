@@ -1,0 +1,70 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:fairy_dust"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:nether_wart"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:nether_wart"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:warped_fungus"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:warped_fungus"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:crimson_fungus"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:crimson_fungus"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:warped_nylium"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:crimson_nylium"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:essence"
+      ,
+      "components": {
+        "buntsy:essence_type": "nether_flora"
+      }
+    },
+  "max_progress": 1000
+}

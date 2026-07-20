@@ -1,74 +1,67 @@
 package net.sophiebun.buntsy.worldgen.biome;
 
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
-import net.minecraft.data.worldgen.BootstapContext;
-import net.minecraft.data.worldgen.biome.OverworldBiomes;
-import net.minecraft.data.worldgen.placement.AquaticPlacements;
-import net.minecraft.data.worldgen.placement.MiscOverworldPlacements;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.ambient.Bat;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.*;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.entity.ModEntities;
-import net.sophiebun.buntsy.item.custom.FairyStaff;
 import net.sophiebun.buntsy.worldgen.ModPlacedFeatures;
-
-import javax.swing.*;
 
 public class ModBiomes {
 
     public static final DeferredRegister<Biome> biomeRegister =
-            DeferredRegister.create(ForgeRegistries.BIOMES, BuntsyMod.MODID);
+            DeferredRegister.create(Registries.BIOME, BuntsyMod.MODID);
 
-    public static final ResourceKey<Biome> CUTERLY_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
-            new ResourceLocation(BuntsyMod.MODID,"cuterly_biome"));
-    public static final ResourceKey<Biome> CANDY_CRAGS_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
-            new ResourceLocation(BuntsyMod.MODID,"candy_crags_biome"));
-    public static final ResourceKey<Biome> POWDERY_TUNDRA_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
-            new ResourceLocation(BuntsyMod.MODID,"powdery_tundra_biome"));
-    public static final ResourceKey<Biome> CHOCOLATE_SPRINGS_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
-            new ResourceLocation(BuntsyMod.MODID,"chocolate_springs_biome"));
-    public static final ResourceKey<Biome> CLOCKWORK_CANOPY_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
-            new ResourceLocation(BuntsyMod.MODID,"clockwork_canopy_biome"));
-    public static final ResourceKey<Biome> SWEET_OCEAN_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
-            new ResourceLocation(BuntsyMod.MODID,"sweet_ocean_biome"));
-    public static final ResourceKey<Biome> WARM_SWEET_OCEAN_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
-            new ResourceLocation(BuntsyMod.MODID,"warm_sweet_ocean_biome"));
-    public static final ResourceKey<Biome> COLD_SWEET_OCEAN_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
-            new ResourceLocation(BuntsyMod.MODID,"cold_sweet_ocean_biome"));
-    public static final ResourceKey<Biome> ORIGAMI_BEACH_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
-            new ResourceLocation(BuntsyMod.MODID,"origami_beach_biome"));
-    public static final ResourceKey<Biome> WARM_ORIGAMI_BEACH_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
-            new ResourceLocation(BuntsyMod.MODID,"warm_origami_beach_biome"));
-    public static final ResourceKey<Biome> COLD_ORIGAMI_BEACH_BIOME = ResourceKey.create(ForgeRegistries.BIOMES.getRegistryKey(),
-            new ResourceLocation(BuntsyMod.MODID,"cold_origami_beach_biome"));
+    public static final ResourceKey<Biome> CUTERLY_BIOME = ResourceKey.create(Registries.BIOME,
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"cuterly_biome"));
+    public static final ResourceKey<Biome> CANDY_CRAGS_BIOME = ResourceKey.create(Registries.BIOME,
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"candy_crags_biome"));
+    public static final ResourceKey<Biome> POWDERY_TUNDRA_BIOME = ResourceKey.create(Registries.BIOME,
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"powdery_tundra_biome"));
+    public static final ResourceKey<Biome> CHOCOLATE_SPRINGS_BIOME = ResourceKey.create(Registries.BIOME,
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"chocolate_springs_biome"));
+    public static final ResourceKey<Biome> CLOCKWORK_CANOPY_BIOME = ResourceKey.create(Registries.BIOME,
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"clockwork_canopy_biome"));
+    public static final ResourceKey<Biome> SWEET_OCEAN_BIOME = ResourceKey.create(Registries.BIOME,
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"sweet_ocean_biome"));
+    public static final ResourceKey<Biome> WARM_SWEET_OCEAN_BIOME = ResourceKey.create(Registries.BIOME,
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"warm_sweet_ocean_biome"));
+    public static final ResourceKey<Biome> COLD_SWEET_OCEAN_BIOME = ResourceKey.create(Registries.BIOME,
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"cold_sweet_ocean_biome"));
+    public static final ResourceKey<Biome> ORIGAMI_BEACH_BIOME = ResourceKey.create(Registries.BIOME,
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"origami_beach_biome"));
+    public static final ResourceKey<Biome> WARM_ORIGAMI_BEACH_BIOME = ResourceKey.create(Registries.BIOME,
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"warm_origami_beach_biome"));
+    public static final ResourceKey<Biome> COLD_ORIGAMI_BEACH_BIOME = ResourceKey.create(Registries.BIOME,
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"cold_origami_beach_biome"));
 
-    public static void bootstrap(BootstapContext<Biome> context){
-        context.register(CUTERLY_BIOME, cutelyBiome(context));
-        context.register(CANDY_CRAGS_BIOME, candyCragsBiome(context));
-        context.register(POWDERY_TUNDRA_BIOME, powderyTundra(context));
-        context.register(CHOCOLATE_SPRINGS_BIOME, chocolateSprings(context));
-        context.register(CLOCKWORK_CANOPY_BIOME, clockworkCanopy(context));
-        context.register(SWEET_OCEAN_BIOME, sweetOcean(context));
-        context.register(WARM_SWEET_OCEAN_BIOME, warmSweetOcean(context));
-        context.register(COLD_SWEET_OCEAN_BIOME, coldSweetOcean(context));
-        context.register(ORIGAMI_BEACH_BIOME, origamiBeach(context));
-        context.register(WARM_ORIGAMI_BEACH_BIOME, warmOrigamiBeach(context));
-        context.register(COLD_ORIGAMI_BEACH_BIOME, coldOrigamiBeach(context));
+    public static void bootstrap(BootstrapContext<Biome> context){
+
+        HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
+        HolderGetter<ConfiguredWorldCarver<?>> carvers = context.lookup(Registries.CONFIGURED_CARVER);
+
+        context.register(CUTERLY_BIOME, cutelyBiome(placedFeatures, carvers));
+        context.register(CANDY_CRAGS_BIOME, candyCragsBiome(placedFeatures, carvers));
+        context.register(POWDERY_TUNDRA_BIOME, powderyTundra(placedFeatures, carvers));
+        context.register(CHOCOLATE_SPRINGS_BIOME, chocolateSprings(placedFeatures, carvers));
+        context.register(CLOCKWORK_CANOPY_BIOME, clockworkCanopy(placedFeatures, carvers));
+        context.register(SWEET_OCEAN_BIOME, sweetOcean(placedFeatures, carvers));
+        context.register(WARM_SWEET_OCEAN_BIOME, warmSweetOcean(placedFeatures, carvers));
+        context.register(COLD_SWEET_OCEAN_BIOME, coldSweetOcean(placedFeatures, carvers));
+        context.register(ORIGAMI_BEACH_BIOME, origamiBeach(placedFeatures, carvers));
+        context.register(WARM_ORIGAMI_BEACH_BIOME, warmOrigamiBeach(placedFeatures, carvers));
+        context.register(COLD_ORIGAMI_BEACH_BIOME, coldOrigamiBeach(placedFeatures, carvers));
     }
 
     public static void standardGeneration(BiomeGenerationSettings.Builder builder) {
@@ -80,7 +73,7 @@ public class ModBiomes {
         BiomeDefaultFeatures.addDefaultSeagrass(builder);
     }
 
-    private static Biome cutelyBiome(BootstapContext<Biome> context) {
+    private static Biome cutelyBiome(HolderGetter<PlacedFeature> placedFeatureLU, HolderGetter<ConfiguredWorldCarver<?>> carversLU) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(EntityType.SHEEP, 5, 2, 4));
@@ -95,7 +88,7 @@ public class ModBiomes {
         spawnBuilder.addSpawn(MobCategory.UNDERGROUND_WATER_CREATURE, new MobSpawnSettings.SpawnerData(EntityType.GLOW_SQUID, 10, 4, 6));
 
         BiomeGenerationSettings.Builder biomeBuilder =
-                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+                new BiomeGenerationSettings.Builder(placedFeatureLU, carversLU);
 
         standardGeneration(biomeBuilder);
         BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
@@ -146,11 +139,11 @@ public class ModBiomes {
         return biome;
     }
 
-    private static Biome candyCragsBiome(BootstapContext<Biome> context) {
+    private static Biome candyCragsBiome(HolderGetter<PlacedFeature> placedFeatureLU, HolderGetter<ConfiguredWorldCarver<?>> carversLU) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         BiomeGenerationSettings.Builder biomeBuilder =
-                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+                new BiomeGenerationSettings.Builder(placedFeatureLU, carversLU);
 
         spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(EntityType.RABBIT, 10, 2, 4));
 
@@ -200,7 +193,7 @@ public class ModBiomes {
         return biome;
     }
 
-    private static Biome powderyTundra(BootstapContext<Biome> context) {
+    private static Biome powderyTundra(HolderGetter<PlacedFeature> placedFeatureLU, HolderGetter<ConfiguredWorldCarver<?>> carversLU) {
 
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
@@ -213,7 +206,7 @@ public class ModBiomes {
 
 
         BiomeGenerationSettings.Builder biomeBuilder =
-                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+                new BiomeGenerationSettings.Builder(placedFeatureLU, carversLU);
 
         standardGeneration(biomeBuilder);
         BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
@@ -248,7 +241,7 @@ public class ModBiomes {
         return biome;
     }
 
-    private static Biome chocolateSprings(BootstapContext<Biome> context) {
+    private static Biome chocolateSprings(HolderGetter<PlacedFeature> placedFeatureLU, HolderGetter<ConfiguredWorldCarver<?>> carversLU) {
 
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
@@ -261,7 +254,7 @@ public class ModBiomes {
         spawnBuilder.addSpawn(MobCategory.AMBIENT, new MobSpawnSettings.SpawnerData(ModEntities.FAIRY_ENTITY.get(), 10, 2, 3));
 
         BiomeGenerationSettings.Builder biomeBuilder =
-                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+                new BiomeGenerationSettings.Builder(placedFeatureLU, carversLU);
 
         standardGeneration(biomeBuilder);
         BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
@@ -295,12 +288,12 @@ public class ModBiomes {
         return biome;
     }
 
-    private static Biome clockworkCanopy(BootstapContext<Biome> context) {
+    private static Biome clockworkCanopy(HolderGetter<PlacedFeature> placedFeatureLU, HolderGetter<ConfiguredWorldCarver<?>> carversLU) {
 
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         BiomeGenerationSettings.Builder biomeBuilder =
-                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+                new BiomeGenerationSettings.Builder(placedFeatureLU, carversLU);
 
         spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(ModEntities.MARIONETTE.get(), 20, 2, 4));
         spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.SPIDER, 40, 2, 4));
@@ -355,14 +348,14 @@ public class ModBiomes {
         return biome;
     }
 
-    private static Biome sweetOcean(BootstapContext<Biome> context) {
+    private static Biome sweetOcean(HolderGetter<PlacedFeature> placedFeatureLU, HolderGetter<ConfiguredWorldCarver<?>> carversLU) {
 
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         spawnBuilder.addSpawn(MobCategory.AMBIENT, new MobSpawnSettings.SpawnerData(EntityType.BAT, 10, 1, 1));
 
         BiomeGenerationSettings.Builder biomeBuilder =
-                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+                new BiomeGenerationSettings.Builder(placedFeatureLU, carversLU);
 
         BiomeDefaultFeatures.oceanSpawns(spawnBuilder, 10, 3, 15);
 
@@ -394,14 +387,14 @@ public class ModBiomes {
         return biome;
     }
 
-    private static Biome warmSweetOcean(BootstapContext<Biome> context) {
+    private static Biome warmSweetOcean(HolderGetter<PlacedFeature> placedFeatureLU, HolderGetter<ConfiguredWorldCarver<?>> carversLU) {
 
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         spawnBuilder.addSpawn(MobCategory.AMBIENT, new MobSpawnSettings.SpawnerData(EntityType.BAT, 10, 1, 1));
 
         BiomeGenerationSettings.Builder biomeBuilder =
-                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+                new BiomeGenerationSettings.Builder(placedFeatureLU, carversLU);
 
         spawnBuilder.addSpawn(MobCategory.WATER_AMBIENT, new MobSpawnSettings.SpawnerData(EntityType.TROPICAL_FISH, 25, 8, 8));
         spawnBuilder.addSpawn(MobCategory.WATER_CREATURE, new MobSpawnSettings.SpawnerData(EntityType.SQUID, 5, 2, 4));
@@ -437,14 +430,14 @@ public class ModBiomes {
         return biome;
     }
 
-    private static Biome coldSweetOcean(BootstapContext<Biome> context) {
+    private static Biome coldSweetOcean(HolderGetter<PlacedFeature> placedFeatureLU, HolderGetter<ConfiguredWorldCarver<?>> carversLU) {
 
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         spawnBuilder.addSpawn(MobCategory.AMBIENT, new MobSpawnSettings.SpawnerData(EntityType.BAT, 10, 1, 1));
 
         BiomeGenerationSettings.Builder biomeBuilder =
-                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+                new BiomeGenerationSettings.Builder(placedFeatureLU, carversLU);
 
         BiomeDefaultFeatures.oceanSpawns(spawnBuilder, 10, 3, 15);
 
@@ -471,14 +464,14 @@ public class ModBiomes {
         return biome;
     }
 
-    private static Biome origamiBeach(BootstapContext<Biome> context) {
+    private static Biome origamiBeach(HolderGetter<PlacedFeature> placedFeatureLU, HolderGetter<ConfiguredWorldCarver<?>> carversLU) {
 
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         spawnBuilder.addSpawn(MobCategory.AMBIENT, new MobSpawnSettings.SpawnerData(EntityType.BAT, 10, 1, 1));
 
         BiomeGenerationSettings.Builder biomeBuilder =
-                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+                new BiomeGenerationSettings.Builder(placedFeatureLU, carversLU);
 
         BiomeDefaultFeatures.oceanSpawns(spawnBuilder, 10, 3, 15);
 
@@ -518,14 +511,14 @@ public class ModBiomes {
         return biome;
     }
 
-    private static Biome warmOrigamiBeach(BootstapContext<Biome> context) {
+    private static Biome warmOrigamiBeach(HolderGetter<PlacedFeature> placedFeatureLU, HolderGetter<ConfiguredWorldCarver<?>> carversLU) {
 
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         spawnBuilder.addSpawn(MobCategory.AMBIENT, new MobSpawnSettings.SpawnerData(EntityType.BAT, 10, 1, 1));
 
         BiomeGenerationSettings.Builder biomeBuilder =
-                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+                new BiomeGenerationSettings.Builder(placedFeatureLU, carversLU);
 
         spawnBuilder.addSpawn(MobCategory.WATER_AMBIENT, new MobSpawnSettings.SpawnerData(EntityType.TROPICAL_FISH, 25, 8, 8));
         spawnBuilder.addSpawn(MobCategory.WATER_CREATURE, new MobSpawnSettings.SpawnerData(EntityType.SQUID, 5, 2, 4));
@@ -569,14 +562,14 @@ public class ModBiomes {
         return biome;
     }
 
-    private static Biome coldOrigamiBeach(BootstapContext<Biome> context) {
+    private static Biome coldOrigamiBeach(HolderGetter<PlacedFeature> placedFeatureLU, HolderGetter<ConfiguredWorldCarver<?>> carversLU) {
 
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         spawnBuilder.addSpawn(MobCategory.AMBIENT, new MobSpawnSettings.SpawnerData(EntityType.BAT, 10, 1, 1));
 
         BiomeGenerationSettings.Builder biomeBuilder =
-                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+                new BiomeGenerationSettings.Builder(placedFeatureLU, carversLU);
 
         BiomeDefaultFeatures.oceanSpawns(spawnBuilder, 10, 3, 15);
 

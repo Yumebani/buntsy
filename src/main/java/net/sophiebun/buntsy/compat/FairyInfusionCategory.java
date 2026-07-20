@@ -18,8 +18,8 @@ import net.sophiebun.buntsy.recipe.FairyOfferingRecipe;
 
 public class FairyInfusionCategory implements IRecipeCategory<FairyInfusionRecipe> {
 
-    public static final ResourceLocation UID = new ResourceLocation(BuntsyMod.MODID, "fairy_infusion");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(BuntsyMod.MODID,
+    public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "fairy_infusion");
+    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,
             "textures/gui/jei_fairy_infusion_bench_gui.png");
 
     public static final RecipeType<FairyInfusionRecipe> FAIRY_INFUSION_RECIPE_TYPE =

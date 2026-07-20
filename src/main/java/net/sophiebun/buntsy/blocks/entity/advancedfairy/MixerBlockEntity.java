@@ -2,6 +2,7 @@ package net.sophiebun.buntsy.blocks.entity.advancedfairy;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -17,28 +18,25 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
-import net.sophiebun.buntsy.recipe.FumeDistilleryRecipe;
+import net.sophiebun.buntsy.recipe.MixerInput;
 import net.sophiebun.buntsy.recipe.MixerRecipe;
-import net.sophiebun.buntsy.screen.FumeDistilleryMenu;
 import net.sophiebun.buntsy.screen.MixerMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class MixerBlockEntity extends FairyInteractBlockEntity implements MenuProvider {
 
-    private final ItemStackHandler inputItemHandler = new ItemStackHandler(6) {
+    public final ItemStackHandler inputItemHandler = new ItemStackHandler(6) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -48,7 +46,7 @@ public class MixerBlockEntity extends FairyInteractBlockEntity implements MenuPr
         }
     };
 
-    private final ItemStackHandler outputItemHandler = new ItemStackHandler(1) {
+    public final ItemStackHandler outputItemHandler = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -63,17 +61,6 @@ public class MixerBlockEntity extends FairyInteractBlockEntity implements MenuPr
     protected final ContainerData data;
     private int progress = 0;
     private int maxProgress = 200;
-
-    private LazyOptional<IItemHandler> inputLazyItemHandler = LazyOptional.of(() -> inputItemHandler);
-    private LazyOptional<IItemHandler> outputLazyItemHandler = LazyOptional.of(() -> outputItemHandler);
-
-    public LazyOptional<IItemHandler> getInputLazyItemHandler() {
-        return inputLazyItemHandler;
-    }
-
-    public LazyOptional<IItemHandler> getOutputLazyItemHandler() {
-        return outputLazyItemHandler;
-    }
 
     public MixerBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.MIXER_BLOCK_ENTITY.get(), pPos, pBlockState);
@@ -115,31 +102,14 @@ public class MixerBlockEntity extends FairyInteractBlockEntity implements MenuPr
         return new MixerMenu(i, inventory, this, this.data);
     }
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            if (side.equals(Direction.DOWN)){
-                return outputLazyItemHandler.cast();
-            }
-            else{
-                return inputLazyItemHandler.cast();
-            }
+
+    public ItemStackHandler getItemHandler(Direction side) {
+        if (side.equals(Direction.DOWN)){
+            return outputItemHandler;
         }
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        inputLazyItemHandler = LazyOptional.of((() -> inputItemHandler));
-        outputLazyItemHandler = LazyOptional.of((() -> outputItemHandler));
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        inputLazyItemHandler.invalidate();
-        outputLazyItemHandler.invalidate();
+        else{
+            return inputItemHandler;
+        }
     }
 
     public void drops() {
@@ -153,21 +123,21 @@ public class MixerBlockEntity extends FairyInteractBlockEntity implements MenuPr
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("inputInventory", inputItemHandler.serializeNBT());
-        pTag.put("outputInventory", outputItemHandler.serializeNBT());
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.saveAdditional(pTag, registries);
+
+        pTag.put("inputInventory", inputItemHandler.serializeNBT(registries));
+        pTag.put("outputInventory", outputItemHandler.serializeNBT(registries));
         pTag.putInt("mixer.progress", this.progress);
         pTag.putInt("mixer.max_progress", this.maxProgress);
-
-        super.saveAdditional(pTag);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.loadAdditional(pTag, registries);
 
-        this.inputItemHandler.deserializeNBT(pTag.getCompound("inputInventory"));
-        this.outputItemHandler.deserializeNBT(pTag.getCompound("outputInventory"));
+        this.inputItemHandler.deserializeNBT(registries, pTag.getCompound("inputInventory"));
+        this.outputItemHandler.deserializeNBT(registries, pTag.getCompound("outputInventory"));
         this.progress = pTag.getInt("mixer.progress");
         this.maxProgress = pTag.getInt("mixer.max_progress");
     }
@@ -214,7 +184,7 @@ public class MixerBlockEntity extends FairyInteractBlockEntity implements MenuPr
 
     public void outputItems(ItemStack primary){
         ItemStack newItem = new ItemStack(primary.getItem(), this.outputItemHandler.getStackInSlot(0).getCount() + primary.getCount());
-        newItem.setTag(primary.getTag());
+        newItem.applyComponents(primary.getComponents());
         this.outputItemHandler.setStackInSlot(0, newItem);
     }
 
@@ -229,7 +199,7 @@ public class MixerBlockEntity extends FairyInteractBlockEntity implements MenuPr
     }
 
     public void craftItem() {
-        MixerRecipe recipe = getCurrentRecipe().get();
+        MixerRecipe recipe = getCurrentRecipe().get().value();
         ItemStack result = recipe.getResultItem(null);
 
         List<ItemStack> items = new ArrayList<>();
@@ -250,23 +220,24 @@ public class MixerBlockEntity extends FairyInteractBlockEntity implements MenuPr
     }
 
     public boolean hasRecipe() {
-        Optional<MixerRecipe> recipe = getCurrentRecipe();
+        Optional<RecipeHolder<MixerRecipe>> recipe = getCurrentRecipe();
 
         if (recipe.isEmpty()){
             return false;
         }
 
-        ItemStack result = recipe.get().getResultItem(null);
+        ItemStack result = recipe.get().value().getResultItem(null);
         return isOutputClear(result);
     }
 
-    public Optional<MixerRecipe> getCurrentRecipe() {
-        SimpleContainer inventory = new SimpleContainer(6);
+    public Optional<RecipeHolder<MixerRecipe>> getCurrentRecipe() {
+        List<ItemStack> inputs = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
-            inventory.setItem(i, inputItemHandler.getStackInSlot(i));
+            inputs.add(i, inputItemHandler.getStackInSlot(i));
         }
+        MixerInput input = new MixerInput(inputs);
 
-        return this.level.getRecipeManager().getRecipeFor(MixerRecipe.Type.INSTANCE, inventory, level);
+        return this.level.getRecipeManager().getRecipeFor(MixerRecipe.Type.INSTANCE, input, level);
     }
 
     private boolean hasProgressFinished() {
@@ -288,7 +259,7 @@ public class MixerBlockEntity extends FairyInteractBlockEntity implements MenuPr
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 }

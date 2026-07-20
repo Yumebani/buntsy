@@ -7,7 +7,7 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkCrafterEntity;
 import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
@@ -34,25 +34,25 @@ public class ClockworkCrafterMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
         addPlayerInventory(inv);
 
-        this.blockEntity.getInputLazyItemHandler().ifPresent(iItemHandler -> {
+        if (this.blockEntity.inputItemHandler != null){
             for (int i = 0; i < 18; i++){
-                this.addSlot(new SlotItemHandler(iItemHandler, i, 8 + (18 * (i % 9)), 80 + (18 * (i / 9))));
+                this.addSlot(new SlotItemHandler(this.blockEntity.inputItemHandler, i, 8 + (18 * (i % 9)), 80 + (18 * (i / 9))));
             }
-        });
+        }
 
-        this.blockEntity.getOutputLazyItemHandler().ifPresent(iItemHandler -> {
-            this.addSlot(new OutputSlot(iItemHandler, 0, 142, 35));
-        });
+        if (this.blockEntity.outputItemHandler != null){
+            this.addSlot(new OutputSlot(this.blockEntity.outputItemHandler, 0, 142, 35));
+        }
 
-        this.blockEntity.getPatternLazyItemHandler().ifPresent(iItemHandler -> {
+        if (this.blockEntity.patternItemHandler != null){
             for (int i = 0; i < 9; i++){
-                this.addSlot(new PatternSlot(iItemHandler, i, 48 + (18 * (i % 3)), 17 + (18 * (i / 3))));
+                this.addSlot(new PatternSlot(this.blockEntity.patternItemHandler, i, 48 + (18 * (i % 3)), 17 + (18 * (i / 3))));
             }
-        });
+        }
 
-        this.blockEntity.getResultLazyItemHandler().ifPresent(iItemHandler -> {
-            this.addSlot(new PatternOutputSlot(iItemHandler, 0, 17, 35));
-        });
+        if (this.blockEntity.resultItemHandler != null){
+            this.addSlot(new PatternOutputSlot(this.blockEntity.resultItemHandler, 0, 17, 35));
+        }
 
         addDataSlots(data);
     }

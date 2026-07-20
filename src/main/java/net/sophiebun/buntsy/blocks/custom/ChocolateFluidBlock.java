@@ -24,7 +24,7 @@ import java.util.function.Supplier;
 public class ChocolateFluidBlock extends LiquidBlock {
 
 
-    public ChocolateFluidBlock(Supplier<? extends FlowingFluid> pFluid, Properties pProperties) {
+    public ChocolateFluidBlock(FlowingFluid pFluid, Properties pProperties) {
         super(pFluid, pProperties);
     }
 

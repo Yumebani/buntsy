@@ -1,15 +1,18 @@
 package net.sophiebun.buntsy.item;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
+import net.sophiebun.buntsy.codec.CatalystType;
+import net.sophiebun.buntsy.codec.FumeType;
+import net.sophiebun.buntsy.components.ModDataComponents;
 import net.sophiebun.buntsy.item.custom.Essence;
 import net.sophiebun.buntsy.item.custom.FumeBottle;
 import net.sophiebun.buntsy.item.custom.Prism;
@@ -19,7 +22,7 @@ public class CreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TAB =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, BuntsyMod.MODID);
 
-    public static final RegistryObject<CreativeModeTab> BUNTSY_TAB = CREATIVE_MODE_TAB.register("buntsy_tab",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> BUNTSY_TAB = CREATIVE_MODE_TAB.register("buntsy_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.STRAWBERRY.get()))
                     .title(Component.translatable("creativetab.buntsy_tab"))
                     .displayItems((pParameters, pOutput) -> {
@@ -421,31 +424,23 @@ public class CreativeModeTabs {
 
                         for (String essenceType : Essence.EssenceTypes){
 
-                            CompoundTag nbt = new CompoundTag();
-                            nbt.putString("buntsy.essenceType", essenceType);
                             ItemStack stack = new ItemStack(ModItems.ESSENCE.get());
-                            stack.setTag(nbt);
+                            stack.set(ModDataComponents.ESSENCE_TYPE, essenceType);
                             pOutput.accept(stack);
                         }
 
                         for (String prismType : Prism.PrismTypes){
 
-                            CompoundTag nbt = new CompoundTag();
-                            nbt.putString("buntsy.prismType", prismType);
                             ItemStack stack = new ItemStack(ModItems.PRISM.get());
-                            stack.setTag(nbt);
+                            stack.set(ModDataComponents.PRISM_TYPE, prismType);
                             pOutput.accept(stack);
                         }
 
                         for (FumeBottle.FumeType fumeType : FumeBottle.FumeType.values()){
 
                             for (int i = 1; i < 4; i++){
-                                CompoundTag nbt = new CompoundTag();
-                                nbt.putInt("buntsy.fumeType", fumeType.ordinal());
-                                nbt.putInt("buntsy.fumeLevel", i);
-
                                 ItemStack stack = new ItemStack(ModItems.FUME_BOTTLE.get());
-                                stack.setTag(nbt);
+                                stack.set(ModDataComponents.FUME_TYPE, new FumeType(fumeType.ordinal(), i));
                                 pOutput.accept(stack);
                             }
                         }
@@ -454,20 +449,12 @@ public class CreativeModeTabs {
 
                         for (FumeBottle.FumeType fumeType : FumeBottle.FumeType.values()){
 
-                            CompoundTag nbt = new CompoundTag();
-                            nbt.putInt("buntsy.fumeType", fumeType.ordinal());
-                            nbt.putString("buntsy.catalystType", "creation");
-
                             ItemStack stack = new ItemStack(ModItems.CATALYST.get());
-                            stack.setTag(nbt);
+                            stack.set(ModDataComponents.CATALYST_TYPE, new CatalystType(fumeType.ordinal(), "creation"));
                             pOutput.accept(stack);
 
-                            nbt = new CompoundTag();
-                            nbt.putInt("buntsy.fumeType", fumeType.ordinal());
-                            nbt.putString("buntsy.catalystType", "enhancer");
-
                             stack = new ItemStack(ModItems.CATALYST.get());
-                            stack.setTag(nbt);
+                            stack.set(ModDataComponents.CATALYST_TYPE, new CatalystType(fumeType.ordinal(), "enhancer"));
                             pOutput.accept(stack);
                         }
 

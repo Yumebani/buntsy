@@ -2,38 +2,22 @@ package net.sophiebun.buntsy.blocks.entity.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.Tuple;
-import net.minecraft.world.Containers;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.effect.*;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.DimensionDataStorage;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
-import net.sophiebun.buntsy.screen.GiantCocoonMenu;
-import net.sophiebun.buntsy.server.GiantCocoonSavedData;
-import net.sophiebun.buntsy.server.ModGiantCocoonServerPacket;
-import net.sophiebun.buntsy.server.ModPacketHandler;
 import net.sophiebun.buntsy.server.PrismaticBeaconSavedData;
 import net.sophiebun.buntsy.tag.ModTags;
 import org.jetbrains.annotations.NotNull;
@@ -91,7 +75,7 @@ public class PrismaticBeaconBlockEntity extends BlockEntity {
         }
     };
 
-    private static final Map<Block, MobEffect> effectMap = Map.of(
+    private static final Map<Block, Holder<MobEffect>> effectMap = Map.of(
         ModBlocks.BEACON_HASTE_MODIFIER.get(), MobEffects.DIG_SPEED,
         ModBlocks.BEACON_FIRE_RESISTANCE_MODIFIER.get(), MobEffects.FIRE_RESISTANCE,
         ModBlocks.BEACON_HEALTH_BOOST_MODIFIER.get(), MobEffects.HEALTH_BOOST,
@@ -115,35 +99,31 @@ public class PrismaticBeaconBlockEntity extends BlockEntity {
         super(ModBlockEntities.PRISMATIC_BEACON_BLOCK_ENTITY.get(), pPos, pBlockState);
     }
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        return super.getCapability(cap, side);
-    }
-
     public void assignNewPlayer(UUID uuid){
         this.assignedPlayer = uuid;
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.saveAdditional(pTag, registries);
+
         pTag.putBoolean("prismatic.has_player", assignedPlayer != null);
         if (assignedPlayer != null){
             pTag.putUUID("prismatic.assigned_player", assignedPlayer);
         }
         pTag.putInt("prismatic.block_id", blockId);
         pTag.putBoolean("prismatic.valid", this.valid);
-        super.saveAdditional(pTag);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.loadAdditional(pTag, registries);
+
         if (pTag.getBoolean("prismatic.has_player")){
             this.assignedPlayer = pTag.getUUID("prismatic.assigned_player");
         }
         this.blockId = pTag.getInt("prismatic.block_id");
         this.valid = pTag.getBoolean("prismatic.valid");
-
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
@@ -175,13 +155,13 @@ public class PrismaticBeaconBlockEntity extends BlockEntity {
     }
 
     private void applyBeaconEffects(Level pLevel, BlockPos pPos) {
-        Map<MobEffect, Integer> effects = new HashMap<>();
+        Map<Holder<MobEffect>, Integer> effects = new HashMap<>();
         for (int x = startingPoint[0]; x <= -startingPoint[0]; x++){
             for (int y = startingPoint[1]; y < beaconStructure.length; y++){
                 for (int z = startingPoint[2]; z <= -startingPoint[2]; z++){
                     if (beaconStructure[y][z-startingPoint[2]].charAt(x-startingPoint[0]) == 'E'){
                         if (pLevel.getBlockState(pPos.offset(x, -y + 1, z)).is(ModTags.Blocks.PRISMATIC_BEACON_EFFECT_BLOCK)){
-                            MobEffect effect = effectMap.get(pLevel.getBlockState(pPos.offset(x, -y + 1, z)).getBlock());
+                            Holder<MobEffect> effect = effectMap.get(pLevel.getBlockState(pPos.offset(x, -y + 1, z)).getBlock());
                             if (!effects.containsKey(effect)){
                                 effects.put(effect, 1);
                             }
@@ -196,8 +176,8 @@ public class PrismaticBeaconBlockEntity extends BlockEntity {
             }
         }
 
-        List<Tuple<MobEffect, Integer>> finalValues = new ArrayList<>();
-        for (MobEffect effect : effects.keySet()){
+        List<Tuple<Holder<MobEffect>, Integer>> finalValues = new ArrayList<>();
+        for (Holder<MobEffect> effect : effects.keySet()){
             finalValues.add(new Tuple<>(effect, effects.get(effect)));
         }
 
@@ -239,12 +219,7 @@ public class PrismaticBeaconBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 }

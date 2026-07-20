@@ -7,11 +7,9 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.basicfairy.ThreadReelerBlockEntity;
-import net.sophiebun.buntsy.blocks.inventory.FairyInBottleSlot;
 import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
 
 public class ThreadReelerMenu extends AbstractContainerMenu {
@@ -33,14 +31,14 @@ public class ThreadReelerMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
         addPlayerInventory(inv);
 
-        this.blockEntity.getInputLazyItemHandler().ifPresent(iItemHandler -> {
-            this.addSlot(new SlotItemHandler(iItemHandler, 0, 40, 25));
-        });
+        if (this.blockEntity.inputItemHandler != null){
+            this.addSlot(new SlotItemHandler(this.blockEntity.inputItemHandler, 0, 40, 25));
+        }
 
-        this.blockEntity.getOutputLazyItemHandler().ifPresent(iItemHandler -> {
-            this.addSlot(new OutputSlot(iItemHandler, 0, 103, 35));
-            this.addSlot(new OutputSlot(iItemHandler, 1, 121, 35));
-        });
+        if (this.blockEntity.outputItemHandler != null){
+            this.addSlot(new OutputSlot(this.blockEntity.outputItemHandler, 0, 103, 35));
+            this.addSlot(new OutputSlot(this.blockEntity.outputItemHandler, 1, 121, 35));
+        }
 
         addDataSlots(data);
     }

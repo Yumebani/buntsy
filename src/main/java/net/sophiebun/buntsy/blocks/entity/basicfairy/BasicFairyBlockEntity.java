@@ -2,6 +2,7 @@ package net.sophiebun.buntsy.blocks.entity.basicfairy;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
@@ -15,12 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.common.util.NonNullFunction;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.custom.entityblocks.ThreadReelerBlock;
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 
 public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
 
-    protected final ItemStackHandler inputItemHandler = new ItemStackHandler(1) {
+    public final ItemStackHandler inputItemHandler = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -38,15 +34,7 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
         }
     };
 
-    public LazyOptional<IItemHandler> getInputLazyItemHandler() {
-        return inputLazyItemHandler;
-    }
-
-    public LazyOptional<IItemHandler> getOutputLazyItemHandler() {
-        return outputLazyItemHandler;
-    }
-
-    protected final ItemStackHandler outputItemHandler = new ItemStackHandler(2) {
+    public final ItemStackHandler outputItemHandler = new ItemStackHandler(2) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -65,10 +53,6 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     protected int progress = 0;
     protected int maxProgress = 200;
     protected int nextRollChance = 0;
-
-
-    private LazyOptional<IItemHandler> inputLazyItemHandler = LazyOptional.of(() -> this.inputItemHandler);
-    private LazyOptional<IItemHandler> outputLazyItemHandler = LazyOptional.of(() -> this.outputItemHandler);
 
     public BasicFairyBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
         super(pType, pPos, pBlockState);
@@ -101,31 +85,14 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
         };
     }
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            if (side.equals(Direction.DOWN)){
-                return outputLazyItemHandler.cast();
-            }
-            else {
-                return inputLazyItemHandler.cast();
-            }
+
+    public ItemStackHandler getItemHandler(Direction side) {
+        if (side.equals(Direction.DOWN)){
+            return outputItemHandler;
         }
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        inputLazyItemHandler = LazyOptional.of((() -> this.inputItemHandler));
-        outputLazyItemHandler = LazyOptional.of((() -> this.outputItemHandler));
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        inputLazyItemHandler.invalidate();
-        outputLazyItemHandler.invalidate();
+        else {
+            return inputItemHandler;
+        }
     }
 
     public void drops() {
@@ -139,22 +106,22 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("inputInventory", inputItemHandler.serializeNBT());
-        pTag.put("outputInventory", outputItemHandler.serializeNBT());
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.saveAdditional(pTag, registries);
+
+        pTag.put("inputInventory", inputItemHandler.serializeNBT(registries));
+        pTag.put("outputInventory", outputItemHandler.serializeNBT(registries));
         pTag.putInt("basic_fairy_block.progress", this.progress);
         pTag.putInt("basic_fairy_block.max_progress", this.maxProgress);
         pTag.putInt("basic_fairy_block.next_roll_chance", this.nextRollChance);
-
-        super.saveAdditional(pTag);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.loadAdditional(pTag, registries);
 
-        this.inputItemHandler.deserializeNBT(pTag.getCompound("inputInventory"));
-        this.outputItemHandler.deserializeNBT(pTag.getCompound("outputInventory"));
+        this.inputItemHandler.deserializeNBT(registries, pTag.getCompound("inputInventory"));
+        this.outputItemHandler.deserializeNBT(registries, pTag.getCompound("outputInventory"));
         this.progress = pTag.getInt("basic_fairy_block.progress");
         this.maxProgress = pTag.getInt("basic_fairy_block.max_progress");
         this.nextRollChance = pTag.getInt("basic_fairy_block.next_roll_chance");
@@ -253,7 +220,7 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
             inserted = new ItemStack(item.getItem(),
                     this.outputItemHandler.getStackInSlot(slot).getCount() + item.getCount());
         }
-        if (item.hasTag()) inserted.setTag(item.getTag());
+        inserted.applyComponents(item.getComponents());
         this.outputItemHandler.setStackInSlot(slot, inserted);
     }
 
@@ -290,12 +257,7 @@ public abstract class BasicFairyBlockEntity extends FairyInteractBlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 }

@@ -22,10 +22,11 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.common.IShearable;
 
 import java.util.OptionalInt;
 
-public class ModLeaves extends Block implements SimpleWaterloggedBlock, net.minecraftforge.common.IForgeShearable {
+public class ModLeaves extends Block implements SimpleWaterloggedBlock, IShearable {
 
     public static final int DECAY_DISTANCE = 12;
     public static final IntegerProperty DISTANCE = IntegerProperty.create("distance", 1, 12);

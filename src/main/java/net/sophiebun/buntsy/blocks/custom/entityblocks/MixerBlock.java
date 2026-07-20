@@ -1,10 +1,12 @@
 package net.sophiebun.buntsy.blocks.custom.entityblocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -14,19 +16,16 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.network.NetworkHooks;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.advancedfairy.MixerBlockEntity;
-import net.sophiebun.buntsy.blocks.entity.basicfairy.GrindingWheelBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class MixerBlock extends BaseEntityBlock {
 
+    public static final MapCodec<MixerBlock> CODEC = simpleCodec(MixerBlock::new);
     public static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 14, 14);
 
     public MixerBlock(Properties pProperties) {
@@ -34,6 +33,10 @@ public class MixerBlock extends BaseEntityBlock {
         this.registerDefaultState(this.stateDefinition.any());
     }
 
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
 
 
     @Nullable
@@ -55,18 +58,27 @@ public class MixerBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player pPlayer, BlockHitResult hitResult) {
+        return use(state, level, pos, pPlayer, pPlayer.swingingArm, hitResult);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        use(state, level, pos, player, hand, hitResult);
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+    }
+
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
             if (blockEntity instanceof MixerBlockEntity) {
-                NetworkHooks.openScreen((ServerPlayer) pPlayer,(MixerBlockEntity) blockEntity, pPos);
+                pPlayer.openMenu((MixerBlockEntity) blockEntity, pPos);
             }
             else {
                 throw new IllegalStateException("No container provider.");
             }
         }
 
-        super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
         return InteractionResult.SUCCESS;
     }
 

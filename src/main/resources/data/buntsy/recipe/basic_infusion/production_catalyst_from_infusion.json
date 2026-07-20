@@ -1,0 +1,49 @@
+{
+  "type": "buntsy:infusion_altar_basic",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:empty_catalyst"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:diamond_shard"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:diamond_shard"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:redstone"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:glowstone_dust"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:catalyst"
+      ,
+      "components": {
+        "buntsy:catalyst_type": {
+          "type": 0,
+          "function": "creation"
+        }
+      }
+    },
+  "max_progress": 1000
+}

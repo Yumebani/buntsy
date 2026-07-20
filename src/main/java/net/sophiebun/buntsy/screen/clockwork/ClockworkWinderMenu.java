@@ -7,13 +7,9 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
-import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkCrafterEntity;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkWinderEntity;
-import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
-import net.sophiebun.buntsy.blocks.inventory.PatternOutputSlot;
-import net.sophiebun.buntsy.blocks.inventory.PatternSlot;
 import net.sophiebun.buntsy.screen.ModMenuTypes;
 
 public class ClockworkWinderMenu extends AbstractContainerMenu {
@@ -35,9 +31,9 @@ public class ClockworkWinderMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
         addPlayerInventory(inv);
 
-        this.blockEntity.getInventoryLazyItemHandler().ifPresent(iItemHandler -> {
-            this.addSlot(new SlotItemHandler(iItemHandler, 0, 80, 47));
-        });
+        if (this.blockEntity.inventoryItemHandler != null){
+            this.addSlot(new SlotItemHandler(this.blockEntity.inventoryItemHandler, 0, 80, 47));
+        }
 
         addDataSlots(data);
     }

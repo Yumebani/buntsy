@@ -1,47 +1,61 @@
 package net.sophiebun.buntsy.recipe;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.sophiebun.buntsy.BuntsyMod;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MixerRecipe implements Recipe<SimpleContainer> {
+public class MixerRecipe implements Recipe<MixerInput> {
     private final List<ItemStack> inputItems;
     private final ItemStack output;
-    private final ResourceLocation id;
-    public MixerRecipe(List<ItemStack> inputItems, ItemStack output, ResourceLocation id) {
+
+    public MixerRecipe(List<ItemStack> inputItems, ItemStack output) {
         this.inputItems = inputItems;
         this.output = output;
-        this.id = id;
+    }
+
+    public ItemStack getOutput() {
+        return output.copy();
     }
 
     public List<ItemStack> getInputs() {
         return new ArrayList<>(inputItems.stream().toList());
     }
 
+    private ItemStack checkIfContains(List<ItemStack> inputs, ItemStack item){
+        for (ItemStack itemIn : inputs){
+            if (itemMatch(itemIn, item)) return itemIn;
+        }
+        return null;
+    }
+
+    private boolean itemMatch(ItemStack first, ItemStack second){
+        return (first.getCount() <= second.getCount()) &&
+                ItemStack.isSameItemSameComponents(first, second);
+    }
+
     @Override
-    public boolean matches(SimpleContainer pContainer, Level pLevel) {
-        if(pLevel.isClientSide()) {
+    public boolean matches(MixerInput mixerInput, Level level) {
+        if(level.isClientSide()) {
             return false;
         }
 
         List<ItemStack> inputTest = new ArrayList<>(inputItems.stream().toList());
         List<ItemStack> input = new ArrayList<>();
         for (int i = 0; i <= 6; i++){
-            input.add(pContainer.getItem(i));
+            input.add(mixerInput.getItem(i));
         }
 
         for (ItemStack item : input){
@@ -56,21 +70,8 @@ public class MixerRecipe implements Recipe<SimpleContainer> {
         return inputTest.isEmpty();
     }
 
-    private ItemStack checkIfContains(List<ItemStack> inputs, ItemStack item){
-        for (ItemStack itemIn : inputs){
-            if (itemMatch(itemIn, item)) return itemIn;
-        }
-        return null;
-    }
-
-    private boolean itemMatch(ItemStack first, ItemStack second){
-        return (first.is(second.getItem())
-                && first.getCount() <= second.getCount()) &&
-                (!first.hasTag() || first.getTag().equals(second.getTag()));
-    }
-
     @Override
-    public ItemStack assemble(SimpleContainer pContainer, RegistryAccess pRegistryAccess) {
+    public ItemStack assemble(MixerInput mixerInput, HolderLookup.Provider provider) {
         return output.copy();
     }
 
@@ -80,13 +81,8 @@ public class MixerRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return output.copy();
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return id;
     }
 
     @Override
@@ -106,65 +102,24 @@ public class MixerRecipe implements Recipe<SimpleContainer> {
 
     public static class Serializer implements RecipeSerializer<MixerRecipe> {
         public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation(BuntsyMod.MODID, "mixer");
+        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "mixer");
 
         @Override
-        public MixerRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
-
-            //Inputs
-            JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "inputs");
-            List<ItemStack> inputs = new ArrayList<>();
-            for(JsonElement entry : ingredients.asList()) {
-                inputs.add(itemFromCustomJson(entry.getAsJsonObject()));
-            }
-
-            ItemStack output = itemFromCustomJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "output"));
-
-            return new MixerRecipe(inputs, output, pRecipeId);
-        }
-
-        public ItemStack itemFromCustomJson(JsonObject obj){
-            ItemStack item = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(obj, "item"));
-            JsonArray nbtObj = GsonHelper.getAsJsonArray(obj, "nbt");
-            if (!nbtObj.isEmpty()){
-                CompoundTag nbt = new CompoundTag();
-                for (JsonElement entry : nbtObj.asList()){
-                    if (GsonHelper.isNumberValue(entry.getAsJsonObject(), "value")){
-                        nbt.putInt(GsonHelper.getAsString(entry.getAsJsonObject(), "field"),
-                                GsonHelper.getAsInt(entry.getAsJsonObject(), "value"));
-                    }
-                    else {
-                        nbt.putString(GsonHelper.getAsString(entry.getAsJsonObject(), "field"),
-                                GsonHelper.getAsString(entry.getAsJsonObject(), "value"));
-                    }
-                }
-                item.setTag(nbt);
-            }
-            return item;
+        public MapCodec<MixerRecipe> codec() {
+            return RecordCodecBuilder.mapCodec(instance -> {
+                return instance.group(
+                        ItemStack.STRICT_CODEC.listOf().fieldOf("inputs").forGetter(MixerRecipe::getInputs),
+                        ItemStack.STRICT_CODEC.fieldOf("output").forGetter(MixerRecipe::getOutput)
+                ).apply(instance, MixerRecipe::new);
+            });
         }
 
         @Override
-        public @Nullable MixerRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
-            List<ItemStack> inputs = new ArrayList<>();
-
-            int loopCount = pBuffer.readInt();
-            for(int i = 0; i < loopCount; i++) {
-                inputs.add(pBuffer.readItem());
-            }
-
-            ItemStack output = pBuffer.readItem();
-
-            return new MixerRecipe(inputs, output, pRecipeId);
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf pBuffer, MixerRecipe pRecipe) {
-            pBuffer.writeInt(pRecipe.getInputs().size());
-            for (ItemStack item : pRecipe.getInputs()) {
-                pBuffer.writeItemStack(item, false);
-            }
-
-            pBuffer.writeItemStack(pRecipe.output, false);
+        public StreamCodec<RegistryFriendlyByteBuf, MixerRecipe> streamCodec() {
+            return StreamCodec.composite(
+                    ItemStack.STREAM_CODEC.apply(ByteBufCodecs.list()), MixerRecipe::getInputs,
+                    ItemStack.STREAM_CODEC, MixerRecipe::getOutput,
+                    MixerRecipe::new);
         }
     }
 }

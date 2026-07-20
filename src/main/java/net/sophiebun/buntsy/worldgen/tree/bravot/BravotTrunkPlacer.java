@@ -1,11 +1,9 @@
 package net.sophiebun.buntsy.worldgen.tree.bravot;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Position;
-import net.minecraft.core.PositionImpl;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -17,15 +15,16 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.worldgen.tree.ModTrunkPlacerTypes;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class BravotTrunkPlacer extends TrunkPlacer {
 
-    public static final Codec<BravotTrunkPlacer> CODEC = RecordCodecBuilder.create(bravotTrunkPlacerInstance ->
+    public static final MapCodec<BravotTrunkPlacer> CODEC = RecordCodecBuilder.mapCodec(bravotTrunkPlacerInstance ->
             trunkPlacerParts(bravotTrunkPlacerInstance).apply(bravotTrunkPlacerInstance, BravotTrunkPlacer::new));
 
     public static final Direction[] VALID_DIRECTIONS = new Direction[]{

@@ -2,6 +2,7 @@ package net.sophiebun.buntsy.blocks.entity.directfairy;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -15,25 +16,26 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.custom.FairyInteractBlockEntity;
+import net.sophiebun.buntsy.recipe.FairyInfusionInput;
 import net.sophiebun.buntsy.recipe.FairyInfusionRecipe;
+import net.sophiebun.buntsy.recipe.InfusionAltarInput;
 import net.sophiebun.buntsy.screen.FairyInfusionBenchMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity implements MenuProvider {
 
-    private final ItemStackHandler inputItemHandler = new ItemStackHandler(5) {
+    public final ItemStackHandler inputItemHandler = new ItemStackHandler(5) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -42,7 +44,7 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
             }
         }
     };
-    private final ItemStackHandler outputItemHandler = new ItemStackHandler(5) {
+    public final ItemStackHandler outputItemHandler = new ItemStackHandler(5) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -58,17 +60,6 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
     private static final int OUTPUT_SLOT_COUNT = 5;
 
     private final List<Integer> randomRotations;
-
-    private LazyOptional<IItemHandler> inputLazyItemHandler = LazyOptional.of(() -> inputItemHandler);
-    private LazyOptional<IItemHandler> outputLazyItemHandler = LazyOptional.of(() -> outputItemHandler);
-
-    public LazyOptional<IItemHandler> getInputLazyItemHandler() {
-        return inputLazyItemHandler;
-    }
-
-    public LazyOptional<IItemHandler> getOutputLazyItemHandler() {
-        return outputLazyItemHandler;
-    }
 
     public List<Integer> getRandomRotations() {
         return randomRotations;
@@ -96,31 +87,13 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
         return 2;
     }
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            if (side.equals(Direction.DOWN)){
-                return outputLazyItemHandler.cast();
-            }
-            else {
-                return inputLazyItemHandler.cast();
-            }
+    public ItemStackHandler getItemHandler(Direction side) {
+        if (side.equals(Direction.DOWN)){
+            return outputItemHandler;
         }
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        inputLazyItemHandler = LazyOptional.of((() -> this.inputItemHandler));
-        outputLazyItemHandler = LazyOptional.of((() -> this.outputItemHandler));
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        inputLazyItemHandler.invalidate();
-        outputLazyItemHandler.invalidate();
+        else {
+            return inputItemHandler;
+        }
     }
 
     public void drops() {
@@ -146,19 +119,20 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
         return new FairyInfusionBenchMenu(i, inventory, this);
     }
 
-
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("inputInventory", inputItemHandler.serializeNBT());
-        pTag.put("outputInventory", outputItemHandler.serializeNBT());
-        super.saveAdditional(pTag);
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.saveAdditional(pTag, registries);
+
+        pTag.put("inputInventory", inputItemHandler.serializeNBT(registries));
+        pTag.put("outputInventory", outputItemHandler.serializeNBT(registries));
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
-        this.inputItemHandler.deserializeNBT(pTag.getCompound("inputInventory"));
-        this.outputItemHandler.deserializeNBT(pTag.getCompound("outputInventory"));
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.loadAdditional(pTag, registries);
+
+        this.inputItemHandler.deserializeNBT(registries, pTag.getCompound("inputInventory"));
+        this.outputItemHandler.deserializeNBT(registries, pTag.getCompound("outputInventory"));
     }
 
     public List<ItemStack> getRenderInputItems(){
@@ -186,7 +160,7 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
     }
 
     public void infuse() {
-        FairyInfusionRecipe recipe = getCurrentInfusion().get();
+        FairyInfusionRecipe recipe = getCurrentInfusion().get().value();
         int slot = getFirstFilledInputSlot(recipe.getInputs().get(0).getItems()[0].getItem());
         ItemStack result = recipe.getResultItem(null);
         int outputSlot = getClearOutput(result);
@@ -199,7 +173,7 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
     }
 
     public boolean hasInfusion() {
-        Optional<FairyInfusionRecipe> recipe = getCurrentInfusion();
+        Optional<RecipeHolder<FairyInfusionRecipe>> recipe = getCurrentInfusion();
         if (recipe.isEmpty()){
             return false;
         }
@@ -207,13 +181,13 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
         return isOutputClear();
     }
 
-    private Optional<FairyInfusionRecipe> getCurrentInfusion() {
-        SimpleContainer inventory = new SimpleContainer(this.inputItemHandler.getSlots());
+    private Optional<RecipeHolder<FairyInfusionRecipe>> getCurrentInfusion() {
+        List<ItemStack> list = new ArrayList<>();
         for(int i = 0; i < inputItemHandler.getSlots(); i++) {
-            inventory.setItem(i, this.inputItemHandler.getStackInSlot(i));
+            list.add(this.inputItemHandler.getStackInSlot(i));
         }
 
-        return this.level.getRecipeManager().getRecipeFor(FairyInfusionRecipe.Type.INSTANCE, inventory, level);
+        return this.level.getRecipeManager().getRecipeFor(FairyInfusionRecipe.Type.INSTANCE, new FairyInfusionInput(list), level);
     }
 
     private Integer getFirstFilledInputSlot(Item item) {
@@ -236,7 +210,7 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
     }
 
     private boolean isOutputClear() {
-        return getClearOutput(getCurrentInfusion().get().getResultItem(null)) != null;
+        return getClearOutput(getCurrentInfusion().get().value().getResultItem(null)) != null;
     }
 
     private Integer getClearOutput(ItemStack result) {
@@ -256,8 +230,8 @@ public class FairyInfusionBenchBlockEntity extends FairyInteractBlockEntity impl
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
 }

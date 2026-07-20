@@ -1,28 +1,29 @@
 package net.sophiebun.buntsy.blocks.entity.basicfairy;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.state.BlockState;
 import net.sophiebun.buntsy.blocks.custom.entityblocks.ThreadReelerBlock;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.recipe.GrindingWheelRecipe;
+import net.sophiebun.buntsy.recipe.SingleItemInput;
 import net.sophiebun.buntsy.screen.GrindingWheelMenu;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.animation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -65,8 +66,8 @@ public class GrindingWheelBlockEntity extends BasicFairyBlockEntity implements M
     }
 
     public void craftItem() {
-        Optional<GrindingWheelRecipe> recipe = getCurrentRecipe();
-        List<ItemStack> result = recipe.get().getResults(this.nextRollChance);
+        Optional<RecipeHolder<GrindingWheelRecipe>> recipe = getCurrentRecipe();
+        List<ItemStack> result = recipe.get().value().getResults(this.nextRollChance);
 
         this.inputItemHandler.extractItem(INPUT_SLOT, 1, false);
 
@@ -74,25 +75,19 @@ public class GrindingWheelBlockEntity extends BasicFairyBlockEntity implements M
     }
 
     public boolean hasRecipe() {
-        Optional<GrindingWheelRecipe> recipe = getCurrentRecipe();
+        Optional<RecipeHolder<GrindingWheelRecipe>> recipe = getCurrentRecipe();
 
         if (recipe.isEmpty()){
             return false;
         }
 
-        List<ItemStack> result = recipe.get().getResults(this.nextRollChance);
+        List<ItemStack> result = recipe.get().value().getResults(this.nextRollChance);
         return isOutputClear(result.get(0), result.size() == 1 ? null : result.get(1));
     }
 
-    public Optional<GrindingWheelRecipe> getCurrentRecipe() {
-        SimpleContainer inventory = new SimpleContainer(3);
-        inventory.setItem(0, inputItemHandler.getStackInSlot(0));
-        for (int i = 0; i < outputItemHandler.getSlots(); i++) {
-            inventory.setItem(i + 1, outputItemHandler.getStackInSlot(i));
-        }
-
-
-        return this.level.getRecipeManager().getRecipeFor(GrindingWheelRecipe.Type.INSTANCE, inventory, level);
+    public Optional<RecipeHolder<GrindingWheelRecipe>> getCurrentRecipe() {
+        SingleItemInput input = new SingleItemInput(inputItemHandler.getStackInSlot(0));
+        return this.level.getRecipeManager().getRecipeFor(GrindingWheelRecipe.Type.INSTANCE, input, level);
     }
 
     @Nullable
@@ -102,7 +97,7 @@ public class GrindingWheelBlockEntity extends BasicFairyBlockEntity implements M
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 }

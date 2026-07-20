@@ -1,0 +1,70 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:fairy_dust"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:chorus_fruit"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:chorus_fruit"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:chorus_fruit"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:end_stone"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:end_stone"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:end_stone"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:chorus_flower"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:chorus_flower"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:essence"
+      ,
+      "components": {
+        "buntsy:essence_type": "end_flora"
+      }
+    },
+  "max_progress": 1000
+}

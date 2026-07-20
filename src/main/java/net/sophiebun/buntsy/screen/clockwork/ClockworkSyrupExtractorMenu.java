@@ -7,7 +7,7 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkSyrupExtractorEntity;
 import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
@@ -32,17 +32,17 @@ public class ClockworkSyrupExtractorMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
         addPlayerInventory(inv);
 
-        this.blockEntity.getInputLazyItemHandler().ifPresent(iItemHandler -> {
+        if (this.blockEntity.inputItemHandler != null){
             for (int i = 0; i < 9; i++){
-                this.addSlot(new SlotItemHandler(iItemHandler, i, 16 + (18 * (i % 3)), 27 + (18 * (i / 3))));
+                this.addSlot(new SlotItemHandler(this.blockEntity.inputItemHandler, i, 16 + (18 * (i % 3)), 27 + (18 * (i / 3))));
             }
-        });
+        }
 
-        this.blockEntity.getOutputLazyItemHandler().ifPresent(iItemHandler -> {
+        if (this.blockEntity.outputItemHandler != null){
             for (int i = 0; i < 9; i++){
-                this.addSlot(new OutputSlot(iItemHandler, i, 108 + (18 * (i % 3)), 27 + (18 * (i / 3))));
+                this.addSlot(new OutputSlot(this.blockEntity.outputItemHandler, i, 108 + (18 * (i % 3)), 27 + (18 * (i / 3))));
             }
-        });
+        }
 
         addDataSlots(data);
     }

@@ -1,0 +1,49 @@
+{
+  "type": "buntsy:infusion_altar_basic",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:empty_catalyst"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:spider_eye"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:spider_eye"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:magma_cream"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:poisonous_potato"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:catalyst"
+      ,
+      "components": {
+        "buntsy:catalyst_type": {
+          "type": 6,
+          "function": "creation"
+        }
+      }
+    },
+  "max_progress": 1000
+}

@@ -18,8 +18,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.util.DefaultRandomPos;
-import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -29,7 +27,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.FluidType;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkMaidenTerminalEntity;
 import net.sophiebun.buntsy.item.ClockworkTier;
 import net.sophiebun.buntsy.item.ModItems;
@@ -62,9 +60,9 @@ public class ClockworkMaiden extends PathfinderMob {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(CARRIED_ITEM, ItemStack.EMPTY);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(CARRIED_ITEM, ItemStack.EMPTY);
     }
 
     public ItemStack getCarriedItem() {
@@ -82,24 +80,20 @@ public class ClockworkMaiden extends PathfinderMob {
         pTag.putInt("clockwork_maiden.clockwork_tier", this.clockworkTier.ordinal());
         pTag.putBoolean("clockwork_maiden.has_upgrade_item", upgradeItem != null);
         if (upgradeItem != null){
-            CompoundTag tag = new CompoundTag();
-            upgradeItem.save(tag);
-            pTag.put("clockwork_maiden.upgrade_item", tag);
+            pTag.put("clockwork_maiden.upgrade_item", upgradeItem.save(level().registryAccess()));
         }
 
         pTag.putInt("clockwork_maiden.carried_items_size", carriedItems.size());
         for (int i = 0; i < carriedItems.size(); i++){
             MaidenTask task = ((MaidenTask) carriedItems.keySet().toArray()[i]);
-            CompoundTag tag = new CompoundTag();
-            carriedItems.get(task).getFirst().save(tag);
-            pTag.put("clockwork_maiden.carried_items_task_" + i, task.getCompound());
-            pTag.put("clockwork_maiden.carried_items_item_" + i, tag);
-            pTag.put("clockwork_maiden.carried_items_config_" + i, carriedItems.get(task).getSecond().getCompound());
+            pTag.put("clockwork_maiden.carried_items_task_" + i, task.getCompound(level().registryAccess()));
+            pTag.put("clockwork_maiden.carried_items_item_" + i, carriedItems.get(task).getFirst().save(level().registryAccess()));
+            pTag.put("clockwork_maiden.carried_items_config_" + i, carriedItems.get(task).getSecond().getCompound(level().registryAccess()));
         }
 
         pTag.putBoolean("clockwork_maiden.has_current_task", this.currentTask != null);
         if (this.currentTask != null){
-            pTag.put("clockwork_maiden.current_task", this.currentTask.getCompound());
+            pTag.put("clockwork_maiden.current_task", this.currentTask.getCompound(level().registryAccess()));
         }
 
         pTag.putBoolean("clockwork_maiden.has_terminal", this.terminal != null);
@@ -118,7 +112,7 @@ public class ClockworkMaiden extends PathfinderMob {
 
         this.clockworkTier = ClockworkTier.values()[pTag.getInt("clockwork_maiden.clockwork_tier")];
         if (pTag.getBoolean("clockwork_maiden.has_upgrade_item")){
-            this.upgradeItem = ItemStack.of(pTag.getCompound("clockwork_maiden.upgrade_item"));
+            this.upgradeItem = ItemStack.parse(level().registryAccess(), pTag.getCompound("clockwork_maiden.upgrade_item")).get();
         } else {
             this.upgradeItem = null;
         }
@@ -126,21 +120,21 @@ public class ClockworkMaiden extends PathfinderMob {
         int size = pTag.getInt("clockwork_maiden.carried_items_size");
         for (int i = 0; i < size; i++){
             this.carriedItems.put(
-                    MaidenTask.parseCompound(pTag.getCompound("clockwork_maiden.carried_items_task_" + i)),
-                    Pair.of(ItemStack.of(pTag.getCompound("clockwork_maiden.carried_items_item_" + i)),
-                            MaidenInteractionConfig.parseCompound(pTag.getCompound("clockwork_maiden.carried_items_config_" + i))));
+                    MaidenTask.parseCompound(pTag.getCompound("clockwork_maiden.carried_items_task_" + i), level().registryAccess()),
+                    Pair.of(ItemStack.parse(level().registryAccess(), pTag.getCompound("clockwork_maiden.carried_items_item_" + i)).get(),
+                            MaidenInteractionConfig.parseCompound(pTag.getCompound("clockwork_maiden.carried_items_config_" + i), level().registryAccess())));
         }
 
         if (pTag.getBoolean("clockwork_maiden.has_current_task")){
-            this.currentTask = MaidenTask.parseCompound(pTag.getCompound("clockwork_maiden.current_task"));
+            this.currentTask = MaidenTask.parseCompound(pTag.getCompound("clockwork_maiden.current_task"), level().registryAccess());
         }
 
         if (pTag.getBoolean("clockwork_maiden.has_terminal")){
-            this.terminal = NbtUtils.readBlockPos(pTag.getCompound("clockwork_maiden.terminal"));
+            this.terminal = NbtUtils.readBlockPos(pTag, "clockwork_maiden.terminal").get();
         }
 
         if (pTag.getBoolean("clockwork_maiden.has_target")){
-            this.target = NbtUtils.readBlockPos(pTag.getCompound("clockwork_maiden.target"));
+            this.target = NbtUtils.readBlockPos(pTag, "clockwork_maiden.target").get();
         }
 
         super.readAdditionalSaveData(pTag);

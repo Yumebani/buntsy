@@ -7,11 +7,9 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.advancedfairy.MagicCrystalizerBlockEntity;
-import net.sophiebun.buntsy.blocks.entity.basicfairy.GrindingWheelBlockEntity;
 import net.sophiebun.buntsy.blocks.inventory.OutputSlot;
 
 public class MagicCrystalizerMenu extends AbstractContainerMenu {
@@ -34,24 +32,23 @@ public class MagicCrystalizerMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
         addPlayerInventory(inv);
 
-        this.blockEntity.getSampleLazyItemHandler().ifPresent(iItemHandler -> {
-            this.addSlot(new SlotItemHandler(iItemHandler, 0, 50, 26));
-        });
+        if (this.blockEntity.sampleItemHandler != null){
+            this.addSlot(new SlotItemHandler(this.blockEntity.sampleItemHandler, 0, 50, 26));
+        }
 
-        this.blockEntity.getDustLazyItemHandler().ifPresent(iItemHandler -> {
-
+        if (this.blockEntity.dustItemHandler != null){
             for (int i = 0; i < 4; i++){
-                this.addSlot(new SlotItemHandler(iItemHandler, i, 23 + (54 * (i % 2)), 17 + (18 * (i / 2))));
+                this.addSlot(new SlotItemHandler(this.blockEntity.dustItemHandler, i, 23 + (54 * (i % 2)), 17 + (18 * (i / 2))));
             }
 
             for (int i = 0; i < 3; i++){
-                this.addSlot(new SlotItemHandler(iItemHandler, i + 4, 32 + (18 * i), 53));
+                this.addSlot(new SlotItemHandler(this.blockEntity.dustItemHandler, i + 4, 32 + (18 * i), 53));
             }
-        });
+        }
 
-        this.blockEntity.getOutputLazyItemHandler().ifPresent(iItemHandler -> {
-            this.addSlot(new OutputSlot(iItemHandler, 0, 132, 35));
-        });
+        if (this.blockEntity.outputItemHandler != null){
+            this.addSlot(new OutputSlot(this.blockEntity.outputItemHandler, 0, 132, 35));
+        }
 
         addDataSlots(data);
     }

@@ -2,6 +2,7 @@ package net.sophiebun.buntsy.entity.monsters;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -29,7 +30,7 @@ import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.FluidType;
 
 import javax.annotation.Nullable;
 
@@ -136,10 +137,6 @@ public class Marionette extends Monster implements RangedAttackMob {
         return false;
     }
 
-    public MobType getMobType() {
-        return MobType.UNDEFINED;
-    }
-
     public void aiStep() {
         super.aiStep();
     }
@@ -167,12 +164,12 @@ public class Marionette extends Monster implements RangedAttackMob {
         }
     }
 
-    @Nullable
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
-        pSpawnData = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+    @Override
+    public @org.jetbrains.annotations.Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType spawnType, @org.jetbrains.annotations.Nullable SpawnGroupData pDataTag) {
+        SpawnGroupData pSpawnData = super.finalizeSpawn(pLevel, pDifficulty, spawnType, pDataTag);
         RandomSource randomsource = pLevel.getRandom();
         this.populateDefaultEquipmentSlots(randomsource, pDifficulty);
-        this.populateDefaultEquipmentEnchantments(randomsource, pDifficulty);
+        this.populateDefaultEquipmentEnchantments(((ServerLevel) level()), randomsource, pDifficulty);
         this.reassessWeaponGoal();
         this.setCanPickUpLoot(randomsource.nextFloat() < 0.55F * pDifficulty.getSpecialMultiplier());
         return pSpawnData;
@@ -182,7 +179,7 @@ public class Marionette extends Monster implements RangedAttackMob {
         if (this.level() != null && !this.level().isClientSide) {
             this.goalSelector.removeGoal(this.meleeGoal);
             this.goalSelector.removeGoal(this.bowGoal);
-            ItemStack itemstack = this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, item -> item instanceof net.minecraft.world.item.BowItem));
+            ItemStack itemstack = this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, item -> item instanceof BowItem));
             if (itemstack.is(Items.BOW)) {
                 int i = 20;
                 if (this.level().getDifficulty() != Difficulty.HARD) {
@@ -199,10 +196,10 @@ public class Marionette extends Monster implements RangedAttackMob {
     }
 
     public void performRangedAttack(LivingEntity pTarget, float pDistanceFactor) {
-        ItemStack itemstack = this.getProjectile(this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, item -> item instanceof net.minecraft.world.item.BowItem)));
+        ItemStack itemstack = this.getProjectile(this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, item -> item instanceof BowItem)));
         AbstractArrow abstractarrow = this.getArrow(itemstack, pDistanceFactor);
         if (this.getMainHandItem().getItem() instanceof  BowItem)
-            abstractarrow = ((BowItem)this.getMainHandItem().getItem()).customArrow(abstractarrow);
+            abstractarrow = ((BowItem)this.getMainHandItem().getItem()).customArrow(abstractarrow, itemstack, itemstack);
         double d0 = pTarget.getX() - this.getX();
         double d1 = pTarget.getY(0.3333333333333333D) - abstractarrow.getY();
         double d2 = pTarget.getZ() - this.getZ();
@@ -213,7 +210,7 @@ public class Marionette extends Monster implements RangedAttackMob {
     }
 
     protected AbstractArrow getArrow(ItemStack pArrowStack, float pVelocity) {
-        return ProjectileUtil.getMobArrow(this, pArrowStack, pVelocity);
+        return ProjectileUtil.getMobArrow(this, pArrowStack, pVelocity, this.getMainHandItem());
     }
 
     public boolean canFireProjectileWeapon(ProjectileWeaponItem pProjectileWeapon) {

@@ -1,7 +1,12 @@
 package net.sophiebun.buntsy.entity.clockwork_maiden;
 
+import com.mojang.serialization.Codec;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.sophiebun.buntsy.screen.clockwork.CMTParticipantScreen;
 
 import java.util.HashMap;
@@ -83,7 +88,7 @@ public class CMTParticipantData {
         }
     }
 
-    public CompoundTag getCompound() {
+    public CompoundTag getCompound(HolderLookup.Provider registries) {
 
         CompoundTag tag = new CompoundTag();
 
@@ -96,7 +101,7 @@ public class CMTParticipantData {
         int i = 0;
         for (Integer key : insertConfigs.keySet()){
             tag.putInt("cmt_data.inserting_config_key_" + i, key);
-            tag.put("cmt_data.inserting_config_" + i, insertConfigs.get(key).getCompound());
+            tag.put("cmt_data.inserting_config_" + i, insertConfigs.get(key).getCompound(registries));
             i++;
         }
 
@@ -104,7 +109,7 @@ public class CMTParticipantData {
         i = 0;
         for (Integer key : extractConfigs.keySet()){
             tag.putInt("cmt_data.extracting_config_key_" + i, key);
-            tag.put("cmt_data.extracting_config_" + i, extractConfigs.get(key).getCompound());
+            tag.put("cmt_data.extracting_config_" + i, extractConfigs.get(key).getCompound(registries));
             i++;
         }
 
@@ -120,7 +125,7 @@ public class CMTParticipantData {
         return tag;
     }
 
-    public static CMTParticipantData parseCompound(CompoundTag tag) {
+    public static CMTParticipantData parseCompound(CompoundTag tag, HolderLookup.Provider registries) {
 
         Map<Integer, boolean[]> enablings = new HashMap<>();
         for (int i = 0; i < CMTParticipantScreen.MAX_CHANNELS; i++){
@@ -135,7 +140,7 @@ public class CMTParticipantData {
         for (int i = 0; i < count; i++){
             insertConfigs.put(
                     tag.getInt("cmt_data.inserting_config_key_" + i),
-                    MaidenInteractionConfig.parseCompound(tag.getCompound("cmt_data.inserting_config_" + i))
+                    MaidenInteractionConfig.parseCompound(tag.getCompound("cmt_data.inserting_config_" + i), registries)
             );
         }
 
@@ -144,7 +149,7 @@ public class CMTParticipantData {
         for (int i = 0; i < count; i++){
             extractConfigs.put(
                     tag.getInt("cmt_data.extracting_config_key_" + i),
-                    MaidenInteractionConfig.parseCompound(tag.getCompound("cmt_data.extracting_config_" + i))
+                    MaidenInteractionConfig.parseCompound(tag.getCompound("cmt_data.extracting_config_" + i), registries)
             );
         }
 

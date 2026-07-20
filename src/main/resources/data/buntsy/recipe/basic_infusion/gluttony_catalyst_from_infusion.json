@@ -1,0 +1,55 @@
+{
+  "type": "buntsy:infusion_altar_basic",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:catalyst"
+      ,
+      "components": {
+        "buntsy:catalyst_type": {
+          "type": 6,
+          "function": "creation"
+        }
+      }
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:bowl_of_rockcandy"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:bowl_of_rockcandy"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:caramel_strawberries"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:golden_apple"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:catalyst"
+      ,
+      "components": {
+        "buntsy:catalyst_type": {
+          "type": 7,
+          "function": "creation"
+        }
+      }
+    },
+  "max_progress": 1000
+}

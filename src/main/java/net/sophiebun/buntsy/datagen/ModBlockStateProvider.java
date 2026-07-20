@@ -1,15 +1,18 @@
 package net.sophiebun.buntsy.datagen;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraftforge.client.model.generators.*;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.sophiebun.buntsy.BuntsyMod;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.custom.plants.HootnipCrop;
@@ -34,12 +37,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
         logBlock((RotatedPillarBlock) ModBlocks.GENTLIT_LOG.get());
         axisBlock((RotatedPillarBlock) ModBlocks.GENTLIT_WOOD.get(), blockTexture(ModBlocks.GENTLIT_LOG.get()), blockTexture(ModBlocks.GENTLIT_LOG.get()));
         axisBlock((RotatedPillarBlock) ModBlocks.STRIPPED_GENTLIT_LOG.get(), blockTexture(ModBlocks.STRIPPED_GENTLIT_LOG.get()),
-                new ResourceLocation(BuntsyMod.MODID, "block/stripped_gentlit_log_top"));
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/stripped_gentlit_log_top"));
         axisBlock((RotatedPillarBlock) ModBlocks.STRIPPED_GENTLIT_WOOD.get(), blockTexture(ModBlocks.STRIPPED_GENTLIT_LOG.get()), blockTexture(ModBlocks.GENTLIT_LOG.get()));
 
         simpleBlock(ModBlocks.GENTLIT_LEAVES.get(),
-                models().singleTexture(ForgeRegistries.BLOCKS.getKey(ModBlocks.GENTLIT_LEAVES.get()).getPath(),
-                new ResourceLocation("minecraft:block/leaves"), "all", blockTexture(ModBlocks.GENTLIT_LEAVES.get())).renderType("cutout"));
+                models().singleTexture(ModBlocks.GENTLIT_LEAVES.getId().getPath(),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "block/leaves"), "all", blockTexture(ModBlocks.GENTLIT_LEAVES.get())).renderType("cutout"));
         simpleCrossBlock(ModBlocks.GENTLIT_SAPLING);
 
         blockWithItem(ModBlocks.GENTLIT_PLANKS);
@@ -55,12 +58,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
         logBlock((RotatedPillarBlock) ModBlocks.BRAVOT_LOG.get());
         axisBlock((RotatedPillarBlock) ModBlocks.BRAVOT_WOOD.get(), blockTexture(ModBlocks.BRAVOT_LOG.get()), blockTexture(ModBlocks.BRAVOT_LOG.get()));
         axisBlock((RotatedPillarBlock) ModBlocks.STRIPPED_BRAVOT_LOG.get(), blockTexture(ModBlocks.STRIPPED_BRAVOT_LOG.get()),
-                new ResourceLocation(BuntsyMod.MODID, "block/stripped_bravot_log_top"));
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/stripped_bravot_log_top"));
         axisBlock((RotatedPillarBlock) ModBlocks.STRIPPED_BRAVOT_WOOD.get(), blockTexture(ModBlocks.STRIPPED_BRAVOT_LOG.get()), blockTexture(ModBlocks.BRAVOT_LOG.get()));
 
         simpleBlock(ModBlocks.BRAVOT_LEAVES.get(),
-                models().singleTexture(ForgeRegistries.BLOCKS.getKey(ModBlocks.BRAVOT_LEAVES.get()).getPath(),
-                        new ResourceLocation("minecraft:block/leaves"), "all", blockTexture(ModBlocks.BRAVOT_LEAVES.get())).renderType("cutout"));
+                models().singleTexture(ModBlocks.BRAVOT_LEAVES.getId().getPath(),
+                        ResourceLocation.fromNamespaceAndPath("minecraft", "block/leaves"), "all", blockTexture(ModBlocks.BRAVOT_LEAVES.get())).renderType("cutout"));
         simpleCrossBlock(ModBlocks.BRAVOT_SAPLING);
 
         blockWithItem(ModBlocks.BRAVOT_PLANKS);
@@ -76,12 +79,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
         logBlock((RotatedPillarBlock) ModBlocks.MALVOR_LOG.get());
         axisBlock((RotatedPillarBlock) ModBlocks.MALVOR_WOOD.get(), blockTexture(ModBlocks.MALVOR_LOG.get()), blockTexture(ModBlocks.MALVOR_LOG.get()));
         axisBlock((RotatedPillarBlock) ModBlocks.STRIPPED_MALVOR_LOG.get(), blockTexture(ModBlocks.STRIPPED_MALVOR_LOG.get()),
-                new ResourceLocation(BuntsyMod.MODID, "block/stripped_malvor_log_top"));
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/stripped_malvor_log_top"));
         axisBlock((RotatedPillarBlock) ModBlocks.STRIPPED_MALVOR_WOOD.get(), blockTexture(ModBlocks.STRIPPED_MALVOR_LOG.get()), blockTexture(ModBlocks.MALVOR_LOG.get()));
 
         simpleBlock(ModBlocks.MALVOR_LEAVES.get(),
-                models().singleTexture(ForgeRegistries.BLOCKS.getKey(ModBlocks.MALVOR_LEAVES.get()).getPath(),
-                        new ResourceLocation("minecraft:block/leaves"), "all", blockTexture(ModBlocks.MALVOR_LEAVES.get())).renderType("cutout"));
+                models().singleTexture(ModBlocks.MALVOR_LEAVES.getId().getPath(),
+                        ResourceLocation.fromNamespaceAndPath("minecraft", "block/leaves"), "all", blockTexture(ModBlocks.MALVOR_LEAVES.get())).renderType("cutout"));
         simpleCrossBlock(ModBlocks.MALVOR_SAPLING);
 
         blockWithItem(ModBlocks.MALVOR_PLANKS);
@@ -97,12 +100,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
         logBlock((RotatedPillarBlock) ModBlocks.ORIGAMI_PALM_LOG.get());
         axisBlock((RotatedPillarBlock) ModBlocks.ORIGAMI_PALM_WOOD.get(), blockTexture(ModBlocks.ORIGAMI_PALM_LOG.get()), blockTexture(ModBlocks.ORIGAMI_PALM_LOG.get()));
         axisBlock((RotatedPillarBlock) ModBlocks.STRIPPED_ORIGAMI_PALM_LOG.get(), blockTexture(ModBlocks.STRIPPED_ORIGAMI_PALM_LOG.get()),
-                new ResourceLocation(BuntsyMod.MODID, "block/stripped_origami_palm_log_top"));
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/stripped_origami_palm_log_top"));
         axisBlock((RotatedPillarBlock) ModBlocks.STRIPPED_ORIGAMI_PALM_WOOD.get(), blockTexture(ModBlocks.STRIPPED_ORIGAMI_PALM_LOG.get()), blockTexture(ModBlocks.ORIGAMI_PALM_LOG.get()));
 
         simpleBlock(ModBlocks.ORIGAMI_PALM_LEAVES.get(),
-                models().singleTexture(ForgeRegistries.BLOCKS.getKey(ModBlocks.ORIGAMI_PALM_LEAVES.get()).getPath(),
-                        new ResourceLocation("minecraft:block/leaves"), "all", blockTexture(ModBlocks.ORIGAMI_PALM_LEAVES.get())).renderType("cutout"));
+                models().singleTexture(ModBlocks.ORIGAMI_PALM_LEAVES.getId().getPath(),
+                        ResourceLocation.fromNamespaceAndPath("minecraft", "block/leaves"), "all", blockTexture(ModBlocks.ORIGAMI_PALM_LEAVES.get())).renderType("cutout"));
         simpleCrossBlock(ModBlocks.ORIGAMI_PALM_SAPLING);
 
         blockWithItem(ModBlocks.ORIGAMI_PALM_PLANKS);
@@ -117,8 +120,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         logBlock((RotatedPillarBlock) ModBlocks.CRYSTALLIZED_LOG.get());
         simpleBlock(ModBlocks.CRYSTALLIZED_LEAVES.get(),
-                models().singleTexture(ForgeRegistries.BLOCKS.getKey(ModBlocks.CRYSTALLIZED_LEAVES.get()).getPath(),
-                        new ResourceLocation("minecraft:block/leaves"), "all", blockTexture(ModBlocks.CRYSTALLIZED_LEAVES.get())).renderType("cutout"));
+                models().singleTexture(ModBlocks.CRYSTALLIZED_LEAVES.getId().getPath(),
+                        ResourceLocation.fromNamespaceAndPath("minecraft", "block/leaves"), "all", blockTexture(ModBlocks.CRYSTALLIZED_LEAVES.get())).renderType("cutout"));
 
 
         //Adding soil models
@@ -209,7 +212,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         blockWithItem(ModBlocks.CHOCOLATE_BLOCK);
         simpleBlockWithItem(ModBlocks.CHOCOLATE_GEYSER.get(), models().cubeTop(
-                ForgeRegistries.BLOCKS.getKey(ModBlocks.CHOCOLATE_GEYSER.get()).getPath(),
+                ModBlocks.CHOCOLATE_GEYSER.getId().getPath(),
                 modLoc("block/" + ModBlocks.PETRIFIED_CHOCOLATE.getId().getPath()),
                 modLoc("block/" + ModBlocks.CHOCOLATE_GEYSER.getId().getPath())));
 
@@ -275,8 +278,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         mushroomBlock(ModBlocks.PALESHROOM_BLOCK);
 
         //Minerals
-        for (List<RegistryObject<Block>> minerals : ModGrowableMineral.GROWABLE_MINERAL_STAGES){
-            for (RegistryObject<Block> mineral : minerals){
+        for (List<DeferredHolder<Block, Block>> minerals : ModGrowableMineral.GROWABLE_MINERAL_STAGES){
+            for (DeferredHolder<Block, Block> mineral : minerals){
                 crystalBlock(mineral);
             }
         }
@@ -314,8 +317,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 new ModelFile.UncheckedModelFile(modLoc("block/mixer")));
         simpleBlockWithItem(ModBlocks.GIANT_COCOON.get(),
                 models().cubeColumn(ModBlocks.GIANT_COCOON.getId().getPath(),
-                new ResourceLocation(BuntsyMod.MODID, "block/giant_cocoon_side"),
-                new ResourceLocation(BuntsyMod.MODID, "block/giant_cocoon_top")));
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/giant_cocoon_side"),
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/giant_cocoon_top")));
 
         simpleBlockWithItem(ModBlocks.CLOCKWORK_CRAFTER.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/clockwork_crafter")));
@@ -344,9 +347,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 new ModelFile.UncheckedModelFile(modLoc("block/prismatic_beacon")));
         simpleBlockWithItem(ModBlocks.PRISMATIC_BEACON_BASE.get(),
                 models().cubeBottomTop(ModBlocks.PRISMATIC_BEACON_BASE.getId().getPath(),
-                new ResourceLocation(BuntsyMod.MODID, "block/prismatic_beacon_base_side"),
-                new ResourceLocation(BuntsyMod.MODID, "block/prismatic_beacon_base_bottom"),
-                new ResourceLocation(BuntsyMod.MODID, "block/prismatic_beacon_base_top")));
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/prismatic_beacon_base_side"),
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/prismatic_beacon_base_bottom"),
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/prismatic_beacon_base_top")));
         blockWithItem(ModBlocks.BEACON_HASTE_MODIFIER);
         blockWithItem(ModBlocks.BEACON_FIRE_RESISTANCE_MODIFIER);
         blockWithItem(ModBlocks.BEACON_HEALTH_BOOST_MODIFIER);
@@ -364,16 +367,16 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     }
 
-    private void hootnipCrop(RegistryObject<Block> block){
+    private void hootnipCrop(DeferredHolder<Block, Block> block){
         getVariantBuilder(block.get()).forAllStates(blockState -> {
                 String modelName = block.getId().getPath() + "_stage" + blockState.getValue(HootnipCrop.AGE);
                 return ConfiguredModel.builder().modelFile(models().crop(modelName,
-                        new ResourceLocation(BuntsyMod.MODID, "block/" + modelName)).renderType("cutout")).build();}
+                        ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/" + modelName)).renderType("cutout")).build();}
         );
     }
 
 
-    private void wildHootnipBlock(RegistryObject<Block> block){
+    private void wildHootnipBlock(DeferredHolder<Block, Block> block){
         getVariantBuilder(block.get()).partialState()
                 .with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER)
                 .modelForState().modelFile(getCrossModel(block, "_top")).addModel().partialState()
@@ -381,7 +384,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 .modelForState().modelFile(getCrossModel(block, "_bottom")).addModel().partialState();
     }
 
-    private void syrupExtractorBlock(RegistryObject<Block> block){
+    private void syrupExtractorBlock(DeferredHolder<Block, Block> block){
 
         getVariantBuilder(block.get()).forAllStates(blockState -> {
             ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/syrup_extractor_stage" + blockState.getValue(SyrupExtractorBlock.LEVEL)));
@@ -398,7 +401,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         });
     }
 
-    private void clockworkSyrupExtractorBlock(RegistryObject<Block> block){
+    private void clockworkSyrupExtractorBlock(DeferredHolder<Block, Block> block){
 
         getVariantBuilder(block.get()).forAllStates(blockState -> {
             ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/clockwork_syrup_extractor"));
@@ -415,7 +418,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         });
     }
 
-    private void XZdirectionalBlock(RegistryObject<Block> block, ModelFile modelFile){
+    private void XZdirectionalBlock(DeferredHolder<Block, Block> block, ModelFile modelFile){
         getVariantBuilder(block.get()).partialState()
                 .with(HorizontalDirectionalBlock.FACING, Direction.EAST)
                 .modelForState().modelFile(modelFile).rotationY(90).addModel().partialState()
@@ -427,31 +430,31 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 .modelForState().modelFile(modelFile).rotationY(270).addModel().partialState();
     }
 
-    private void strawberryCrop(RegistryObject<Block> block){
+    private void strawberryCrop(DeferredHolder<Block, Block> block){
         getVariantBuilder(block.get()).forAllStates(blockState -> {
             String model_name = block.getId().getPath() + "_stage" + blockState.getValue(StrawberryCrop.AGE);
            return ConfiguredModel.builder().modelFile(models().crop(model_name,
-                   new ResourceLocation(BuntsyMod.MODID, "block/" + model_name)).renderType("cutout")).build();}
+                   ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/" + model_name)).renderType("cutout")).build();}
         );
     }
 
-    private void cropBlock(RegistryObject<Block> block){
+    private void cropBlock(DeferredHolder<Block, Block> block){
         getVariantBuilder(block.get()).forAllStates(blockState -> {
             String model_name = block.getId().getPath() + "_stage" + blockState.getValue(CropBlock.AGE);
            return ConfiguredModel.builder().modelFile(models().crop(model_name,
-                   new ResourceLocation(BuntsyMod.MODID, "block/" + model_name)).renderType("cutout")).build();}
+                   ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/" + model_name)).renderType("cutout")).build();}
         );
     }
 
-    private void crossCropBlock(RegistryObject<Block> block){
+    private void crossCropBlock(DeferredHolder<Block, Block> block){
         getVariantBuilder(block.get()).forAllStates(blockState -> {
             String model_name = block.getId().getPath() + "_stage" + blockState.getValue(CropBlock.AGE);
            return ConfiguredModel.builder().modelFile(models().cross(model_name,
-                   new ResourceLocation(BuntsyMod.MODID, "block/" + model_name)).renderType("cutout")).build();}
+                   ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/" + model_name)).renderType("cutout")).build();}
         );
     }
 
-    private void farmlandBlock(RegistryObject<Block> block, RegistryObject<Block> soil) {
+    private void farmlandBlock(DeferredHolder<Block, Block> block, DeferredHolder<Block, Block> soil) {
         BlockModelBuilder farmland = farmlandModel(block, soil);
         BlockModelBuilder moistFarmland = moistFarmlandModel(block, soil);
 
@@ -463,25 +466,25 @@ public class ModBlockStateProvider extends BlockStateProvider {
         });
     }
 
-    private BlockModelBuilder farmlandModel(RegistryObject<Block> block, RegistryObject<Block> soil){
+    private BlockModelBuilder farmlandModel(DeferredHolder<Block, Block> block, DeferredHolder<Block, Block> soil){
         return models().withExistingParent(block.getId().getPath(), mcLoc("block/template_farmland"))
-                .texture("dirt", new ResourceLocation(BuntsyMod.MODID, "block/" + soil.getId().getPath()))
-                .texture("top", new ResourceLocation(BuntsyMod.MODID, "block/" + block.getId().getPath()));
+                .texture("dirt", ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/" + soil.getId().getPath()))
+                .texture("top", ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/" + block.getId().getPath()));
     }
-    private BlockModelBuilder moistFarmlandModel(RegistryObject<Block> block, RegistryObject<Block> soil){
+    private BlockModelBuilder moistFarmlandModel(DeferredHolder<Block, Block> block, DeferredHolder<Block, Block> soil){
         return models().withExistingParent(block.getId().getPath(), mcLoc("block/template_farmland"))
-                .texture("dirt", new ResourceLocation(BuntsyMod.MODID, "block/" + soil.getId().getPath()))
-                .texture("top", new ResourceLocation(BuntsyMod.MODID, "block/" + block.getId().getPath() + "_moist"));
+                .texture("dirt", ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/" + soil.getId().getPath()))
+                .texture("top", ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/" + block.getId().getPath() + "_moist"));
     }
 
-    private void pottedPlant(RegistryObject<Block> registryObject, RegistryObject<Block> plant){
+    private void pottedPlant(DeferredHolder<Block, Block> registryObject, DeferredHolder<Block, Block> plant){
         simpleBlockWithItem(registryObject.get(),
-                models().singleTexture(ForgeRegistries.BLOCKS.getKey(registryObject.get()).getPath()
-                        , new ResourceLocation("flower_pot_cross"), "plant",
+                models().singleTexture(registryObject.getId().getPath()
+                        , ResourceLocation.fromNamespaceAndPath("minecraft", "flower_pot_cross"), "plant",
                         blockTexture(plant.get())).renderType("cutout"));
     }
 
-    private void variedCross(RegistryObject<Block> registryObject){
+    private void variedCross(DeferredHolder<Block, Block> registryObject){
         BlockModelBuilder var1 = getCrossModel(registryObject, "_1");
         BlockModelBuilder var2 = getCrossModel(registryObject, "_2");
         BlockModelBuilder var3 = getCrossModel(registryObject, "_3");
@@ -494,7 +497,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
                     .build());
     }
 
-    private void luminum(RegistryObject<Block> registryObject){
+    private void luminum(DeferredHolder<Block, Block> registryObject){
         BlockModelBuilder bottom = getTwoCrossModel(registryObject, "_bottom");
         BlockModelBuilder top1 = getTwoCrossModel(registryObject, "_top_1");
         BlockModelBuilder top2 = getTwoCrossModel(registryObject, "_top_2");
@@ -523,7 +526,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         });
     }
 
-    private void seaShells(RegistryObject<Block> registryObject){
+    private void seaShells(DeferredHolder<Block, Block> registryObject){
         ResourceLocation parent = modLoc("block/ground_image");
         BlockModelBuilder var1 = getSingleTextureModel(registryObject, parent, "_1");
         BlockModelBuilder var2 = getSingleTextureModel(registryObject, parent, "_2");
@@ -547,15 +550,15 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     }
 
-    private BlockModelBuilder getSingleTextureModel(RegistryObject<Block> registryObject, ResourceLocation parent, String var){
+    private BlockModelBuilder getSingleTextureModel(DeferredHolder<Block, Block> registryObject, ResourceLocation parent, String var){
         return  models().singleTexture(
-                ForgeRegistries.BLOCKS.getKey(registryObject.get()).getPath() + var,
+                registryObject.getId().getPath() + var,
                 parent, "image",
-                new ResourceLocation(BuntsyMod.MODID,"block/" + registryObject.getId().getPath() + var)).renderType("cutout");
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"block/" + registryObject.getId().getPath() + var)).renderType("cutout");
 
     }
 
-    private void hangingString(RegistryObject<Block> registryObject){
+    private void hangingString(DeferredHolder<Block, Block> registryObject){
         BlockModelBuilder top = getCrossModel(registryObject, "_top");
         BlockModelBuilder topEnding = getCrossModel(registryObject, "_top_ending");
         BlockModelBuilder topGrab = getCrossModel(registryObject, "_top_grab");
@@ -578,7 +581,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 .modelForState().modelFile(grab).addModel().partialState();
     }
 
-    private void crystalBlock(RegistryObject<Block> registryObject){
+    private void crystalBlock(DeferredHolder<Block, Block> registryObject){
         BlockModelBuilder base = getCrossModel(registryObject, "");
 
         getVariantBuilder(registryObject.get()).partialState()
@@ -596,20 +599,20 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 .modelForState().modelFile(base).rotationX(90).rotationY(270).addModel().partialState();
     }
 
-    private BlockModelBuilder getTwoCrossModel(RegistryObject<Block> registryObject, String var){
-        return models().withExistingParent(ForgeRegistries.BLOCKS.getKey(registryObject.get()).getPath() + var,
-                new ResourceLocation(BuntsyMod.MODID, "two_cross"))
-                .texture("xtex", new ResourceLocation(BuntsyMod.MODID,"block/" + registryObject.getId().getPath() + "_x" + var))
-                .texture("ytex", new ResourceLocation(BuntsyMod.MODID,"block/" + registryObject.getId().getPath() + "_y" + var))
+    private BlockModelBuilder getTwoCrossModel(DeferredHolder<Block, Block> registryObject, String var){
+        return models().withExistingParent(registryObject.getId().getPath() + var,
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "two_cross"))
+                .texture("xtex", ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"block/" + registryObject.getId().getPath() + "_x" + var))
+                .texture("ytex", ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"block/" + registryObject.getId().getPath() + "_y" + var))
                 .renderType("cutout");
     }
 
-    private BlockModelBuilder getCrossModel(RegistryObject<Block> registryObject, String var){
-        return models().cross(ForgeRegistries.BLOCKS.getKey(registryObject.get()).getPath() + var,
-                new ResourceLocation(BuntsyMod.MODID,"block/" + registryObject.getId().getPath() + var)).renderType("cutout");
+    private BlockModelBuilder getCrossModel(DeferredHolder<Block, Block> registryObject, String var){
+        return models().cross(registryObject.getId().getPath() + var,
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID,"block/" + registryObject.getId().getPath() + var)).renderType("cutout");
     }
 
-    private void mushroomBlock(RegistryObject<Block> registryObject){
+    private void mushroomBlock(DeferredHolder<Block, Block> registryObject){
         BlockModelBuilder mushroomInside = mushroomSide(registryObject, true);
         BlockModelBuilder mushroomOutside = mushroomSide(registryObject, false);
 
@@ -629,36 +632,36 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     }
 
-    private BlockModelBuilder mushroomSide(RegistryObject<Block> registryObject, boolean isInside){
+    private BlockModelBuilder mushroomSide(DeferredHolder<Block, Block> registryObject, boolean isInside){
         String inside = isInside ? "_inside" : "";
-        return models().singleTexture(ForgeRegistries.BLOCKS.getKey(registryObject.get()).getPath() + inside,
+        return models().singleTexture(registryObject.getId().getPath() + inside,
                 mcLoc("minecraft:block/template_single_face"),
-                new ResourceLocation(BuntsyMod.MODID, "block/" + registryObject.getId().getPath() + inside));
+                ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/" + registryObject.getId().getPath() + inside));
     }
 
-    private void grassBlock(RegistryObject<Block> registryObject, String blockBottomPath) {
+    private void grassBlock(DeferredHolder<Block, Block> registryObject, String blockBottomPath) {
         simpleBlockWithItem(registryObject.get(),
-                models().cubeBottomTop(ForgeRegistries.BLOCKS.getKey(registryObject.get()).getPath(),
-                        new ResourceLocation(BuntsyMod.MODID, "block/" + registryObject.getId().getPath() + "_side"),
-                        new ResourceLocation(BuntsyMod.MODID, "block/" + blockBottomPath),
-                        new ResourceLocation(BuntsyMod.MODID, "block/" + registryObject.getId().getPath() + "_top")));
+                models().cubeBottomTop(registryObject.getId().getPath(),
+                        ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/" + registryObject.getId().getPath() + "_side"),
+                        ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/" + blockBottomPath),
+                        ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/" + registryObject.getId().getPath() + "_top")));
     }
 
-    private void blockWithItem(RegistryObject<Block> blockRegistryObject) {
+    private void blockWithItem(DeferredHolder<Block, Block> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
     }
 
-    private void translucentBlockWithItem(RegistryObject<Block> blockRegistryObject) {
+    private void translucentBlockWithItem(DeferredHolder<Block, Block> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(),
-                models().singleTexture(ForgeRegistries.BLOCKS.getKey(ModBlocks.SWICE.get()).getPath(),
-                        new ResourceLocation("minecraft:block/cube_all"), "all", blockTexture(ModBlocks.SWICE.get())).renderType("translucent"));
+                models().singleTexture(ModBlocks.SWICE.getId().getPath(),
+                        ResourceLocation.fromNamespaceAndPath("minecraft", "block/cube_all"), "all", blockTexture(ModBlocks.SWICE.get())).renderType("translucent"));
     }
 
-    private void simpleCrossBlock(RegistryObject<Block> blockRegistry){
+    private void simpleCrossBlock(DeferredHolder<Block, Block> blockRegistry){
         simpleBlock(blockRegistry.get(),getCrossModel(blockRegistry, ""));
     }
 
-    private void sweedsCrossBlock(RegistryObject<Block> blockRegistry){
+    private void sweedsCrossBlock(DeferredHolder<Block, Block> blockRegistry){
         BlockModelBuilder base = getCrossModel(blockRegistry, "");
         BlockModelBuilder top = getCrossModel(blockRegistry, "_top");
 

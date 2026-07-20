@@ -1,16 +1,13 @@
 package net.sophiebun.buntsy.blocks.entity.custom;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -18,34 +15,23 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.DimensionDataStorage;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.CapabilityToken;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.common.util.LevelCapabilityData;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
-import net.sophiebun.buntsy.recipe.MagicCrystalizerRecipe;
+import net.sophiebun.buntsy.components.ModDataComponents;
 import net.sophiebun.buntsy.screen.GiantCocoonMenu;
 import net.sophiebun.buntsy.server.GiantCocoonSavedData;
-import net.sophiebun.buntsy.server.ModGiantCocoonServerPacket;
+import net.sophiebun.buntsy.server.packets.GiantCocoonServerPacket;
 import net.sophiebun.buntsy.server.ModPacketHandler;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Optional;
 
 public class GiantCocoonBlockEntity extends BlockEntity implements MenuProvider {
 
-    private final ItemStackHandler uroItemHandler = new ItemStackHandler(1) {
+    public final ItemStackHandler uroItemHandler = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -68,24 +54,18 @@ public class GiantCocoonBlockEntity extends BlockEntity implements MenuProvider 
 
     protected final ContainerData data;
 
-    private LazyOptional<IItemHandler> uroLazyItemHandler = LazyOptional.of(() -> uroItemHandler);
-
-    private LazyOptional<IItemHandler> contentLazyItemHandler = LazyOptional.of(this::getContentItemHandler);
     private boolean initialized = false;
 
     public ItemStackHandler getContentItemHandler(){
         return contentItemHandler;
     }
-    public void setContentItemHandler(CompoundTag tag){
-        contentItemHandler.deserializeNBT(tag);
+
+    public void setContentItemHandler(HolderLookup.Provider provider, CompoundTag tag){
+        contentItemHandler.deserializeNBT(provider, tag);
     }
 
     private int getUroId(){
-        return this.getUro().getTag().getInt("buntsy.uro_id");
-    }
-
-    public LazyOptional<IItemHandler> getContentLazyItemHandler(Level pLevel) {
-        return contentLazyItemHandler;
+        return this.getUro().get(ModDataComponents.URO_ID);
     }
 
     public GiantCocoonBlockEntity(BlockPos pPos, BlockState pBlockState) {
@@ -125,20 +105,17 @@ public class GiantCocoonBlockEntity extends BlockEntity implements MenuProvider 
         return new GiantCocoonMenu(i, inventory, this, this.data);
     }
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            if (!level.isClientSide() && this.hasUro){
-                contentItemHandler = getInvData(level);
-                return contentLazyItemHandler.cast();
-            }
+    public ItemStackHandler getItemHandler(Direction side) {
+        if (!level.isClientSide() && this.hasUro){
+            contentItemHandler = getInvData(level);
+            return contentItemHandler;
         }
-        return super.getCapability(cap, side);
+        return null;
     }
 
     public ItemStackHandler getInvData(Level pLevel){
         GiantCocoonSavedData data = GiantCocoonSavedData.computeIfAbsent(pLevel.getServer());
-        return data.registerNewCocoon(this.getUro().getTag().getInt("buntsy.uro_id"), this);
+        return data.registerNewCocoon(pLevel.registryAccess(), this.getUro().get(ModDataComponents.URO_ID), this);
     }
 
     public ItemStack getUro() {
@@ -165,20 +142,6 @@ public class GiantCocoonBlockEntity extends BlockEntity implements MenuProvider 
         this.hasUro = true;
     }
 
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        contentLazyItemHandler = LazyOptional.of((this::getContentItemHandler));
-        uroLazyItemHandler = LazyOptional.of(() -> uroItemHandler);
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        contentLazyItemHandler.invalidate();
-        uroLazyItemHandler.invalidate();
-    }
-
     public void drops() {
         if (!uroItemHandler.getStackInSlot(0).isEmpty()){
             SimpleContainer inventory = new SimpleContainer(1);
@@ -188,28 +151,27 @@ public class GiantCocoonBlockEntity extends BlockEntity implements MenuProvider 
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("inventory", uroItemHandler.serializeNBT());
-        pTag.putBoolean("has_uro", this.hasUro());
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.saveAdditional(pTag, registries);
 
-        super.saveAdditional(pTag);
+        pTag.put("inventory", uroItemHandler.serializeNBT(registries));
+        pTag.putBoolean("has_uro", this.hasUro());
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.loadAdditional(pTag, registries);
 
-        this.uroItemHandler.deserializeNBT(pTag.getCompound("inventory"));
+        this.uroItemHandler.deserializeNBT(registries, pTag.getCompound("inventory"));
         this.hasUro = pTag.getBoolean("has_uro");
         this.initialized = false;
-
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
 
         if (pLevel.isClientSide()){
             if (changedStack){
-                ModPacketHandler.INSTANCE.sendToServer(new ModGiantCocoonServerPacket(getUroId(), contentItemHandler.serializeNBT(), getBlockPos()));
+                PacketDistributor.sendToServer(new GiantCocoonServerPacket(contentItemHandler.serializeNBT(pLevel.registryAccess()), getUroId(), getBlockPos()));
                 changedStack = false;
             }
         }
@@ -228,12 +190,7 @@ public class GiantCocoonBlockEntity extends BlockEntity implements MenuProvider 
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 }

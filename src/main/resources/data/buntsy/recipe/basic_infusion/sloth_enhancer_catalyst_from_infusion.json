@@ -1,0 +1,55 @@
+{
+  "type": "buntsy:infusion_altar_basic",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:catalyst"
+      ,
+      "components": {
+        "buntsy:catalyst_type": {
+          "type": 8,
+          "function": "creation"
+        }
+      }
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:glowstone_crystal"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:debris_shard"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:diamond_shard"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:netherite_ingot"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:catalyst"
+      ,
+      "components": {
+        "buntsy:catalyst_type": {
+          "type": 8,
+          "function": "enhancer"
+        }
+      }
+    },
+  "max_progress": 1000
+}

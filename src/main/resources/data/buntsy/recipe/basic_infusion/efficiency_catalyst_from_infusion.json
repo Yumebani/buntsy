@@ -1,0 +1,55 @@
+{
+  "type": "buntsy:infusion_altar_basic",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:catalyst"
+      ,
+      "components": {
+        "buntsy:catalyst_type": {
+          "type": 0,
+          "function": "creation"
+        }
+      }
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:glowstone"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:glowstone"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:slime_ball"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:snow_block"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:catalyst"
+      ,
+      "components": {
+        "buntsy:catalyst_type": {
+          "type": 1,
+          "function": "creation"
+        }
+      }
+    },
+  "max_progress": 1000
+}

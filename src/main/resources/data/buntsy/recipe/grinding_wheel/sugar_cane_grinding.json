@@ -1,0 +1,30 @@
+{
+  "type": "buntsy:grinding_wheel",
+  "ingredients": [
+    {
+      "item": "minecraft:sugar_cane"
+    },
+    {
+      "item": "buntsy:sweeds"
+    },
+    {
+      "item": "buntsy:crocktus"
+    }
+  ],
+  "output": [
+    {
+      "chance": 1.0,
+      "item": {
+        "count": 2,
+        "id": "minecraft:sugar"
+      }
+    },
+    {
+      "chance": 0.5,
+      "item": {
+        "count": 1,
+        "id": "minecraft:sugar"
+      }
+    }
+  ]
+}

@@ -12,7 +12,7 @@ import net.sophiebun.buntsy.BuntsyMod;
 public class FairyInfusionBenchScreen extends AbstractContainerScreen<FairyInfusionBenchMenu> {
 
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(BuntsyMod.MODID, "textures/gui/fairy_infusion_bench_gui.png");
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/gui/fairy_infusion_bench_gui.png");
 
     public FairyInfusionBenchScreen(FairyInfusionBenchMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -37,7 +37,7 @@ public class FairyInfusionBenchScreen extends AbstractContainerScreen<FairyInfus
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
-        renderBackground(guiGraphics);
+        renderBackground(guiGraphics, mouseX, mouseY, delta);
         super.render(guiGraphics, mouseX, mouseY, delta);
         renderTooltip(guiGraphics, mouseX, mouseY);
     }

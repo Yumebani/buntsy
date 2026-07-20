@@ -8,7 +8,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.sophiebun.buntsy.blocks.custom.plants.ModLeaves;
 
 public class BlockPatchFeature extends Feature<BlockStateConfiguration> {
@@ -37,7 +36,7 @@ public class BlockPatchFeature extends Feature<BlockStateConfiguration> {
         for(int l = 0; l < 24; ++l) {
             BlockPos pos = blockpos.offset(randomsource.nextInt(j) - randomsource.nextInt(j), y + randomsource.nextInt(k) - randomsource.nextInt(k), randomsource.nextInt(j) - randomsource.nextInt(j));
             BlockState state1 =  worldgenlevel.getBlockState(pos.below());
-            if (state1.getBlock().isCollisionShapeFullBlock(state1, worldgenlevel, pos.below()) && worldgenlevel.getBlockState(pos).isAir()){
+            if (state1.getBlock().isShapeFullBlock(state1.getShape(worldgenlevel, pos.below())) && worldgenlevel.getBlockState(pos).isAir()){
                 worldgenlevel.setBlock(pos, placeState, 2);
                 ++i;
             }

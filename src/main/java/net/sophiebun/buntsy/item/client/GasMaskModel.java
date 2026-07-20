@@ -8,8 +8,8 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class GasMaskModel extends GeoModel<GasMaskItem> {
 
-    private ResourceLocation model = new ResourceLocation(BuntsyMod.MODID, "geo/gas_mask.geo.json");
-    private ResourceLocation texture = new ResourceLocation(BuntsyMod.MODID, "textures/armor/gas_mask.png");
+    private ResourceLocation model = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "geo/gas_mask.geo.json");
+    private ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/armor/gas_mask.png");
 
     @Override
     public ResourceLocation getModelResource(GasMaskItem animatable) {

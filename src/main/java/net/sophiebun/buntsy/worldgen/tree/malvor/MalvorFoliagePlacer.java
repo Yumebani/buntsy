@@ -1,6 +1,7 @@
 package net.sophiebun.buntsy.worldgen.tree.malvor;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
@@ -17,7 +18,7 @@ import java.util.Queue;
 
 public class MalvorFoliagePlacer extends FoliagePlacer {
 
-    public static final Codec<MalvorFoliagePlacer> CODEC = RecordCodecBuilder.create(malvorFoliagePlacerInstance ->
+    public static final MapCodec<MalvorFoliagePlacer> CODEC = RecordCodecBuilder.mapCodec(malvorFoliagePlacerInstance ->
             foliagePlacerParts(malvorFoliagePlacerInstance).apply(malvorFoliagePlacerInstance, MalvorFoliagePlacer::new));
 
     public MalvorFoliagePlacer(IntProvider pRadius, IntProvider pOffset) {

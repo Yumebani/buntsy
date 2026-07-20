@@ -8,8 +8,8 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class HeadBowModel extends GeoModel<HeadBowItem> {
 
-    private ResourceLocation model = new ResourceLocation(BuntsyMod.MODID, "geo/head_bow.geo.json");
-    private ResourceLocation texture = new ResourceLocation(BuntsyMod.MODID, "textures/armor/head_bow.png");
+    private ResourceLocation model = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "geo/head_bow.geo.json");
+    private ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/armor/head_bow.png");
 
     @Override
     public ResourceLocation getModelResource(HeadBowItem animatable) {

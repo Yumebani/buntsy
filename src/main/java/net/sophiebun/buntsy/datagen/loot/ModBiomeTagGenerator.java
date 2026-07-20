@@ -3,14 +3,10 @@ package net.sophiebun.buntsy.datagen.loot;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BiomeTagsProvider;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.biome.Biomes;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.data.BlockTagsProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.sophiebun.buntsy.BuntsyMod;
-import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.tag.ModTags;
 import net.sophiebun.buntsy.worldgen.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;
@@ -49,7 +45,7 @@ public class ModBiomeTagGenerator extends BiomeTagsProvider {
                 .add(Biomes.SUNFLOWER_PLAINS)
                 .add(Biomes.CHERRY_GROVE)
                 .addTag(Tags.Biomes.IS_LUSH)
-                .addTag(Tags.Biomes.IS_CONIFEROUS)
+                .addTag(Tags.Biomes.IS_FOREST)
                 .addTag(Tags.Biomes.IS_PLAINS);
     }
 }

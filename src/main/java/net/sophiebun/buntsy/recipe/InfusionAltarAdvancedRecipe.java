@@ -1,36 +1,35 @@
 package net.sophiebun.buntsy.recipe;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
 import net.sophiebun.buntsy.BuntsyMod;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InfusionAltarAdvancedRecipe implements Recipe<SimpleContainer> {
+public class InfusionAltarAdvancedRecipe implements Recipe<InfusionAltarInput> {
     private final List<ItemStack> inputItems;
     private final ItemStack output;
     private final int maxProgress;
-    private final ResourceLocation id;
-    public InfusionAltarAdvancedRecipe(List<ItemStack> inputItems, ItemStack output, int maxProgress, ResourceLocation id) {
+    public InfusionAltarAdvancedRecipe(List<ItemStack> inputItems, ItemStack output, int maxProgress) {
         this.inputItems = inputItems;
         this.output = output;
         this.maxProgress = maxProgress;
-        this.id = id;
+    }
+
+    private ItemStack getOutput() {
+        return output;
     }
 
     public int getMaxProgress() {
@@ -41,18 +40,29 @@ public class InfusionAltarAdvancedRecipe implements Recipe<SimpleContainer> {
         return inputItems;
     }
 
+    private ItemStack checkIfContains(List<ItemStack> inputs, ItemStack item){
+        for (ItemStack itemIn : inputs){
+            if (itemMatch(itemIn, item)) return itemIn;
+        }
+        return null;
+    }
+
+    private boolean itemMatch(ItemStack first, ItemStack second){
+        return (first.getCount() <= second.getCount()) && ItemStack.isSameItemSameComponents(first,second);
+    }
+
     @Override
-    public boolean matches(SimpleContainer pContainer, Level pLevel) {
-        if(pLevel.isClientSide()) {
+    public boolean matches(InfusionAltarInput infusionAltarInput, Level level) {
+        if(level.isClientSide()) {
             return false;
         }
 
-        if (!itemMatch(inputItems.get(0), pContainer.getItem(0))) return false;
+        if (!itemMatch(inputItems.get(0), infusionAltarInput.getItem(0))) return false;
 
         List<ItemStack> inputTest = new ArrayList<>(inputItems.stream().toList());
         List<ItemStack> input = new ArrayList<>();
         for (int i = 0; i <= 8; i++){
-            input.add(pContainer.getItem(i));
+            input.add(infusionAltarInput.getItem(i));
         }
 
         for (ItemStack item : input){
@@ -65,21 +75,8 @@ public class InfusionAltarAdvancedRecipe implements Recipe<SimpleContainer> {
         return true;
     }
 
-    private ItemStack checkIfContains(List<ItemStack> inputs, ItemStack item){
-        for (ItemStack itemIn : inputs){
-            if (itemMatch(itemIn, item)) return itemIn;
-        }
-        return null;
-    }
-
-    private boolean itemMatch(ItemStack first, ItemStack second){
-        return (first.is(second.getItem())
-                && first.getCount() <= second.getCount()) &&
-                (!first.hasTag() || first.getTag().equals(second.getTag()));
-    }
-
     @Override
-    public ItemStack assemble(SimpleContainer pContainer, RegistryAccess pRegistryAccess) {
+    public ItemStack assemble(InfusionAltarInput infusionAltarInput, HolderLookup.Provider provider) {
         return output.copy();
     }
 
@@ -89,13 +86,8 @@ public class InfusionAltarAdvancedRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return output.copy();
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return id;
     }
 
     @Override
@@ -110,73 +102,32 @@ public class InfusionAltarAdvancedRecipe implements Recipe<SimpleContainer> {
 
     public static class Type implements RecipeType<InfusionAltarAdvancedRecipe> {
         public static final Type INSTANCE = new Type();
-        public static final String ID = "infusion_altar_basic";
+        public static final String ID = "infusion_altar_advanced";
     }
 
     public static class Serializer implements RecipeSerializer<InfusionAltarAdvancedRecipe> {
         public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation(BuntsyMod.MODID, "infusion_altar_advanced");
+        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "infusion_altar_advanced");
 
         @Override
-        public InfusionAltarAdvancedRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
-
-            //Inputs
-            JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "inputs");
-            List<ItemStack> inputs = new ArrayList<>();
-            for(JsonElement entry : ingredients.asList()) {
-                inputs.add(itemFromCustomJson(entry.getAsJsonObject()));
-            }
-
-            ItemStack output = itemFromCustomJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "output"));
-            int maxProgress = GsonHelper.getAsInt(pSerializedRecipe, "max_progress");
-
-            return new InfusionAltarAdvancedRecipe(inputs, output, maxProgress, pRecipeId);
-        }
-
-        public ItemStack itemFromCustomJson(JsonObject obj){
-            ItemStack item = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(obj, "item"));
-            JsonArray nbtObj = GsonHelper.getAsJsonArray(obj, "nbt");
-            if (!nbtObj.isEmpty()){
-                CompoundTag nbt = new CompoundTag();
-                for (JsonElement entry : nbtObj.asList()){
-                    if (GsonHelper.isNumberValue(entry.getAsJsonObject(), "value")){
-                        nbt.putInt(GsonHelper.getAsString(entry.getAsJsonObject(), "field"),
-                                GsonHelper.getAsInt(entry.getAsJsonObject(), "value"));
-                    }
-                    else {
-                        nbt.putString(GsonHelper.getAsString(entry.getAsJsonObject(), "field"),
-                                GsonHelper.getAsString(entry.getAsJsonObject(), "value"));
-                    }
-                }
-                item.setTag(nbt);
-            }
-            return item;
+        public MapCodec<InfusionAltarAdvancedRecipe> codec() {
+            return RecordCodecBuilder.mapCodec(instance -> {
+                return instance.group(
+                        ItemStack.STRICT_CODEC.listOf().fieldOf("inputs").forGetter(InfusionAltarAdvancedRecipe::getInputs),
+                        ItemStack.STRICT_CODEC.fieldOf("output").forGetter(InfusionAltarAdvancedRecipe::getOutput),
+                        Codec.INT.fieldOf("max_progress").forGetter(InfusionAltarAdvancedRecipe::getMaxProgress)
+                ).apply(instance, InfusionAltarAdvancedRecipe::new);
+            });
         }
 
         @Override
-        public @Nullable InfusionAltarAdvancedRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
-            List<ItemStack> inputs = new ArrayList<>();
-
-            for(int i = 0; i < 9; i++) {
-                inputs.add(pBuffer.readItem());
-            }
-
-            ItemStack output = pBuffer.readItem();
-
-            int maxProgress = pBuffer.readInt();
-
-            return new InfusionAltarAdvancedRecipe(inputs, output, maxProgress, pRecipeId);
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf pBuffer, InfusionAltarAdvancedRecipe pRecipe) {
-            for (ItemStack item : pRecipe.getInputs()) {
-                pBuffer.writeItemStack(item, false);
-            }
-
-            pBuffer.writeItemStack(pRecipe.output, false);
-
-            pBuffer.writeInt(pRecipe.getMaxProgress());
+        public StreamCodec<RegistryFriendlyByteBuf, InfusionAltarAdvancedRecipe> streamCodec() {
+            return StreamCodec.composite(
+                    ItemStack.STREAM_CODEC.apply(ByteBufCodecs.list()), InfusionAltarAdvancedRecipe::getInputs,
+                    ItemStack.STREAM_CODEC, InfusionAltarAdvancedRecipe::getOutput,
+                    ByteBufCodecs.INT, InfusionAltarAdvancedRecipe::getMaxProgress,
+                    InfusionAltarAdvancedRecipe::new
+            );
         }
     }
 }

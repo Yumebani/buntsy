@@ -12,7 +12,7 @@ import net.sophiebun.buntsy.BuntsyMod;
 public class ClockworkFisherScreen extends AbstractContainerScreen<ClockworkFisherMenu> {
 
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(BuntsyMod.MODID, "textures/gui/clockwork_passive_collector_gui.png");
+            ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/gui/clockwork_passive_collector_gui.png");
 
     public ClockworkFisherScreen(ClockworkFisherMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -39,7 +39,7 @@ public class ClockworkFisherScreen extends AbstractContainerScreen<ClockworkFish
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
-        renderBackground(guiGraphics);
+        renderBackground(guiGraphics, mouseX, mouseY, delta);
         super.render(guiGraphics, mouseX, mouseY, delta);
         renderTooltip(guiGraphics, mouseX, mouseY);
     }

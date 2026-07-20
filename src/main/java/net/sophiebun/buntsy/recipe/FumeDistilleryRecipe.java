@@ -3,10 +3,16 @@ package net.sophiebun.buntsy.recipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.SimpleContainer;
@@ -20,22 +26,24 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FumeDistilleryRecipe implements Recipe<SimpleContainer> {
+public class FumeDistilleryRecipe implements Recipe<FumeDistilleryInput> {
     private final List<ItemStack> inputItems;
     private final ItemStack output;
-    private final ResourceLocation id;
-    public FumeDistilleryRecipe(List<ItemStack> inputItems, ItemStack output, ResourceLocation id) {
+    public FumeDistilleryRecipe(List<ItemStack> inputItems, ItemStack output) {
         this.inputItems = inputItems;
         this.output = output;
-        this.id = id;
     }
 
     public List<ItemStack> getInputs() {
         return inputItems;
     }
 
+    public ItemStack getOutput() {
+        return output.copy();
+    }
+
     @Override
-    public boolean matches(SimpleContainer pContainer, Level pLevel) {
+    public boolean matches(FumeDistilleryInput recipeInput, Level pLevel) {
         if(pLevel.isClientSide()) {
             return false;
         }
@@ -44,16 +52,14 @@ public class FumeDistilleryRecipe implements Recipe<SimpleContainer> {
 
         for (int i = 0; i < 3; i++){
             ItemStack inputItem = inputItems.get(i);
-            ItemStack containerItem = pContainer.getItem(i);
-            matches &= (inputItem.is(containerItem.getItem())
-                    && inputItem.getCount() <= containerItem.getCount()) &&
-                    (!inputItem.hasTag() || inputItem.getTag().equals(containerItem.getTag()));
+            ItemStack containerItem = recipeInput.getItem(i);
+            matches &= ItemStack.isSameItemSameComponents(inputItem, containerItem);
         }
         return matches;
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer pContainer, RegistryAccess pRegistryAccess) {
+    public ItemStack assemble(FumeDistilleryInput recipeInput, HolderLookup.Provider provider) {
         return output.copy();
     }
 
@@ -63,13 +69,8 @@ public class FumeDistilleryRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return output.copy();
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return id;
     }
 
     @Override
@@ -89,63 +90,24 @@ public class FumeDistilleryRecipe implements Recipe<SimpleContainer> {
 
     public static class Serializer implements RecipeSerializer<FumeDistilleryRecipe> {
         public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation(BuntsyMod.MODID, "fume_distillery");
+        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "fume_distillery");
 
         @Override
-        public FumeDistilleryRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
-
-            //Inputs
-            JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "inputs");
-            List<ItemStack> inputs = new ArrayList<>();
-            for(JsonElement entry : ingredients.asList()) {
-                inputs.add(itemFromCustomJson(entry.getAsJsonObject()));
-            }
-
-            ItemStack output = itemFromCustomJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "output"));
-
-            return new FumeDistilleryRecipe(inputs, output, pRecipeId);
-        }
-
-        public ItemStack itemFromCustomJson(JsonObject obj){
-            ItemStack item = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(obj, "item"));
-            JsonArray nbtObj = GsonHelper.getAsJsonArray(obj, "nbt");
-            if (!nbtObj.isEmpty()){
-                CompoundTag nbt = new CompoundTag();
-                for (JsonElement entry : nbtObj.asList()){
-                    if (GsonHelper.isNumberValue(entry.getAsJsonObject(), "value")){
-                        nbt.putInt(GsonHelper.getAsString(entry.getAsJsonObject(), "field"),
-                                GsonHelper.getAsInt(entry.getAsJsonObject(), "value"));
-                    }
-                    else {
-                        nbt.putString(GsonHelper.getAsString(entry.getAsJsonObject(), "field"),
-                                GsonHelper.getAsString(entry.getAsJsonObject(), "value"));
-                    }
-                }
-                item.setTag(nbt);
-            }
-            return item;
+        public MapCodec<FumeDistilleryRecipe> codec() {
+            return RecordCodecBuilder.mapCodec(fumeDistilleryRecipeInstance -> {
+                return fumeDistilleryRecipeInstance.group(
+                        ItemStack.STRICT_CODEC.listOf().fieldOf("inputs").forGetter(FumeDistilleryRecipe::getInputs),
+                        ItemStack.STRICT_CODEC.fieldOf("output").forGetter(FumeDistilleryRecipe::getOutput)
+                ).apply(fumeDistilleryRecipeInstance, FumeDistilleryRecipe::new);
+            });
         }
 
         @Override
-        public @Nullable FumeDistilleryRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
-            List<ItemStack> inputs = new ArrayList<>();
-
-            for(int i = 0; i < 3; i++) {
-                inputs.add(pBuffer.readItem());
-            }
-
-            ItemStack output = pBuffer.readItem();
-
-            return new FumeDistilleryRecipe(inputs, output, pRecipeId);
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf pBuffer, FumeDistilleryRecipe pRecipe) {
-            for (ItemStack item : pRecipe.getInputs()) {
-                pBuffer.writeItemStack(item, false);
-            }
-
-            pBuffer.writeItemStack(pRecipe.output, false);
+        public StreamCodec<RegistryFriendlyByteBuf, FumeDistilleryRecipe> streamCodec() {
+            return StreamCodec.composite(
+                        ItemStack.STREAM_CODEC.apply(ByteBufCodecs.list()), FumeDistilleryRecipe::getInputs,
+                        ItemStack.STREAM_CODEC, FumeDistilleryRecipe::getOutput,
+                        FumeDistilleryRecipe::new);
         }
     }
 }

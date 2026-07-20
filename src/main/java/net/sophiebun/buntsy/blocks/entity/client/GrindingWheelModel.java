@@ -9,9 +9,9 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class GrindingWheelModel extends GeoModel<GrindingWheelBlockEntity> {
 
-    private static final ResourceLocation MODEL = new ResourceLocation(BuntsyMod.MODID, "geo/grinding_wheel.geo.json");
-    private static final ResourceLocation ANIMATION = new ResourceLocation(BuntsyMod.MODID, "animations/grinding_wheel.animation.json");
-    private static final ResourceLocation TEXTURE = new ResourceLocation(BuntsyMod.MODID, "textures/block/grinding_wheel.png");
+    private static final ResourceLocation MODEL = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "geo/grinding_wheel.geo.json");
+    private static final ResourceLocation ANIMATION = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "animations/grinding_wheel.animation.json");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/block/grinding_wheel.png");
 
     @Override
     public ResourceLocation getModelResource(GrindingWheelBlockEntity animatable) {

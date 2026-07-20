@@ -1,0 +1,70 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:fairy_dust"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:hootcat_feather"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:molted_moth_wings"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:white_wool"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:turtle_scute"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:feather"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:honeycomb"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:egg"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:leather"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:essence"
+      ,
+      "components": {
+        "buntsy:essence_type": "fauna"
+      }
+    },
+  "max_progress": 1000
+}

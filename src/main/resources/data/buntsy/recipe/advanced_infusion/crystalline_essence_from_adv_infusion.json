@@ -1,0 +1,70 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:fairy_dust"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:amethyst_shard"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:iron_crystal"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:glowstone_crystal"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:copper_crystal"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:gold_crystal"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:amethyst_shard"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:redstone_crystal"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:lapis_crystal"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:essence"
+      ,
+      "components": {
+        "buntsy:essence_type": "crystalline"
+      }
+    },
+  "max_progress": 1000
+}

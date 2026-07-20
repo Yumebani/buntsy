@@ -17,7 +17,7 @@ public class ClockworkMaidenRenderer extends MobRenderer<ClockworkMaiden, Clockw
 
     @Override
     public ResourceLocation getTextureLocation(ClockworkMaiden maiden) {
-        return new ResourceLocation(BuntsyMod.MODID, "textures/entity/clockwork_maiden.png");
+        return ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "textures/entity/clockwork_maiden.png");
     }
 
     @Override

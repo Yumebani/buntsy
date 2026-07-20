@@ -1,6 +1,7 @@
 package net.sophiebun.buntsy.worldgen.tree.malvor;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -26,7 +27,7 @@ import java.util.stream.Collectors;
 
 public class MalvorTrunkPlacer extends TrunkPlacer {
 
-    public static final Codec<MalvorTrunkPlacer> CODEC = RecordCodecBuilder.create(malvorTrunkPlacerInstance ->
+    public static final MapCodec<MalvorTrunkPlacer> CODEC = RecordCodecBuilder.mapCodec(malvorTrunkPlacerInstance ->
             trunkPlacerParts(malvorTrunkPlacerInstance).apply(malvorTrunkPlacerInstance, MalvorTrunkPlacer::new));
 
     private static final int TRUNK_WIDTH = 10;

@@ -1,0 +1,43 @@
+{
+  "type": "buntsy:infusion_altar_basic",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"minecraft:iron_block"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:diamond"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:silky_ingot"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:silky_ingot"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:emerald"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 4,
+        "id":"buntsy:prismatic_beacon_base"
+
+    },
+  "max_progress": 500
+}

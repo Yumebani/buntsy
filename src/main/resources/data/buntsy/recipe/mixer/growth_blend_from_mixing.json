@@ -1,0 +1,22 @@
+{
+  "type": "buntsy:mixer",
+  "inputs": [
+    {
+        "count": 1,
+        "id":"minecraft:bone_meal"
+    },
+    {
+        "count": 1,
+        "id":"minecraft:carrot"
+    },
+    {
+        "count": 1,
+        "id":"minecraft:potato"
+    }
+  ],
+  "output":
+  {
+      "count": 2,
+      "id":"buntsy:growth_blend"
+  }
+}

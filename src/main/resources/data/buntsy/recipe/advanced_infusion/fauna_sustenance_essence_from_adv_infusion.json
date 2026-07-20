@@ -1,0 +1,70 @@
+{
+  "type": "buntsy:infusion_altar_advanced",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"buntsy:fairy_dust"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:cooked_cod"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:cooked_mutton"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:cooked_porkchop"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:cooked_salmon"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:pufferfish"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:cooked_chicken"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:tropical_fish"
+
+    },
+    {
+
+        "count": 1,
+        "id":"minecraft:cooked_beef"
+
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:essence"
+      ,
+      "components": {
+        "buntsy:essence_type": "fauna_sustenance"
+      }
+    },
+  "max_progress": 1000
+}

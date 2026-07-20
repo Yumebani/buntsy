@@ -1,0 +1,48 @@
+{
+  "type": "buntsy:fume_distillery",
+  "inputs": [
+    {
+
+        "count": 1,
+        "id":"minecraft:sugar"
+
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:catalyst"
+      ,
+      "components": {
+        "buntsy:catalyst_type": {
+          "type": 7,
+          "function": "creation"
+        }
+      }
+    },
+    {
+
+        "count": 1,
+        "id":"buntsy:fume_bottle"
+      ,
+      "components": {
+        "buntsy:fume_type": {
+          "type": 6,
+          "level": 1
+        }
+      }
+    }
+  ],
+  "output":
+    {
+
+        "count": 1,
+        "id":"buntsy:fume_bottle"
+      ,
+      "components": {
+        "buntsy:fume_type": {
+          "type": 7,
+          "level": 1
+        }
+      }
+    }
+}

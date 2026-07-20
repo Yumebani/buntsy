@@ -1,6 +1,7 @@
 package net.sophiebun.buntsy.blocks.entity.directfairy;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -25,7 +26,9 @@ public class FairyPowerRelayBlockEntity extends FairyInteractBlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.saveAdditional(pTag, registries);
+
         if (linked == null){
             pTag.putBoolean("fairy_power_relay.has_linked", false);
         }
@@ -33,16 +36,14 @@ public class FairyPowerRelayBlockEntity extends FairyInteractBlockEntity {
             pTag.putBoolean("fairy_power_relay.has_linked", true);
             pTag.put("fairy_power_relay.linked", NbtUtils.writeBlockPos(linked));
         }
-
-        super.saveAdditional(pTag);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider registries) {
+        super.loadAdditional(pTag, registries);
 
         if (pTag.getBoolean("fairy_power_relay.has_linked")){
-            this.linked =  NbtUtils.readBlockPos(pTag.getCompound("fairy_power_relay.linked"));
+            this.linked =  NbtUtils.readBlockPos(pTag, "fairy_power_relay.linked").get();
         }
         else this.linked = null;
     }
@@ -76,8 +77,8 @@ public class FairyPowerRelayBlockEntity extends FairyInteractBlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     public void animateParticles(ServerLevel pLevel, BlockPos pos) {

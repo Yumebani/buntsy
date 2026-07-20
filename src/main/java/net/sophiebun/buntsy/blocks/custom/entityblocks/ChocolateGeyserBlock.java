@@ -1,5 +1,6 @@
 package net.sophiebun.buntsy.blocks.custom.entityblocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.sounds.SoundEvents;
@@ -23,11 +24,17 @@ import org.joml.Vector3f;
 
 public class ChocolateGeyserBlock extends BaseEntityBlock {
 
+    public static final MapCodec<ChocolateGeyserBlock> CODEC = simpleCodec(ChocolateGeyserBlock::new);
     public static final IntegerProperty STAGE = IntegerProperty.create("stage", 0, 2);
 
     public ChocolateGeyserBlock(Properties pProperties) {
         super(pProperties);
         this.registerDefaultState(this.stateDefinition.any().setValue(STAGE, 0));
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {

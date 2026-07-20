@@ -1,22 +1,24 @@
 package net.sophiebun.buntsy.server;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Tuple;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.saveddata.SavedData;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.sophiebun.buntsy.blocks.entity.custom.GiantCocoonBlockEntity;
+import net.sophiebun.buntsy.codec.UroContent;
+import net.sophiebun.buntsy.components.ModDataComponents;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.item.custom.CocoonBag;
-import org.checkerframework.checker.units.qual.C;
+import net.sophiebun.buntsy.server.packets.GiantCocoonClientPacket;
 
 import java.util.*;
 
@@ -49,39 +51,39 @@ public class GiantCocoonSavedData extends SavedData {
     }
 
 
-    public void loadNewStackHandler(int key, CompoundTag nbt){
+    public void loadNewStackHandler(HolderLookup.Provider registries, int key, CompoundTag nbt){
         if (!stackHandlers.containsKey(key)){
-            createNewStackHandler(key);
+            createNewStackHandler(registries, key);
         }
-        stackHandlers.get(key).deserializeNBT(nbt);
+        stackHandlers.get(key).deserializeNBT(registries, nbt);
     }
 
-    public void packetUpdate(int key, CompoundTag nbt, BlockPos origin){
+    public void packetUpdate(HolderLookup.Provider registries, int key, CompoundTag nbt, BlockPos origin){
         if (!stackHandlers.containsKey(key)){
-            createNewStackHandler(key);
+            createNewStackHandler(registries, key);
         }
 
-        stackHandlers.get(key).deserializeNBT(nbt);
+        stackHandlers.get(key).deserializeNBT(registries, nbt);
 
-        distributePackets(key, origin, null);
+        distributePackets(registries, key, origin, null);
     }
 
-    public void packetUpdatePlayer(int key, CompoundTag nbt, ServerPlayer player){
+    public void packetUpdatePlayer(HolderLookup.Provider registries, int key, CompoundTag nbt, ServerPlayer player){
         if (!stackHandlers.containsKey(key)){
-            createNewStackHandler(key);
+            createNewStackHandler(registries, key);
         }
 
-        stackHandlers.get(key).deserializeNBT(nbt);
+        stackHandlers.get(key).deserializeNBT(registries, nbt);
 
-        distributePackets(key, null, player);
+        distributePackets(registries, key, null, player);
     }
 
-    public void distributePackets(int key, BlockPos origin, ServerPlayer originPlayer){
+    public void distributePackets(HolderLookup.Provider registries, int key, BlockPos origin, ServerPlayer originPlayer){
         if (cocoons.containsKey(key)){
             for (GiantCocoonBlockEntity cocoon : cocoons.get(key)){
                 if (origin == null || !cocoon.getBlockPos().equals(origin)){
-                    ModPacketHandler.INSTANCE.send(PacketDistributor.DIMENSION.with(() -> cocoon.getLevel().dimension()),
-                            new ModGiantCocoonClientPacket(stackHandlers.get(key).serializeNBT(), cocoon.getBlockPos()));
+                    PacketDistributor.sendToPlayersInDimension(((ServerLevel) cocoon.getLevel()),
+                            new GiantCocoonClientPacket(stackHandlers.get(key).serializeNBT(registries), cocoon.getBlockPos()));
                 }
             }
         }
@@ -89,7 +91,7 @@ public class GiantCocoonSavedData extends SavedData {
         if (playersToUpdate.containsKey(key)){
             for (ServerPlayer player : playersToUpdate.get(key).values()){
                 if (originPlayer == null || !player.getUUID().equals(originPlayer.getUUID())){
-                    updatePlayerItemTag(stackHandlers.get(key).serializeNBT(), player);
+                    updatePlayerItemTag(stackHandlers.get(key).serializeNBT(registries), player);
                 }
             }
         }
@@ -104,38 +106,36 @@ public class GiantCocoonSavedData extends SavedData {
         ItemStack handItem = player.getMainHandItem();
         ItemStack offHand = player.getOffhandItem();
 
-        if (!handItem.isEmpty() && handItem.hasTag() && handItem.is(ModItems.COCOON_BAG.get())){
-            tag.putInt("buntsy.uro_id", CocoonBag.getUroId(handItem));
-            handItem.setTag(tag);
+        if (!handItem.isEmpty() && handItem.is(ModItems.COCOON_BAG.get())){
+            handItem.set(ModDataComponents.URO_CONTENT, new UroContent(itemHandlerTag, true, false));
         }
         else {
-            tag.putInt("buntsy.uro_id", CocoonBag.getUroId(offHand));
-            offHand.setTag(tag);
+            offHand.set(ModDataComponents.URO_CONTENT, new UroContent(itemHandlerTag, true, false));
         }
     }
 
-    private void createNewStackHandler(int key){
+    private void createNewStackHandler(HolderLookup.Provider provider, int key){
         stackHandlers.put(key, new ItemStackHandler(27) {
             @Override
             protected void onContentsChanged(int slot) {
 
-                distributePackets(key, null, null);
+                distributePackets(provider, key, null, null);
                 setDirty();
             }
         });
     }
-    public void distributePacket(int id, ServerPlayer player) {
+    public void distributePacket(HolderLookup.Provider registries, int id, ServerPlayer player) {
         if (!stackHandlers.containsKey(id)){
-            createNewStackHandler(id);
+            createNewStackHandler(registries, id);
         }
 
-        updatePlayerItemTag(stackHandlers.get(id).serializeNBT(), player);
+        updatePlayerItemTag(stackHandlers.get(id).serializeNBT(registries), player);
 
     }
 
-    public ItemStackHandler registerNewCocoon(int id, GiantCocoonBlockEntity cocoon){
+    public ItemStackHandler registerNewCocoon(HolderLookup.Provider registries, int id, GiantCocoonBlockEntity cocoon){
         if (!stackHandlers.containsKey(id)){
-            createNewStackHandler(id);
+            createNewStackHandler(registries, id);
         }
 
         cocoons.computeIfAbsent(id, k -> new ArrayList<>());
@@ -162,30 +162,36 @@ public class GiantCocoonSavedData extends SavedData {
         this.currentId = currentId;
     }
 
-    public static GiantCocoonSavedData load(CompoundTag tag){
+    public static GiantCocoonSavedData load(CompoundTag tag, HolderLookup.Provider levelRegistry){
         GiantCocoonSavedData data = GiantCocoonSavedData.create();
         data.setCurrentId(tag.getInt("current_id"));
         int loopCount = tag.getInt("inventory_count");
         for (int i = 0; i < loopCount; i++){
-            data.loadNewStackHandler(tag.getInt("inventory_id_" + i), tag.getCompound("inventory_" + i));
+            data.loadNewStackHandler(levelRegistry, tag.getInt("inventory_id_" + i), tag.getCompound("inventory_" + i));
         }
         return data;
     }
 
+    public static final SavedData.Factory<GiantCocoonSavedData> FACTORY = new SavedData.Factory<>(
+            GiantCocoonSavedData::create,
+            GiantCocoonSavedData::load,
+            DataFixTypes.SAVED_DATA_MAP_DATA
+    );
+
+    public static GiantCocoonSavedData computeIfAbsent(MinecraftServer server){
+        return server.overworld().getDataStorage().computeIfAbsent(FACTORY, "cocoons_data");
+    }
+
     @Override
-    public CompoundTag save(CompoundTag pCompoundTag) {
+    public CompoundTag save(CompoundTag pCompoundTag, HolderLookup.Provider provider) {
         pCompoundTag.putInt("current_id", currentId);
         pCompoundTag.putInt("inventory_count", stackHandlers.size());
         List<Integer> keys = stackHandlers.keySet().stream().toList();
         for (int i = 0; i < stackHandlers.size(); i++){
             pCompoundTag.putInt("inventory_id_" + i, keys.get(i));
-            pCompoundTag.put("inventory_" + i, stackHandlers.get(i).serializeNBT());
+            pCompoundTag.put("inventory_" + i, stackHandlers.get(i).serializeNBT(provider));
         }
         return pCompoundTag;
-    }
 
-    public static GiantCocoonSavedData computeIfAbsent(MinecraftServer server){
-        return server.overworld().getDataStorage().computeIfAbsent(GiantCocoonSavedData::load, GiantCocoonSavedData::create, "cocoons_data");
     }
-
 }
