@@ -32,7 +32,7 @@ public class ClockworkMaidenTerminalBlock extends WindupClockworkBlock {
 
     public ClockworkMaidenTerminalBlock(Properties pProperties) {
         super(pProperties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(RUNNING, false));
     }
 
     @Override

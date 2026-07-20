@@ -16,20 +16,22 @@ public class ClockworkPowderedSugarCollectorScreen extends AbstractContainerScre
 
     public ClockworkPowderedSugarCollectorScreen(ClockworkPowderedSugarCollectorMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, Component.translatable("screen.buntsy.clockwork_powdered_sugar_collector"));
+        this.imageHeight = 165;
     }
 
     @Override
     protected void init() {
         super.init();
         this.titleLabelX = 22;
+        this.inventoryLabelY = 73;
     }
+
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE);
-        this.imageHeight = 165;
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 

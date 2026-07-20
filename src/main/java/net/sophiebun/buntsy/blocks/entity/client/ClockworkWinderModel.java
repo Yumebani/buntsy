@@ -2,6 +2,7 @@ package net.sophiebun.buntsy.blocks.entity.client;
 
 import net.minecraft.resources.ResourceLocation;
 import net.sophiebun.buntsy.BuntsyMod;
+import net.sophiebun.buntsy.blocks.custom.entityblocks.ClockworkWinderBlock;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkMaidenTerminalEntity;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkWinderEntity;
 import software.bernie.geckolib.model.GeoModel;
@@ -21,7 +22,7 @@ public class ClockworkWinderModel extends GeoModel<ClockworkWinderEntity> {
 
     @Override
     public ResourceLocation getTextureResource(ClockworkWinderEntity animatable) {
-        return animatable.isBurning() ? TEXTURE_ON : TEXTURE_OFF;
+        return animatable.getBlockState().getValue(ClockworkWinderBlock.BURNING) ? TEXTURE_ON : TEXTURE_OFF;
     }
 
     @Override

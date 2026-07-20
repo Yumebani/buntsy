@@ -16,12 +16,14 @@ public class ClockworkFisherScreen extends AbstractContainerScreen<ClockworkFish
 
     public ClockworkFisherScreen(ClockworkFisherMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
+        this.imageHeight = 165;
     }
 
     @Override
     protected void init() {
         super.init();
         this.titleLabelX = 22;
+        this.inventoryLabelY = 73;
     }
 
     @Override
@@ -29,7 +31,6 @@ public class ClockworkFisherScreen extends AbstractContainerScreen<ClockworkFish
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE);
-        this.imageHeight = 165;
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 

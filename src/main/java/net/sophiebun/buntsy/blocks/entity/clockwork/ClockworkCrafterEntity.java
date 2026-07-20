@@ -112,7 +112,7 @@ public class ClockworkCrafterEntity extends WindupClockworkEntity implements Men
                 return switch(i) {
                     case 0 -> ClockworkCrafterEntity.this.progress;
                     case 1 -> ClockworkCrafterEntity.this.maxProgress;
-                    case 2 -> ClockworkCrafterEntity.this.isWoundUp() ? 1 : 0;
+                    case 2 -> ClockworkCrafterEntity.this.windupRemaining;
                     default -> 0;
                 };
             }
@@ -122,6 +122,7 @@ public class ClockworkCrafterEntity extends WindupClockworkEntity implements Men
                 switch(i) {
                     case 0 -> ClockworkCrafterEntity.this.progress = i1;
                     case 1 -> ClockworkCrafterEntity.this.maxProgress = i1;
+                    case 2 -> ClockworkCrafterEntity.this.windupRemaining = i1;
                 };
             }
 
@@ -302,7 +303,7 @@ public class ClockworkCrafterEntity extends WindupClockworkEntity implements Men
         for (int i = 0; i < 18; i++){
             ItemStack stack = inputItemHandler.getStackInSlot(i);
             if (stack.isEmpty()){
-                inputItemHandler.setStackInSlot(i, remainingStack);
+                return true;
             } else if (stack.is(remainingStack.getItem())){
                 int remainder = stack.getCount() + totalRemaining;
                 if (remainder > remainingStack.getMaxStackSize()){
@@ -329,17 +330,17 @@ public class ClockworkCrafterEntity extends WindupClockworkEntity implements Men
                             int remainder = stack.getCount() - total;
                             ItemStack remainingStack = itemStack.getCraftingRemainingItem();
                             if (remainder >= 0){
-                                stack.setCount(remainder);
                                 if (!remainingStack.isEmpty()){
-                                    outputRemainder(remainingStack, remainder);
+                                    outputRemainder(remainingStack, stack.getCount() - remainder);
                                 }
+                                stack.setCount(remainder);
                                 break;
                             } else {
                                 total -= stack.getCount();
-                                stack.setCount(0);
                                 if (!remainingStack.isEmpty()){
                                     outputRemainder(remainingStack, stack.getCount());
                                 }
+                                stack.setCount(0);
                             }
                         }
                     }
@@ -354,6 +355,7 @@ public class ClockworkCrafterEntity extends WindupClockworkEntity implements Men
             ItemStack stack = inputItemHandler.getStackInSlot(i);
             if (stack.isEmpty()){
                 inputItemHandler.setStackInSlot(i, remainingStack);
+                break;
             } else if (stack.is(remainingStack.getItem())){
                 int remainder = stack.getCount() + totalRemaining;
                 if (remainder > remainingStack.getMaxStackSize()){
@@ -421,6 +423,8 @@ public class ClockworkCrafterEntity extends WindupClockworkEntity implements Men
             } else {
                 this.progress = 0;
             }
+        } else {
+            this.canCraft(level);
         }
     }
 

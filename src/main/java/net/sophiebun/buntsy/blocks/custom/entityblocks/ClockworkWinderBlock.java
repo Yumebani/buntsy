@@ -28,12 +28,13 @@ import org.jetbrains.annotations.Nullable;
 
 public class ClockworkWinderBlock extends ClockworkBlock{
 
+    public static final BooleanProperty BURNING = BooleanProperty.create("burning");
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 14, 16);
 
     public ClockworkWinderBlock(Properties pProperties) {
         super(pProperties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(BURNING, false));
     }
 
     @Override
@@ -100,7 +101,7 @@ public class ClockworkWinderBlock extends ClockworkBlock{
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         super.createBlockStateDefinition(pBuilder);
-        pBuilder.add(FACING);
+        pBuilder.add(FACING, BURNING);
     }
 
     @Override

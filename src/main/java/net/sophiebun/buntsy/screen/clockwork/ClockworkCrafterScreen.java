@@ -39,6 +39,7 @@ public class ClockworkCrafterScreen extends AbstractContainerScreen<ClockworkCra
         guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
 
         renderProgress(guiGraphics, x, y);
+        renderWoundUp(guiGraphics, x, y);
     }
 
     @Override
@@ -50,5 +51,11 @@ public class ClockworkCrafterScreen extends AbstractContainerScreen<ClockworkCra
 
     private void renderProgress(GuiGraphics guiGraphics, int x, int y) {
         guiGraphics.blit(TEXTURE, x + 107, y + 34, 176, 0, (int)(24 * (menu.getProgress() / ((float) menu.getMaxProgress()))), 17);
+    }
+
+    private void renderWoundUp(GuiGraphics guiGraphics, int x, int y) {
+        if (menu.isWoundUp()){
+            guiGraphics.blit(TEXTURE, x + 108, y + 46, 176, 17, 12, 13);
+        }
     }
 }

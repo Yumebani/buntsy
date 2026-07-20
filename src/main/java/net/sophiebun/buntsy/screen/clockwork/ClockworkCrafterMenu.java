@@ -22,7 +22,7 @@ public class ClockworkCrafterMenu extends AbstractContainerMenu {
     private final ContainerData data;
 
     public ClockworkCrafterMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(3));
     }
 
     public ClockworkCrafterMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
@@ -75,7 +75,7 @@ public class ClockworkCrafterMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 0;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 19;  // must be the number of slots you have!
 
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
@@ -135,5 +135,9 @@ public class ClockworkCrafterMenu extends AbstractContainerMenu {
 
     public int getMaxProgress() {
         return this.data.get(1);
+    }
+
+    public boolean isWoundUp() {
+        return this.data.get(2) > 0;
     }
 }

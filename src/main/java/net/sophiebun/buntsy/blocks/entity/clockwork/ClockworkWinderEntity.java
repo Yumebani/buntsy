@@ -61,7 +61,7 @@ public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuP
     protected final ContainerData data;
 
     private int burnTicks = 0;
-    private int maxBurnTicks = 0;
+    private int maxBurnTicks = -1;
 
     private List<BlockPos> registeredBlocks = new ArrayList<>();
     private int totalWeight = 0;
@@ -84,7 +84,7 @@ public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuP
 
     private PlayState predicate(AnimationState<ClockworkWinderEntity> clockworkFairyTerminalEntityAnimationState) {
         clockworkFairyTerminalEntityAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.clockwork_winder.running", Animation.LoopType.LOOP));
-        return isBurning() ? PlayState.CONTINUE : PlayState.STOP;
+        return getBlockState().getValue(ClockworkWinderBlock.BURNING) ? PlayState.CONTINUE : PlayState.STOP;
     }
 
     @Override
@@ -206,9 +206,7 @@ public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuP
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
 
-        if (this.maxBurnTicks == -1 && inventoryItemHandler.getStackInSlot(0).getBurnTime(RecipeType.SMELTING) != -1){
-            consumeFuel();
-        } else if (this.burnTicks > 0) {
+        if (this.burnTicks > 0) {
 
             this.burnTicks -= getBurn();
 
@@ -224,8 +222,14 @@ public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuP
                 nextCheckTick--;
             }
 
-        } else {
+        } else if (this.maxBurnTicks != -1){
+            level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(ClockworkWinderBlock.BURNING, false));
             this.maxBurnTicks = -1;
+        }
+
+        if (this.maxBurnTicks == -1 && inventoryItemHandler.getStackInSlot(0).getBurnTime(RecipeType.SMELTING) != -1) {
+            level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(ClockworkWinderBlock.BURNING, true));
+            consumeFuel();
         }
     }
 
@@ -256,12 +260,12 @@ public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuP
     private void registerBlocks(){
         nextRegisterTick = 30;
 
-        int range = getClockworkRangeAmount();
+        int range = getMaxDistance();
 
         for (BlockPos pos : BlockPos.withinManhattan(this.getBlockPos(), range, range / 2, range)){
             if (this.level.isLoaded(pos) && !registeredBlocks.contains(pos) && this.level.getBlockEntity(pos) instanceof WindupClockworkEntity
-            && ((WindupClockworkEntity) this.level.getBlockEntity(pos)).isWindedUpBy()){
-                this.registeredBlocks.add(pos);
+            && !(((WindupClockworkEntity) this.level.getBlockEntity(pos)).isWindedUpBy())){
+                this.registeredBlocks.add(pos.offset(0, 0, 0));
             }
         }
     }

@@ -21,7 +21,7 @@ public class ClockworkWinderScreen extends AbstractContainerScreen<ClockworkWind
     @Override
     protected void init() {
         super.init();
-        this.titleLabelX = 46;
+        this.titleLabelX = 52;
     }
 
 

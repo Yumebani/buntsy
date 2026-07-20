@@ -5,11 +5,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.sophiebun.buntsy.blocks.custom.entityblocks.ClockworkWinderBlock;
 import net.sophiebun.buntsy.blocks.custom.entityblocks.WindupClockworkBlock;
 
 public abstract class WindupClockworkEntity extends ClockworkBlockEntity{
 
-    private int windupRemaining = 0;
+    protected int windupRemaining = 0;
     private BlockPos winder = null;
 
     public WindupClockworkEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
@@ -17,7 +18,7 @@ public abstract class WindupClockworkEntity extends ClockworkBlockEntity{
     }
 
     public boolean isWindedUpBy(){
-        return winder == null;
+        return winder != null;
     }
 
     public boolean isWoundUp(){
@@ -47,7 +48,10 @@ public abstract class WindupClockworkEntity extends ClockworkBlockEntity{
     public void windup(BlockPos pos){
         windupRemaining = 80;
         winder = pos;
-        level.getBlockState(this.getBlockPos()).setValue(WindupClockworkBlock.RUNNING, true);
+        BlockState state = getBlockState();
+        if (!state.getValue(WindupClockworkBlock.RUNNING)){
+            level.setBlockAndUpdate(getBlockPos(), state.setValue(WindupClockworkBlock.RUNNING, true));
+        }
     }
 
     protected void tickWindup(){
@@ -55,7 +59,10 @@ public abstract class WindupClockworkEntity extends ClockworkBlockEntity{
         if (windupRemaining <= 0){
             winder = null;
             windupRemaining = 0;
-            level.getBlockState(this.getBlockPos()).setValue(WindupClockworkBlock.RUNNING, false);
+            BlockState state = getBlockState();
+            if (state.getValue(WindupClockworkBlock.RUNNING)){
+                level.setBlockAndUpdate(getBlockPos(), state.setValue(WindupClockworkBlock.RUNNING, false));
+            }
         }
     }
 

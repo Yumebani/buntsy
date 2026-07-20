@@ -56,7 +56,7 @@ public class ClockworkMaidenTerminalEntity extends WindupClockworkEntity impleme
 
     private PlayState predicate(AnimationState<ClockworkMaidenTerminalEntity> clockworkFairyTerminalEntityAnimationState) {
         clockworkFairyTerminalEntityAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.clockwork_windup.running", Animation.LoopType.LOOP));
-        return isWoundUp() ? PlayState.CONTINUE : PlayState.STOP;
+        return getBlockState().getValue(WindupClockworkBlock.RUNNING)  ? PlayState.CONTINUE : PlayState.STOP;
     }
 
     @Override
