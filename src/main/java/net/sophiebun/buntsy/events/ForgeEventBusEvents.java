@@ -1,15 +1,19 @@
 package net.sophiebun.buntsy.events;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,25 +33,30 @@ public class ForgeEventBusEvents {
         ServerLevelAccessor level = event.getLevel();
         Entity entity = event.getEntity();
 
-        if (entity instanceof Fairy || entity instanceof Silkbun) {
+        if (entity instanceof Fairy) {
+            runCheck(event, level, 48, 16, 4);
+        } else if (entity instanceof Silkbun){
+            runCheck(event, level, 32, 16, 5);
+        }
+    }
 
-            double spawnX = event.getX();
-            double spawnY = event.getY();
-            double spawnZ = event.getZ();
+    private static void runCheck(MobSpawnEvent.FinalizeSpawn event, ServerLevelAccessor level, int size, int sizeY, int count){
+        double spawnX = event.getX();
+        double spawnY = event.getY();
+        double spawnZ = event.getZ();
 
-            AABB scanArea = new AABB(
-                    spawnX - 32, spawnY - 16, spawnZ - 32,
-                    spawnX + 32, spawnY + 16, spawnZ + 32
-            );
+        AABB scanArea = new AABB(
+                spawnX - size, spawnY - sizeY, spawnZ - size,
+                spawnX + size, spawnY + sizeY, spawnZ + size
+        );
 
-            if (level.getEntitiesOfClass(event.getEntity().getClass(), scanArea).size() >= 5) {
-                event.setSpawnCancelled(true);
-                return;
-            }
+        if (level.getEntitiesOfClass(event.getEntity().getClass(), scanArea).size() >= count) {
+            event.setSpawnCancelled(true);
+            return;
+        }
 
-            if (level.getRawBrightness(event.getEntity().blockPosition(), 0) < 4) {
-                event.setSpawnCancelled(true);
-            }
+        if (level.getRawBrightness(event.getEntity().blockPosition(), 0) < 4) {
+            event.setSpawnCancelled(true);
         }
     }
 }

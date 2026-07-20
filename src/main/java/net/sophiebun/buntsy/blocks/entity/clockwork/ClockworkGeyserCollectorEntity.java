@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.sophiebun.buntsy.blocks.custom.entityblocks.ChocolateGeyserBlock;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.item.ModItems;
-import net.sophiebun.buntsy.screen.ClockworkGeyserCollectorMenu;
+import net.sophiebun.buntsy.screen.clockwork.ClockworkGeyserCollectorMenu;
 import org.jetbrains.annotations.Nullable;
 
 public class ClockworkGeyserCollectorEntity extends ClockworkPassiveCollectorEntity implements MenuProvider {

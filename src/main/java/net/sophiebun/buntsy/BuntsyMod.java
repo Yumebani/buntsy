@@ -21,9 +21,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.sophiebun.buntsy.blocks.ModBlocks;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
-import net.sophiebun.buntsy.blocks.entity.client.ClockworkFairyTerminalRenderer;
-import net.sophiebun.buntsy.blocks.entity.client.GrindingWheelBlockRenderer;
-import net.sophiebun.buntsy.blocks.entity.client.ThreadReelerBlockRenderer;
+import net.sophiebun.buntsy.blocks.entity.client.*;
 import net.sophiebun.buntsy.client.particle.ModParticleTypes;
 import net.sophiebun.buntsy.dispenser.DispenserBehaviourAditions;
 import net.sophiebun.buntsy.entity.ModEntities;
@@ -34,6 +32,7 @@ import net.sophiebun.buntsy.item.CreativeModeTabs;
 import net.sophiebun.buntsy.item.ModItems;
 import net.sophiebun.buntsy.recipe.ModRecipes;
 import net.sophiebun.buntsy.screen.*;
+import net.sophiebun.buntsy.screen.clockwork.*;
 import net.sophiebun.buntsy.server.ModPacketHandler;
 import net.sophiebun.buntsy.worldgen.biome.surface.ModSurfaceRules;
 import net.sophiebun.buntsy.worldgen.feature.ModFeatures;
@@ -139,7 +138,9 @@ public class BuntsyMod
             MenuScreens.register(ModMenuTypes.CLOCKWORK_SYRUP_EXTRACTOR_MENU.get(), ClockworkSyrupExtractorScreen::new);
             MenuScreens.register(ModMenuTypes.CLOCKWORK_GEYSER_COLLECTOR_MENU.get(), ClockworkGeyserCollectorScreen::new);
             MenuScreens.register(ModMenuTypes.CLOCKWORK_POWDERED_SUGAR_COLLECTOR_MENU.get(), ClockworkPowderedSugarCollectorScreen::new);
+            MenuScreens.register(ModMenuTypes.CLOCKWORK_FISHER_MENU.get(), ClockworkFisherScreen::new);
             MenuScreens.register(ModMenuTypes.CLOCKWORK_CRAFTER_MENU.get(), ClockworkCrafterScreen::new);
+            MenuScreens.register(ModMenuTypes.CLOCKWORK_WINDER_MENU.get(), ClockworkWinderScreen::new);
             MenuScreens.register(ModMenuTypes.CLOCKWORK_FAIRY_TERMINAL_MENU.get(), ClockworkFairyTerminalScreen::new);
 
             MenuScreens.register(ModMenuTypes.CMT_PARTICIPANT_MENU.get(), CMTParticipantScreen::new);
@@ -154,6 +155,8 @@ public class BuntsyMod
             BlockEntityRenderers.register(ModBlockEntities.GRINDING_WHEEL_BLOCK_ENTITY.get(), GrindingWheelBlockRenderer::new);
 
             BlockEntityRenderers.register(ModBlockEntities.CLOCKWORK_FAIRY_TERMINAL_ENTITY.get(), ClockworkFairyTerminalRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.CLOCKWORK_MAIDEN_TERMINAL_ENTITY.get(), ClockworkMaidenTerminalRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.CLOCKWORK_WINDER_ENTITY.get(), ClockworkWinderRenderer::new);
 
             event.enqueueWork(() -> {
                 ItemBlockRenderTypes.setRenderLayer(ModBlocks.SWICE.get(), RenderType.translucent());

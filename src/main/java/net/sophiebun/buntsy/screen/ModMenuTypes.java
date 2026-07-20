@@ -9,7 +9,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.sophiebun.buntsy.BuntsyMod;
-import net.sophiebun.buntsy.blocks.entity.advancedfairy.MagicCrystalizerBlockEntity;
+import net.sophiebun.buntsy.screen.clockwork.*;
 
 public class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MenusRegister =
@@ -44,6 +44,10 @@ public class ModMenuTypes {
             registerMenuType("clockwork_geyser_collector_menu", ClockworkGeyserCollectorMenu::new);
     public static final RegistryObject<MenuType<ClockworkPowderedSugarCollectorMenu>> CLOCKWORK_POWDERED_SUGAR_COLLECTOR_MENU =
             registerMenuType("clockwork_powdered_sugar_collector_menu", ClockworkPowderedSugarCollectorMenu::new);
+    public static final RegistryObject<MenuType<ClockworkFisherMenu>> CLOCKWORK_FISHER_MENU =
+            registerMenuType("clockwork_fisher_menu", ClockworkFisherMenu::new);
+    public static final RegistryObject<MenuType<ClockworkWinderMenu>> CLOCKWORK_WINDER_MENU =
+            registerMenuType("clockwork_winder_menu", ClockworkWinderMenu::new);
     public static final RegistryObject<MenuType<ClockworkCrafterMenu>> CLOCKWORK_CRAFTER_MENU =
             registerMenuType("clockwork_crafter_menu", ClockworkCrafterMenu::new);
     public static final RegistryObject<MenuType<ClockworkFairyTerminalMenu>> CLOCKWORK_FAIRY_TERMINAL_MENU =

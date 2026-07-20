@@ -10,10 +10,9 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.sophiebun.buntsy.blocks.custom.entityblocks.ChocolateGeyserBlock;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.item.ModItems;
-import net.sophiebun.buntsy.screen.ClockworkPowderedSugarCollectorMenu;
+import net.sophiebun.buntsy.screen.clockwork.ClockworkPowderedSugarCollectorMenu;
 import net.sophiebun.buntsy.worldgen.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;
 

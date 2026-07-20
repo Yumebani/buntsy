@@ -25,14 +25,14 @@ import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkFairyTerminalEntity
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkSyrupExtractorEntity;
 import org.jetbrains.annotations.Nullable;
 
-public class ClockworkFairyTerminalBlock extends ClockworkBlock{
+public class ClockworkFairyTerminalBlock extends WindupClockworkBlock{
 
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
 
     public ClockworkFairyTerminalBlock(Properties pProperties) {
         super(pProperties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(RUNNING, false));
     }
 
     @Override
@@ -98,6 +98,7 @@ public class ClockworkFairyTerminalBlock extends ClockworkBlock{
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
+        super.createBlockStateDefinition(pBuilder);
         pBuilder.add(FACING);
     }
 

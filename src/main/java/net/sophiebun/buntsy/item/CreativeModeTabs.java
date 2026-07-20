@@ -28,9 +28,11 @@ public class CreativeModeTabs {
 
                         pOutput.accept(ModBlocks.PINK_FLUF_CHARMIL_SOIL.get());
                         pOutput.accept(ModBlocks.CHARMIL_SOIL.get());
+                        pOutput.accept(ModBlocks.CHARMIL_FARMLAND.get());
 
                         pOutput.accept(ModBlocks.GRAY_MOSS_ODIATE_SOIL.get());
                         pOutput.accept(ModBlocks.ODIATE_SOIL.get());
+                        pOutput.accept(ModBlocks.ODIATE_FARMLAND.get());
                         pOutput.accept(ModBlocks.ODIATE_MUD.get());
                         pOutput.accept(ModBlocks.PACKED_ODIATE_MUD.get());
                         pOutput.accept(ModBlocks.ODIATE_MUD_BRICKS.get());
@@ -144,6 +146,8 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.BRAVE_LOTUS.get());
                         pOutput.accept(ModBlocks.MALIUM_LOTUS.get());
 
+                        pOutput.accept(ModBlocks.SWEEDS.get());
+                        pOutput.accept(ModBlocks.CROCKTUS.get());
                         pOutput.accept(ModBlocks.PINK_CHARMIL_GRASS.get());
                         pOutput.accept(ModBlocks.BLUE_CHARMIL_GRASS.get());
                         pOutput.accept(ModBlocks.PALEGRASS.get());
@@ -332,7 +336,9 @@ public class CreativeModeTabs {
                         pOutput.accept(ModBlocks.CLOCKWORK_SYRUP_EXTRACTOR.get());
                         pOutput.accept(ModBlocks.CLOCKWORK_GEYSER_COLLECTOR.get());
                         pOutput.accept(ModBlocks.CLOCKWORK_POWDERED_SUGAR_COLLECTOR.get());
+                        pOutput.accept(ModBlocks.CLOCKWORK_FISHER.get());
                         pOutput.accept(ModBlocks.CLOCKWORK_CRAFTER.get());
+                        pOutput.accept(ModBlocks.CLOCKWORK_WINDER.get());
                         pOutput.accept(ModBlocks.CLOCKWORK_FAIRY_TERMINAL.get());
                         pOutput.accept(ModBlocks.CLOCKWORK_MAIDEN_TERMINAL.get());
                         pOutput.accept(ModBlocks.GIANT_COCOON.get());
@@ -477,9 +483,17 @@ public class CreativeModeTabs {
                         pOutput.accept(ModItems.BOWL_OF_CARAMEL.get());
                         pOutput.accept(ModItems.STRAWBERRY.get());
                         pOutput.accept(ModItems.STRAWBERRY_SEEDS.get());
+                        pOutput.accept(ModItems.SUGARDEW_SEEDS.get());
+                        pOutput.accept(ModItems.SUGARDEW.get());
+                        pOutput.accept(ModItems.SUGARDEW_BALL.get());
+                        pOutput.accept(ModItems.DEW_CRYSTALS.get());
+                        pOutput.accept(ModItems.WINTER_ROOT.get());
+                        pOutput.accept(ModItems.ROOT_FLOUR.get());
+                        pOutput.accept(ModItems.ROOT_WAFFLE.get());
                         pOutput.accept(ModItems.CARAMEL_STRAWBERRIES.get());
                         pOutput.accept(ModItems.CHOCOLATE.get());
                         pOutput.accept(ModItems.CHOCOLATE_STRAWBERRIES.get());
+                        pOutput.accept(ModItems.ROOT_WAFFLE.get());
                         pOutput.accept(ModItems.VANILLA_ICECREAM.get());
                         pOutput.accept(ModItems.CHOCOLATE_ICECREAM.get());
                         pOutput.accept(ModItems.CARAMEL_ICECREAM.get());

@@ -15,7 +15,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
-import net.minecraft.world.item.BottleItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -28,16 +28,16 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
-import net.sophiebun.buntsy.item.ModItems;
-import net.sophiebun.buntsy.screen.ClockworkCrafterMenu;
+import net.sophiebun.buntsy.screen.clockwork.ClockworkCrafterMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-public class ClockworkCrafterEntity extends ClockworkBlockEntity implements MenuProvider {
+public class ClockworkCrafterEntity extends WindupClockworkEntity implements MenuProvider {
 
     protected final ItemStackHandler inputItemHandler = new ItemStackHandler(18) {
         @Override
@@ -112,6 +112,7 @@ public class ClockworkCrafterEntity extends ClockworkBlockEntity implements Menu
                 return switch(i) {
                     case 0 -> ClockworkCrafterEntity.this.progress;
                     case 1 -> ClockworkCrafterEntity.this.maxProgress;
+                    case 2 -> ClockworkCrafterEntity.this.windupRemaining;
                     default -> 0;
                 };
             }
@@ -121,12 +122,13 @@ public class ClockworkCrafterEntity extends ClockworkBlockEntity implements Menu
                 switch(i) {
                     case 0 -> ClockworkCrafterEntity.this.progress = i1;
                     case 1 -> ClockworkCrafterEntity.this.maxProgress = i1;
+                    case 2 -> ClockworkCrafterEntity.this.windupRemaining = i1;
                 };
             }
 
             @Override
             public int getCount() {
-                return 2;
+                return 3;
             }
         };
     }
@@ -273,10 +275,16 @@ public class ClockworkCrafterEntity extends ClockworkBlockEntity implements Menu
                         int remainder = collector.get(key) - total;
                         if (remainder >= 0){
                             collector.put(key, remainder);
+                            if (!itemStack.getCraftingRemainingItem().isEmpty() && !canOutputRemainder(itemStack.getCraftingRemainingItem(), total)){
+                                return false;
+                            }
                             total = 0;
                             break;
                         } else {
                             total -= collector.get(key);
+                            if (!itemStack.getCraftingRemainingItem().isEmpty() && !canOutputRemainder(itemStack.getCraftingRemainingItem(), collector.get(key))){
+                                return false;
+                            }
                             collector.put(key, 0);
                         }
                     }
@@ -290,28 +298,72 @@ public class ClockworkCrafterEntity extends ClockworkBlockEntity implements Menu
         return true;
     }
 
+    private boolean canOutputRemainder(ItemStack remainingStack, int count){
+        int totalRemaining = count;
+        for (int i = 0; i < 18; i++){
+            ItemStack stack = inputItemHandler.getStackInSlot(i);
+            if (stack.isEmpty()){
+                return true;
+            } else if (stack.is(remainingStack.getItem())){
+                int remainder = stack.getCount() + totalRemaining;
+                if (remainder > remainingStack.getMaxStackSize()){
+                    totalRemaining = remainder - remainingStack.getMaxStackSize();
+                } else {
+                    return true;
+                }
+            }
+        }
+        return totalRemaining == 0;
+    }
+
     public void takeFromInputs(NonNullList<Ingredient> ingredients){
 
         for (Ingredient ingredient : ingredients){
 
             if (!ingredient.isEmpty()){
                 int total = ingredient.getItems()[0].getCount();
-
                 for (ItemStack itemStack : ingredient.getItems()){
+
                     for (int i = 0; i < 18; i++){
                         ItemStack stack = inputItemHandler.getStackInSlot(i);
                         if (stack.is(itemStack.getItem())){
                             int remainder = stack.getCount() - total;
+                            ItemStack remainingStack = itemStack.getCraftingRemainingItem();
                             if (remainder >= 0){
+                                if (!remainingStack.isEmpty()){
+                                    outputRemainder(remainingStack, stack.getCount() - remainder);
+                                }
                                 stack.setCount(remainder);
-                                total = 0;
                                 break;
                             } else {
                                 total -= stack.getCount();
+                                if (!remainingStack.isEmpty()){
+                                    outputRemainder(remainingStack, stack.getCount());
+                                }
                                 stack.setCount(0);
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+
+    private void outputRemainder(ItemStack remainingStack, int count){
+        int totalRemaining = count;
+        for (int i = 0; i < 18; i++){
+            ItemStack stack = inputItemHandler.getStackInSlot(i);
+            if (stack.isEmpty()){
+                inputItemHandler.setStackInSlot(i, remainingStack);
+                break;
+            } else if (stack.is(remainingStack.getItem())){
+                int remainder = stack.getCount() + totalRemaining;
+                if (remainder > remainingStack.getMaxStackSize()){
+                    totalRemaining = remainder - remainingStack.getMaxStackSize();
+                    stack.setCount(stack.getMaxStackSize());
+                } else {
+                    stack.setCount(remainder);
+                    break;
                 }
             }
         }
@@ -357,16 +409,27 @@ public class ClockworkCrafterEntity extends ClockworkBlockEntity implements Menu
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
 
-        if (this.canCraft(level)){
-            this.progress += getClockworkProgressAmount();
+        if (this.isWoundUp()){
+            this.tickWindup();
 
-            if (this.progress > this.maxProgress){
-                this.craft(level);
+            if (this.canCraft(level)){
+                this.progress += getClockworkProgressAmount();
+
+                if (this.progress > this.maxProgress){
+                    this.craft(level);
+                    this.progress = 0;
+                }
+
+            } else {
                 this.progress = 0;
             }
-
         } else {
-            this.progress = 0;
+            this.canCraft(level);
         }
+    }
+
+    @Override
+    public int getWindupWeight() {
+        return 1;
     }
 }

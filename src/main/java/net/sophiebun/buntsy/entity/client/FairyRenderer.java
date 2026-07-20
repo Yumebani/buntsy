@@ -11,13 +11,21 @@ import net.sophiebun.buntsy.entity.animals.Fairy;
 import net.sophiebun.buntsy.entity.animals.Silkbun;
 
 public class FairyRenderer extends MobRenderer<Fairy, FairyModel<Fairy>> {
+
+    public static final ResourceLocation SWEET_FAIRY = new ResourceLocation(BuntsyMod.MODID, "textures/entity/sweet_fairy.png");
+    public static final ResourceLocation SUNNY_FAIRY = new ResourceLocation(BuntsyMod.MODID, "textures/entity/sunny_fairy.png");
+    public static final ResourceLocation ICE_FAIRY = new ResourceLocation(BuntsyMod.MODID, "textures/entity/ice_fairy.png");
     public FairyRenderer(EntityRendererProvider.Context pContext) {
         super(pContext, new FairyModel<>(pContext.bakeLayer(ModModelLayers.FAIRY_LAYER)), 0.0f);
     }
 
     @Override
     public ResourceLocation getTextureLocation(Fairy fairy) {
-        return new ResourceLocation(BuntsyMod.MODID, "textures/entity/fairy.png");
+        return switch (fairy.getVariant()){
+            case ICE -> ICE_FAIRY;
+            case SUNNY -> SUNNY_FAIRY;
+            default -> SWEET_FAIRY;
+        };
     }
 
     @Override

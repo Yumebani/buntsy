@@ -173,6 +173,9 @@
   "block.buntsy.cut_clockwork_brass_stairs": "Cut Clockwork Brass Stairs",
   "block.buntsy.cut_clockwork_brass_slab": "Cut Clockwork Brass Slab",
 
+  "block.buntsy.sweeds": "Sweeds",
+  "block.buntsy.crocktus": "Crocktus",
+
   "block.buntsy.sweetgrass": "Sweetgrass",
   "block.buntsy.tall_sweetgrass": "Tall Sweetgrass",
   "block.buntsy.cotton_vine": "Cottonvine",
@@ -201,6 +204,8 @@
   "block.buntsy.strawberry_crop": "Strawberry Crop",
   "block.buntsy.wild_hootnip": "Wild Hootnip",
   "block.buntsy.hootnip_crop": "Hootnip Crop",
+  "block.buntsy.winter_root_crop": "Winter Root Crop",
+  "block.buntsy.sugardew_crop": "Sugardew Crop",
 
   "block.buntsy.charming_lotus": "Charming Lotus",
   "block.buntsy.brave_lotus": "Brave Lotus",
@@ -288,7 +293,9 @@
   "block.buntsy.clockwork_syrup_extractor": "Clockwork Syrup Extractor",
   "block.buntsy.clockwork_geyser_collector": "Clockwork Geyser Collector",
   "block.buntsy.clockwork_powdered_sugar_collector": "Clockwork Powdered Sugar Collector",
+  "block.buntsy.clockwork_fisher": "Clockwork Fisher",
   "block.buntsy.clockwork_crafter": "Clockwork Crafter",
+  "block.buntsy.clockwork_winder": "Clockwork Winder",
   "block.buntsy.clockwork_fairy_terminal": "Clockwork Fairy Terminal",
   "block.buntsy.clockwork_maiden_terminal": "Clockwork Maiden Terminal",
 
@@ -398,7 +405,10 @@
   "item.buntsy.cold_powdered_sugar": "Cold Powdered Sugar",
   "item.buntsy.chocolate_flakes": "Chocolate Flakes",
   "item.buntsy.strawberry_seeds": "Strawberry Seeds",
+  "item.buntsy.sugardew_seeds": "Sugardew Seeds",
+  "item.buntsy.winter_root": "Winter Root",
   "item.buntsy.hootnip_seeds": "Hootnip Seeds",
+  "item.buntsy.sugardew": "Sugardew",
 
   "item.buntsy.speed_blend": "Speed Blend",
   "item.buntsy.efficiency_blend": "Efficiency Blend",
@@ -452,6 +462,9 @@
   "item.buntsy.cat_ears": "Cat Ears",
   "item.buntsy.gas_mask": "Gas Mask",
 
+  "item.buntsy.sugardew_ball": "Sugardew Ball",
+  "item.buntsy.dew_crystals": "Dew Crystals",
+  "item.buntsy.root_flour": "Root Flour",
   "item.buntsy.blazing_hootnip": "Blazing Hootnip",
   "item.buntsy.hootnip": "Hootnip",
   "item.buntsy.ground_hootnip": "Ground Hootnip",
@@ -462,6 +475,7 @@
   "item.buntsy.syrupy_mixture_bowl": "Syrupy Mixture Bowl",
   "item.buntsy.bowl_of_caramel": "Bowl of Caramel",
   "item.buntsy.strawberry": "Strawberry",
+  "item.buntsy.root_waffle": "Root Waffle",
   "item.buntsy.caramel_strawberries": "Caramel Strawberries",
   "item.buntsy.chocolate_strawberries": "Chocolate Strawberries",
   "item.buntsy.chocolate": "Chocolate",
@@ -493,6 +507,8 @@
 
   "screen.cmt_participant": "Editing Config",
   "screen.buntsy.clockwork_powdered_sugar_collector": "Powdered Sugar Collector",
+
+  "jei.buntsy.clockwork_collector": "Collection",
 
   "biome.buntsy.cuterly_biome": "Cuterly",
   "biome.buntsy.candy_crags_biome": "Candy Crags",

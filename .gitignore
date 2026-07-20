@@ -21,6 +21,8 @@ build
 eclipse
 run
 run-data
+run-data/logs
+run-data/config
 generated
 
 # Files from Forge MDK

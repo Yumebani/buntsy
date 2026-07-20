@@ -25,7 +25,7 @@ import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkCrafterEntity;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkSyrupExtractorEntity;
 import org.jetbrains.annotations.Nullable;
 
-public class ClockworkCrafterBlock extends ClockworkBlock{
+public class ClockworkCrafterBlock extends WindupClockworkBlock{
 
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
@@ -98,6 +98,7 @@ public class ClockworkCrafterBlock extends ClockworkBlock{
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
+        super.createBlockStateDefinition(pBuilder);
         pBuilder.add(FACING);
     }
 

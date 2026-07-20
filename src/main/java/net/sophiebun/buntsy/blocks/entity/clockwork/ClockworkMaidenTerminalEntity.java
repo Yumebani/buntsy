@@ -9,35 +9,33 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.Containers;
-import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.sophiebun.buntsy.blocks.custom.entityblocks.WindupClockworkBlock;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.entity.clockwork_maiden.CMTParticipantData;
 import net.sophiebun.buntsy.entity.clockwork_maiden.MaidenInteractionConfig;
 import net.sophiebun.buntsy.entity.clockwork_maiden.MaidenTask;
-import net.sophiebun.buntsy.screen.CMTParticipantScreen;
+import net.sophiebun.buntsy.screen.clockwork.CMTParticipantScreen;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoBlockEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
+public class ClockworkMaidenTerminalEntity extends WindupClockworkEntity implements GeoBlockEntity {
 
     private final Map<BlockPos, CMTParticipantData> registeredConfigs = new HashMap<>();
     private final List<MaidenTask> maidenTasks = new ArrayList<>();
@@ -46,6 +44,25 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
 
     private final int BASE_BLOCK_COUNT = 12;
     private final int BASE_RANGE_COUNT = 8;
+
+    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private AnimationController<ClockworkMaidenTerminalEntity> controller;
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controller = new AnimationController<>(this, "controller", 2, this::predicate);
+        controllers.add(controller);
+    }
+
+    private PlayState predicate(AnimationState<ClockworkMaidenTerminalEntity> clockworkFairyTerminalEntityAnimationState) {
+        clockworkFairyTerminalEntityAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.clockwork_windup.running", Animation.LoopType.LOOP));
+        return getBlockState().getValue(WindupClockworkBlock.RUNNING)  ? PlayState.CONTINUE : PlayState.STOP;
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
 
     public ClockworkMaidenTerminalEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.CLOCKWORK_MAIDEN_TERMINAL_ENTITY.get(), pPos, pBlockState);
@@ -128,26 +145,25 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
 
     public MaidenTask getTask(){
 
-        boolean recompile = false;
-        for (BlockPos pos : registeredConfigs.keySet().stream().toList()){
-            if (level.isLoaded(pos) && level.getBlockEntity(pos) == null){
-                registeredConfigs.remove(pos);
-                recompile = true;
+        if (isWoundUp()){
+            boolean recompile = false;
+            for (BlockPos pos : registeredConfigs.keySet().stream().toList()){
+                if (level.isLoaded(pos) && level.getBlockEntity(pos) == null){
+                    registeredConfigs.remove(pos);
+                    recompile = true;
+                }
             }
+            if (recompile) recompileTasks();
+
+            if (tasksRoundRobin >= maidenTasks.size()){
+                tasksRoundRobin = 0;
+            }
+
+            if (!this.maidenTasks.isEmpty()){
+                return this.maidenTasks.get(tasksRoundRobin++);
+            } else return null;
         }
-        if (recompile) recompileTasks();
-
-        if (tasksRoundRobin >= maidenTasks.size()){
-            tasksRoundRobin = 0;
-        }
-
-        if (!this.maidenTasks.isEmpty()){
-            return this.maidenTasks.get(tasksRoundRobin++);
-        } else return null;
-    }
-
-    public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-
+        else return null;
     }
 
     public void recompileTasks(){
@@ -258,5 +274,17 @@ public class ClockworkMaidenTerminalEntity extends ClockworkBlockEntity {
 
     public void removeBlock(BlockEntity blockEntity) {
         this.registeredConfigs.remove(blockEntity.getBlockPos());
+    }
+
+    public void tick(Level pLevel, BlockPos pPos, BlockState pState){
+
+        if (isWoundUp()){
+            tickWindup();
+        }
+    }
+
+    @Override
+    public int getWindupWeight() {
+        return 4;
     }
 }

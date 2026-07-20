@@ -12,7 +12,7 @@ public class ClockworkFairyTerminalModel extends GeoModel<ClockworkFairyTerminal
     private static final ResourceLocation MODEL = new ResourceLocation(BuntsyMod.MODID, "geo/clockwork_fairy_terminal.geo.json");
     private static final ResourceLocation ANIMATION = new ResourceLocation(BuntsyMod.MODID, "animations/clockwork_fairy_terminal.animation.json");
 
-    private static final ResourceLocation TEXTURE_IDLE = new ResourceLocation(BuntsyMod.MODID, "textures/block/clockwork_fairy_terminal.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(BuntsyMod.MODID, "textures/block/clockwork_fairy_terminal.png");
 
     @Override
     public ResourceLocation getModelResource(ClockworkFairyTerminalEntity animatable) {
@@ -21,7 +21,7 @@ public class ClockworkFairyTerminalModel extends GeoModel<ClockworkFairyTerminal
 
     @Override
     public ResourceLocation getTextureResource(ClockworkFairyTerminalEntity animatable) {
-        return TEXTURE_IDLE;
+        return TEXTURE;
     }
 
     @Override
