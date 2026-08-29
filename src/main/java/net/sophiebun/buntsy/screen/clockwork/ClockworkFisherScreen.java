@@ -22,7 +22,7 @@ public class ClockworkFisherScreen extends AbstractContainerScreen<ClockworkFish
     @Override
     protected void init() {
         super.init();
-        this.titleLabelX = 22;
+        this.titleLabelX = 48;
         this.inventoryLabelY = 73;
     }
 

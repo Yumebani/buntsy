@@ -10,9 +10,9 @@ import net.sophiebun.buntsy.BuntsyMod;
 import org.joml.Vector3f;
 
 public class ModFluidTypes {
-    public static final ResourceLocation WATER_STILL_RL = ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/water_still");
-    public static final ResourceLocation WATER_FLOWING_RL =  ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "block/water_flow");
-    public static final ResourceLocation SOAP_OVERLAY_RL =  ResourceLocation.fromNamespaceAndPath(BuntsyMod.MODID, "misc/in_soap_water");
+    public static final ResourceLocation WATER_STILL_RL = ResourceLocation.fromNamespaceAndPath("minecraft", "block/water_still");
+    public static final ResourceLocation WATER_FLOWING_RL =  ResourceLocation.fromNamespaceAndPath("minecraft", "block/water_flow");
+    public static final ResourceLocation SOAP_OVERLAY_RL =  ResourceLocation.fromNamespaceAndPath("minecraft", "block/water_overlay");
 
     public static final DeferredRegister<FluidType> FLUID_TYPES =
             DeferredRegister.create(NeoForgeRegistries.FLUID_TYPES, BuntsyMod.MODID);

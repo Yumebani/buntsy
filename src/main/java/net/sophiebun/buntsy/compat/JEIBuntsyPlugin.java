@@ -51,9 +51,11 @@ public class JEIBuntsyPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.MAGIC_CRYSTALIZER.get()), MagicCrystalizerCategory.MAGIC_CRYSTALIZER_RECIPE_TYPE);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.FUME_DISTILLERY.get()), FumeDistilleryCategory.FUME_DISTILLERY_RECIPE_TYPE);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.INFUSION_ALTAR_BASIC.get()), InfusionAltarBasicCategory.INFUSION_ALTAR_BASIC_RECIPE_TYPE);
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.INFUSION_ALTAR_ADVANCED.get()), InfusionAltarBasicCategory.INFUSION_ALTAR_BASIC_RECIPE_TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.INFUSION_ALTAR_ADVANCED.get()), InfusionAltarAdvancedCategory.INFUSION_ALTAR_ADVANCED_RECIPE_TYPE);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.INFUSION_PEDESTAL.get()), InfusionAltarBasicCategory.INFUSION_ALTAR_BASIC_RECIPE_TYPE);
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.INFUSION_PEDESTAL.get()), InfusionAltarBasicCategory.INFUSION_ALTAR_BASIC_RECIPE_TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.INFUSION_PEDESTAL.get()), InfusionAltarAdvancedCategory.INFUSION_ALTAR_ADVANCED_RECIPE_TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.FAIRY_POWER_RELAY.get()), InfusionAltarBasicCategory.INFUSION_ALTAR_BASIC_RECIPE_TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.FAIRY_POWER_RELAY.get()), InfusionAltarAdvancedCategory.INFUSION_ALTAR_ADVANCED_RECIPE_TYPE);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.MIXER_BLOCK.get()), MixerCategory.MIXER_RECIPE_TYPE);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.CLOCKWORK_FISHER.get()), ClockworkCollectorCategory.CLOCKWORK_COLLECTOR_RECIPE_TYPE);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.CLOCKWORK_GEYSER_COLLECTOR.get()), ClockworkCollectorCategory.CLOCKWORK_COLLECTOR_RECIPE_TYPE);
