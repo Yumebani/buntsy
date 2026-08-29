@@ -106,7 +106,7 @@ public class MixerBlockEntity extends FairyInteractBlockEntity implements MenuPr
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("block.buntsy.mixer");
+        return Component.translatable("block.buntsy.mixer_block");
     }
 
     @Nullable
