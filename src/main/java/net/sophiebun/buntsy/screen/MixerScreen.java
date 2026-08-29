@@ -21,7 +21,7 @@ public class MixerScreen extends AbstractContainerScreen<MixerMenu> {
     @Override
     protected void init() {
         super.init();
-        this.titleLabelX = 56;
+        this.titleLabelX = 82;
     }
 
     @Override
