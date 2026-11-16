@@ -67,9 +67,9 @@ public record ClockworkCardPuncherPacket(
 
             ServerLevel level = ((ServerLevel) context.player().level());
 
-            if (level == null || (packet.block.isPresent() && !level.hasChunkAt(packet.block.get()))) return;
+            if (level == null || (packet.block.isPresent() && !level.isLoaded(packet.block.get()))) return;
 
-            if (!packet.terminalBlock.isPresent()){
+            if (packet.maidenId != -1){
                 handleMaidenOperations(packet, context);
             } else {
                 handleMaidenTerminalOperations(packet, context);
@@ -121,7 +121,7 @@ public record ClockworkCardPuncherPacket(
         }
         else if (packet.operationType == ConfigureStaffOperationType.SET_BLOCK){
 
-            BlockEntity blockEntity = level.getBlockEntity(packet.block.get());
+            BlockEntity blockEntity = level.getBlockEntity(packet.terminalBlock.get());
             if (blockEntity instanceof ClockworkMaidenTerminalEntity) {
                 
                 if (maiden.containsTerminal((ClockworkMaidenTerminalEntity) blockEntity)){

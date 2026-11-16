@@ -111,6 +111,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.CLOCKWORK_CRAFTER.get())
                 .add(ModBlocks.CLOCKWORK_WINDER.get())
                 .add(ModBlocks.CLOCKWORK_FAIRY_TERMINAL.get())
+                .add(ModBlocks.CLOCKWORK_MAIDEN_TERMINAL.get())
                 .add(ModBlocks.DEAD_SWEET_CORAL_BLOCK.get())
                 .add(ModBlocks.SWEET_CORAL_BLOCK.get())
                 .add(ModBlocks.BITTER_CORAL_BLOCK.get())

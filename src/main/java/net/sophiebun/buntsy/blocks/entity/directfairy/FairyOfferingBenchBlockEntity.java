@@ -178,7 +178,15 @@ public class FairyOfferingBenchBlockEntity extends FairyInteractBlockEntity impl
     public Optional<RecipeHolder<FairyOfferingRecipe>> getCurrentRecipe() {
         List<ItemStack> list = new ArrayList<>();
         for (int i = 0; i < inputItemHandler.getSlots(); i++) {
-            list.add(inputItemHandler.getStackInSlot(i));
+            if (!inputItemHandler.getStackInSlot(i).isEmpty()){
+                list.add(inputItemHandler.getStackInSlot(i));
+                for (int ii = i; ii < inputItemHandler.getSlots(); ii++){
+                    list.add(ItemStack.EMPTY);
+                }
+                break;
+            } else {
+                list.add(ItemStack.EMPTY);
+            }
         }
         FairyOfferingInput input = new FairyOfferingInput(list);
 

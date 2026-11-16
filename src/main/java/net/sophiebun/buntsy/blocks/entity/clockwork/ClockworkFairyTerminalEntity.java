@@ -128,7 +128,7 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
 
     @Override
     public int getWindupWeight() {
-        return 2;
+        return 4;
     }
 
     @Override
@@ -217,11 +217,17 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
         if (this.isWoundUp()) {
             this.tickWindup();
 
+            if (windupRemaining <= 0){
+                setUpdateBlocksFlag(true);
+            }
+
             this.generalTick(pLevel);
             this.updateConsumptionRate(pLevel);
             this.updateRegisteredBlocks(pLevel);
             this.fairyEatFromOfferings(pLevel);
             this.taskTick(pLevel);
+        } else {
+            this.updateRegisteredBlocks(pLevel);
         }
     }
 
@@ -299,10 +305,10 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
                 else if (this.currentWeight > this.getMaxFairyWeight()){
                     this.unregisterBlock(level.getBlockEntity(pos), level);
                 }
-                else if (this.isHungry()){
+                else if (this.isHungry() || !this.isWoundUp()){
                     ((FairyInteractBlockEntity) level.getBlockEntity(pos)).setEnchanted(false);
                 }
-                else{
+                else if (this.isWoundUp()){
                     ((FairyInteractBlockEntity) level.getBlockEntity(pos)).setEnchanted(true);
 
                     if (this.fumes.containsKey(2)){
@@ -378,7 +384,7 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
     }
 
     public int getMaxFairyWeight() {
-        return FAIRY_TERMINAL_BASE_POOL + (fumes.containsKey(1) ? fumes.get(1).get(0) : 0);
+        return FAIRY_TERMINAL_BASE_POOL + getClockworkWeightAmount() + (fumes.containsKey(1) ? fumes.get(1).get(0) : 0);
     }
 
     public void setUpdateBlocksFlag(boolean updateBlocksFlag) {
@@ -1021,6 +1027,15 @@ public class ClockworkFairyTerminalEntity extends WindupClockworkEntity implemen
             case SIMPLE -> 2;
             case INTRICATE -> 4;
             case COMPLEX -> 8;
+        };
+    }
+
+    protected int getClockworkWeightAmount() {
+        return switch (clockworkTier){
+            case NONE -> 0;
+            case SIMPLE -> 1;
+            case INTRICATE -> 2;
+            case COMPLEX -> 4;
         };
     }
 }

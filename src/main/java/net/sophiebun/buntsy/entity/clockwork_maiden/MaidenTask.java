@@ -51,7 +51,6 @@ public class MaidenTask {
 
         if (level.isLoaded(extractBlock.getPos())){
 
-            BlockEntity entity = level.getBlockEntity(extractBlock.getPos());
             IItemHandler itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, extractBlock.getPos(), extractBlock.getSide());
             
             List<ItemStack> extractableSpace = new ArrayList<>();
@@ -119,8 +118,7 @@ public class MaidenTask {
     }
 
     private int getCountInStorage(Level level, MaidenInteractionConfig config, ItemStack itemStack) {
-        BlockEntity entity = level.getBlockEntity(config.getPos());
-        IItemHandler itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, extractBlock.getPos(), extractBlock.getSide());
+        IItemHandler itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, config.getPos(), config.getSide());
 
         List<Integer> count = new ArrayList<>();
         count.add(0);

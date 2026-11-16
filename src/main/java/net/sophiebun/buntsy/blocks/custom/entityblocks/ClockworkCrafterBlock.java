@@ -25,6 +25,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkCrafterEntity;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkSyrupExtractorEntity;
+import net.sophiebun.buntsy.item.custom.ClockworkUpgradeItem;
 import org.jetbrains.annotations.Nullable;
 
 public class ClockworkCrafterBlock extends WindupClockworkBlock{
@@ -73,6 +74,9 @@ public class ClockworkCrafterBlock extends WindupClockworkBlock{
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+
+        super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+
         if (!pLevel.isClientSide() && !pPlayer.isCrouching()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
             if (blockEntity instanceof ClockworkCrafterEntity) {
@@ -83,8 +87,6 @@ public class ClockworkCrafterBlock extends WindupClockworkBlock{
                 throw new IllegalStateException("No container provider.");
             }
         }
-
-        super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
         return InteractionResult.SUCCESS;
     }
 

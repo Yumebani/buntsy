@@ -31,7 +31,7 @@ public class ModEntities {
             enitityRegister.register("marionette", () -> EntityType.Builder.of(Marionette::new, MobCategory.MONSTER)
                     .sized(0.5f, 1.6f).build("marionette"));
     public static final DeferredHolder<EntityType<?>, EntityType<ClockworkMaiden>> CLOCKWORK_MAIDEN_ENTITY =
-            enitityRegister.register("clockwork_maiden", () -> EntityType.Builder.of(ClockworkMaiden::new, MobCategory.MISC)
+            enitityRegister.register("clockwork_maiden", () -> EntityType.Builder.of(ClockworkMaiden::new, MobCategory.CREATURE)
                     .sized(0.5f, 1.6f).build("clockwork_maiden"));
 
     public static void register(IEventBus eventBus){

@@ -172,7 +172,10 @@ public class MaidenInteractionConfig {
         tag.put("maiden_config.pos", NbtUtils.writeBlockPos(pos));
         tag.putInt("maiden_config.direction", side.ordinal());
         for (int i = 0; i < 12; i++){
-            tag.put("maiden_config.filter_item_" + i, filter.get(i).save(registries));
+            tag.putBoolean("maiden_config.filter_item_empty_" + i, filter.get(i).isEmpty());
+            if (!filter.get(i).isEmpty()){
+                tag.put("maiden_config.filter_item_" + i, filter.get(i).save(registries));
+            }
         }
         tag.putBoolean("maiden_config.whitelist", whiteList);
         tag.putBoolean("maiden_config.exact", exact);
@@ -205,7 +208,11 @@ public class MaidenInteractionConfig {
         Direction side = Direction.values()[tag.getInt("maiden_config.direction")];
         List<ItemStack> filter = new ArrayList<>();
         for (int i = 0; i < 12; i++){
-            filter.add(ItemStack.parse(registries, tag.getCompound("maiden_config.filter_item_" + i)).get());
+            if (tag.getBoolean("maiden_config.filter_item_empty_" + i)){
+                filter.add(ItemStack.EMPTY);
+            } else {
+                filter.add(ItemStack.parse(registries, tag.getCompound("maiden_config.filter_item_" + i)).get());
+            }
         }
         boolean whiteList = tag.getBoolean("maiden_config.whitelist");
         boolean exact = tag.getBoolean("maiden_config.exact");

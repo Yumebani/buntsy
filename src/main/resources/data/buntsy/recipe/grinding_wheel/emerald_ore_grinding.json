@@ -24,7 +24,7 @@
       }
     },
     {
-      "chance": 0.1,
+      "chance": 0.2,
       "item": {
         "count": 1,
         "id": "buntsy:pristine_emerald_sample"

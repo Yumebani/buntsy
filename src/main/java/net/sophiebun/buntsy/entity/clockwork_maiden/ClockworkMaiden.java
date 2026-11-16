@@ -60,6 +60,16 @@ public class ClockworkMaiden extends PathfinderMob {
     }
 
     @Override
+    public boolean isPersistenceRequired() {
+        return true;
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
+    @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(CARRIED_ITEM, ItemStack.EMPTY);
@@ -78,8 +88,8 @@ public class ClockworkMaiden extends PathfinderMob {
         super.addAdditionalSaveData(pTag);
 
         pTag.putInt("clockwork_maiden.clockwork_tier", this.clockworkTier.ordinal());
-        pTag.putBoolean("clockwork_maiden.has_upgrade_item", upgradeItem != null);
-        if (upgradeItem != null){
+        pTag.putBoolean("clockwork_maiden.has_upgrade_item", !upgradeItem.isEmpty());
+        if (!upgradeItem.isEmpty()){
             pTag.put("clockwork_maiden.upgrade_item", upgradeItem.save(level().registryAccess()));
         }
 
@@ -114,7 +124,7 @@ public class ClockworkMaiden extends PathfinderMob {
         if (pTag.getBoolean("clockwork_maiden.has_upgrade_item")){
             this.upgradeItem = ItemStack.parse(level().registryAccess(), pTag.getCompound("clockwork_maiden.upgrade_item")).get();
         } else {
-            this.upgradeItem = null;
+            this.upgradeItem = ItemStack.EMPTY;
         }
 
         int size = pTag.getInt("clockwork_maiden.carried_items_size");
@@ -168,7 +178,7 @@ public class ClockworkMaiden extends PathfinderMob {
     }
 
     public void ejectItem(Level level, Player player){
-        if (this.upgradeItem != null){
+        if (!this.upgradeItem.isEmpty()){
             level.addFreshEntity(new ItemEntity(level, player.position().x, player.position().y + 1f, player.position().z, this.upgradeItem));
             this.clockworkTier = ClockworkTier.NONE;
             this.upgradeItem = ItemStack.EMPTY;

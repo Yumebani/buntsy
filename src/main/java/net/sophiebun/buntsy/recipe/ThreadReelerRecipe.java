@@ -50,13 +50,17 @@ public class ThreadReelerRecipe implements Recipe<SingleItemInput> {
         List<ItemStack> items = new ArrayList<>();
         for (ChanceItemEntry entry : output){
             if (entry.left() >= rollChance / 100f){
+                boolean found = false;
                 for (ItemStack itemStack : items){
                     if (ItemStack.isSameItemSameComponents(itemStack, entry.right())){
                         itemStack.grow(entry.right().getCount());
+                        found = true;
                         break;
                     }
                 }
-                items.add(entry.right().copy());
+                if (!found){
+                    items.add(entry.right().copy());
+                }
             }
         }
         return items;

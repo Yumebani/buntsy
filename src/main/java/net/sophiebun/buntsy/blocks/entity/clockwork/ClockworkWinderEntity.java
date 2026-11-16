@@ -243,10 +243,10 @@ public class ClockworkWinderEntity extends ClockworkBlockEntity implements MenuP
 
     protected int getBurnTimeModifier(){
         return switch (clockworkTier){
-            case NONE -> 4;
-            case SIMPLE -> 6;
-            case INTRICATE -> 8;
-            case COMPLEX -> 12;
+            case NONE -> 8;
+            case SIMPLE -> 16;
+            case INTRICATE -> 32;
+            case COMPLEX -> 64;
         };
     }
 

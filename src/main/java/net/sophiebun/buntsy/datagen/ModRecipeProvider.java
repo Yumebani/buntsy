@@ -480,7 +480,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer);
 
         //Giant Cocoon
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.GIANT_COCOON.get(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.GIANT_COCOON.get(), 2)
                 .define('A', ModItems.SILK_FABRIC.get())
                 .define('B', ModItems.TOUGH_SILK_FABRIC.get())
                 .pattern("ABA")

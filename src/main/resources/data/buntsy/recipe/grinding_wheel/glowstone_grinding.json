@@ -21,7 +21,7 @@
       }
     },
     {
-      "chance": 0.05,
+      "chance": 0.1,
       "item": {
         "count": 1,
         "id": "buntsy:pristine_glowstone_sample"

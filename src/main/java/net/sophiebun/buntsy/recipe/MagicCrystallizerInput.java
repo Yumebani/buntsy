@@ -1,5 +1,6 @@
 package net.sophiebun.buntsy.recipe;
 
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeInput;
@@ -12,6 +13,7 @@ public record MagicCrystallizerInput(
 
     @Override
     public ItemStack getItem(int index) {
+        if (ingredients.get(index).isEmpty()) return ItemStack.EMPTY;
         return ingredients.get(index).getItems()[0];
     }
 

@@ -18,7 +18,7 @@ import net.sophiebun.buntsy.item.custom.ClockworkUpgradeItem;
 public class ClockworkBlockEntity extends BlockEntity {
 
     protected ClockworkTier clockworkTier = ClockworkTier.NONE;
-    private ItemStack upgradeItem = null;
+    private ItemStack upgradeItem = ItemStack.EMPTY;
 
     public ClockworkBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
         super(pType, pPos, pBlockState);
@@ -29,8 +29,8 @@ public class ClockworkBlockEntity extends BlockEntity {
         super.saveAdditional(pTag, registries);
 
         pTag.putInt("clockwork_base.clockwork_tier", this.clockworkTier.ordinal());
-        pTag.putBoolean("clockwork_base.has_upgrade_item", upgradeItem != null);
-        if (upgradeItem != null){
+        pTag.putBoolean("clockwork_base.has_upgrade_item", !upgradeItem.isEmpty());
+        if (!upgradeItem.isEmpty()){
             CompoundTag tag = new CompoundTag();
             upgradeItem.save(registries, tag);
             pTag.put("clockwork_base.upgrade_item", tag);
@@ -45,7 +45,7 @@ public class ClockworkBlockEntity extends BlockEntity {
         if (pTag.getBoolean("clockwork_base.has_upgrade_item")){
             this.upgradeItem = ItemStack.parseOptional(registries, pTag.getCompound("clockwork_base.upgrade_item"));
         } else {
-            this.upgradeItem = null;
+            this.upgradeItem = ItemStack.EMPTY;
         }
     }
 
@@ -64,7 +64,7 @@ public class ClockworkBlockEntity extends BlockEntity {
     }
 
     public void ejectItem(Level level, Player player){
-        if (this.upgradeItem != null){
+        if (!this.upgradeItem.isEmpty()){
             level.addFreshEntity(new ItemEntity(level, player.position().x, player.position().y + 1f, player.position().z, this.upgradeItem));
             this.clockworkTier = ClockworkTier.NONE;
             this.upgradeItem = ItemStack.EMPTY;

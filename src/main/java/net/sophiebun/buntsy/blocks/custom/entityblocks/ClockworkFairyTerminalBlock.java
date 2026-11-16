@@ -23,6 +23,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.sophiebun.buntsy.blocks.entity.ModBlockEntities;
 import net.sophiebun.buntsy.blocks.entity.clockwork.ClockworkFairyTerminalEntity;
+import net.sophiebun.buntsy.item.custom.ClockworkUpgradeItem;
 import org.jetbrains.annotations.Nullable;
 
 public class ClockworkFairyTerminalBlock extends WindupClockworkBlock{
@@ -71,6 +72,9 @@ public class ClockworkFairyTerminalBlock extends WindupClockworkBlock{
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+
+        super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+
         if (!pLevel.isClientSide() && !pPlayer.isCrouching()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
             if (blockEntity instanceof ClockworkFairyTerminalEntity) {
@@ -81,8 +85,6 @@ public class ClockworkFairyTerminalBlock extends WindupClockworkBlock{
                 throw new IllegalStateException("No container provider.");
             }
         }
-
-        super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
         return InteractionResult.SUCCESS;
     }
 

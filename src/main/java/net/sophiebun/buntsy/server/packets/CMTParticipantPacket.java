@@ -44,7 +44,7 @@ public record CMTParticipantPacket (
             ByteBufCodecs.optional(ByteBufCodecs.COMPOUND_TAG), CMTParticipantPacket::data,
             ByteBufCodecs.optional(BlockPos.STREAM_CODEC), CMTParticipantPacket::terminal,
             ByteBufCodecs.optional(BlockPos.STREAM_CODEC), CMTParticipantPacket::target,
-            ByteBufCodecs.optional(ItemStack.LIST_STREAM_CODEC), CMTParticipantPacket::filter,
+            ByteBufCodecs.optional(ItemStack.OPTIONAL_LIST_STREAM_CODEC), CMTParticipantPacket::filter,
             ByteBufCodecs.VAR_INT, CMTParticipantPacket::operationTypeOrdinal,
             CMTParticipantPacket::new
     );

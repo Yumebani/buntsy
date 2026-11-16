@@ -262,6 +262,6 @@ public class ClockworkMaidenTerminalEntity extends WindupClockworkEntity impleme
 
     @Override
     public int getWindupWeight() {
-        return 4;
+        return 6;
     }
 }

@@ -65,7 +65,7 @@ public class ModGrowableMineral extends AmethystClusterBlock {
     private int stage;
 
     public ModGrowableMineral(byte id, int stage, int pSize, int pOffset, Properties pProperties) {
-        super(pSize, pOffset, pProperties);
+        super(pSize, pOffset, pProperties.randomTicks());
         this.id = id;
         this.stage = stage;
     }
