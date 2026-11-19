@@ -73,7 +73,7 @@ public class SyrupExtractorBlock extends Block{
     }
 
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        return this.defaultBlockState().setValue(FACING, pContext.getClickedFace()).setValue(LEVEL, Integer.valueOf(0));
+        return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite()).setValue(LEVEL, Integer.valueOf(0));
     }
 
     @Override
